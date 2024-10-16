@@ -1,5 +1,6 @@
 import Header from "../../components/header/Header";
 import "./Main.scss";
+import mainData from "../../data/maindata.json";
 
 const Main = () => {
   return (
@@ -19,22 +20,16 @@ const Main = () => {
             </span>
           </div>
           <div className="info1-content-right">
-            <div className="info1-content-right-box">
-              <span className="info1-content-right-box-head">제목</span>
-              <span className="info1-content-left-body">데이터</span>
-            </div>
-
-            {/* 이후 mapping으로 지우기 */}
-
-            <div className="info1-content-right-box">
-              <span className="info1-content-right-box-head">제목</span>
-              <span className="info1-content-left-body">데이터</span>
-            </div>
-
-            <div className="info1-content-right-box">
-              <span className="info1-content-right-box-head">제목</span>
-              <span className="info1-content-left-body">데이터</span>
-            </div>
+            {mainData.info1.map((it) => {
+              return (
+                <div className="info1-content-right-box">
+                  <span className="info1-content-right-box-head">
+                    {it.title}
+                  </span>
+                  <span className="info1-content-left-body">{it.data}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
