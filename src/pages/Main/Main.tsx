@@ -39,31 +39,16 @@ const Main = () => {
           <span className="info2-left-txt1">혼자 고민했던 문제들</span>
           <span className="info2-left-txt2">리밍으로 해결하세요</span>
         </div>
+
         <div className="info2-right">
-          <div className="info2-right-box">
-            <span className="info2-right-box-img">😀</span>
-            <span className="info2-right-box-txt">리밍으로 해결하세요</span>
-          </div>
-          <div className="info2-right-box">
-            <span className="info2-right-box-img">😀</span>
-            <span className="info2-right-box-txt">리밍으로 해결하세요</span>
-          </div>
-          <div className="info2-right-box">
-            <span className="info2-right-box-img">😀</span>
-            <span className="info2-right-box-txt">리밍으로 해결하세요</span>
-          </div>
-          <div className="info2-right-box">
-            <span className="info2-right-box-img">😀</span>
-            <span className="info2-right-box-txt">리밍으로 해결하세요</span>
-          </div>
-          <div className="info2-right-box">
-            <span className="info2-right-box-img">😀</span>
-            <span className="info2-right-box-txt">리밍으로 해결하세요</span>
-          </div>
-          <div className="info2-right-box">
-            <span className="info2-right-box-img">😀</span>
-            <span className="info2-right-box-txt">리밍으로 해결하세요</span>
-          </div>
+          {mainData.info2.map((it) => {
+            return (
+              <div className="info2-right-box">
+                <span className="info2-right-box-img">{it.title}</span>
+                <span className="info2-right-box-txt">{it.data}</span>
+              </div>
+            );
+          })}
         </div>
       </div>
 
