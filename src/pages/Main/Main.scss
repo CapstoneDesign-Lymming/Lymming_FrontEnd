@@ -136,30 +136,84 @@
   .info3 {
     box-sizing: border-box;
     height: 130%;
+    width: 100%;
     padding: 5% 15%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    align-items: center;
 
-    &-title {
-      font-size: 1.3vw;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 2%;
+    .scroll {
+      box-sizing: border-box;
+      height: 70%;
+      width: 70%;
+      margin-top: 5%;
+      position: absolute;
 
-      &-step {
+      .title {
+        font-size: 1.3vw;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         margin-bottom: 2%;
+        white-space: pre-wrap;
+      }
+      .img {
+        height: 80%;
+        background-color: #e6f0ff;
       }
     }
 
-    &-progressbar {
+    .progressbar {
+      position: relative;
       height: 5%;
-      background-color: wheat;
+      width: 100%;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2%;
+      margin-bottom: 2%;
+
+      .circle {
+        width: 4%;
+        padding-top: 4%;
+        background-color: #e9ecef;
+        border-radius: 50%;
+        transition: all 200ms ease;
+        transition-delay: 0s;
+      }
+      .circle.active {
+        transition-delay: 100ms;
+        background-color: #8fa9f1;
+        color: #8fa9f1;
+      }
+
+      .progress-bar {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        bottom: 86%;
+        z-index: -1; // 안해주면 circle 부분 위에 배경이 표시된다.
+        height: 4px;
+        width: 100%;
+        background: #e9ecef;
+        transition: all 300ms ease;
+      }
     }
 
-    &-img {
-      width: 100%;
-      height: 70%;
-      background-color: #e6f0ff;
+    .btn-wrapper {
+      position: absolute;
+      width: 90%;
+      top: 50%;
+      left: 50%; /* 부모 요소 기준으로 중앙 정렬 */
+      transform: translate(-50%); /* 중앙 정렬을 위한 이동 */
+      display: flex;
+      justify-content: space-between;
+
+      .arrow {
+        background: none;
+        border: none;
+      }
     }
   }
 
