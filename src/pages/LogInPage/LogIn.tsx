@@ -15,6 +15,7 @@ import {
   Child5,
   Child6,
 } from "../../components/Modal/LoginInfoModal/LoginInfoModalChild";
+import { useLoginStore } from "../../store/useLoginStore";
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -32,14 +33,14 @@ const LogIn = () => {
   });
 
   // 로그인 상태 true일시 모달 나오게 하기
-  const [login, setLogin] = useState(true);
-  const [loginPage, setLoginPage] = useState(6);
+
+  const { count, isOpen, setIsOpen } = useLoginStore();
 
   // 로그인 페이지 렌더링 함수
   const renderLoginPage = () => {
-    console.log(loginPage);
+    console.log(count);
 
-    switch (loginPage) {
+    switch (count) {
       case 1:
         return <Child1 />;
       case 2:
@@ -59,12 +60,10 @@ const LogIn = () => {
 
   return (
     <div className="LogIn">
-      {login && (
+      {isOpen && (
         <>
           <div className="backdrop" />
-          <LoginInfoModal button={loginPage}>
-            {renderLoginPage()}
-          </LoginInfoModal>
+          <LoginInfoModal>{renderLoginPage()}</LoginInfoModal>
         </>
       )}
       <div className="back_wrapper">
@@ -84,7 +83,7 @@ const LogIn = () => {
         </div>
 
         <div className="right">
-          <KakaoLoginButton />
+          <KakaoLoginButton onClick={() => setIsOpen(true)} />
           <GoogleLoginButton text="구글 로그인" />
           <GithubLoginButton text="깃허브 로그인" />
         </div>

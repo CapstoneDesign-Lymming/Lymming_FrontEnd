@@ -13,9 +13,9 @@ export const Child1 = () => {
         <span>성별을 선택해주세요</span>
 
         <div className="q2-box">
-          <div className="q2-box-item">남성</div>
-          <div className="q2-box-item">여성</div>
-          <div className="q2-box-item">기타</div>
+          <button className="q2-box-item">남성</button>
+          <button className="q2-box-item">여성</button>
+          <button className="q2-box-item">기타</button>
         </div>
       </div>
 

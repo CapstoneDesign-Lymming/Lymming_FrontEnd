@@ -30,5 +30,23 @@
     list-style: none;
     justify-content: space-between;
     text-align: center;
+
+    .login_aft {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      img {
+        width: 70%;
+        padding-top: 70%;
+        background-color: aquamarine;
+        border-radius: 100px;
+      }
+
+      span {
+        font-size: 0.6vw;
+        font-weight: bolder;
+      }
+    }
   }
 }

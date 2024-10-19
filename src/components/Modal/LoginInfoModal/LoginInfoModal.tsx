@@ -1,12 +1,29 @@
+import { useNavigate } from "react-router-dom";
+import { useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
 
-const LoginInfoModal = ({ button, children }) => {
-  console.log(button);
+const LoginInfoModal = ({ children }) => {
+  const { count, setCount, setIsOpen, setLogin } = useLoginStore();
+
+  const navigate = useNavigate();
+
   return (
     <div className="LoginInfoModal">
       <div className="child_wrqpper">{children}</div>
       <div className="btn_wrqpper">
-        <button>{button === 6 ? "완료" : "다음"}</button>
+        {count === 6 ? (
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              setLogin(true);
+              navigate("/");
+            }}
+          >
+            완료
+          </button>
+        ) : (
+          <button onClick={() => setCount(1)}>다음</button>
+        )}
       </div>
     </div>
   );
