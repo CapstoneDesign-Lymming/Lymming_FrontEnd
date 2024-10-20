@@ -1,6 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import "./Header.scss";
+import { useLoginStore } from "../../store/useLoginStore";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  const { login } = useLoginStore();
+
   return (
     <header className="Header">
       <div className="Header-title">
@@ -13,7 +19,15 @@ const Header = () => {
         <li>둘러보기</li>
 
         {/* 로그인 완료시 상태에 따라 변동시키기 */}
-        <li>로그인</li>
+
+        {login == true ? (
+          <li className="login_aft">
+            <img />
+            <span>username</span>
+          </li>
+        ) : (
+          <li onClick={() => navigate("/login")}>로그인</li>
+        )}
       </ul>
     </header>
   );

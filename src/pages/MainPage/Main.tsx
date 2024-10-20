@@ -1,8 +1,50 @@
 import Header from "../../components/header/Header";
 import "./Main.scss";
 import mainData from "../../data/maindata.json";
+import React, { useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Main = () => {
+  const [isBack, setIsBack] = useState(false);
+  const [visible, setVisible] = useState(0);
+
+  const contentVariants = {
+    initial: (isBack: boolean) => ({
+      x: isBack ? 500 : -500,
+      opacity: 0,
+      scale: 0.5,
+    }),
+    animate: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: (isBack: boolean) => ({
+      x: isBack ? -500 : 500,
+      opacity: 0,
+      scale: 0,
+      transition: {
+        duration: 0.5,
+      },
+    }),
+  };
+
+  const handleNext = () => {
+    setIsBack(true); // 앞으로 가는 애니메이션
+    console.log(visible);
+    setVisible((prevIndex) => (prevIndex + 1) % mainData.info3.length); // 다음 인덱스로
+  };
+
+  const handlePrev = () => {
+    setIsBack(false); // 뒤로 가는 애니메이션
+    setVisible((prevIndex) =>
+      prevIndex === 0 ? mainData.info3.length - 1 : prevIndex - 1
+    ); // 이전 인덱스로
+  };
+
   return (
     <div className="Main">
       <Header />
@@ -53,12 +95,47 @@ const Main = () => {
       </div>
 
       <div className="info3">
-        <div className="info3-title">
-          <span className="info3-title-step">step1</span>
-          <span className="info3-title-text">프로젝트를 구성해보세요.</span>
+        <div className="progressbar">
+          {mainData.info3.map((it, index) => (
+            <span
+              className={`circle ${index === visible ? "active" : ""}`}
+            ></span>
+          ))}
+
+          <div className="progress-bar"></div>
         </div>
-        <div className="info3-progressbar"></div>
-        <div className="info3-img"></div>
+
+        <div className="btn-wrapper">
+          <button className="arrow" onClick={handlePrev}>
+            왼쪽
+          </button>
+
+          <button className="arrow" onClick={handleNext}>
+            오른쪽
+          </button>
+        </div>
+
+        <AnimatePresence>
+          {mainData.info3.map((it, index) => {
+            return visible === index ? (
+              <motion.div
+                key={index}
+                custom={isBack} // custom 속성을 통해 isBack을 전달
+                variants={contentVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="scroll"
+              >
+                <div className="title">
+                  <span className="title-step">{it.title}</span>
+                </div>
+
+                <div className="img"></div>
+              </motion.div>
+            ) : null;
+          })}
+        </AnimatePresence>
       </div>
 
       <footer className="footer">
