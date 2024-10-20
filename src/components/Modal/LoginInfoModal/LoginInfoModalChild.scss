@@ -58,6 +58,20 @@
         color: #ced4da;
         background-color: white;
       }
+      input[type="radio"] {
+        display: none;
+      }
+
+      input[type="radio"]:checked + .q2-box-item {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      &-item:hover {
+        background-color: #f0f0f0;
+        border-color: #999;
+      }
     }
   }
 
@@ -92,6 +106,21 @@
         border: 1px solid #ced4da;
         border-radius: 5px;
         color: #ced4da;
+      }
+
+      input[type="radio"] {
+        display: none;
+      }
+
+      input[type="radio"]:checked + .q3-box-item {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      &-item:hover {
+        background-color: #f0f0f0;
+        border-color: #999;
       }
     }
   }
@@ -128,12 +157,28 @@
         border-radius: 5px;
         color: #ced4da;
       }
+
+      input[type="radio"] {
+        display: none;
+      }
+
+      input[type="radio"]:checked + .q4-box-item {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      &-item:hover {
+        background-color: #f0f0f0;
+        border-color: #999;
+      }
     }
   }
 }
 
 .Child2 {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 10%;
@@ -146,22 +191,41 @@
     text-align: center;
   }
   .skills {
-    width: 80%;
-    height: 100%;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 3%;
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    input[type="checkbox"]:checked + .skills-item {
+      color: white;
+      border-color: #007bff;
+      background-color: #007bff;
+    }
+
+    &-item:hover {
+      border-color: #999;
+    }
 
     &-item {
       box-sizing: border-box;
-      border: 1px solid gray;
+      border: 1px solid #ced4da;
       width: 30%;
-      height: 8%;
-
+      height: 30px;
+      color: #b5bcc2;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 1%;
       border-radius: 5px;
-
       font-size: 1vw;
+
+      margin-bottom: 10%;
     }
   }
 }
@@ -191,7 +255,23 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border: 1px solid gray;
+      border: 1px solid #ced4da;
+      color: #b5bcc2;
+      border-radius: 7px;
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    input[type="radio"]:checked + .time-item {
+      color: white;
+      border-color: #868e96;
+      color: #868e96;
+    }
+
+    &-item:hover {
+      border-color: #999;
     }
   }
 }
@@ -233,6 +313,7 @@
       margin: 0;
       resize: none;
       border-radius: 10px;
+      padding: 3%;
     }
   }
 }

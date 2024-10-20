@@ -1,0 +1,39 @@
+{
+  "skills": [
+    "java",
+    "python",
+    "javascript",
+    "c#",
+    "ruby",
+    "typescript",
+    "sql",
+    "html",
+    "css",
+    "react",
+    "node.js",
+    "go",
+    "rust"
+  ],
+  "interest": [
+    "ai",
+    "web",
+    "mobile",
+    "data science",
+    "cloud ",
+
+    "devops",
+    "cybersecurity",
+    "blockchain",
+    "game ",
+    "AR/VR",
+    "UI/UX design",
+    "e-commerce",
+    "automation",
+    "IoT",
+    "networking",
+    "database ",
+    "quantum ",
+    "robotics",
+    "big data"
+  ]
+}

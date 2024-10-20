@@ -5,7 +5,7 @@ import {
   GithubLoginButton,
   createButton,
 } from "react-social-login-buttons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import {
   Child1,
@@ -18,6 +18,9 @@ import {
 import { useLoginStore } from "../../store/useLoginStore";
 
 const LogIn = () => {
+  const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
+  const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
+
   const navigate = useNavigate();
   const KakaoLoginButton = createButton({
     text: "카카오 로그인",
@@ -32,9 +35,13 @@ const LogIn = () => {
     activeStyle: { background: "#E5CC00" },
   });
 
-  // 로그인 상태 true일시 모달 나오게 하기
-
   const { count, isOpen, setIsOpen } = useLoginStore();
+
+  const kakaolink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const onKakaoBtnClick = () => {
+    window.location.href = kakaolink;
+  };
 
   // 로그인 페이지 렌더링 함수
   const renderLoginPage = () => {
@@ -83,7 +90,7 @@ const LogIn = () => {
         </div>
 
         <div className="right">
-          <KakaoLoginButton onClick={() => setIsOpen(true)} />
+          <KakaoLoginButton onClick={onKakaoBtnClick} />
           <GoogleLoginButton text="구글 로그인" />
           <GithubLoginButton text="깃허브 로그인" />
         </div>
