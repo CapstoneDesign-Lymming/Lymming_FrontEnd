@@ -16,6 +16,7 @@ import {
   Child6,
 } from "../../components/Modal/LoginInfoModal/LoginInfoModalChild";
 import { useLoginStore } from "../../store/useLoginStore";
+import Header from "../../components/header/Header";
 
 const LogIn = () => {
   const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
