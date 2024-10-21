@@ -5,7 +5,7 @@ import {
   GithubLoginButton,
   createButton,
 } from "react-social-login-buttons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import {
   Child1,
@@ -38,9 +38,14 @@ const LogIn = () => {
   const { count, isOpen, setIsOpen } = useLoginStore();
 
   const kakaolink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  // 여기는 깃허브 링크로 따로 추가해야함
+  const gitlink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const onKakaoBtnClick = () => {
     window.location.href = kakaolink;
+  };
+  const onGitBtnClick = () => {
+    window.location.href = gitlink;
   };
 
   // 로그인 페이지 렌더링 함수
@@ -92,7 +97,7 @@ const LogIn = () => {
         <div className="right">
           <KakaoLoginButton onClick={onKakaoBtnClick} />
           <GoogleLoginButton text="구글 로그인" />
-          <GithubLoginButton text="깃허브 로그인" />
+          <GithubLoginButton text="깃허브 로그인" onClick={onGitBtnClick} />
         </div>
       </div>
     </div>

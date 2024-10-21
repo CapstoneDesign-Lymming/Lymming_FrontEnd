@@ -1,14 +1,14 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLoginStore } from "../store/useLoginStore";
-import axios from "axios";
 
-const KakaoAuth = () => {
+const GithubAuth = () => {
   const navigate = useNavigate();
   const { setLogin, setIsOpen } = useLoginStore();
 
   useEffect(() => {
-    postKakaoCode(code);
+    postGithubCode(code);
   }, []);
 
   const queryString = window.location.search; // URL 쿼리 스트링 가져오기
@@ -16,17 +16,20 @@ const KakaoAuth = () => {
   const code = urlParams.get("code"); // 'code' 파라미터 값을 가져오기
 
   // 서버로 인가코드 전송
-  const postKakaoCode = async (code: any) => {
+  const postGithubCode = async (code: any) => {
     console.log("로그인", code);
     try {
-      const result = await axios.post("http://localhost:8080/api/kakao/login", {
-        code,
-      });
+      const result = await axios.post(
+        "http://localhost:8080/api/github/login",
+        {
+          code,
+        }
+      );
 
       //  사용자 정보를 로컬 스터리지에 저장
       localStorage.setItem("token", result.data);
-      console.log("로그인", result.data);
 
+      console.log("로그인", result.data);
       getUserData();
     } catch (e) {
       console.error(e);
@@ -47,10 +50,10 @@ const KakaoAuth = () => {
   };
 
   return (
-    <div className="KakaoAuth">
+    <div className="GithubAuth">
       <h1>로그인 중입니다.</h1>
     </div>
   );
 };
 
-export default KakaoAuth;
+export default GithubAuth;
