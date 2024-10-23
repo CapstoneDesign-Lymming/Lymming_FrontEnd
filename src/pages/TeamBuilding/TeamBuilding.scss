@@ -1,0 +1,66 @@
+.TeamBuilding {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .content {
+    width: 30%;
+    flex-grow: 1;
+    row-gap: 5%;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    padding: 0 5%;
+    &-top {
+      display: flex;
+      justify-content: space-between;
+
+      &-left {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &-right {
+        display: flex;
+
+        &-1 {
+          display: flex;
+          flex-direction: column;
+        }
+        &-2 {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+
+    &-center {
+      justify-content: space-between;
+      display: flex;
+      &-left {
+        display: flex;
+        flex-direction: column;
+      }
+      &-right {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .input_img {
+      display: flex;
+    }
+    .input_content {
+      display: flex;
+    }
+
+    .btn_wrapper {
+      display: flex;
+      justify-content: end;
+      gap: 5%;
+    }
+  }
+}
