@@ -18,24 +18,25 @@
     &-img {
       width: 20px;
       height: 20px;
-      background-color: #0c158a;
     }
   }
 
   &-ul {
     align-items: center;
     font-size: 1.2vw;
-    width: 25%;
+    width: 35%;
     display: flex;
     list-style: none;
     justify-content: space-between;
     text-align: center;
-
+    li{
+      width: 20vw;
+      margin: 10px;
+    }
     .login_aft {
       display: flex;
       flex-direction: column;
       align-items: center;
-
       img {
         width: 70%;
         padding-top: 70%;
