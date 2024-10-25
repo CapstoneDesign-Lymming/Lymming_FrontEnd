@@ -1,6 +1,6 @@
 const ComfirmVideoModal = () => {
   return (
-    <div>ComfirmVideoModal</div>
+    <div> ComfirmVideoModal </div>
   )
 }
 
