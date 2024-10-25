@@ -11,7 +11,9 @@ const Header = () => {
     <header className="Header">
       <div className="Header-title">
         <img className="Header-title-img" src="" />
-        <span className="Header-title-txt">lymming</span>
+        <span className="Header-title-txt" onClick={() => navigate("/")}>
+          lymming
+        </span>
       </div>
       <ul className="Header-ul">
         <li onClick={() => navigate("/participate")}>참여하기</li>
