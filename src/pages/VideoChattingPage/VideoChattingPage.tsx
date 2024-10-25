@@ -1,35 +1,31 @@
 import {  useNavigate } from "react-router-dom"
-import "./VideoChattingPage.scss"
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import "./VideoChattingPage.scss"
 
 
 const VideoChattingPage = () => {
 
     const navigate = useNavigate();
+
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
 
-    // const [isVideoChatting,setInVideoChattng]=useState<boolean>(false);
     const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
-    // const [isMicOn,setIsMicOn]=useState<boolean>(true);
     console.log("비디오 연결 상태",isVideoOn);
-
+    // const [isVideoChatting,setInVideoChattng]=useState<boolean>(false);
+    // const [isMicOn,setIsMicOn]=useState<boolean>(true);
     const [room, setRoom] = useState<string>('test_room'); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
     const [socket, setSocket] = useState<Socket | null>(null);
     const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
     const [isScreenSharing,setIsScreenSharing]=useState<boolean>(false);
-
     useEffect(() => {
-        //소켓 연결
         const nextSocket = io('http://localhost:8080');
-
         try{
             setSocket(nextSocket);
         }catch(error){
                 console.log("setSocket Error!",error)
         }
-
         try {
             setRoom("test_room"); //TODO: 추후 사용자 room id로 변경
 
@@ -64,11 +60,11 @@ const VideoChattingPage = () => {
             setPeerConnection(pc);
             
         } catch (error) {
-            console.log("setPeerConnection Error!",error)
+            console.log("setPeerConnection Error!",error);
         }
         
         nextSocket.on('offer', async (msg) => {
-            console.log("offer")
+            console.log("offer받음");
             if (msg.sender === socket?.id) return;
             await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
 
@@ -78,7 +74,7 @@ const VideoChattingPage = () => {
         });
 
         nextSocket.on('answer', (msg) => {
-            console.log("answer")
+            console.log("answer");
             if (msg.sender === socket?.id) return;
             pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
         });
@@ -118,29 +114,45 @@ const VideoChattingPage = () => {
           }
         });
 
+        nextSocket.on('allReady',()=>{
+            console.log("⭐모두 준비 완료")
+        })
+
         nextSocket.on('callEnded',()=>{
             console.log("callEnd")
-          endCall();
+            endCall();
         });
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    useEffect(()=>{
-        videoChatting();
-    })
+    
+    // useEffect(()=>{
+    //     videoChatting();
+    // })
+
     //TODO: setVideo + joinRoom + peerConnection => offer생성 => 연결
-    const videoChatting=()=>{
-        if(localVideoRef.current && peerConnection){ setVideo(); }
-        if (socket && room){ joinRoom(); }
-        call();
-    }
+    // const videoChatting=()=>{
+    //     try {
+    //         console.log("@@")
+    //         if(localVideoRef.current && peerConnection){ setVideo(); }
+    //         else{ return}
+    //         if (socket && room){ joinRoom(); }
+    //         else{ return}
 
-
-    /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
-    // const startVideoChatting=()=>{
-    //     setVideo();
-    //     joinRoom();
+    //     } catch (error) {
+    //         console.log("@@@@",error)
+    //     }
+        
+    //     call();
     // }
+
+
+    // /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
+     const startVideoChatting=()=>{
+        setVideo();
+        joinRoom();
+        socket?.emit('ready');
+     }
 
 
 
@@ -167,8 +179,11 @@ const VideoChattingPage = () => {
     };
 
     const call = async () => {
-        if (!peerConnection) return;
-        console.log("call")
+        if (!peerConnection){ 
+            console.log("call 실패")
+            return; }
+        console.log("call");
+        console.log("offer보냄")
         const offer = await peerConnection?.createOffer(); //offer생성
         await peerConnection?.setLocalDescription(offer);//SDP세팅
         socket?.emit('offer', { sdp: offer, room });//offer전송
@@ -312,7 +327,7 @@ const VideoChattingPage = () => {
                     </div>}
 
                     {!isVideoOn?
-                    <div className="NavMenu" >
+                    <div className="NavMenu" onClick={startVideoChatting}>
                         <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z"/></svg>
                         <div>비디오</div>
                     </div>:
