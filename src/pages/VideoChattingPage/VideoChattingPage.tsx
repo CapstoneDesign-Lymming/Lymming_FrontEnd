@@ -5,7 +5,6 @@ import "./VideoChattingPage.scss"
 
 
 const VideoChattingPage = () => {
-
     const navigate = useNavigate();
 
     const localVideoRef = useRef<HTMLVideoElement>(null);
@@ -17,21 +16,14 @@ const VideoChattingPage = () => {
     // const [isMicOn,setIsMicOn]=useState<boolean>(true);
     const [room, setRoom] = useState<string>('test_room'); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
     const [socket, setSocket] = useState<Socket | null>(null);
-    const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
+    // const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
+    const peerConnection = useRef<RTCPeerConnection | null>(null);
     const [isScreenSharing,setIsScreenSharing]=useState<boolean>(false);
+    
     useEffect(() => {
         const nextSocket = io('http://localhost:8080');
-        try{
-            setSocket(nextSocket);
-        }catch(error){
-                console.log("setSocket Error!",error)
-        }
-        try {
-            setRoom("test_room"); //TODO: 추후 사용자 room id로 변경
-
-        } catch (error) {
-            console.log("setRoom Error!",error)
-        }
+        setSocket(nextSocket);
+        setRoom("test_room"); //TODO: 추후 사용자 room id로 변경
 
         const pc = new RTCPeerConnection({
             iceServers: [
@@ -40,32 +32,36 @@ const VideoChattingPage = () => {
                 { urls: 'stun:stun2.l.google.com:19302' },
                 { urls: 'stun:stun3.l.google.com:19302' },
                 {
-                  //env파일 VITE로 시작, ignore등록하기 import.meta.env.으로 접근
                   urls: import.meta.env.VITE_COTURN_SERVER_IP,
                   username: import.meta.env.VITE_COTURN_ID,
                   credential: import.meta.env.VITE_COTURN_PW
                 },
             ],
         });
+
         pc.onicecandidate = (event) => { //on_ice_candidate
             if (!event.candidate) return;
+            console.log("# onicecandidate")
             nextSocket.emit('candidate', { candidate: event.candidate, room });
         };
         pc.ontrack = (event) => {
             if (!remoteVideoRef.current || !event.streams[0]) return;
+            console.log("# ontrack");
             remoteVideoRef.current.srcObject = event.streams[0];
         };
 
         try {
-            setPeerConnection(pc);
-            
+            // setPeerConnection(pc);
+            peerConnection.current = pc; //기존 useState값을 useRef로 변경하여 즉시 참조할 수 있게 변경
+            console.log("# PeerConnection")
         } catch (error) {
             console.log("setPeerConnection Error!",error);
         }
         
         nextSocket.on('offer', async (msg) => {
-            console.log("offer받음");
             if (msg.sender === socket?.id) return;
+            console.log("offer받음");
+
             await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
 
             const answer = await pc.createAnswer();
@@ -88,10 +84,13 @@ const VideoChattingPage = () => {
             if (candidate && candidate.sdpMid !== null && candidate.sdpMLineIndex !== null) {
                 try {
                     const iceCandidate = new RTCIceCandidate(candidate);
-                    peerConnection?.addIceCandidate(iceCandidate)
+                    if(peerConnection.current && iceCandidate){
+                        peerConnection.current.addIceCandidate(iceCandidate)
                         .catch((error) => {
                             console.error("Error adding received ICE candidate", error);
                         });
+                    }
+                    
                 } catch (error) {
                     console.error("Error constructing RTCIceCandidate", error);
                 }
@@ -109,13 +108,20 @@ const VideoChattingPage = () => {
             if(remoteVideoRef.current){
               remoteVideoRef.current.srcObject=webcamStream;
             }
-            const videoSender = peerConnection?.getSenders().find(sender=>sender.track?.kind ==='video');
-            if(videoSender) videoSender.replaceTrack(webcamStream.getVideoTracks()[0])
+            if(peerConnection.current){
+                const videoSender = peerConnection.current.getSenders().find(sender=>sender.track?.kind ==='video');
+                if(videoSender) videoSender.replaceTrack(webcamStream.getVideoTracks()[0])
+            }
           }
         });
-
-        nextSocket.on('allReady',()=>{
-            console.log("⭐모두 준비 완료")
+        //TODO:
+        //TODO: setVideo와 joinRoom에서 peerConnetion상태 확인하기 !!!
+        nextSocket.on('allReady',async()=>{
+            console.log("⭐모두 준비 완료");
+            console.log("allReady, call호출 전 peerConnectino 상태:",peerConnection);
+            const al=confirm("확인");
+            if(al) call()
+            
         })
 
         nextSocket.on('callEnded',()=>{
@@ -158,35 +164,51 @@ const VideoChattingPage = () => {
 
     const setVideo = async () => {
         console.log("setVideo, 비디오 세팅");
-        // if (!localVideoRef.current || !peerConnection) return;
+        if (!localVideoRef.current || !peerConnection) return;
+        
         const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true  });
+
         if(localVideoRef.current){
             localVideoRef.current.srcObject = stream;
         }
         if(peerConnection){
-            stream.getTracks().forEach((track) => peerConnection.addTrack(track, stream));
+            console.log("peerConnection.addTrack");
+            stream.getTracks().forEach((track) => {
+                if(peerConnection.current){
+                    peerConnection.current.addTrack(track, stream)}});
         }
+        console.log("setVideo에서 peerConnection상태",peerConnection);
+
         //stream: MediaStream의 객체로 비디오 및 오디오 트랙의 모음을 나타냄
         //getTracks: MediaStream객체의 메서드, 스트림에 포함된 모든 MediaStreamTrack객체를 배열형태로 변환함
         //MediaStremaTrack: 비디오나 오디오 같은 미디어 데이터의 단일 트랙을 나타냄
         setIsVideoOn(true);
     };
-
+    // const setPeerConnection =()=>{
+    //     console.log("peerConnection이 초기화되었습니다:", peerConnection);
+    // }
     const joinRoom = () => {
-        console.log("joinRoom 방 입성")
+        console.log("joinRoom 방 입성");
+        console.log("joinRoom에서 peerConnection상태",peerConnection);
         if (!socket || !room) return;
         socket.emit('join', { room });
     };
 
     const call = async () => {
         if (!peerConnection){ 
-            console.log("call 실패")
-            return; }
+            console.log("call 실패",peerConnection);
+            return; 
+        }
+        console.log('🔥peerConnection상태',peerConnection);
+
         console.log("call");
-        console.log("offer보냄")
-        const offer = await peerConnection?.createOffer(); //offer생성
-        await peerConnection?.setLocalDescription(offer);//SDP세팅
-        socket?.emit('offer', { sdp: offer, room });//offer전송
+        console.log("offer보냄");
+        if(peerConnection.current) {
+            const offer = await peerConnection.current.createOffer();
+            await peerConnection.current.setLocalDescription(offer);//SDP세팅
+            socket?.emit('offer', { sdp: offer, room });
+        } //offer생성
+        //offer전송
     };
 
     //FIXME: 화면공유 시작 클릭했지만 실패했을 경우에 대한 케이스 처리
@@ -205,13 +227,17 @@ const VideoChattingPage = () => {
             }
             //소켓을 활용해 화면공유 여부를 서버로 전송함 
             socket?.emit('screenSharing',{room,isScreenSharing:true});
-            
-            const videoSender = peerConnection.getSenders().find(sender => sender.track?.kind === 'video');
-            if (videoSender) {
-                videoSender.replaceTrack(screenStream.getVideoTracks()[0]);
-            } else {
-                screenStream.getTracks().forEach((track) => peerConnection.addTrack(track, screenStream));
+            if(peerConnection.current){
+                const videoSender = peerConnection.current.getSenders().find(sender => sender.track?.kind === 'video');
+                if (videoSender) {
+                    videoSender.replaceTrack(screenStream.getVideoTracks()[0]);
+                } else {
+                    screenStream.getTracks().forEach((track) => {
+                        if(peerConnection.current)
+                        peerConnection.current.addTrack(track, screenStream)});
+                }
             }
+            
             console.log(isScreenSharing);
             console.log ("화면 공유 시작");
 
@@ -223,11 +249,13 @@ const VideoChattingPage = () => {
                 if (localVideoRef.current) {
                     localVideoRef.current.srcObject = stream;
                 }
-
-                const webcamSender = peerConnection.getSenders().find(sender => sender.track?.kind === 'video');
-                if (webcamSender) {
-                    webcamSender.replaceTrack(stream.getVideoTracks()[0]);
+                if(peerConnection.current){
+                    const webcamSender = peerConnection.current.getSenders().find(sender => sender.track?.kind === 'video');
+                    if (webcamSender) {
+                        webcamSender.replaceTrack(stream.getVideoTracks()[0]);
+                    }
                 }
+                
                 //화면공유 종료 상태를 서버에 알림
                 socket?.emit('screenSharing',{room,isScreenSharing:false});
                 setIsScreenSharing(false);
@@ -244,7 +272,9 @@ const VideoChattingPage = () => {
              localVideoRef.current.srcObject = stream;
          }
          if(peerConnection){
-             stream.getTracks().forEach((track) => peerConnection.addTrack(track, stream));
+             stream.getTracks().forEach((track) => {
+                if(peerConnection.current)
+                    peerConnection.current.addTrack(track, stream)});
          }
          //stream: MediaStream의 객체로 비디오 및 오디오 트랙의 모음을 나타냄
          //getTracks: MediaStream객체의 메서드, 스트림에 포함된 모든 MediaStreamTrack객체를 배열형태로 변환함
@@ -253,38 +283,38 @@ const VideoChattingPage = () => {
         //  setIsMicOn(true);
     }
     const stopScreenSharing = async () => {
-      if (!peerConnection) return;
-  
-      const videoSender = peerConnection.getSenders().find(sender => sender.track?.kind === 'video');
-      if (videoSender) {
-        // 현재 화면 공유 트랙을 종료하고, 웹캠 트랙으로 교체합니다.
-        videoSender.replaceTrack(null);
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        if (localVideoRef.current) {
-          localVideoRef.current.srcObject = stream;
+        if (!peerConnection) return;
+        if(peerConnection.current){
+            const videoSender = peerConnection.current.getSenders().find(sender => sender.track?.kind === 'video');
+            if (videoSender) {
+            // 현재 화면 공유 트랙을 종료하고, 웹캠 트랙으로 교체합니다.
+            videoSender.replaceTrack(null);
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+            if (localVideoRef.current) {
+                localVideoRef.current.srcObject = stream;
+            }
+            if (peerConnection) {
+                const webcamSender = peerConnection.current.getSenders().find(sender => sender.track?.kind === 'video');
+                if (webcamSender) {
+                webcamSender.replaceTrack(stream.getVideoTracks()[0]);
+                }
+            }
+            // 화면 공유 종료 상태를 서버에 알림
+            socket?.emit('screenSharing', { room, isScreenSharing: false });
+            setIsScreenSharing(false);
+            }
         }
-        if (peerConnection) {
-          const webcamSender = peerConnection.getSenders().find(sender => sender.track?.kind === 'video');
-          if (webcamSender) {
-            webcamSender.replaceTrack(stream.getVideoTracks()[0]);
-          }
-        }
-  
-        // 화면 공유 종료 상태를 서버에 알림
-        socket?.emit('screenSharing', { room, isScreenSharing: false });
-        setIsScreenSharing(false);
-      }
     };
 
     const endCall = ()=>{
-      if(peerConnection){
-        peerConnection.getSenders().forEach(sender=>{
-          if(sender.track){
-            sender.track.stop(); //트랙 종료
-          }
-        });
-        peerConnection.close();//peer연결 종료
-        setPeerConnection(null);
+      if(peerConnection.current){
+            peerConnection.current.getSenders().forEach(sender=>{
+            if(sender.track){
+                sender.track.stop(); //트랙 종료
+            }
+            });
+            peerConnection.current.close();//peer연결 종료
+            peerConnection.current=null;
       }
       if(socket){
         socket.emit('callEnded',{room});
@@ -353,7 +383,7 @@ const VideoChattingPage = () => {
                     }
                     <div className="NavMenu" onClick={()=>{
                         endCall();
-                        navigate("/")}}>
+                        navigate("/");}}>
                         <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M320 32c0-9.9-4.5-19.2-12.3-25.2S289.8-1.4 280.2 1l-179.9 45C79 51.3 64 70.5 64 92.5L64 448l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 192 0 32 0 0-32 0-448zM256 256c0 17.7-10.7 32-24 32s-24-14.3-24-32s10.7-32 24-32s24 14.3 24 32zm96-128l96 0 0 352c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-320c0-35.3-28.7-64-64-64l-96 0 0 64z"/></svg>
                         <div>종료하기</div>
                     </div>
