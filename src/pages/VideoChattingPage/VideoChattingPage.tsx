@@ -16,11 +16,16 @@ const VideoChattingPage = () => {
     // const [isMicOn,setIsMicOn]=useState<boolean>(true);
     const [room, setRoom] = useState<string>('test_room'); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
     const [socket, setSocket] = useState<Socket | null>(null);
-    // const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
     const peerConnection = useRef<RTCPeerConnection | null>(null);
-    const [isScreenSharing,setIsScreenSharing]=useState<boolean>(false);
-    
+    const [isLocalScreenSharing,setIsLocalScreenSharing]=useState<boolean>(false); //FIXME: 화면 공유 전역, 지역 상태 설정
+    const [isRemoteScreenSharing,setIsRemoteScreenSharing]=useState<boolean>(false); //FIXME: 화면 공유 전역, 지역 상태 설정
+
+    const [isReady,setIsReady]=useState<boolean>(false);
+    const [isCalling,setIsCalling]=useState<boolean>(false);
+
     useEffect(() => {
+        console.log("🔥🔥",isCalling);
+
         const nextSocket = io('http://localhost:8080');
         setSocket(nextSocket);
         setRoom("test_room"); //TODO: 추후 사용자 room id로 변경
@@ -38,10 +43,11 @@ const VideoChattingPage = () => {
                 },
             ],
         });
-
+        
         pc.onicecandidate = (event) => { //on_ice_candidate
             if (!event.candidate) return;
-            console.log("# onicecandidate")
+            console.log("# onicecandidate");
+            console.log("💧💧");
             nextSocket.emit('candidate', { candidate: event.candidate, room });
         };
         pc.ontrack = (event) => {
@@ -67,6 +73,7 @@ const VideoChattingPage = () => {
             const answer = await pc.createAnswer();
             await pc.setLocalDescription(answer);
             nextSocket.emit('answer', { sdp: pc.localDescription, room });
+
         });
 
         nextSocket.on('answer', (msg) => {
@@ -90,7 +97,8 @@ const VideoChattingPage = () => {
                             console.error("Error adding received ICE candidate", error);
                         });
                     }
-                    
+                    setIsCalling(true);
+                    console.log("🔥🔥")
                 } catch (error) {
                     console.error("Error constructing RTCIceCandidate", error);
                 }
@@ -101,7 +109,8 @@ const VideoChattingPage = () => {
 
         nextSocket.on('screenSharing',async (msg)=>{
           console.log("상대방 화면 공유 상태", msg.isScreenSharing);
-          setIsScreenSharing(msg.isScreenSharing);
+          setIsRemoteScreenSharing(msg.isScreenSharing); 
+          console.log(isLocalScreenSharing);
 
           if(!msg.isScreenSharing){
             const webcamStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
@@ -114,13 +123,12 @@ const VideoChattingPage = () => {
             }
           }
         });
-        //TODO:
-        //TODO: setVideo와 joinRoom에서 peerConnetion상태 확인하기 !!!
+
         nextSocket.on('allReady',async()=>{
             console.log("⭐모두 준비 완료");
             console.log("allReady, call호출 전 peerConnectino 상태:",peerConnection);
-            const al=confirm("확인");
-            if(al) call()
+            setIsReady(true);
+            //TODO: 토스트를 통해 사용자에게 통하하기 버튼 안내
             
         })
 
@@ -128,31 +136,9 @@ const VideoChattingPage = () => {
             console.log("callEnd")
             endCall();
         });
-        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     
-    // useEffect(()=>{
-    //     videoChatting();
-    // })
-
-    //TODO: setVideo + joinRoom + peerConnection => offer생성 => 연결
-    // const videoChatting=()=>{
-    //     try {
-    //         console.log("@@")
-    //         if(localVideoRef.current && peerConnection){ setVideo(); }
-    //         else{ return}
-    //         if (socket && room){ joinRoom(); }
-    //         else{ return}
-
-    //     } catch (error) {
-    //         console.log("@@@@",error)
-    //     }
-        
-    //     call();
-    // }
-
-
     // /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
      const startVideoChatting=()=>{
         setVideo();
@@ -184,9 +170,7 @@ const VideoChattingPage = () => {
         //MediaStremaTrack: 비디오나 오디오 같은 미디어 데이터의 단일 트랙을 나타냄
         setIsVideoOn(true);
     };
-    // const setPeerConnection =()=>{
-    //     console.log("peerConnection이 초기화되었습니다:", peerConnection);
-    // }
+
     const joinRoom = () => {
         console.log("joinRoom 방 입성");
         console.log("joinRoom에서 peerConnection상태",peerConnection);
@@ -209,6 +193,8 @@ const VideoChattingPage = () => {
             socket?.emit('offer', { sdp: offer, room });
         } //offer생성
         //offer전송
+        console.log("🌦️");
+        setIsCalling(true);
     };
 
     //FIXME: 화면공유 시작 클릭했지만 실패했을 경우에 대한 케이스 처리
@@ -216,7 +202,7 @@ const VideoChattingPage = () => {
         if (!peerConnection) return;
         try {
           //화면공유 시작
-            setIsScreenSharing(true);
+            setIsLocalScreenSharing(true);
             const screenStream = await navigator.mediaDevices.getDisplayMedia({
                 video: true,
                 audio: true,
@@ -238,13 +224,13 @@ const VideoChattingPage = () => {
                 }
             }
             
-            console.log(isScreenSharing);
+            console.log(isLocalScreenSharing);
             console.log ("화면 공유 시작");
 
             //화면공유 종료 시
             screenStream.getVideoTracks()[0].onended = async () => {
                 console.log('Screen sharing stopped');
-                setIsScreenSharing(false);
+                setIsLocalScreenSharing(false);
                 const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true  });
                 if (localVideoRef.current) {
                     localVideoRef.current.srcObject = stream;
@@ -258,7 +244,7 @@ const VideoChattingPage = () => {
                 
                 //화면공유 종료 상태를 서버에 알림
                 socket?.emit('screenSharing',{room,isScreenSharing:false});
-                setIsScreenSharing(false);
+                setIsLocalScreenSharing(false);
             };
         } catch (error) {
             console.error("화면 공유 오류:", error);
@@ -301,7 +287,7 @@ const VideoChattingPage = () => {
             }
             // 화면 공유 종료 상태를 서버에 알림
             socket?.emit('screenSharing', { room, isScreenSharing: false });
-            setIsScreenSharing(false);
+            setIsLocalScreenSharing(false);
             }
         }
     };
@@ -328,21 +314,20 @@ const VideoChattingPage = () => {
         remoteVideoRef.current.srcObject = null;  
       }
       setIsVideoOn(false);  // 비디오 연결 상태를 초기화합니다.
-      setIsScreenSharing(false);  // 화면 공유 상태를 초기화합니다.
+      setIsLocalScreenSharing(false);  // 화면 공유 상태를 초기화합니다.
+      setIsCalling(false);
     }
     return (
         <>
             <div className="VideoChattingWrapper">
                 <div className="VideoChattingWrapper-VideoWrapper">
-                    <video className={`VideoBox ${isScreenSharing?'sharing':''}`}
+                    <video className={`VideoBox ${isLocalScreenSharing?'Sharing':''}`}
                         ref={localVideoRef} 
-                        // isScreenSharing={isScreenSharing}/
                         autoPlay playsInline muted>
                         <svg className="VideoBox-expendIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"/></svg>
                     </video>
-                    <video className={`VideoBox ${isScreenSharing?'Sharing':''}`}
+                    <video className={`VideoBox ${isRemoteScreenSharing?'Sharing':''}`}
                         ref={remoteVideoRef} 
-                        // isScreenSharing={isScreenSharing}
                         autoPlay playsInline muted>
                         <svg className="VideoBox-expendIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"/></svg>
                         
@@ -350,7 +335,6 @@ const VideoChattingPage = () => {
                 </div>
 
                 <div className="VideoChattingWrapper-Navigater">
-
                     {<div className="NavMenu">
                         <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z"/></svg>
                         <div className="NavMenu-icon_text">음소거</div>
@@ -371,7 +355,7 @@ const VideoChattingPage = () => {
                         <div>참여자</div>
                     </div>
 
-                    {isScreenSharing?
+                    {isLocalScreenSharing?
                         <div className="NavMenu" onClick={stopScreenSharing}>
                             <svg className="NavMenu-icon"style={{fill:"#FF4444"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 32c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0zM160 160c-6.5 0-12.3 3.9-14.8 9.9s-1.1 12.9 3.5 17.4l40 40-71 71C114 302 112 306.9 112 312s2 10 5.7 13.7l36.7 36.7c3.6 3.6 8.5 5.7 13.7 5.7s10-2 13.7-5.7l71-71 40 40c4.6 4.6 11.5 5.9 17.4 3.5s9.9-8.3 9.9-14.8l0-144c0-8.8-7.2-16-16-16l-144 0z"/></svg>
                             <div>공유중지</div>
@@ -387,7 +371,17 @@ const VideoChattingPage = () => {
                         <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M320 32c0-9.9-4.5-19.2-12.3-25.2S289.8-1.4 280.2 1l-179.9 45C79 51.3 64 70.5 64 92.5L64 448l-32 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 192 0 32 0 0-32 0-448zM256 256c0 17.7-10.7 32-24 32s-24-14.3-24-32s10.7-32 24-32s24 14.3 24 32zm96-128l96 0 0 352c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-32 0 0-320c0-35.3-28.7-64-64-64l-96 0 0 64z"/></svg>
                         <div>종료하기</div>
                     </div>
-                    <div onClick={call}>start</div>
+                    {(isReady&& !isCalling) &&
+                    <div className="NavMenu" onClick={call}>
+                        <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>                        
+                        <div>통화하기</div>
+                    </div>}
+
+                    {isCalling&&
+                    <div className="NavMenu" onClick={endCall}>
+                        <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M228.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C76.1 30.2 64 46 64 64c0 107.4 37.8 206 100.8 283.1L9.2 469.1c-10.4 8.2-12.3 23.3-4.1 33.7s23.3 12.3 33.7 4.1l592-464c10.4-8.2 12.3-23.3 4.1-33.7s-23.3-12.3-33.7-4.1L253 278c-17.8-21.5-32.9-45.2-45-70.7L257.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96zm96.8 319l-91.3 72C310.7 476 407.1 512 512 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L368.7 368c-15-7.1-29.3-15.2-43-24.3z"/></svg>                    
+                        <div>통화종료</div>
+                    </div>}
                 </div>
             </div>
         </>

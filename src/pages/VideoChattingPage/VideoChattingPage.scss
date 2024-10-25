@@ -17,6 +17,9 @@
             border: 0.1px solid rgb(105, 105, 105);
             border-radius: 8px;
             margin: 0 30px;
+            transform: rotate(180deg);
+            -webkit-transform:rotateY(180deg);
+            -moz-transform:rotateY(180deg);
             &-expendIcon{
                 position: relative;
                 top: 1vh;
@@ -24,11 +27,13 @@
                 fill: white;
                 height: 20px;
             }
-            .Sharing{
-                transform: rotate(180deg);
-                -webkit-transform:rotateY(180deg);
-                -moz-transform:rotateY(180deg);
-            }
+            
+            
+        }
+        .Sharing{
+            transform: none;
+            -webkit-transform:none;
+            -moz-transform:none;
         }
     }
     &-Navigater{
