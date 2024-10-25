@@ -3,7 +3,16 @@ import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import "./VideoChattingPage.scss"
 
-
+/**TODO:
+ * 1. 최초 렌더링 시 비디오 활성화 물어보는 방식으로 변경 (기존: 비디오 아이콘 선택)
+ * 2. 마이크 비디오 on off
+ * 3. 프로필 사진 video화면에 표시
+ * 4. 참여자 목록
+ * 5. 추후 채팅방->화상채팅방 이동시 url에 room id값 받아서 room name세팅
+ * 
+ * FIXME:
+ * 1. 화면공유 시작 클릭했지만 실패했을 경우에 대한 케이스 처리
+ */
 const VideoChattingPage = () => {
     const navigate = useNavigate();
 
@@ -17,8 +26,8 @@ const VideoChattingPage = () => {
     const [room, setRoom] = useState<string>('test_room'); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
     const [socket, setSocket] = useState<Socket | null>(null);
     const peerConnection = useRef<RTCPeerConnection | null>(null);
-    const [isLocalScreenSharing,setIsLocalScreenSharing]=useState<boolean>(false); //FIXME: 화면 공유 전역, 지역 상태 설정
-    const [isRemoteScreenSharing,setIsRemoteScreenSharing]=useState<boolean>(false); //FIXME: 화면 공유 전역, 지역 상태 설정
+    const [isLocalScreenSharing,setIsLocalScreenSharing]=useState<boolean>(false); 
+    const [isRemoteScreenSharing,setIsRemoteScreenSharing]=useState<boolean>(false); 
 
     const [isReady,setIsReady]=useState<boolean>(false);
     const [isCalling,setIsCalling]=useState<boolean>(false);
@@ -145,8 +154,6 @@ const VideoChattingPage = () => {
         joinRoom();
         socket?.emit('ready');
      }
-
-
 
     const setVideo = async () => {
         console.log("setVideo, 비디오 세팅");
