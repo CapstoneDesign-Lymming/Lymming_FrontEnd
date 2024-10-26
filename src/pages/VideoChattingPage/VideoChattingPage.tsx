@@ -4,6 +4,7 @@ import { io, Socket } from "socket.io-client";
 import "./VideoChattingPage.scss"
 import ComfirmVideoModal from "../../components/Modal/VideoChattingModal/ComfirmVideoModal";
 import useModalStore from "../../store/useModalState";
+import useConfirmVideoStore from "../../store/useComfirmVideoStore";
 
 /**TODO:
  * 1. 최초 렌더링 시 비디오 활성화 물어보는 방식으로 변경 (기존: 비디오 아이콘 선택)
@@ -35,7 +36,7 @@ const VideoChattingPage = () => {
     const [isCalling,setIsCalling]=useState<boolean>(false);
 
     const {isModalOpen,openModal}=useModalStore();
-
+    const {isConfirmVideo}=useConfirmVideoStore();
     useEffect(() => {
         console.log("🔥🔥",isCalling);
 
@@ -151,9 +152,16 @@ const VideoChattingPage = () => {
         });
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    
+    useEffect(()=>{
+        console.log("isConfirmVideo",isConfirmVideo);
+        if(!isConfirmVideo) openModal();
+        if(isConfirmVideo) startVideoChatting();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[isConfirmVideo]);
+  
     // /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
      const startVideoChatting=()=>{
+        console.log("startVideoChatting");
         setVideo();
         joinRoom();
         socket?.emit('ready');
