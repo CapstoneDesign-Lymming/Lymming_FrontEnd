@@ -2,6 +2,8 @@ import {  useNavigate } from "react-router-dom"
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import "./VideoChattingPage.scss"
+import ComfirmVideoModal from "../../components/Modal/VideoChattingModal/ComfirmVideoModal";
+import useModalStore from "../../store/useModalState";
 
 /**TODO:
  * 1. 최초 렌더링 시 비디오 활성화 물어보는 방식으로 변경 (기존: 비디오 아이콘 선택)
@@ -31,6 +33,8 @@ const VideoChattingPage = () => {
 
     const [isReady,setIsReady]=useState<boolean>(false);
     const [isCalling,setIsCalling]=useState<boolean>(false);
+
+    const {isModalOpen,openModal}=useModalStore();
 
     useEffect(() => {
         console.log("🔥🔥",isCalling);
@@ -390,6 +394,8 @@ const VideoChattingPage = () => {
                         <div>통화종료</div>
                     </div>}
                 </div>
+                <button onClick={openModal}>0/x</button>
+                {isModalOpen&&<ComfirmVideoModal/>}
             </div>
         </>
     )
