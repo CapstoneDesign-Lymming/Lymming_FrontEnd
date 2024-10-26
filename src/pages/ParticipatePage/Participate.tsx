@@ -9,6 +9,8 @@ const Participate = () => {
   const navigate = useNavigate();
   const [userModalOpen, setUserModalOpen] = useState(false);
 
+  //서버에서 리스트 받아오는 걸로 수정해야함
+
   return (
     <div className="Participate">
       <Header />
@@ -39,7 +41,9 @@ const Participate = () => {
             <div className="content-item" key={index}>
               <div
                 className="content-item-top"
-                onClick={() => navigate(`/participate/detail/${index}`)}
+                onClick={() =>
+                  navigate(`/participate/detail/${index}`, { state: it })
+                }
               >
                 <div className="content-item-top-label">
                   <div className="content-item-top-label-left">{it.type}</div>
@@ -54,6 +58,11 @@ const Participate = () => {
                 </div>
                 <div className="content-item-top-feature">
                   {it.position.map((it, index) => {
+                    return <span key={index}>{it}</span>;
+                  })}
+                </div>
+                <div className="content-item-top-style">
+                  {it.style.map((it, index) => {
                     return <span key={index}>{it}</span>;
                   })}
                 </div>
