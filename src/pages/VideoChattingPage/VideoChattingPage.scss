@@ -1,0 +1,68 @@
+.VideoChattingWrapper{
+    width: 100%;
+    height: 100%;
+    background-color: #0E0E0E;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &-VideoWrapper{
+        display: flex;
+        .VideoBox{
+            width: 45vw;
+            height: 78vh;
+            
+            background-color: #000000;
+            border: 0.1px solid rgb(105, 105, 105);
+            border-radius: 8px;
+            margin: 0 30px;
+            transform: rotate(180deg);
+            -webkit-transform:rotateY(180deg);
+            -moz-transform:rotateY(180deg);
+            &-expendIcon{
+                position: relative;
+                top: 1vh;
+                left: 95%;
+                fill: white;
+                height: 20px;
+            }
+            
+            
+        }
+        .Sharing{
+            transform: none;
+            -webkit-transform:none;
+            -moz-transform:none;
+        }
+    }
+    &-Navigater{
+        display: flex;
+        justify-content:space-around;
+        align-items:center;
+        
+        position: fixed;
+        bottom: 10px;
+
+        width: 40vw;
+        height: 50px;
+
+        // border-radius: 8px;
+        // border: 0.1px solid rgb(105, 105, 105);
+        
+        .NavMenu{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            font-weight: 700;
+            font-size: 14.3px;
+            &-icon{
+                width: 100%;
+                height: 70%;
+                fill:white;
+            }
+            
+           
+        }
+    }
+}
