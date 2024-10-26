@@ -1,0 +1,92 @@
+{
+  "skills": [
+    {
+      "name": "C",
+      "url": "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+    },
+    {
+      "name": "C++",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwvEKwo91nazgUYyvBL7q0Vz_5c5Mo1d1mBg&s"
+    },
+    {
+      "name": "Java",
+      "url": "https://i.namu.wiki/i/MuCO_ocla-FyadGnRZytkRLggQOcqxv_hXNjN7aYXDOPivIChJNdiRXp6vwSXbM6GcUL3pVTL-5U5TKQ0f1YhA.svg"
+    },
+    {
+      "name": "JavaScript",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png"
+    },
+    {
+      "name": "Python",
+      "url": "https://images.velog.io/images/pm1100tm/post/d7133a58-e16e-4766-825e-a8ebd11d8345/python.jpg"
+    },
+    {
+      "name": "Spring",
+      "url": "https://static-00.iconduck.com/assets.00/spring-icon-2048x2045-yufnoc34.png"
+    },
+    {
+      "name": "Go",
+      "url": "https://blog.kakaocdn.net/dn/edggFw/btshaqCLX6n/UfMqbTR66IgW6HjsiQyjOK/img.png"
+    },
+    {
+      "name": "Rust",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTcazYyZ8EqjUEJgLwqVvaZE5wYmV0hFZWZw&s"
+    },
+    {
+      "name": "Kotlin",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNMqcPYrGB2mMauyg3pK8NMBVtzgQotqJe5w&s"
+    },
+    {
+      "name": "Swift",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxPoi0fALopQqvBEMq6A4-EETjJ_WjVhycJg&s"
+    },
+    {
+      "name": "PHP",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/640px-PHP-logo.svg.png"
+    },
+    {
+      "name": "TypeScript",
+      "url": "https://i.namu.wiki/i/EY559r31H-um8uTtptPIbCZoBGxsumSlwEH0T_rA6WmxQq1UwqyAf3cJQJXN7Fv5CoEz0kv5CBXzjkkPU_XWig.svg"
+    },
+    {
+      "name": "SQL",
+      "url": "https://velog.velcdn.com/images/jjs9674/post/0cf2af91-25c9-49e2-a9e7-6796eef8e22d/image.png"
+    },
+    {
+      "name": "HTML",
+      "url": "https://cdn-icons-png.flaticon.com/256/174/174854.png"
+    },
+    {
+      "name": "CSS",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQckBwdkFhUDEqfrZNq05JfWGtrj69tDEOsgQ&s"
+    },
+    {
+      "name": "R",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/1200px-R_logo.svg.png"
+    },
+    {
+      "name": "Nest.js",
+      "url": "https://i.namu.wiki/i/X7RPRZJiL_bDk-b5yfaeCqEaINp3iwm7ngVhzN9LDg4hNjz0Bs3QTo7pgbCfGW3xp_sQZxMGUfnxBAXGNFwGKw.svg"
+    },
+    {
+      "name": "Next.js",
+      "url": "https://static-00.iconduck.com/assets.00/nextjs-icon-512x512-y563b8iq.png"
+    },
+    {
+      "name": "Figma",
+      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoUX5LMRa7atIsNfl0nP3DaUaV4URhV0PHfA&s"
+    },
+    {
+      "name": "DJango",
+      "url": "https://seeklogo.com/images/D/django-logo-4C5ECF7036-seeklogo.com.png"
+    },
+    {
+      "name": "Dart",
+      "url": "https://blog.kakaocdn.net/dn/Qdz3l/btrCYiPIVo2/WmVJYR3jcibFlT1OkeJ2j1/img.png"
+    },
+    {
+      "name": "Tensorflow",
+      "url": "https://images.velog.io/images/prayme/post/77832200-a794-47ad-90ef-396626ede203/5d9a94f375e579406076.png"
+    }
+  ]
+}
