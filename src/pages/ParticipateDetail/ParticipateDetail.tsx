@@ -1,15 +1,27 @@
+import { useState } from "react";
 import Header from "../../components/header/Header";
 import "./ParticipateDetail.scss";
+import Usermodal from "../../components/Modal/UserModal/UserModal";
 
 const ParticipateDetail = () => {
+  const [userModalOpen, setUserModalOpen] = useState(false);
   return (
     <div className="ParticipateDetail">
       <Header />
 
+      {userModalOpen && (
+        <>
+          <div className="backdrop" onClick={() => setUserModalOpen(false)} />
+          <Usermodal close={setUserModalOpen} />
+        </>
+      )}
+
       <div className="content">
         <div className="content-name">
           <img />
-          <span className="bold_name">박준서</span>
+          <span className="bold_name" onClick={() => setUserModalOpen(true)}>
+            박준서
+          </span>
           <span>2024.09.11</span>
         </div>
         <div className="content-title">
@@ -46,7 +58,7 @@ const ParticipateDetail = () => {
           본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다.
         </div>
       </div>
-      <button>채팅하기</button>
+      <button className="bottom_btn">채팅하기</button>
     </div>
   );
 };

@@ -2,12 +2,12 @@ import Header from "../../components/header/Header";
 import "./Participate.scss";
 import dummy from "../../data/participateDummyData.json";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 
 const Participate = () => {
   const navigate = useNavigate();
-  const [userModalOpen, setUserModalOpen] = useState(true);
+  const [userModalOpen, setUserModalOpen] = useState(false);
 
   return (
     <div className="Participate">
@@ -15,8 +15,8 @@ const Participate = () => {
 
       {userModalOpen && (
         <>
-          <div className="backdrop" />
-          <Usermodal />
+          <div className="backdrop" onClick={() => setUserModalOpen(false)} />
+          <Usermodal close={setUserModalOpen} />
         </>
       )}
 
@@ -42,20 +42,20 @@ const Participate = () => {
                 onClick={() => navigate(`/participate/detail/${index}`)}
               >
                 <div className="content-item-top-label">
-                  <div className="content-item-top-label-left">프로젝트</div>
+                  <div className="content-item-top-label-left">{it.type}</div>
                   <div className="content-item-top-label-right">
                     <img />
                     <span>D-20</span>
                   </div>
                 </div>
-                <div className="content-item-top-title">
-                  프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.
-                </div>
+                <div className="content-item-top-title">{it.title}</div>
                 <div className="content-item-top-info">
-                  <span>마감</span> <span>|</span> <span>2024.11.07</span>
+                  <span>마감</span> <span>|</span> <span>{it.end}</span>
                 </div>
                 <div className="content-item-top-feature">
-                  <span>프론트</span> <span>백엔드</span> <span>디자이너</span>
+                  {it.position.map((it, index) => {
+                    return <span key={index}>{it}</span>;
+                  })}
                 </div>
                 <div className="content-item-top-skills">
                   <img />
@@ -70,7 +70,7 @@ const Participate = () => {
               >
                 <div className="content-item-bottom-left">
                   <img />
-                  <span>프론트짱</span>
+                  <span>{it.name}</span>
                 </div>
                 <div className="content-item-bottom-right">
                   <div className="content-item-bottom-right-watch">

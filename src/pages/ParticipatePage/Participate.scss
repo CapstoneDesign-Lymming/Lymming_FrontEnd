@@ -42,12 +42,12 @@
   }
 
   .content {
-    height: auto;
+    height: 100%;
     padding: 0 3% 5% 3%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    box-sizing: border-box;
+
     row-gap: 5%;
 
     &-item {
@@ -121,7 +121,9 @@
         }
 
         &-feature {
-          margin-top: 15%;
+          padding-top: 15%;
+          display: flex;
+          gap: 2%;
 
           span {
             background-color: #e9ecef;
@@ -151,7 +153,8 @@
       &-bottom {
         display: flex;
         justify-content: space-between;
-        flex-grow: 1;
+        height: 5%;
+
         &-left {
           font-weight: bolder;
           width: 40%;

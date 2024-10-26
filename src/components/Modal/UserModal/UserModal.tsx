@@ -1,10 +1,15 @@
+import React, { FC } from "react";
 import "./UserModal.scss";
 
-const Usermodal = () => {
+interface UsermodalProps {
+  close: (value: boolean) => void;
+}
+
+const Usermodal: React.FC<UsermodalProps> = ({ close }) => {
   return (
     <div className="Usermodal">
       <div className="back">
-        <button>뒤로</button>
+        <button onClick={() => close(false)}>뒤로</button>
       </div>
       <div className="top">
         <img />
