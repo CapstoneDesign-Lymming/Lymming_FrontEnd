@@ -15,6 +15,64 @@
     z-index: 1; /* 모달보다 위에 위치하도록 설정 */
   }
 
+  .skillSelector {
+    position: absolute;
+    z-index: 1;
+    width: 40%;
+    height: 30%;
+    background-color: #dee2e6;
+    border-radius: 10px;
+    top: 25%;
+    left: 3%;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+
+    button {
+      width: 10%;
+      position: relative;
+      left: 90%;
+      top: -5%;
+
+      background: #adb5bd;
+      border: none;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-grow: 1;
+      flex-wrap: wrap;
+
+      align-items: center;
+      justify-content: flex-start;
+      gap: 7%;
+
+      .wrapper {
+        display: flex;
+        width: 10%;
+        height: 12%;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+        img {
+          width: 20%;
+          height: 50%;
+          /* 비율을 유지하기 위해 높이는 자동으로 설정 */
+        }
+        label {
+          font-size: 1vw;
+          flex-grow: 1;
+        }
+        input {
+          display: none;
+        }
+        input:checked + label {
+          color: #007bff;
+        }
+      }
+    }
+  }
+
   .menu {
     box-sizing: border-box;
     padding: 3%;
@@ -24,12 +82,22 @@
       display: flex;
       justify-content: space-between;
       font-weight: bolder;
+
+      .active {
+        color: #007bff; /* 원하는 스타일 추가 */
+      }
     }
 
     &-filter {
       display: flex;
       gap: 5%;
       margin-top: 5%;
+      select {
+        padding: 7%;
+        height: 100%;
+        border-radius: 10px;
+        box-sizing: border-box;
+      }
       span {
         width: 20%;
         font-size: 1vw;
@@ -43,16 +111,17 @@
 
   .content {
     height: 100%;
-    padding: 0 3% 5% 3%;
+    padding: 0 3% 3% 3%;
     display: flex;
     flex-wrap: wrap;
-    gap: 3%;
+    justify-content: flex-start;
+    gap: 5%;
     row-gap: 5%;
 
     &-item {
       box-sizing: border-box;
       width: 30%;
-      height: 60%;
+      height: 60vh;
       border: 1px solid #dee2e6;
       padding: 1%;
       border-radius: 10px;
