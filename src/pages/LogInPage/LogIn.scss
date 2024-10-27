@@ -20,6 +20,17 @@
     z-index: 1; /* 모달보다 위에 위치하도록 설정 */
   }
 
+  .back_wrapper {
+    button {
+      border: none;
+      background-color: #ebebeb;
+
+      img {
+        width: 30px;
+      }
+    }
+  }
+
   .content {
     display: flex;
     padding: 5%;
@@ -36,6 +47,12 @@
       &-title {
         font-size: 1.2vw;
         font-weight: bolder;
+        display: flex;
+        gap: 5%;
+
+        img {
+          width: 30px;
+        }
       }
 
       h2 {

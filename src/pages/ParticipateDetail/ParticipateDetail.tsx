@@ -60,8 +60,9 @@ const ParticipateDetail = () => {
           </div>
           <div className="content-info-bottom">
             <span className="bold_span">원하는 기술 스택</span>
-            <span>프론트</span>
-            <span>디자이너</span>
+            {data.skillicon.map((it: any, index: any) => {
+              return <img key={index} src={it} />;
+            })}
           </div>
         </div>
         <hr />

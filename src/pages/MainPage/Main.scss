@@ -1,6 +1,6 @@
 .Main {
   height: 100%;
-
+  word-break: keep-all;
   .image_wrapper {
     height: 100%;
     width: 100%;
@@ -22,12 +22,13 @@
         flex-direction: column;
         text-align: center;
         font-size: 2vw;
+        gap: 5%;
 
         &-head {
           color: #1059c1;
         }
         &-body {
-          font-weight: bolder;
+          word-break: keep-all;
         }
       }
 
@@ -225,8 +226,12 @@
     padding: 5%;
 
     &-title {
+      display: flex;
       span {
         font-size: 1.5vw;
+      }
+      img {
+        width: 3%;
       }
     }
 

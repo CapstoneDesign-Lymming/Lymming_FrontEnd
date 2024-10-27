@@ -3,6 +3,9 @@ import "./Main.scss";
 import mainData from "../../data/maindata.json";
 import React, { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import leftbtn from "../../assets/img/leftrrow.png";
+import rightbtn from "../../assets/img/rigntarrow.png";
+import logo from "../../assets/img/lymming_logo.png";
 
 const Main = () => {
   const [isBack, setIsBack] = useState(false);
@@ -107,11 +110,11 @@ const Main = () => {
 
         <div className="btn-wrapper">
           <button className="arrow" onClick={handlePrev}>
-            왼쪽
+            <img src={leftbtn} />
           </button>
 
           <button className="arrow" onClick={handleNext}>
-            오른쪽
+            <img src={rightbtn} />
           </button>
         </div>
 
@@ -140,7 +143,7 @@ const Main = () => {
 
       <footer className="footer">
         <div className="footer-title">
-          <img />
+          <img src={logo} />
           <span>lymming</span>
         </div>
         <div className="footer-profile">
@@ -150,13 +153,13 @@ const Main = () => {
             <span>깃허브</span>
           </div>
           <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">박준서</span>
-            <span className="footer-profile-box-span2">빅데이터 20205175</span>
+            <span className="footer-profile-box-span1">노기훈</span>
+            <span className="footer-profile-box-span2">빅데이터 20205160</span>
             <span>깃허브</span>
           </div>
           <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">박준서</span>
-            <span className="footer-profile-box-span2">빅데이터 20205175</span>
+            <span className="footer-profile-box-span1">지우림</span>
+            <span className="footer-profile-box-span2">빅데이터 20202849</span>
             <span>깃허브</span>
           </div>
         </div>

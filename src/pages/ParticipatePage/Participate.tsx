@@ -2,9 +2,13 @@ import Header from "../../components/header/Header";
 import "./Participate.scss";
 import dummy from "../../data/participateDummyData.json";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
+import newImg from "../../assets/img/new.png";
+import watch from "../../assets/img/watch.png";
+import chat from "../../assets/img/chat.png";
+import heart from "../../assets/img/heart.png";
 
 interface ParticipateItem {
   type: string;
@@ -13,17 +17,22 @@ interface ParticipateItem {
   position: string[];
   style: string[];
   name: string;
+  skill: string[];
+  skillicon: string[];
 }
 
 const Participate = () => {
   const navigate = useNavigate();
+  const inside = useRef<HTMLDivElement>(null);
   const [userModalOpen, setUserModalOpen] = useState(false);
-
   const [selectTab, setSelectTab] = useState("전체");
   const [data, setData] = useState<ParticipateItem[]>([]);
-
   const [visible, setVisible] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+  const [selectSecondTab, setSelectSecondTab] = useState({
+    position: "",
+    method: "",
+  });
 
   const onSkillClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -36,17 +45,63 @@ const Participate = () => {
       setSelectedSkills((prev) => prev.filter((skill) => skill !== value));
     }
   };
+
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const target = e.target;
+    const selectedValue = target.value;
+
+    setSelectSecondTab((prev) => ({
+      ...prev, // 이전 상태를 복사
+      [target.name]: selectedValue, // 선택된 키의 값을 업데이트
+    }));
+  };
+
   useEffect(() => {
-    const filteredData =
+    let filteredData =
       selectTab === "전체"
         ? dummy.dummy
         : dummy.dummy.filter((it) => it.type === selectTab);
 
-    // 선택된 기술 스택으로 추가 필터링 로직추가
+    if (selectedSkills.length > 0) {
+      filteredData = filteredData.filter((it) => {
+        return it.skill.some((skill) => selectedSkills.includes(skill));
+      });
+    }
+
+    console.log(selectSecondTab);
+
+    // 포지션 필터링
+    if (selectSecondTab.position) {
+      filteredData = filteredData.filter((it) => {
+        return it.position.includes(selectSecondTab.position);
+      });
+    }
+
+    // 진행 방식 필터링
+    if (selectSecondTab.method) {
+      filteredData = filteredData.filter((it) => {
+        return it.method.includes(selectSecondTab.method);
+      });
+    }
 
     setData(filteredData);
-  }, [selectTab]);
+  }, [selectTab, selectedSkills, selectSecondTab]);
 
+  const handleClickOutside = (e: MouseEvent) => {
+    console.log("click");
+    if (inside.current && !inside.current.contains(e.target as Node)) {
+      setVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    if (visible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [visible]);
   //서버에서 리스트 받아오는 걸로 수정해야함
 
   return (
@@ -60,23 +115,27 @@ const Participate = () => {
         </>
       )}
       {visible && (
-        <div className="skillSelector">
+        <div className="skillSelector" ref={inside}>
           <button onClick={() => setVisible(false)}>닫기</button>
 
           <div className="skill-item">
-            {skill_data.skills.map((item) => (
-              <div key={item.name} className="wrapper">
-                <img src={item.url} />
+            {skill_data.skills.map((item, index) => (
+              <React.Fragment key={index}>
                 <input
                   type="checkbox"
                   id={item.name}
                   value={item.name}
                   onChange={onSkillClick}
+                  checked={selectedSkills.includes(item.name)}
                 />
-                <label htmlFor={item.name} className="skill_name">
-                  {item.name}
-                </label>
-              </div>
+                <div key={item.name} className="wrapper">
+                  <img src={item.url} />
+
+                  <label htmlFor={item.name} className={"skill_name"}>
+                    {item.name}
+                  </label>
+                </div>
+              </React.Fragment>
             ))}
           </div>
         </div>
@@ -109,22 +168,34 @@ const Participate = () => {
           </span>
 
           <div>
-            <select id="position">
-              <option value="position" disabled hidden>
+            <select
+              id="position"
+              name="position"
+              onChange={onSelectChange}
+              defaultValue=""
+            >
+              <option value="" disabled hidden>
                 포지션
               </option>
-              <option value="developer">개발자</option>
-              <option value="designer">디자이너</option>
+              <option value="프론트">프론트</option>
+              <option value="백엔드">백엔드</option>
+              <option value="디자이너">디자이너</option>
+              <option value="기획">기획</option>
             </select>
           </div>
 
           <div>
-            <select id="method">
+            <select
+              id="method"
+              name="method"
+              onChange={onSelectChange}
+              defaultValue=""
+            >
               <option value="method" disabled hidden>
                 진행방식
               </option>
-              <option value="agile">온라인</option>
-              <option value="waterfall">오프라인</option>
+              <option value="온라인">온라인</option>
+              <option value="오프라인">오프라인</option>
             </select>
           </div>
         </div>
@@ -143,7 +214,7 @@ const Participate = () => {
                 <div className="content-item-top-label">
                   <div className="content-item-top-label-left">{it.type}</div>
                   <div className="content-item-top-label-right">
-                    <img />
+                    <img src={newImg} />
                     <span>D-20</span>
                   </div>
                 </div>
@@ -162,9 +233,9 @@ const Participate = () => {
                   })}
                 </div>
                 <div className="content-item-top-skills">
-                  <img />
-                  <img />
-                  <img />
+                  {it.skillicon.map((it, index) => {
+                    return <img src={it} />;
+                  })}
                 </div>
                 <hr />
               </div>
@@ -178,15 +249,15 @@ const Participate = () => {
                 </div>
                 <div className="content-item-bottom-right">
                   <div className="content-item-bottom-right-watch">
-                    <img />
+                    <img src={watch} />
                     <span>10</span>
                   </div>
                   <div className="content-item-bottom-right-chat">
-                    <img />
+                    <img src={chat} />
                     <span>채팅하기</span>
                   </div>
                   <div className="content-item-bottom-right-heart">
-                    <img />
+                    <img src={heart} />
                   </div>
                 </div>
               </div>

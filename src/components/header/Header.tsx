@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Header.scss";
 import { useLoginStore } from "../../store/useLoginStore";
+import headerImg from "../../assets/img/lymming_logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Header = () => {
   return (
     <header className="Header">
       <div className="Header-title">
-        <img className="Header-title-img" src="" />
+        <img className="Header-title-img" src={headerImg} />
         <span className="Header-title-txt" onClick={() => navigate("/")}>
           lymming
         </span>

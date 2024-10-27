@@ -7,8 +7,14 @@
       "uploadTime": "2023.11.07",
       "position": ["프론트", "백엔드", "디자이너"],
       "style": ["열정적", "열정적", "열정적"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://images.velog.io/images/pm1100tm/post/d7133a58-e16e-4766-825e-a8ebd11d8345/python.jpg"
+      ],
       "name": "프론트짱",
+      "skill": ["C", "C++"],
       "heart": 0,
+      "method": "온라인",
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
     },
@@ -19,8 +25,14 @@
       "uploadTime": "2023.11.07",
       "position": ["프론트", "디자이너"],
       "style": ["열정적", "열정적", "열정적"],
+      "skillicon": [
+        "https://blog.kakaocdn.net/dn/edggFw/btshaqCLX6n/UfMqbTR66IgW6HjsiQyjOK/img.png",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "skill": ["C", "Java"],
       "name": "박준서",
       "heart": 0,
+      "method": "온라인",
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
     },
@@ -30,6 +42,65 @@
       "end": "2024.11.07",
       "uploadTime": "2023.11.07",
       "position": ["프론트", "백엔드", "디자이너"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "skill": ["C", "Java"],
+      "style": ["열정적", "열정적", "열정적"],
+      "name": "박준서1",
+      "heart": 0,
+      "method": "온라인",
+      "profile": "",
+      "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
+    },
+    {
+      "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
+      "type": "프로젝트",
+      "end": "2024.11.07",
+      "uploadTime": "2023.11.07",
+      "position": ["프론트", "백엔드", "디자이너"],
+      "style": ["열정적", "열정적", "열정적"],
+      "skill": ["C", "Java"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "method": "온라인",
+      "name": "프론트짱",
+      "heart": 0,
+      "profile": "",
+      "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
+    },
+    {
+      "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
+      "type": "프로젝트",
+      "end": "2024.11.07",
+      "method": "온라인",
+      "skill": ["C", "Java"],
+      "position": ["프론트"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "style": ["열정적", "열정적", "열정적"],
+      "name": "프론트짱",
+      "heart": 0,
+      "profile": "",
+      "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
+    },
+    {
+      "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
+      "type": "프로젝트",
+      "end": "2024.11.07",
+      "method": "온라인",
+      "uploadTime": "2023.11.07",
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "position": ["프론트"],
+      "skill": ["C", "Java"],
       "style": ["열정적", "열정적", "열정적"],
       "name": "박준서1",
       "heart": 0,
@@ -40,8 +111,14 @@
       "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
       "type": "프로젝트",
       "end": "2024.11.07",
+      "skill": ["C", "Java"],
+      "method": "오프라인",
       "uploadTime": "2023.11.07",
-      "position": ["프론트", "백엔드", "디자이너"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "position": ["프론트"],
       "style": ["열정적", "열정적", "열정적"],
       "name": "프론트짱",
       "heart": 0,
@@ -52,8 +129,13 @@
       "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
       "type": "프로젝트",
       "end": "2024.11.07",
-
-      "position": ["프론트", "백엔드", "디자이너"],
+      "method": "오프라인",
+      "skill": ["C", "Java"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "position": ["프론트"],
       "style": ["열정적", "열정적", "열정적"],
       "name": "프론트짱",
       "heart": 0,
@@ -63,47 +145,17 @@
     {
       "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
       "type": "프로젝트",
-      "end": "2024.11.07",
-      "uploadTime": "2023.11.07",
-      "position": ["프론트", "백엔드", "디자이너"],
-      "style": ["열정적", "열정적", "열정적"],
-      "name": "박준서1",
-      "heart": 0,
-      "profile": "",
-      "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
-    },
-    {
-      "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
-      "type": "프로젝트",
-      "end": "2024.11.07",
-      "uploadTime": "2023.11.07",
-      "position": ["프론트", "백엔드", "디자이너"],
-      "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
-      "heart": 0,
-      "profile": "",
-      "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
-    },
-    {
-      "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
-      "type": "프로젝트",
-      "end": "2024.11.07",
-
-      "position": ["프론트", "백엔드", "디자이너"],
-      "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
-      "heart": 0,
-      "profile": "",
-      "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
-    },
-    {
-      "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
-      "type": "프로젝트",
+      "method": "오프라인",
       "end": "2024.11.07",
       "uploadTime": "2023.11.07",
       "position": ["프론트", "백엔드", "디자이너"],
       "style": ["열정적", "열정적", "열정적"],
       "name": "박준서1",
+      "skill": ["C", "Java"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -113,9 +165,15 @@
       "type": "프로젝트",
       "end": "2024.11.07",
       "uploadTime": "2023.11.07",
-      "position": ["프론트", "백엔드", "디자이너"],
+      "skill": ["C", "Java"],
+      "position": ["디자이너"],
       "style": ["열정적", "열정적", "열정적"],
       "name": "프론트짱",
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
+      "method": "오프라인",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -123,9 +181,14 @@
     {
       "title": "프로젝트를 쉽게 구하는 플랫폼 리밍의 팀원을 모집합니다.",
       "type": "프로젝트",
+      "skill": ["C", "Java"],
+      "skillicon": [
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
+        "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
+      ],
       "end": "2024.11.07",
-
-      "position": ["프론트", "백엔드", "디자이너"],
+      "method": "오프라인",
+      "position": ["프론트"],
       "style": ["열정적", "열정적", "열정적"],
       "name": "프론트짱",
       "heart": 0,
