@@ -120,15 +120,14 @@
       }
       &-bottom {
         display: flex;
+        gap: 0.5%;
 
-        .round_span {
-          background-color: #e9ecef;
-          padding: 1%;
-          border-radius: 10px;
-          font-size: 0.9vw;
-          font-weight: bolder;
-
-          margin-right: 1%;
+        img {
+          width: 2%;
+          padding: 0.2%;
+          box-sizing: border-box;
+          border-radius: 100px;
+          border: 1px solid gray;
         }
       }
     }

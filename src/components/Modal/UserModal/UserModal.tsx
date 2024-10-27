@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import "./UserModal.scss";
+import back from "../../../assets/img/leftrrow.png";
 
 interface UsermodalProps {
   close: (value: boolean) => void;
@@ -9,7 +10,9 @@ const Usermodal: React.FC<UsermodalProps> = ({ close }) => {
   return (
     <div className="Usermodal">
       <div className="back">
-        <button onClick={() => close(false)}>뒤로</button>
+        <button onClick={() => close(false)}>
+          <img src={back} />
+        </button>
       </div>
       <div className="top">
         <img />

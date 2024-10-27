@@ -11,6 +11,17 @@
   padding: 2%;
   box-sizing: border-box;
 
+  .back {
+    button {
+      border: none;
+      background-color: white;
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
   .top {
     box-sizing: border-box;
     height: 60%;
