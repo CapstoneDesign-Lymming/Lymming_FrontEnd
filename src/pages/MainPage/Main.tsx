@@ -1,7 +1,7 @@
 import Header from "../../components/header/Header";
 import "./Main.scss";
 import mainData from "../../data/maindata.json";
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import leftbtn from "../../assets/img/leftrrow.png";
 import rightbtn from "../../assets/img/rigntarrow.png";

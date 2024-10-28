@@ -239,11 +239,11 @@ const Participate = () => {
                 </div>
                 <hr />
               </div>
-              <div
-                className="content-item-bottom"
-                onClick={() => setUserModalOpen(true)}
-              >
-                <div className="content-item-bottom-left">
+              <div className="content-item-bottom">
+                <div
+                  className="content-item-bottom-left"
+                  onClick={() => setUserModalOpen(true)}
+                >
                   <img />
                   <span>{it.name}</span>
                 </div>
@@ -252,7 +252,10 @@ const Participate = () => {
                     <img src={watch} />
                     <span>10</span>
                   </div>
-                  <div className="content-item-bottom-right-chat">
+                  <div
+                    className="content-item-bottom-right-chat"
+                    onClick={() => navigate("/chat")}
+                  >
                     <img src={chat} />
                     <span>채팅하기</span>
                   </div>
