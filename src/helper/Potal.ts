@@ -1,12 +1,13 @@
 import { ReactNode } from "react";
-import ReactDom from "react-dom";
+import ReactDOM from "react-dom";
 
 interface ModalPortalProps{
     children:ReactNode;
 }
+
 const ModalPortal=({children}:ModalPortalProps)=>{
     const el = document.getElementById("modal");
-    if(el){ 
-        return ReactDom.createPortal(children,el)};
+    return el? ReactDOM.createPortal(children,el):null;
 }
+
 export default ModalPortal

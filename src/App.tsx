@@ -7,8 +7,9 @@ import Participate from "./pages/ParticipatePage/Participate";
 import ParticipateDetail from "./pages/ParticipateDetail/ParticipateDetail";
 import TeamBuilding from "./pages/TeamBuilding/TeamBuilding";
 import VideoChattingPage from "./pages/VideoChattingPage/VideoChattingPage";
-import NewVideoChattingPage from "./pages/VideoChattingPage/NewVideoChattingPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
+import MemberPage from "./pages/MemberPage/MemberPage";
+import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
 
 function App() {
   return (
@@ -19,14 +20,14 @@ function App() {
         <Route path="/auth" element={<KakaoAuth />}></Route>
         <Route path="/participate" element={<Participate />}></Route>
         <Route path="/videochat" element={<VideoChattingPage />}></Route>
-        <Route path="/newVideo" element={<NewVideoChattingPage />}></Route>
-
         <Route
           path="/participate/detail/:id"
           element={<ParticipateDetail />}
         ></Route>
         <Route path="/teambuild" element={<TeamBuilding />}></Route>
         <Route path="/chat" element={<ChatPage />}></Route>
+        <Route path="/member" element={<MemberPage />}></Route>
+        <Route path="/exhibition" element={<ExhibitionPage />}></Route>
       </Routes>
     </div>
   );
