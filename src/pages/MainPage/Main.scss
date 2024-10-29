@@ -4,7 +4,11 @@
   .image_wrapper {
     height: 100%;
     width: 100%;
-    background-color: antiquewhite;
+    background-color: rgb(234, 228, 220);
+    background-image: url('../../assets/img/mainimg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
   }
 
   .info1 {

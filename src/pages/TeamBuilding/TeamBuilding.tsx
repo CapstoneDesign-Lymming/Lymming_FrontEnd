@@ -110,8 +110,9 @@ const TeamBuilding = () => {
   const imgPreviewUrl = img ? URL.createObjectURL(img) : imgs;
 
   return (
+    <>
+    <Header />
     <div className="TeamBuilding">
-      <Header />
 
       <div className="content">
         <h2 className="content-title_h2">프로젝트 정보를 입력해주세요</h2>
@@ -258,6 +259,8 @@ const TeamBuilding = () => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 

@@ -10,9 +10,10 @@
   justify-content: space-between;
   padding: 0 2%;
   box-sizing: border-box;
-  background-color: #d9d9d9;
+  background-color: #ffffffd5;
   height: 7vh;
-
+  position: fixed;
+  
   &-title {
     font-size: 1.4vw;
     font-weight: bolder;
@@ -57,4 +58,7 @@
       }
     }
   }
+}
+.MainHeader{
+  background-color: rgba(255, 255, 255, 0);
 }

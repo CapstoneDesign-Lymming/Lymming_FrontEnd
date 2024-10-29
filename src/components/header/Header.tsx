@@ -1,15 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation} from "react-router-dom";
 import "./Header.scss";
 import { useLoginStore } from "../../store/useLoginStore";
 import headerImg from "../../assets/img/lymming_logo.png";
+import { useEffect, useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const pageLocation = useLocation();
   const { login } = useLoginStore();
+  const [isMain,setIsMain]=useState(false);
 
+  console.log("pagelocation",pageLocation.pathname);
+
+  useEffect(()=>{
+    if(pageLocation.pathname=="/") setIsMain(true);
+  },[pageLocation]);
+  
   return (
-    <header className="Header">
+    <header className={`Header ${isMain?'MainHeader':''}`}>
       <div className="Header-title">
         <img className="Header-title-img" src={headerImg} />
         <span className="Header-title-txt" onClick={() => navigate("/")}>
