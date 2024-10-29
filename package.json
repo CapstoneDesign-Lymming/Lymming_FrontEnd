@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/fiber": "^8.17.10",
     "@stomp/stompjs": "^7.0.0",
     "@types/sockjs-client": "^1.5.4",
     "axios": "^1.7.7",
@@ -22,6 +23,7 @@
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.8.0",
     "sockjs-client": "^1.6.1",
+    "three": "^0.169.0",
     "zustand": "^5.0.0"
   },
   "devDependencies": {
