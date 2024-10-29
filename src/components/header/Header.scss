@@ -1,3 +1,4 @@
+@import "../../style/mixin.scss";
 @font-face {
   font-family: 'laundrygothic_font';
   font-weight: normal;
@@ -12,7 +13,7 @@
   box-sizing: border-box;
   background-color: #ffffffd5;
   height: 7vh;
-  position: fixed;
+  position: fixed;  
   
   &-title {
     font-size: 1.4vw;
@@ -56,6 +57,31 @@
         font-size: 0.6vw;
         font-weight: bolder;
       }
+    }
+  }
+  &-hidden{
+    position: absolute;
+    top: 6vh;
+    right: 15vw;
+    .hidden_btn{
+      @include flex-column-center;
+      width: 8vw;
+      height: 48px;
+      background-color: #4d4d4d8d;
+      color:rgb(255, 255, 255);
+      border-radius: 8px;
+      #btn1{
+        width: 86%;
+        text-align: center;
+        border-bottom: 1.4px solid white;
+      }
+      #btn2{
+        width: 86%;
+        text-align: center;
+      }
+    }
+    .HiddenBtnOff{
+      display: none;
     }
   }
 }

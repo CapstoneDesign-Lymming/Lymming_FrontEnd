@@ -9,8 +9,7 @@ const Header = () => {
   const pageLocation = useLocation();
   const { login } = useLoginStore();
   const [isMain,setIsMain]=useState(false);
-
-  console.log("pagelocation",pageLocation.pathname);
+  const [isHiddenBtnOn,setIsHiddenBtnOn]=useState(false);
 
   useEffect(()=>{
     if(pageLocation.pathname=="/") setIsMain(true);
@@ -27,7 +26,7 @@ const Header = () => {
       <ul className="Header-ul">
         <li onClick={() => navigate("/participate")}>참여하기</li>
         <li onClick={() => navigate("/teambuild")}>팀 꾸리기</li>
-        <li>둘러보기</li>
+        <li onClick={()=>setIsHiddenBtnOn(!isHiddenBtnOn)}>둘러보기</li>
         <li onClick={() => navigate("/videochat")}>화상채팅</li>
 
         {login == true ? (
@@ -39,6 +38,12 @@ const Header = () => {
           <li onClick={() => navigate("/login")}>로그인</li>
         )}
       </ul>
+      <div className="Header-hidden">
+        <div className={`hidden_btn ${isHiddenBtnOn?'HiddenBtnOn':'HiddenBtnOff'}`} onClick={()=>setIsHiddenBtnOn(false)}>
+          <div id="btn1" onClick={() => navigate("/member")}>참여자</div>
+          <div id="btn2" onClick={() => navigate("/exhibition")}>전시회</div>
+        </div>
+      </div>
     </header>
   );
 };

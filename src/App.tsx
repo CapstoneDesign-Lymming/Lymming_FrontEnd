@@ -8,6 +8,8 @@ import ParticipateDetail from "./pages/ParticipateDetail/ParticipateDetail";
 import TeamBuilding from "./pages/TeamBuilding/TeamBuilding";
 import VideoChattingPage from "./pages/VideoChattingPage/VideoChattingPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
+import MemberPage from "./pages/MemberPage/MemberPage";
+import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         ></Route>
         <Route path="/teambuild" element={<TeamBuilding />}></Route>
         <Route path="/chat" element={<ChatPage />}></Route>
+        <Route path="/member" element={<MemberPage />}></Route>
+        <Route path="/exhibition" element={<ExhibitionPage />}></Route>
       </Routes>
     </div>
   );
