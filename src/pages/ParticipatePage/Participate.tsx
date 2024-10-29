@@ -234,7 +234,7 @@ const Participate = () => {
                 </div>
                 <div className="content-item-top-skills">
                   {it.skillicon.map((it, index) => {
-                    return <img src={it} />;
+                    return <img src={it} key={index} />;
                   })}
                 </div>
                 <hr />

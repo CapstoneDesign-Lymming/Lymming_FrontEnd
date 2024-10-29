@@ -30,17 +30,21 @@
         font-weight: bold;
       }
       &-list {
+        box-sizing: border-box;
+        overflow-y: scroll;
         width: 100%;
         font-size: 1vw;
         flex-grow: 1;
         display: flex;
+        flex-direction: column;
+        gap: 3%;
 
         &-item {
           box-sizing: border-box;
           display: flex;
           align-items: center;
           width: 100%;
-          height: 10%;
+          height: 8vh;
           border: 1px solid #506bf3;
           border-radius: 10px;
           padding: 1%;
