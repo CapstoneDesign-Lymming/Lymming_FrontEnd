@@ -8,6 +8,7 @@ import useConfirmVideoStore from "../../store/useComfirmVideoStore";
 
 /**TODO:
  * 완료 1. 최초 렌더링 시 비디오 활성화 물어보는 방식으로 변경 (기존: 비디오 아이콘 선택) 
+ * 1. node.js 배포
  * 2. 마이크 비디오 on off
  * 3. 프로필 사진 video화면에 표시
  * 4. 참여자 목록
@@ -15,7 +16,7 @@ import useConfirmVideoStore from "../../store/useComfirmVideoStore";
  * 
  * FIXME:
  * 1. 화면공유 시작 클릭했지만 실패했을 경우에 대한 케이스 처리
- * 2.비디오 off후 on시 상대에게 정상작동 x
+ * 2. 비디오 off후 on시 상대에게 정상작동 x
  */
 const VideoChattingPage = () => {
     const navigate = useNavigate();
@@ -166,29 +167,28 @@ const VideoChattingPage = () => {
         });
 
         nextSocket.on('toggleVideo',(data)=>{
-            // console.log("toggle change");
-            // const {userId, isVideoOn}=data;
-            // const videoTracks = (localVideoRef.current?.srcObject as MediaStream)?.getAudioTracks();
-            // videoTracks?.forEach(track => {
-            //     console.log("👍👍video 토글 상태", isVideoOn);
-            //     track.enabled = isVideoOn; // 상대방의 비디오 상태에 따라 비디오 트랙 활성화/비활성화
-            //     console.log(`User ${userId} mic status: ${isMicOn}`);
-            // });
             if (data.userId !== socket?.id) { // 자신의 토글 무시
                 if (data.isVideoOn && remoteVideoRef.current) {
-                    // 상대 비디오 켜기
-                    const remoteStream = new MediaStream();
-                    // 원격 사용자로부터의 트랙 추가 (필요시 구현)
-                    // 예시: peerConnection.current.addTrack(remoteTrack);
-                    // 여기서는 remoteTrack을 사용할 수 있다고 가정합니다.
-                    
-                    // 예시: 비디오 요소에 원격 스트림 설정
-                    remoteVideoRef.current.srcObject = remoteStream; // 원격 비디오 재설정
-                    console.log(remoteVideoRef.current.srcObject);
+                    // if(peerConnection.current){
+                    //     peerConnection.current.ontrack=(event)=>{
+                    //         const [remoteStream]=event.streams;
+                    //         if(remoteVideoRef.current){
+                    //             remoteVideoRef.current.srcObject = remoteStream;
+                    //             console.log("상대 비디오 재설정",remoteStream);
+                    //         }
+                    //     }
+                    // }
                     
                 } else {
                     // 상대 비디오 끄기
-                    if(remoteVideoRef.current) remoteVideoRef.current.srcObject = null; // 비디오 끄기
+                    // if(remoteVideoRef.current) remoteVideoRef.current.srcObject = null; // 비디오 끄기
+                    if (remoteVideoRef.current?.srcObject) {
+                        const mediaStream = remoteVideoRef.current.srcObject as MediaStream; // 타입 단언
+                        const tracks = mediaStream.getVideoTracks();
+                        tracks.forEach(track => track.enabled = false); // 비디오 트랙 비활성화
+                        console.log("상대 비디오 끄기");
+                    }
+                    
                 }
             }
         });
@@ -372,11 +372,13 @@ const VideoChattingPage = () => {
             //소켓으로 toggleVideo값 전송
             socket?.emit('toggleVideo',{room:room, userId:socket.id, isVideoOn:false});
             console.log("toggleVideo off");
+
         } else {
             // 비디오 켜기
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-            if (localVideoRef.current) {
+            if (localVideoRef.current){
                 localVideoRef.current.srcObject = stream; // 비디오 재설정
+                console.log("비디오 재설정",stream);
             }
             stream.getTracks().forEach((track: MediaStreamTrack) => {
                 if (peerConnection.current) {
@@ -444,11 +446,11 @@ const VideoChattingPage = () => {
                     {isVideoOn?
                     <div className="NavMenu" onClick={toggleVideo}>
                         <svg className="NavMenu-icon" style={{fill:"#FF4444"}}xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7l-86.4-67.7 13.8 9.2c9.8 6.5 22.4 7.2 32.9 1.6s16.9-16.4 16.9-28.2l0-256c0-11.8-6.5-22.6-16.9-28.2s-23-5-32.9 1.6l-96 64L448 174.9l0 17.1 0 128 0 5.8-32-25.1L416 128c0-35.3-28.7-64-64-64L113.9 64 38.8 5.1zM407 416.7L32.3 121.5c-.2 2.1-.3 4.3-.3 6.5l0 256c0 35.3 28.7 64 64 64l256 0c23.4 0 43.9-12.6 55-31.3z"/></svg>
-                        <div>비디오종료</div>
+                        <div>비디오 끄기</div>
                     </div>:
                     <div className="NavMenu" onClick={toggleVideo}>
                         <svg className="NavMenu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z"/></svg>
-                        <div>비디오</div>
+                        <div>비디오 켜기</div>
                     </div>}
 
                     <div className="NavMenu">
