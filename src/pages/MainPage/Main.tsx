@@ -65,9 +65,9 @@ const Main = () => {
             </span>
           </div>
           <div className="info1-content-right">
-            {mainData.info1.map((it) => {
+            {mainData.info1.map((it, index) => {
               return (
-                <div className="info1-content-right-box">
+                <div className="info1-content-right-box" key={index}>
                   <span className="info1-content-right-box-head">
                     {it.title}
                   </span>
@@ -86,9 +86,9 @@ const Main = () => {
         </div>
 
         <div className="info2-right">
-          {mainData.info2.map((it) => {
+          {mainData.info2.map((it, index) => {
             return (
-              <div className="info2-right-box">
+              <div className="info2-right-box" key={index}>
                 <span className="info2-right-box-img">{it.title}</span>
                 <span className="info2-right-box-txt">{it.data}</span>
               </div>
@@ -102,6 +102,7 @@ const Main = () => {
           {mainData.info3.map((it, index) => (
             <span
               className={`circle ${index === visible ? "active" : ""}`}
+              key={index}
             ></span>
           ))}
 
