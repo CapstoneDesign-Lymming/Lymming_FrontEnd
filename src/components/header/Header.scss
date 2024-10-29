@@ -4,6 +4,11 @@
   font-weight: normal;
   src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
 }
+@font-face {
+  font-family: 'NanumSquareNeo';
+  font-weight: normal;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf") ;
+}
 
 .Header {
   display: flex;
@@ -14,7 +19,9 @@
   background-color: #ffffffd5;
   height: 7vh;
   position: fixed;  
-  
+  font-family:"NanumSquareNeo";
+  user-select:none;
+  cursor: pointer;
   &-title {
     font-size: 1.4vw;
     font-weight: bolder;
@@ -74,10 +81,12 @@
         width: 86%;
         text-align: center;
         border-bottom: 1.4px solid white;
+        padding: 2px;
       }
       #btn2{
         width: 86%;
         text-align: center;
+        padding: 2px;
       }
     }
     .HiddenBtnOff{
