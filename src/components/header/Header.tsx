@@ -10,13 +10,36 @@ const Header = () => {
   const { login } = useLoginStore();
   const [isMain,setIsMain]=useState(false);
   const [isHiddenBtnOn,setIsHiddenBtnOn]=useState(false);
+  const [headerVisible, setHeaderVisible]=useState(true);
+  const [lastScrollY, setLastScrollY]=useState(0);
 
   useEffect(()=>{
     if(pageLocation.pathname=="/") setIsMain(true);
   },[pageLocation]);
-  
+
+ 
+
+  useEffect(()=>{
+    const handleScroll=()=>{
+      const currentScrollY = window.scrollY;
+      console.log("Current Scroll Y:", currentScrollY);
+      // setHeaderVisible(currentScrollY > lastScrollY ? false:true);
+      if(currentScrollY>lastScrollY){
+        setHeaderVisible(false);
+      }else{
+        setHeaderVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+      window.addEventListener('scroll',handleScroll);
+      return ()=> window.removeEventListener('scroll',handleScroll);
+  },[lastScrollY]);
+
   return (
-    <header className={`Header ${isMain?'MainHeader':''}`}>
+    <header className={`Header 
+    ${isMain?'MainHeader':''}
+    ${headerVisible?'':'headerUp'}
+    `}>
       <div className="Header-title">
         <img className="Header-title-img" src={headerImg} />
         <span className="Header-title-txt" onClick={() => navigate("/")}>
