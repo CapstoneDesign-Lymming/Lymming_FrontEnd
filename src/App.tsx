@@ -10,6 +10,7 @@ import VideoChattingPage from "./pages/VideoChattingPage/VideoChattingPage";
 import ChatPage from "./pages/ChatPage/ChatPage";
 import MemberPage from "./pages/MemberPage/MemberPage";
 import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
+import SharePage from "./pages/SharePage/SharePage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/chat" element={<ChatPage />}></Route>
         <Route path="/member" element={<MemberPage />}></Route>
         <Route path="/exhibition" element={<ExhibitionPage />}></Route>
+        <Route path="/share" element={<SharePage />}></Route>
       </Routes>
     </div>
   );

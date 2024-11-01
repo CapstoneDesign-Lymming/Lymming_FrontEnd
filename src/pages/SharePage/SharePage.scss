@@ -1,0 +1,15 @@
+@import '../../style/mixin.scss';
+
+
+.SharePageWrapper{
+    @include flex-center;
+    margin-top: 7vh;
+    .SharePage{
+        width: 80vw;
+        height: 90vh;
+        border: 0.01px solid black;
+        &-Header{
+            font-weight: 800;
+        }
+    }
+}

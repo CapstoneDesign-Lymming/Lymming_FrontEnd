@@ -28,7 +28,8 @@ interface InfoState {
 
 // 로그인 data
 export const useLoginStore = create<LoginState>((set) => ({
-  login: false,
+  login: true,
+  // login: false,
   count: 1,
   isOpen: false,
   setCount: () => set((state: any) => ({ count: state.count + 1 })),
