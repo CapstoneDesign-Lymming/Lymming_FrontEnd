@@ -1,8 +1,11 @@
 import Header from "../../components/header/Header";
 import "./Main.scss";
 import mainData from "../../data/maindata.json";
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import leftbtn from "../../assets/img/leftrrow.png";
+import rightbtn from "../../assets/img/rigntarrow.png";
+import logo from "../../assets/img/lymming_logo.png";
 
 const Main = () => {
   const [isBack, setIsBack] = useState(false);
@@ -62,9 +65,9 @@ const Main = () => {
             </span>
           </div>
           <div className="info1-content-right">
-            {mainData.info1.map((it) => {
+            {mainData.info1.map((it, index) => {
               return (
-                <div className="info1-content-right-box">
+                <div className="info1-content-right-box" key={index}>
                   <span className="info1-content-right-box-head">
                     {it.title}
                   </span>
@@ -83,9 +86,9 @@ const Main = () => {
         </div>
 
         <div className="info2-right">
-          {mainData.info2.map((it) => {
+          {mainData.info2.map((it, index) => {
             return (
-              <div className="info2-right-box">
+              <div className="info2-right-box" key={index}>
                 <span className="info2-right-box-img">{it.title}</span>
                 <span className="info2-right-box-txt">{it.data}</span>
               </div>
@@ -99,6 +102,7 @@ const Main = () => {
           {mainData.info3.map((it, index) => (
             <span
               className={`circle ${index === visible ? "active" : ""}`}
+              key={index}
             ></span>
           ))}
 
@@ -107,11 +111,11 @@ const Main = () => {
 
         <div className="btn-wrapper">
           <button className="arrow" onClick={handlePrev}>
-            왼쪽
+            <img src={leftbtn} />
           </button>
 
           <button className="arrow" onClick={handleNext}>
-            오른쪽
+            <img src={rightbtn} />
           </button>
         </div>
 
@@ -140,7 +144,7 @@ const Main = () => {
 
       <footer className="footer">
         <div className="footer-title">
-          <img />
+          <img src={logo} />
           <span>lymming</span>
         </div>
         <div className="footer-profile">
@@ -150,13 +154,13 @@ const Main = () => {
             <span>깃허브</span>
           </div>
           <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">박준서</span>
-            <span className="footer-profile-box-span2">빅데이터 20205175</span>
+            <span className="footer-profile-box-span1">노기훈</span>
+            <span className="footer-profile-box-span2">빅데이터 20205160</span>
             <span>깃허브</span>
           </div>
           <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">박준서</span>
-            <span className="footer-profile-box-span2">빅데이터 20205175</span>
+            <span className="footer-profile-box-span1">지우림</span>
+            <span className="footer-profile-box-span2">빅데이터 20202849</span>
             <span>깃허브</span>
           </div>
         </div>

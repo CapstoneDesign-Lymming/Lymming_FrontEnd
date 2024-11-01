@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Header from "../../components/header/Header";
 import "./TeamBuilding.scss";
-import imgs from "../../../public/vite.svg";
+import imgs from "../../assets/img/noimage.jpg";
 import { useNavigate } from "react-router-dom";
 
 interface State {
@@ -110,8 +110,9 @@ const TeamBuilding = () => {
   const imgPreviewUrl = img ? URL.createObjectURL(img) : imgs;
 
   return (
+    <>
+    <Header />
     <div className="TeamBuilding">
-      <Header />
 
       <div className="content">
         <h2 className="content-title_h2">프로젝트 정보를 입력해주세요</h2>
@@ -258,6 +259,8 @@ const TeamBuilding = () => {
         </div>
       </div>
     </div>
+    </>
+    
   );
 };
 

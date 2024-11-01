@@ -5,7 +5,7 @@ import {
   GithubLoginButton,
   createButton,
 } from "react-social-login-buttons";
-import { useEffect, useRef, useState } from "react";
+
 import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import {
   Child1,
@@ -16,7 +16,8 @@ import {
   Child6,
 } from "../../components/Modal/LoginInfoModal/LoginInfoModalChild";
 import { useLoginStore } from "../../store/useLoginStore";
-import Header from "../../components/header/Header";
+import logo from "../../assets/img/lymming_logo.png";
+import left from "../../assets/img/leftrrow.png";
 
 const LogIn = () => {
   const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
@@ -80,13 +81,15 @@ const LogIn = () => {
         </>
       )}
       <div className="back_wrapper">
-        <button onClick={() => navigate("/")}>뒤로가기</button>
+        <button onClick={() => navigate("/")}>
+          <img src={left} />
+        </button>
       </div>
 
       <div className="content">
         <div className="left">
           <div className="left-title">
-            <img className="left-title-img" />
+            <img className="left-title-img" src={logo} />
             <span className="left-title-text"> lymming</span>
           </div>
 

@@ -1,12 +1,30 @@
+@import "../../style/mixin.scss";
+
+@font-face {
+  font-family: "laundrygothic_font";
+  font-weight: normal;
+  src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  font-weight: normal;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+}
+
 .Header {
+  z-index: 999;
   display: flex;
   width: 100%;
   justify-content: space-between;
-  padding: 0 2%;
+  padding: 0 1%;
   box-sizing: border-box;
-  background-color: #d9d9d9;
-  height: 7%;
-
+  background-color: #ffffffd5;
+  height: 7vh;
+  position: fixed;
+  font-family: "NanumSquareNeo";
+  user-select: none;
+  cursor: pointer;
+  z-index: 999;
   &-title {
     font-size: 1.4vw;
     font-weight: bolder;
@@ -14,23 +32,25 @@
     align-items: center;
     width: 9%;
     justify-content: space-between;
-
+    font-family: "laundrygothic_font";
     &-img {
-      width: 20px;
-      height: 20px;
+      width: 100%;
+      height: 60%;
+      object-fit: contain;
     }
   }
 
   &-ul {
     align-items: center;
     font-size: 1.2vw;
-    width: 35%;
+    width: 40%;
+
     display: flex;
     list-style: none;
     justify-content: space-between;
     text-align: center;
-    li{
-      width: 20vw;
+    li {
+      width: 8vw;
       margin: 10px;
     }
     .login_aft {
@@ -38,9 +58,12 @@
       flex-direction: column;
       align-items: center;
       img {
-        width: 70%;
-        padding-top: 70%;
-        background-color: aquamarine;
+        background-image: url("../../assets/img/lymming_logo.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 30px;
+        height: 30px;
         border-radius: 100px;
       }
 
@@ -50,4 +73,38 @@
       }
     }
   }
+  &-hidden {
+    position: absolute;
+    top: 6vh;
+    right: 15vw;
+    .hidden_btn {
+      @include flex-column-center;
+      width: 8vw;
+      height: 48px;
+      background-color: #4d4d4d8d;
+      color: rgb(255, 255, 255);
+      border-radius: 8px;
+      #btn1 {
+        width: 86%;
+        text-align: center;
+        border-bottom: 1.4px solid white;
+        padding: 2px;
+      }
+      #btn2 {
+        width: 86%;
+        text-align: center;
+        padding: 2px;
+      }
+    }
+    .HiddenBtnOff {
+      display: none;
+    }
+    .headerUp {
+      transform: translateY(-100%);
+      background-color: aliceblue;
+    }
+  }
+}
+.MainHeader {
+  background-color: rgba(255, 255, 255, 0.051);
 }
