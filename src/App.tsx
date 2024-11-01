@@ -11,6 +11,7 @@ import ChatPage from "./pages/ChatPage/ChatPage";
 import MemberPage from "./pages/MemberPage/MemberPage";
 import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
 import SharePage from "./pages/SharePage/SharePage";
+import ShareDetailPage from "./pages/ShareDetailPage/ShareDetailPage";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
         <Route
           path="/participate/detail/:id"
           element={<ParticipateDetail />}
+        ></Route>
+        <Route
+          path="/share/detail/:id"
+          element={<ShareDetailPage />}
         ></Route>
         <Route path="/teambuild" element={<TeamBuilding />}></Route>
         <Route path="/chat" element={<ChatPage />}></Route>
