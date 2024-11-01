@@ -10,14 +10,12 @@
     align-items: center;
 }
 
-//세로방향 가운데 정렬
 @mixin flex-column-center{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-//세로방향 시작 정렬
 @mixin flex-column-start{
     display: flex;
     flex-direction: column;
@@ -37,16 +35,15 @@
     align-items: start;
 }
 
-//background-contain
 @mixin background-contain{
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-//background-cover
 @mixin background-cover{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
+
