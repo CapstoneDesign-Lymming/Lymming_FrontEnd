@@ -1,17 +1,18 @@
 @import "../../style/mixin.scss";
 
 @font-face {
-  font-family: 'laundrygothic_font';
+  font-family: "laundrygothic_font";
   font-weight: normal;
   src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
 }
 @font-face {
-  font-family: 'NanumSquareNeo';
+  font-family: "NanumSquareNeo";
   font-weight: normal;
-  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf") ;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
 }
 
 .Header {
+  z-index: 999;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -19,9 +20,9 @@
   box-sizing: border-box;
   background-color: #ffffffd5;
   height: 7vh;
-  position: fixed;  
-  font-family:"NanumSquareNeo";
-  user-select:none;
+  position: fixed;
+  font-family: "NanumSquareNeo";
+  user-select: none;
   cursor: pointer;
   z-index: 999;
   &-title {
@@ -72,38 +73,38 @@
       }
     }
   }
-  &-hidden{
+  &-hidden {
     position: absolute;
     top: 6vh;
     right: 15vw;
-    .hidden_btn{
+    .hidden_btn {
       @include flex-column-center;
       width: 8vw;
       height: 48px;
       background-color: #4d4d4d8d;
-      color:rgb(255, 255, 255);
+      color: rgb(255, 255, 255);
       border-radius: 8px;
-      #btn1{
+      #btn1 {
         width: 86%;
         text-align: center;
         border-bottom: 1.4px solid white;
         padding: 2px;
       }
-      #btn2{
+      #btn2 {
         width: 86%;
         text-align: center;
         padding: 2px;
       }
     }
-    .HiddenBtnOff{
+    .HiddenBtnOff {
       display: none;
     }
-    .headerUp{
+    .headerUp {
       transform: translateY(-100%);
       background-color: aliceblue;
     }
   }
 }
-.MainHeader{
+.MainHeader {
   background-color: rgba(255, 255, 255, 0.051);
 }
