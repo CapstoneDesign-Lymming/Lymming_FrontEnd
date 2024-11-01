@@ -18,7 +18,7 @@
             "project_description": "코드쉐어는 실시간 코드 협업이 가능한 웹 기반 IDE입니다.",
             "team_member": [6, 7, 8, 9],
             "team_member_name": ["조하영", "김성민", "장민호", "이슬기"],
-            "is_completed": false
+            "is_completed": true
         },
         {
             "user_id": 3,
@@ -38,7 +38,7 @@
             "project_description": "플랜박스는 프로젝트 관리 및 일정 관리를 지원하는 플랫폼입니다.",
             "team_member": [13, 14, 15, 16],
             "team_member_name": ["김지훈", "이지아", "한예진", "최준영"],
-            "is_completed": false
+            "is_completed": true
         },
         {
             "user_id": 5,
@@ -48,7 +48,7 @@
             "project_description": "러닝카페는 지역 기반의 스터디 공간을 예약할 수 있는 서비스입니다.",
             "team_member": [17, 18, 19],
             "team_member_name": ["이성훈", "박지민", "김나영"],
-            "is_completed": false
+            "is_completed": true
         },
         {
             "user_id": 6,
@@ -78,7 +78,7 @@
             "project_description": "에코마켓은 친환경 제품을 중고로 사고파는 마켓플레이스입니다.",
             "team_member": [27, 28, 29, 30],
             "team_member_name": ["정해인", "안소희", "서민수", "조유진"],
-            "is_completed": false
+            "is_completed": true
         },
         {
             "user_id": 9,

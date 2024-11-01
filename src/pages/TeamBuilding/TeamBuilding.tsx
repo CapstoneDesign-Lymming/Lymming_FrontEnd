@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import Header from "../../components/header/Header";
 import "./TeamBuilding.scss";
-import imgs from "../../../public/vite.svg";
+import imgs from "../../assets/img/noimage.jpg";
 import { useNavigate } from "react-router-dom";
 
 interface State {

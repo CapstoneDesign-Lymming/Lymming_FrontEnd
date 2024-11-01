@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 import Header from '../../components/header/Header';
 import './SharePage.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface itemType{
   userId:number,
@@ -22,6 +23,8 @@ const fetchLocalData  =async()=>{
 }
 
 const SharePage = () => {
+  const navigate = useNavigate();
+
   const {data,error,isLoading} = useQuery('localData',fetchLocalData);
   if(isLoading) return <div>로딩 중!</div>
   if(error) return <div>에러</div>
@@ -31,28 +34,34 @@ const SharePage = () => {
         <div className='SharePageWrapper'>
             <div className='SharePage'>
                 <div className='SharePage-BodyWrapper'>
-                  {data.ShareData.map((item:itemType)=>(
-                    <div className={`SharePage-BodyWrapper-CardWrapper ${item.is_completed?"completed":""}`}
-                      key={item.project_id}>
-                        <div className='CardInsideWrapper'>
-                          <div className='CardHeader'>
-                            <div className='CardHeader-Title'>{item.project_name}</div>
-                          </div>
-                          <div className='CardBody'>
-                              <img src={`${item.project_url}`} alt="" />
-                          </div>
-                          <div className='CardFooter'>
-                            <div className='CardFooter-Description'>{item.project_description}</div>
-                            <div className='CardFooter-MembersWrapper'>
-                              {item.team_member_name.map((name)=>(
-                                <div className='memberItem'>{name}</div>
-                              ))}
+                  <div className='SharePage-BodyWrapper-CardBundle'>
+                    {data.ShareData.map((item:itemType)=>(
+                      <div 
+                        className={`SharePage-BodyWrapper-CardBundle-CardWrapper 
+                        ${item.is_completed?"completed":""}`}
+                        key={item.project_id}
+                        onClick={()=>{navigate(`/share/detail/${item.project_id}`,{state:item})}}>
+                          <div className='CardInsideWrapper'>
+                            <div className='CardHeader'>
+                              <div className='CardHeader-Title'>{item.project_name}</div>
+                            </div>
+                            <div className='CardBody'>
+                                <img src={`${item.project_url}`} alt="" />
+                            </div>
+                            <div className='CardFooter'>
+                              <div className='CardFooter-Description'>{item.project_description}</div>
+                              <div className='CardFooter-MembersWrapper'>
+                                {item.team_member_name.map((name)=>(
+                                  <div className='memberItem'>{name}</div>
+                                ))}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                    
-                    </div>
-                  ))}
+                      
+                      </div>
+                    ))}
+                  </div>
+                  
                 </div>
             </div>
         </div>
