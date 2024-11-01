@@ -6,151 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
-
-const data = [
-  {
-    content: "안녕하세요!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "안녕하세요 ㅎㅎ",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "넵 혹시 팀원 구하시나요?",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "네네 저희 백엔드 구하고 있습니다",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-
-  {
-    content: "좋아요!!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-  {
-    content: "오예",
-    userId: "user456",
-    userName: "김철수",
-    timestamp: "2024-07-29T14:31:00Z",
-    roomId: "room1",
-  },
-];
+import { pre } from "framer-motion/client";
 
 const data2 = [
   {
@@ -174,20 +30,27 @@ interface ChatMessage {
   userName: string;
   timestamp: string;
   roomId: string;
+  //보낸사람
+  userId: string;
 }
 
 interface chatRoom {
   id: string;
-  chatHistory: ChatMessage[];
+  roomId: string;
+  userId: string;
+  //상대
+  userName: string;
 }
 
 const ChatPage = () => {
   const currentUser = "user123"; // 토큰을 통해 로그인된 사용자 id 확인해야함
-  const [partner, setPartner] = useState("");
+  const [partner, setPartner] = useState("홍길동");
   // 채팅방 정보 받아오기 - 채팅 기록등
   const [chatRoom, setChatRoom] = useState<chatRoom | null>(null);
   const client = useRef<CompatClient | null>(null);
   const [inputMessage, setInputMessage] = useState("");
+
+  const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
 
   // msg time 전달하기
   const getMsgTime = () => {
@@ -206,8 +69,9 @@ const ChatPage = () => {
   // 채팅방 있는지 검사, 있으면 채팅방 있다고 상태 업데이트
   // 없으면 채팅방 생성 함수
   const enterChatRoom = async () => {
-    await isExistChatRoom();
-    if (chatRoom) {
+    const roomExists = await isExistChatRoom();
+
+    if (roomExists) {
       // 소켓 연결
       connectSocket();
     } else {
@@ -221,79 +85,116 @@ const ChatPage = () => {
   const isExistChatRoom = async () => {
     if (partner) {
       try {
-        const res = await axios.post(
-          "http://localhost:8080/chat/existroom",
-          `${currentUser}_${partner}`
-        );
-        setChatRoom(res.data);
+        const res = await axios.post("http://localhost:8080/chat/existroom", {
+          roomId: `${currentUser}_${partner}`,
+        });
+        await setChatRoom(res.data);
         console.log(res);
+      } catch (e) {
+        console.error(e);
+      }
+      return true;
+    }
+    return false;
+  };
+
+  const createChatRoom = async () => {
+    if (partner) {
+      const payload = {
+        roomId: `${currentUser}_${partner}`,
+        userId: partner,
+      };
+      try {
+        const res = await axios.post(
+          "http://localhost:8080/chat/room/create",
+          payload
+        );
+
+        if (res.data) {
+          setChatRoom(res.data);
+        } else {
+          console.log("채팅방이 존재하지 않습니다.");
+        }
       } catch (e) {
         console.error(e);
       }
     }
   };
+  const loadChatHistory = async () => {
+    if (chatRoom?.roomId) {
+      console.log("채팅기록 불러오기");
+      try {
+        const res = await axios.get(
+          `http://localhost:8080/chat/${chatRoom.roomId}/history`
+        );
+        setChatHistory(res.data);
 
-  const createChatRoom = async () => {
-    try {
-      const res = await axios.post(
-        "http://localhost:8080/chat/room/create",
-        `${currentUser}_${partner}`
-      );
-
-      setChatRoom(res.data);
-      console.log("채팅방 생성", res.data);
-    } catch (e) {
-      console.error(e);
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
   const connectSocket = () => {
     const socket = new SockJS("http://localhost:8080/chatting");
+
     client.current = Stomp.over(socket);
 
-    client.current.connect({}, () => {
-      client.current?.subscribe(`/sub/chat/room/${chatRoom?.id}`, (message) => {
-        const msg = JSON.parse(message.body);
-        console.log("받은 메세지", msg);
-        if (chatRoom) {
-          setChatRoom((prev) => ({
-            ...prev!,
-            chatHistory: [...prev!.chatHistory, msg],
-          }));
-        }
-      });
-    });
+    client.current.connect(
+      {},
+      () => {
+        client.current?.subscribe(
+          `/sub/chat/room/${chatRoom?.id}`,
+          (message) => {
+            const msg = JSON.parse(message.body);
+
+            if (chatRoom) {
+              setChatHistory((prev) => [...prev, msg]);
+            }
+          }
+        );
+      },
+      (error: any) => {
+        console.error("STOMP connection error: ", error); // 연결 실패 시 오류 로그
+      }
+    );
   };
 
   const sendChatMessage = () => {
     if (client.current && client.current.connected) {
-      client.current.send(
-        "/pub/chatting/message",
-        {},
-        JSON.stringify({
-          type: "TALK",
-          roomId: chatRoom?.id,
-          content: inputMessage,
-          timestamp: getMsgTime(),
-          userName: currentUser,
-        })
-      );
+      const msgData = {
+        type: "TALK",
+        roomId: chatRoom!.roomId,
+        userId: currentUser,
+        content: inputMessage,
+        timestamp: getMsgTime(),
+        userName: currentUser,
+      };
+
+      client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
+      setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
       console.log(inputMessage);
     }
   };
 
-  // useEffect(() => {
-  //   setPartner("park");
-  // }, []);
-
   useEffect(() => {
-    enterChatRoom();
+    const initializeChatRoom = async () => {
+      await enterChatRoom(); // enterChatRoom이 완료될 때까지 대기
+      console.log(chatRoom);
+    };
+
+    initializeChatRoom();
 
     return () => {
       client.current?.disconnect();
     };
   }, [partner]);
+
+  useEffect(() => {
+    loadChatHistory();
+  }, [chatRoom]);
 
   return (
     <div className="ChatPage">
@@ -337,7 +238,7 @@ const ChatPage = () => {
           <div className="content-right-info">
             <div className="content-right-info-profile">
               <img />
-              <span>박준서</span>
+              <span>{partner}</span>
             </div>
             <button className="content-right-info-video">
               <img className="video" src={video} />
@@ -345,26 +246,32 @@ const ChatPage = () => {
           </div>
           <hr />
           <div className="content-right-body">
-            {data.map((msg, index) => (
-              <React.Fragment key={index}>
-                <div
-                  className={`content-right-body-wrapper ${
-                    msg.userId === currentUser ? "own-message" : "other-message"
-                  }`}
-                >
-                  <img />
-                  <div className="container">
-                    <div key={index} className={`message`}>
-                      {msg.content}
+            {chatHistory &&
+              chatHistory.map((msg, index) => (
+                <React.Fragment key={index}>
+                  <div
+                    className={`content-right-body-wrapper ${
+                      msg.userId === currentUser
+                        ? "own-message"
+                        : "other-message"
+                    }`}
+                  >
+                    <img />
+                    <div className="container">
+                      <div key={index} className={`message`}>
+                        {msg.content}
+                      </div>
+                      <span className="time">08:00</span>
                     </div>
-                    <span className="time">08:00</span>
                   </div>
-                </div>
-              </React.Fragment>
-            ))}
+                </React.Fragment>
+              ))}
           </div>
           <div className="content-right-input">
-            <textarea onChange={(e) => setInputMessage(e.target.value)} />
+            <textarea
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+            />
             <button onClick={sendChatMessage}>
               <img src={chatsend} />
             </button>
