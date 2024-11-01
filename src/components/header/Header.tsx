@@ -17,7 +17,7 @@ const Header = () => {
     if(pageLocation.pathname=="/") setIsMain(true);
   },[pageLocation]);
 
- 
+
 
   useEffect(()=>{
     const handleScroll=()=>{
@@ -50,7 +50,7 @@ const Header = () => {
         <li onClick={() => navigate("/participate")}>참여하기</li>
         <li onClick={() => navigate("/teambuild")}>팀 꾸리기</li>
         <li onClick={()=>setIsHiddenBtnOn(!isHiddenBtnOn)}>둘러보기</li>
-        <li onClick={() => navigate("/videochat")}>화상채팅</li>
+        {login && <li onClick={() => navigate("/share")}>내 프로젝트</li>}
 
         {login == true ? (
           <li className="login_aft">
