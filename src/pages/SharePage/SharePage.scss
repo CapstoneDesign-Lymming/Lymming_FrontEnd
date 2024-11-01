@@ -1,15 +1,98 @@
 @import '../../style/mixin.scss';
-
+@font-face {
+    font-family: "NanumSquareNeo";
+    font-weight: normal;
+    src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+  }
 
 .SharePageWrapper{
+    font-family: "NanumSquareNeo";
     @include flex-center;
     margin-top: 7vh;
     .SharePage{
-        width: 80vw;
-        height: 90vh;
-        border: 0.01px solid black;
+        width: 100%;
+        height: 100%;
         &-Header{
             font-weight: 800;
+        }
+        &-BodyWrapper{
+            width: 100%;
+            height: 100%;
+            @include flex-center;
+            flex-wrap: wrap;
+            &-CardWrapper{
+                width: 25vw;
+                height: 50vh;
+                border: 4px solid transparent;
+                // border-image: linear-gradient(to bottom, #D9DDE3,#55595F) 1;
+                background-image: linear-gradient(#fff,#fff),linear-gradient(to bottom, #D9DDE3,#55595F);
+                background-origin: border-box;
+                background-clip: content-box, border-box;
+                border-radius: 10px;
+                @include flex-center;
+                margin: 2%;
+                overflow: hidden;
+                .CardInsideWrapper{
+                    // background-color: #dee4eb;
+                    margin: 2%;
+
+                    margin-top: 4%;
+                    width: 100%;
+                    height: 100%;
+                    .CardHeader{
+                        margin-top: 1%;
+                        width: 100px;
+                        height: 10%;
+                        background-color: #B6E9FF;
+                        border-radius: 10px;
+                        color: #47576A;
+                        font-weight: 700;
+                        
+                        @include flex-center;
+                        flex-wrap: nowrap;
+                        &-Title{
+                            @include flex-center;
+                        }
+                    }
+                    .CardBody{
+                        width: 100%;
+                        height: 49%;
+                        margin-top: 2%;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 10px;
+                        }
+
+                    }
+                    .CardFooter{
+                        margin-top: 4%;
+                        width: 100%;
+                        height: 30%;
+                        &-Description{
+                            width: 100%;
+                            height:64%;
+                        }
+                        &-MembersWrapper{
+                            width: 100%;
+                            height: 40%;
+                            display: flex;
+                            justify-content:flex-start;
+                            .memberItem{
+                                @include flex-center;
+                                height: 70%;
+                                background-color: #E9ECEF;
+                                color:#47576A;
+                                padding: 1%;
+                                margin-right: 4%;
+                                flex-wrap: wrap;
+                                border-radius: 8px;
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
     }
 }
