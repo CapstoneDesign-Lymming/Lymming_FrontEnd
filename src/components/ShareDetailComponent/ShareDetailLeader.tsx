@@ -13,7 +13,10 @@ interface ShareDetailLeaderProps{
 
 const ShareDetailLeader = ({leaderData}:ShareDetailLeaderProps) => {
     return (
-        <div>{leaderData.project_description}</div>
+        // <div>{leaderData.project_description}</div>
+        <>
+            <div className="ShareDetailLeaderWrapper"></div>
+        </>
     )
 }
 

@@ -17,7 +17,6 @@ const ShareDetailPage = () => {
             <Header/>
             <div className="ShareDetailPageWrapper">
                 {(data && data.team_leader===username)? 
-                
                 <ShareDetailLeader leaderData={data}/>
                 :
                 <ShareDetailCommon leaderData={data}/>

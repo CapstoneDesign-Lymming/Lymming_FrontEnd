@@ -1,3 +1,4 @@
+import './ShareDetailCommon.scss'
 interface ShareDetailLeaderProps{
     leaderData: {
         userId: number,
@@ -10,12 +11,28 @@ interface ShareDetailLeaderProps{
         is_completed: boolean,
       }
   }
+
+
 const ShareDetailCommon = ({leaderData}:ShareDetailLeaderProps) => {
+    console.log(leaderData.project_url)
   return (
     <>  
-        <div>공통 페이지</div>
-        <div>{leaderData.project_description}</div>
+        {/* <div>공통 페이지</div>
+        <div>{leaderData.project_description}</div> */}
+        <div className='ShareDetailCommonWrapper'>
+            <div className='ShareDetailCommon'>
+                <div className='ShareDetailCommon-Header'>
+                    {leaderData.project_name}
+                </div>
+                <div className='ShareDetailCommon-Body'>
+                    <img src={`${leaderData.project_url}`} alt=""/>
+                </div>
+                <div className='ShareDetailCommon-Footer'>
 
+                </div>
+            </div>
+            
+        </div>
     </>
 )
 }
