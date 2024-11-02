@@ -41,6 +41,7 @@ interface chatRoom {
   userId1: string;
   //상대
   userId2: string;
+  lastMessage: ChatMessage;
 }
 
 const ChatPage = () => {
@@ -91,6 +92,7 @@ const ChatPage = () => {
       await createChatRoom();
       connectSocket();
     }
+    getChatRooms();
   };
 
   // 채팅방이 있는지 검사
@@ -202,6 +204,8 @@ const ChatPage = () => {
     }
   };
 
+  useEffect(() => {}, []);
+
   // 채팅방 목록 불러오기
   const getChatRooms = async () => {
     try {
@@ -215,14 +219,6 @@ const ChatPage = () => {
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    const init = async () => {
-      await getChatRooms();
-    };
-
-    init();
-  }, [chatRooms]);
 
   useEffect(() => {
     const initializeChatRoom = async () => {
@@ -272,8 +268,12 @@ const ChatPage = () => {
                       <span>{it.userId2}</span>
                     </div>
                     <div className="content-left-list-item-body">
-                      <span className="content-left-list-item-body-message"></span>
-                      <span className="content-left-list-item-body-time"></span>
+                      <span className="content-left-list-item-body-message">
+                        {it.lastMessage ? it.lastMessage.content : ""}
+                      </span>
+                      <span className="content-left-list-item-body-time">
+                        {it.lastMessage ? it.lastMessage.timestamp : ""}
+                      </span>
                     </div>
                     <div className="content-left-list-item-count">
                       <span>1</span>
