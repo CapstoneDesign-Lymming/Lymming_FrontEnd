@@ -1,12 +1,13 @@
 import Header from "../../components/header/Header";
 import "./ChatPage.scss";
 import chatsend from "../../assets/img/chat_send.png";
+import chatsendDisable from "../../assets/img/chat_send_disabled.png";
 import video from "../../assets/img/videocam.png";
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
-import { pre } from "framer-motion/client";
+import { useLocation } from "react-router-dom";
 
 const data2 = [
   {
@@ -37,20 +38,30 @@ interface ChatMessage {
 interface chatRoom {
   id: string;
   roomId: string;
-  userId: string;
+  userId1: string;
   //상대
-  userName: string;
+  userId2: string;
+  lastMessage: ChatMessage;
 }
 
 const ChatPage = () => {
+  const location = useLocation();
+
   const currentUser = "user123"; // 토큰을 통해 로그인된 사용자 id 확인해야함
-  const [partner, setPartner] = useState("홍길동");
+
   // 채팅방 정보 받아오기 - 채팅 기록등
   const [chatRoom, setChatRoom] = useState<chatRoom | null>(null);
   const client = useRef<CompatClient | null>(null);
   const [inputMessage, setInputMessage] = useState("");
 
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
+  const messageEndRef = useRef<HTMLDivElement>(null);
+
+  const parterId = location.state.id;
+  const [partner, setPartner] = useState(parterId);
+  const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
+
+  console.log(partner);
 
   // msg time 전달하기
   const getMsgTime = () => {
@@ -72,28 +83,41 @@ const ChatPage = () => {
     const roomExists = await isExistChatRoom();
 
     if (roomExists) {
+      console.log("채팅방 존재");
       // 소켓 연결
       connectSocket();
     } else {
+      console.log("채팅방 없음");
       // 채팅방 생성 함수
       await createChatRoom();
       connectSocket();
     }
+    getChatRooms();
   };
 
   // 채팅방이 있는지 검사
   const isExistChatRoom = async () => {
     if (partner) {
+      console.log("채팅방 조사");
       try {
         const res = await axios.post("http://localhost:8080/chat/existroom", {
           roomId: `${currentUser}_${partner}`,
         });
-        await setChatRoom(res.data);
-        console.log(res);
+
+        console.log(res.data.type);
+
+        if (res.data === "") {
+          console.log("채팅방 없음");
+          return false; // 채팅방이 없으므로 false 반환
+        }
+
+        // 채팅방이 존재하는 경우
+        console.log("채팅방 있음");
+        setChatRoom(res.data);
+        return true;
       } catch (e) {
         console.error(e);
       }
-      return true;
     }
     return false;
   };
@@ -102,7 +126,8 @@ const ChatPage = () => {
     if (partner) {
       const payload = {
         roomId: `${currentUser}_${partner}`,
-        userId: partner,
+        userId1: currentUser,
+        userId2: parterId,
       };
       try {
         const res = await axios.post(
@@ -179,10 +204,27 @@ const ChatPage = () => {
     }
   };
 
+  useEffect(() => {}, []);
+
+  // 채팅방 목록 불러오기
+  const getChatRooms = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/chat/chatrooms", {
+        // 올바른 URL 경로 확인
+        params: { userId: currentUser }, // userId를 파라미터로 전달
+      });
+      console.log(res.data);
+      setChatRooms(res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const initializeChatRoom = async () => {
       await enterChatRoom(); // enterChatRoom이 완료될 때까지 대기
       console.log(chatRoom);
+      console.log(partner);
     };
 
     initializeChatRoom();
@@ -196,6 +238,13 @@ const ChatPage = () => {
     loadChatHistory();
   }, [chatRoom]);
 
+  useEffect(() => {
+    messageEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [chatHistory]);
+
   return (
     <div className="ChatPage">
       <Header />
@@ -206,32 +255,32 @@ const ChatPage = () => {
             <span>채팅기록</span>
           </div>
           <div className="content-left-list">
-            {/* 추후에 리스트에서 이름으로 가져와야한다 */}
-            {data2.map((it, index) => {
-              return (
-                <div
-                  key={index}
-                  className="content-left-list-item"
-                  onClick={() => setPartner(it.userName)}
-                >
-                  <div className="content-left-list-item-profile">
-                    <img />
-                    <span>{it.userName}</span>
+            {chatRooms &&
+              chatRooms.map((it, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="content-left-list-item"
+                    onClick={() => setPartner(it.userId2)}
+                  >
+                    <div className="content-left-list-item-profile">
+                      <img />
+                      <span>{it.userId2}</span>
+                    </div>
+                    <div className="content-left-list-item-body">
+                      <span className="content-left-list-item-body-message">
+                        {it.lastMessage ? it.lastMessage.content : ""}
+                      </span>
+                      <span className="content-left-list-item-body-time">
+                        {it.lastMessage ? it.lastMessage.timestamp : ""}
+                      </span>
+                    </div>
+                    <div className="content-left-list-item-count">
+                      <span>1</span>
+                    </div>
                   </div>
-                  <div className="content-left-list-item-body">
-                    <span className="content-left-list-item-body-message">
-                      {it.lastchat}
-                    </span>
-                    <span className="content-left-list-item-body-time">
-                      {it.timestamp}
-                    </span>
-                  </div>
-                  <div className="content-left-list-item-count">
-                    <span>1</span>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
         </div>
         <div className="content-right">
@@ -261,19 +310,24 @@ const ChatPage = () => {
                       <div key={index} className={`message`}>
                         {msg.content}
                       </div>
-                      <span className="time">08:00</span>
+                      <span className="time">{msg.timestamp}</span>
                     </div>
                   </div>
                 </React.Fragment>
               ))}
+
+            <div ref={messageEndRef}></div>
           </div>
           <div className="content-right-input">
             <textarea
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
             />
-            <button onClick={sendChatMessage}>
-              <img src={chatsend} />
+            <button
+              onClick={sendChatMessage}
+              style={{ pointerEvents: inputMessage === "" ? "none" : "all" }}
+            >
+              <img src={inputMessage === "" ? chatsendDisable : chatsend} />
             </button>
           </div>
         </div>

@@ -11,7 +11,7 @@
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
         "https://images.velog.io/images/pm1100tm/post/d7133a58-e16e-4766-825e-a8ebd11d8345/python.jpg"
       ],
-      "name": "프론트짱",
+      "userId": "프론트짱",
       "skill": ["C", "C++"],
       "heart": 0,
       "method": "온라인",
@@ -30,7 +30,7 @@
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
       ],
       "skill": ["C", "Java"],
-      "name": "박준서",
+      "userId": "박준서",
       "heart": 0,
       "method": "온라인",
       "profile": "",
@@ -48,7 +48,7 @@
       ],
       "skill": ["C", "Java"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "박준서1",
+      "userId": "박준서1",
       "heart": 0,
       "method": "온라인",
       "profile": "",
@@ -67,7 +67,7 @@
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
       ],
       "method": "온라인",
-      "name": "프론트짱",
+      "userId": "프론트짱",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -84,7 +84,7 @@
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
       ],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
+      "userId": "프론트짱",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -102,7 +102,7 @@
       "position": ["프론트"],
       "skill": ["C", "Java"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "박준서1",
+      "userId": "박준서1",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -120,7 +120,7 @@
       ],
       "position": ["프론트"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
+      "userId": "프론트짱",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -137,7 +137,7 @@
       ],
       "position": ["프론트"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
+      "userId": "프론트짱4",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
@@ -150,7 +150,7 @@
       "uploadTime": "2023.11.07",
       "position": ["프론트", "백엔드", "디자이너"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "박준서1",
+      "userId": "박준서1",
       "skill": ["C", "Java"],
       "skillicon": [
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
@@ -168,7 +168,7 @@
       "skill": ["C", "Java"],
       "position": ["디자이너"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
+      "userId": "프론트짱3",
       "skillicon": [
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg",
         "https://i.namu.wiki/i/KcqDuQYTxNpUcLIMZTg28QXse0XiWx1G7K68kYYCo1GuhoHmhB_V8Qe9odGGt0BH9-0nQZTN53WXTNpDmwVfWQ.svg"
@@ -190,7 +190,7 @@
       "method": "오프라인",
       "position": ["프론트"],
       "style": ["열정적", "열정적", "열정적"],
-      "name": "프론트짱",
+      "userId": "프론트짱2",
       "heart": 0,
       "profile": "",
       "content": "본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다. 본문입니다."
