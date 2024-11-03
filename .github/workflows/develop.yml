@@ -2,17 +2,17 @@ name: Main deploy # WorkFlow 이름
 on: # Event 감지
   push:
     branches:
-      - develop # main에서 develop으로 변경
+      - develop
 
 jobs: # job 설정
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code # Repo checkout 
-        uses: actions/checkout@v3
+        uses: actions/checkout@v1
 
       - name: Cache node modules # node modules 캐싱
-        uses: actions/cache@v3
+        uses: actions/cache@v1
         with:
           path: node_modules
           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
