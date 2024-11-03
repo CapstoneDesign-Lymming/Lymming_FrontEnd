@@ -4,10 +4,12 @@ interface LoginState {
   login: boolean;
   count: number;
   isOpen: boolean;
+  username:string;
   setCount: () => void;
   setCountDown: () => void;
   setIsOpen: () => void;
   setLogin: () => void;
+  setUserName: (newUsername: string) => void; 
 }
 
 interface UserInfo {
@@ -32,10 +34,12 @@ export const useLoginStore = create<LoginState>((set) => ({
   // login: false,
   count: 1,
   isOpen: false,
+  username:"노기훈",
   setCount: () => set((state: any) => ({ count: state.count + 1 })),
   setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
   setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
   setLogin: () => set((state: any) => ({ login: !state.login })),
+  setUserName: (newUsername: string) => set(() => ({ username: newUsername })),
 }));
 
 // 회원 정보 입력 data
