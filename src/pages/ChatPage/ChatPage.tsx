@@ -9,23 +9,6 @@ import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import { useLocation } from "react-router-dom";
 
-const data2 = [
-  {
-    lastchat: "안녕하세요!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    lastchat: "안녕하세요!",
-    userId: "user123",
-    userName: "박준서",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-];
-
 interface ChatMessage {
   content: string;
   userName: string;
@@ -98,10 +81,10 @@ const ChatPage = () => {
   // 채팅방이 있는지 검사
   const isExistChatRoom = async () => {
     if (partner) {
-      console.log("채팅방 조사");
+      const roomId = await sortChatRoomId(currentUser, partner);
       try {
         const res = await axios.post("http://localhost:8080/chat/existroom", {
-          roomId: `${currentUser}_${partner}`,
+          roomId: roomId,
         });
 
         console.log(res.data.type);
@@ -124,8 +107,9 @@ const ChatPage = () => {
 
   const createChatRoom = async () => {
     if (partner) {
+      const roomId = await sortChatRoomId(currentUser, partner);
       const payload = {
-        roomId: `${currentUser}_${partner}`,
+        roomId: roomId,
         userId1: currentUser,
         userId2: parterId,
       };
@@ -204,7 +188,13 @@ const ChatPage = () => {
     }
   };
 
-  useEffect(() => {}, []);
+  const sortChatRoomId = (userId1: String, userId2: String): String => {
+    let arr = [userId1, userId2];
+
+    arr.sort();
+
+    return `${arr[0]}_${arr[1]}`;
+  };
 
   // 채팅방 목록 불러오기
   const getChatRooms = async () => {

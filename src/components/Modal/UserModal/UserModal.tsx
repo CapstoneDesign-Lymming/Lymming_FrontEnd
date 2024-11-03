@@ -1,4 +1,3 @@
-import React, { FC } from "react";
 import "./UserModal.scss";
 import back from "../../../assets/img/leftrrow.png";
 
