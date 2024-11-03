@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useInfoStore } from "../../../store/useLoginStore";
 import "./LoginInfoModalChild.scss";
 import infoData from "../../../data/loginInfoData.json";
-import { data, pre } from "framer-motion/client";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();

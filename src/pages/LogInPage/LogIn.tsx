@@ -37,7 +37,7 @@ const LogIn = () => {
     activeStyle: { background: "#E5CC00" },
   });
 
-  const { count, isOpen, setIsOpen } = useLoginStore();
+  const { count, isOpen } = useLoginStore();
 
   const kakaolink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   // 여기는 깃허브 링크로 따로 추가해야함

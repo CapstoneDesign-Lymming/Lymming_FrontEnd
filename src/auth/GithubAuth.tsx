@@ -5,7 +5,7 @@ import { useLoginStore } from "../store/useLoginStore";
 
 const GithubAuth = () => {
   const navigate = useNavigate();
-  const { setLogin, setIsOpen } = useLoginStore();
+  const { setIsOpen } = useLoginStore();
 
   useEffect(() => {
     postGithubCode(code);

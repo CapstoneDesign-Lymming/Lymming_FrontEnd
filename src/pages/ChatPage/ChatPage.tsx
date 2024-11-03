@@ -9,23 +9,6 @@ import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import { useLocation } from "react-router-dom";
 
-const data2 = [
-  {
-    lastchat: "안녕하세요!",
-    userId: "user123",
-    userName: "홍길동",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-  {
-    lastchat: "안녕하세요!",
-    userId: "user123",
-    userName: "박준서",
-    timestamp: "2024-07-29T14:30:00Z",
-    roomId: "room1",
-  },
-];
-
 interface ChatMessage {
   content: string;
   userName: string;
@@ -203,8 +186,6 @@ const ChatPage = () => {
       console.log(inputMessage);
     }
   };
-
-  useEffect(() => {}, []);
 
   // 채팅방 목록 불러오기
   const getChatRooms = async () => {
