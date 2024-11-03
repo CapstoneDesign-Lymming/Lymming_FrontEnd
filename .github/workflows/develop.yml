@@ -11,6 +11,11 @@ jobs: # job 설정
       - name: Checkout source code # Repo checkout 
         uses: actions/checkout@v3
 
+      - name: Set up Node.js #node js 설정
+        uses: actions/setup-node@v3
+        with:
+          node-version:'20' #node.js 20버전 사용
+
       - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v3
         with:
@@ -28,8 +33,8 @@ jobs: # job 설정
 
       - name: Build # React Build
         run: npm run build
-        env:
-          CI: "false"
+        # env:
+        #   CI: "false"
 
       - name: Deploy
         env:
