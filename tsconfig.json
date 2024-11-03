@@ -6,6 +6,7 @@
   ],
 
   "compilerOptions": {
-    "moduleResolution": "Bundler"
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   }
 }
