@@ -5,7 +5,7 @@ import axios from "axios";
 
 const KakaoAuth = () => {
   const navigate = useNavigate();
-  const { setLogin, setIsOpen } = useLoginStore();
+  const { setIsOpen } = useLoginStore();
 
   useEffect(() => {
     postKakaoCode(code);

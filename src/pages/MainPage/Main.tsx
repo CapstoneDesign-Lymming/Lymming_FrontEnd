@@ -99,7 +99,7 @@ const Main = () => {
 
       <div className="info3">
         <div className="progressbar">
-          {mainData.info3.map((it, index) => (
+          {mainData.info3.map((_, index) => (
             <span
               className={`circle ${index === visible ? "active" : ""}`}
               key={index}
