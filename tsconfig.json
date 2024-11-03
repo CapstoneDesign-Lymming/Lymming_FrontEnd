@@ -4,8 +4,8 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+
   "compilerOptions": {
-    "resolveJsonModule": true,
-    "esModuleInterop": true
+    "moduleResolution": "Bundler"
   }
 }
