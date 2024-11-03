@@ -1,13 +1,25 @@
 import Header from "../../components/header/Header";
 import "./Main.scss";
-import mainData from "../../data/maindata.json";
+import data from "../../data/maindata.json";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import leftbtn from "../../assets/img/leftrrow.png";
 import rightbtn from "../../assets/img/rigntarrow.png";
 import logo from "../../assets/img/lymming_logo.png";
 
+interface InfoItem {
+  title: string;
+  data: string;
+}
+
+interface MainData {
+  info1: InfoItem[];
+  info2: InfoItem[];
+  info3: InfoItem[];
+}
+
 const Main = () => {
+  const mainData: MainData = data;
   const [isBack, setIsBack] = useState(false);
   const [visible, setVisible] = useState(0);
 
@@ -65,7 +77,7 @@ const Main = () => {
             </span>
           </div>
           <div className="info1-content-right">
-            {mainData.info1.map((it, index) => {
+            {mainData.info1.map((it: InfoItem, index: number) => {
               return (
                 <div className="info1-content-right-box" key={index}>
                   <span className="info1-content-right-box-head">
@@ -86,7 +98,7 @@ const Main = () => {
         </div>
 
         <div className="info2-right">
-          {mainData.info2.map((it, index) => {
+          {mainData.info2.map((it: InfoItem, index: number) => {
             return (
               <div className="info2-right-box" key={index}>
                 <span className="info2-right-box-img">{it.title}</span>
@@ -99,7 +111,7 @@ const Main = () => {
 
       <div className="info3">
         <div className="progressbar">
-          {mainData.info3.map((_, index) => (
+          {mainData.info3.map((_, index: number) => (
             <span
               className={`circle ${index === visible ? "active" : ""}`}
               key={index}
@@ -120,7 +132,7 @@ const Main = () => {
         </div>
 
         <AnimatePresence>
-          {mainData.info3.map((it, index) => {
+          {mainData.info3.map((it: InfoItem, index: number) => {
             return visible === index ? (
               <motion.div
                 key={index}
