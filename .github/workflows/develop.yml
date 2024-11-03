@@ -14,7 +14,7 @@ jobs: # job 설정
       - name: Set up Node.js #node js 설정
         uses: actions/setup-node@v3
         with:
-          node-version:'20' #node.js 20버전 사용
+          node-version: '20' #node.js 20버전 사용
 
       - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v3
