@@ -26,6 +26,9 @@ const ShareDetailCommon = ({leaderData}:ShareDetailLeaderProps) => {
                 </div>
                 <div className='ShareDetailCommon-Body'>
                     <img src={`${leaderData.project_url}`} alt=""/>
+                    <div className='Body_description'>
+                        {leaderData.project_description}
+                    </div>
                 </div>
                 <div className='ShareDetailCommon-Footer'>
 
