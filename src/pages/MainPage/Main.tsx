@@ -1,6 +1,6 @@
 import Header from "../../components/header/Header";
 import "./Main.scss";
-import data from "../../data/maindata.json";
+import data from "../../../public/json/mainData.json";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import leftbtn from "../../assets/img/leftrrow.png";
