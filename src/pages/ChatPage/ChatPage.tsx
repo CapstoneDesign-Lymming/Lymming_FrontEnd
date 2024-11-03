@@ -81,10 +81,10 @@ const ChatPage = () => {
   // 채팅방이 있는지 검사
   const isExistChatRoom = async () => {
     if (partner) {
-      console.log("채팅방 조사");
+      const roomId = await sortChatRoomId(currentUser, partner);
       try {
         const res = await axios.post("http://localhost:8080/chat/existroom", {
-          roomId: `${currentUser}_${partner}`,
+          roomId: roomId,
         });
 
         console.log(res.data.type);
@@ -107,8 +107,9 @@ const ChatPage = () => {
 
   const createChatRoom = async () => {
     if (partner) {
+      const roomId = await sortChatRoomId(currentUser, partner);
       const payload = {
-        roomId: `${currentUser}_${partner}`,
+        roomId: roomId,
         userId1: currentUser,
         userId2: parterId,
       };
@@ -185,6 +186,14 @@ const ChatPage = () => {
       setInputMessage("");
       console.log(inputMessage);
     }
+  };
+
+  const sortChatRoomId = (userId1: String, userId2: String): String => {
+    let arr = [userId1, userId2];
+
+    arr.sort();
+
+    return `${arr[0]}_${arr[1]}`;
   };
 
   // 채팅방 목록 불러오기
