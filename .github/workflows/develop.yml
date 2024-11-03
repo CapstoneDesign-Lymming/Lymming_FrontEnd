@@ -1,4 +1,4 @@
-name: Main deploy # WorkFlow 이름
+name: Develop deploy # WorkFlow 이름
 on: # Event 감지
   push:
     branches:
@@ -29,8 +29,8 @@ jobs: # job 설정
       - name: Build # React Build
         run: npm run build
         env:
-          CI: ""
-          
+          CI: "false"
+
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
