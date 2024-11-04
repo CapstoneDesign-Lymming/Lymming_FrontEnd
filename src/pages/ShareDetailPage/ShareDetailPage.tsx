@@ -17,9 +17,9 @@ const ShareDetailPage = () => {
       <Header />
       <div className="ShareDetailPageWrapper">
         {data && data.team_leader === username ? (
-          <ShareDetailLeader /*leaderData={data}*/ />
+          <ShareDetailLeader data={data} />
         ) : (
-          <ShareDetailCommon leaderData={data} />
+          <ShareDetailCommon data={data} />
         )}
         {!data && <div>data가 안넘어왔습니다.ㅣ</div>}
       </div>

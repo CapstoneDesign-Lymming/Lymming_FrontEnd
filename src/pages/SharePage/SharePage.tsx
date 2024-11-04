@@ -57,7 +57,7 @@ const SharePage = () => {
                     </div>
                     <div className="CardFooter">
                       <div className="CardFooter-Description">
-                        {item.project_description}
+                        <div className="word">{item.project_description}</div>
                       </div>
                       <div className="CardFooter-MembersWrapper">
                         {item.team_member_name.map((name) => (
