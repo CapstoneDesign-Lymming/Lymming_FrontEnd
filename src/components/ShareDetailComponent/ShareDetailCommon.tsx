@@ -1,6 +1,6 @@
 import "./ShareDetailCommon.scss";
 interface ShareDetailLeaderProps {
-  leaderData: {
+  data: {
     userId: number;
     project_id: number;
     project_name: string;
@@ -15,31 +15,27 @@ interface ShareDetailLeaderProps {
   };
 }
 
-const ShareDetailCommon = ({ leaderData }: ShareDetailLeaderProps) => {
+const ShareDetailCommon = ({ data }: ShareDetailLeaderProps) => {
   return (
     <>
       {/* <div>공통 페이지</div>
         <div>{leaderData.project_description}</div> */}
       <div className="ShareDetailCommonWrapper">
         <div className="ShareDetailCommon">
-          <div className="ShareDetailCommon-Header">
-            {leaderData.project_name}
-          </div>
+          <div className="ShareDetailCommon-Header">{data.project_name}</div>
           <div className="ShareDetailCommon-Body">
-            <img src={`${leaderData.project_url}`} alt="" />
-            <div className="Body_description">
-              {leaderData.project_description}
-            </div>
+            <img src={`${data.project_url}`} alt="" />
+            <div className="Body_description">{data.project_description}</div>
           </div>
           <div className="ShareDetailCommon-Footer">
-            {leaderData.team_member.map((userId, idx) => (
+            {data.team_member.map((userId, idx) => (
               <div className="MemberCardWrapper">
                 {
                   <div className="MemberCard" key={userId}>
                     <div className="MemberCard-head">
                       <img
                         className="MemberCard-head-profile"
-                        src={`${leaderData.team_member_url[idx]}`}
+                        src={`${data.team_member_url[idx]}`}
                         alt=""
                       ></img>
                     </div>
@@ -50,8 +46,7 @@ const ShareDetailCommon = ({ leaderData }: ShareDetailLeaderProps) => {
                       >
                         <path
                           className={`${
-                            leaderData.team_leader ===
-                            leaderData.team_member_name[idx]
+                            data.team_leader === data.team_member_name[idx]
                               ? "leader"
                               : "no_leader"
                           }`}
@@ -59,10 +54,10 @@ const ShareDetailCommon = ({ leaderData }: ShareDetailLeaderProps) => {
                         />
                       </svg>
                       <div className="MemberCard-body-name">
-                        {leaderData.team_member_name[idx]}
+                        {data.team_member_name[idx]}
                       </div>
                       <div className="MemberCard-body-position">
-                        {leaderData.team_member_position[idx]}
+                        {data.team_member_position[idx]}
                       </div>
                     </div>
                   </div>
