@@ -8,12 +8,13 @@ interface ShareDetailLeaderProps {
     project_description: string;
     team_member: number[];
     team_member_name: string[];
+    team_member_url: string[];
+    team_member_position: string[];
     is_completed: boolean;
   };
 }
 
 const ShareDetailCommon = ({ leaderData }: ShareDetailLeaderProps) => {
-  console.log(leaderData.project_url);
   return (
     <>
       {/* <div>공통 페이지</div>
@@ -29,7 +30,29 @@ const ShareDetailCommon = ({ leaderData }: ShareDetailLeaderProps) => {
               {leaderData.project_description}
             </div>
           </div>
-          <div className="ShareDetailCommon-Footer"></div>
+          <div className="ShareDetailCommon-Footer">
+            {leaderData.team_member.map((userId, idx) => (
+              <div className="MemberCardWrapper">
+                <div className="MemberCard" key={userId}>
+                  <div className="MemberCard-head">
+                    <img
+                      className="MemberCard-head-profile"
+                      src={`${leaderData.team_member_url[idx]}`}
+                      alt=""
+                    ></img>
+                  </div>
+                  <div className="MemberCard-body">
+                    <div className="MemberCard-body-name">
+                      {leaderData.team_member_name[idx]}
+                    </div>
+                    <div className="MemberCard-body-position">
+                      {leaderData.team_member_position[idx]}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
