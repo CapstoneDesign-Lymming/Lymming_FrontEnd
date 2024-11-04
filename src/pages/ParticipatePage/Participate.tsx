@@ -16,7 +16,7 @@ interface ParticipateItem {
   end: string;
   position: string[];
   style: string[];
-  name: string;
+  userId: string;
   skill: string[];
   skillicon: string[];
 }
@@ -245,7 +245,7 @@ const Participate = () => {
                   onClick={() => setUserModalOpen(true)}
                 >
                   <img />
-                  <span>{it.name}</span>
+                  <span>{it.userId}</span>
                 </div>
                 <div className="content-item-bottom-right">
                   <div className="content-item-bottom-right-watch">
@@ -254,7 +254,9 @@ const Participate = () => {
                   </div>
                   <div
                     className="content-item-bottom-right-chat"
-                    onClick={() => navigate("/chat")}
+                    onClick={() =>
+                      navigate("/chat", { state: { id: it.userId } })
+                    }
                   >
                     <img src={chat} />
                     <span>채팅하기</span>

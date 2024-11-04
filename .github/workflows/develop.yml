@@ -1,0 +1,45 @@
+name: Develop deploy # WorkFlow 이름
+on: # Event 감지
+  push:
+    branches:
+      - develop
+
+jobs: # job 설정
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code # Repo checkout 
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js #node js 설정
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' #node.js 20버전 사용
+
+      - name: Cache node modules # node modules 캐싱
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Check Node v # Node 버전 확인
+        run: node -v
+
+      - name: Install Dependencies # 의존 파일 설치
+        run: npm install
+
+      - name: Build # React Build
+        run: npm run build
+        # env:
+        #   CI: "false"
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-northeast-2
+        run: |
+          aws s3 cp dist s3://lymming.link/ --recursive 
