@@ -74,6 +74,12 @@
             height: 40%;
             margin-top: 1%;
             @include flex-column-center;
+            .no_leader {
+              display: none;
+            }
+            .leader {
+              fill: #f0e08c;
+            }
             &-name {
               font-size: 18px;
               font-weight: 500;
