@@ -1,23 +1,10 @@
-import { useEffect, useRef } from "react";
-import useModalStore from "../../../store/useModalState";
 import "./ComfirmVideoModal.scss";
 import useConfirmVideoStore from "../../../store/useComfirmVideoStore";
+import useModalClose from "../../../hooks/useModalClose";
 
 const ComfirmVideoModal = () => {
-  const { closeModal } = useModalStore();
   const { setConfirmVideo } = useConfirmVideoStore();
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  //modal외 요소 클릭시 닫힘
-  useEffect(() => {
-    const handleClickOutSide = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node))
-        closeModal();
-    };
-    document.addEventListener("mousedown", handleClickOutSide);
-    return () => document.removeEventListener("mousedown", handleClickOutSide);
-  }, [closeModal]);
-
+  const { closeModal, modalRef } = useModalClose();
   return (
     <div ref={modalRef} className="ComfirmVideoModal">
       <div className="ModalHeader">
