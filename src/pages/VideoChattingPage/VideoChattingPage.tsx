@@ -48,6 +48,7 @@ const VideoChattingPage = () => {
 
   useEffect(() => {
     console.log("🔥🔥", isCalling);
+    //signaling server url 변경
     const nextSocket = io(import.meta.env.VITE_SIGNALING_SERVER_URL);
     setSocket(nextSocket);
     setRoom("test_room"); //TODO: 추후 사용자 room id로 변경
