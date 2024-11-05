@@ -6,8 +6,9 @@ import useModalStore from "../store/useModalState";
  *@ modalRef : modal의 영역을 useRef로 감싼 값
  */
 const useModalClose = () => {
-  const { closeModal } = useModalStore();
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const { closeModal } = useModalStore();
 
   useEffect(() => {
     const handleClickOutSide = (event: MouseEvent) => {
@@ -18,7 +19,7 @@ const useModalClose = () => {
     return () => document.removeEventListener("mousedown", handleClickOutSide);
   }, [closeModal]);
 
-  return { closeModal, modalRef };
+  return { modalRef, closeModal };
 };
 
 export default useModalClose;
