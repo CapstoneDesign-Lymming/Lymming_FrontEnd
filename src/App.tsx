@@ -12,6 +12,7 @@ import MemberPage from "./pages/MemberPage/MemberPage";
 import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
 import SharePage from "./pages/SharePage/SharePage";
 import ShareDetailPage from "./pages/ShareDetailPage/ShareDetailPage";
+import ShareDetailLeader from "./components/ShareDetailComponent/ShareDetailLeader";
 
 function App() {
   return (
@@ -26,15 +27,16 @@ function App() {
           path="/participate/detail/:id"
           element={<ParticipateDetail />}
         ></Route>
-        <Route
-          path="/share/detail/:id"
-          element={<ShareDetailPage />}
-        ></Route>
+        <Route path="/share/detail/:id" element={<ShareDetailPage />}></Route>
         <Route path="/teambuild" element={<TeamBuilding />}></Route>
         <Route path="/chat" element={<ChatPage />}></Route>
         <Route path="/member" element={<MemberPage />}></Route>
         <Route path="/exhibition" element={<ExhibitionPage />}></Route>
         <Route path="/share" element={<SharePage />}></Route>
+        <Route
+          path="/share/detail/leader"
+          element={<ShareDetailLeader />}
+        ></Route>
       </Routes>
     </div>
   );
