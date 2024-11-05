@@ -13,8 +13,14 @@ interface ShareDetailLeaderProps {
     is_completed: boolean;
   };
 }
+//TODO: 공통 페이지에서 리더라면 수정하기 표시가 뜸
 
-const ShareDetailLeader = ({ data }: ShareDetailLeaderProps) => {
+import { useLocation } from "react-router-dom";
+
+//수정하기 누르면 지금 리더페이지로 이동
+const ShareDetailLeader = () => {
+  const location = useLocation();
+  const data: ShareDetailLeaderProps = location.state;
   console.log(data);
   return (
     <>
@@ -49,7 +55,7 @@ const ShareDetailLeader = ({ data }: ShareDetailLeaderProps) => {
             <div></div>
           </div>
           <div className="ShareDetailLeader-Footer_BtnWrapper">
-            <button>종료하기</button>
+            <button>저장하기</button>
           </div>
         </div>
       </div>
