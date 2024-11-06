@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useLoginStore } from "../../store/useLoginStore";
+import { useInfoStore } from "../../store/useLoginStore";
 import "./ShareDetailCommon.scss";
 interface ShareDetailLeaderProps {
   data: {
@@ -17,8 +17,8 @@ interface ShareDetailLeaderProps {
   };
 }
 
-const ShareDetailCommon = ({ data }: ShareDetailLeaderProps) => {
-  const { username } = useLoginStore();
+const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
+  const { data } = useInfoStore();
   const navigate = useNavigate();
   return (
     <>
@@ -26,29 +26,33 @@ const ShareDetailCommon = ({ data }: ShareDetailLeaderProps) => {
         <div>{leaderData.project_description}</div> */}
       <div className="ShareDetailCommonWrapper">
         <div className="ShareDetailCommon">
-          <div className="ShareDetailCommon-Header">{data.project_name}</div>
+          <div className="ShareDetailCommon-Header">
+            {propData.project_name}
+          </div>
           <div className="ShareDetailCommon-Body">
-            <img src={`${data.project_url}`} alt="" />
-            <div className="Body_description">{data.project_description}</div>
+            <img src={`${propData.project_url}`} alt="" />
+            <div className="Body_description">
+              {propData.project_description}
+            </div>
           </div>
           <div className="ShareDetailCommon-Footer">
-            {data.team_member.map((userId, idx) => (
+            {propData.team_member.map((userId, idx) => (
               <div className="MemberCardWrapper">
                 {
                   <div className="MemberCard" key={userId}>
                     <div className="MemberCard-head">
                       <img
                         className="MemberCard-head-profile"
-                        src={`${data.team_member_url[idx]}`}
+                        src={`${propData.team_member_url[idx]}`}
                         alt=""
                       ></img>
                     </div>
                     <div className="MemberCard-body">
                       <div className="MemberCard-body-name">
-                        {data.team_member_name[idx]}
+                        {propData.team_member_name[idx]}
                       </div>
                       <div className="MemberCard-body-position">
-                        {data.team_member_position[idx]}
+                        {propData.team_member_position[idx]}
                       </div>
                     </div>
                   </div>
@@ -56,12 +60,12 @@ const ShareDetailCommon = ({ data }: ShareDetailLeaderProps) => {
               </div>
             ))}
           </div>
-          {data && data.team_leader === username && (
+          {propData && propData.team_leader === data.name && (
             <div className="leader_btn_bundle">
               <div
                 className="leader_btn"
                 onClick={() => {
-                  navigate("/share/detail/leader", { state: data });
+                  navigate("/share/detail/leader", { state: propData });
                 }}
               >
                 수정하기

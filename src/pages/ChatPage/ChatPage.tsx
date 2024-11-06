@@ -7,7 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface ChatMessage {
   content: string;
@@ -29,7 +29,7 @@ interface chatRoom {
 
 const ChatPage = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const currentUser = "user123"; // 토큰을 통해 로그인된 사용자 id 확인해야함
 
   // 채팅방 정보 받아오기 - 채팅 기록등
@@ -43,7 +43,7 @@ const ChatPage = () => {
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
-
+  const [roomId, setRoomId] = useState<string>("");
   console.log(partner);
 
   // msg time 전달하기
@@ -108,6 +108,8 @@ const ChatPage = () => {
   const createChatRoom = async () => {
     if (partner) {
       const roomId = await sortChatRoomId(currentUser, partner);
+      setRoomId(roomId);
+      console.log("roomId는!", roomId);
       const payload = {
         roomId: roomId,
         userId1: currentUser,
@@ -188,8 +190,8 @@ const ChatPage = () => {
     }
   };
 
-  const sortChatRoomId = (userId1: String, userId2: String): String => {
-    let arr = [userId1, userId2];
+  const sortChatRoomId = (userId1: string, userId2: string): string => {
+    const arr = [userId1, userId2];
 
     arr.sort();
 
@@ -281,7 +283,10 @@ const ChatPage = () => {
                 <img />
                 <span>{partner}</span>
               </div>
-              <button className="content-right-info-video">
+              <button
+                onClick={() => navigate(`/videochat/${roomId}`)}
+                className="content-right-info-video"
+              >
                 <img className="video" src={video} />
               </button>
             </div>
