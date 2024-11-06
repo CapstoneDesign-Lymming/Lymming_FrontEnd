@@ -21,18 +21,18 @@ function App() {
         <Route path="/" element={<Main />}></Route>
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/auth" element={<KakaoAuth />}></Route>
-        <Route path="/participate" element={<Participate />}></Route>
         <Route path="/videochat" element={<VideoChattingPage />}></Route>
+        <Route path="/participate" element={<Participate />}></Route>
         <Route
           path="/participate/detail/:id"
           element={<ParticipateDetail />}
         ></Route>
-        <Route path="/share/detail/:id" element={<ShareDetailPage />}></Route>
         <Route path="/teambuild" element={<TeamBuilding />}></Route>
         <Route path="/chat" element={<ChatPage />}></Route>
         <Route path="/member" element={<MemberPage />}></Route>
         <Route path="/exhibition" element={<ExhibitionPage />}></Route>
         <Route path="/share" element={<SharePage />}></Route>
+        <Route path="/share/detail/:id" element={<ShareDetailPage />}></Route>
         <Route
           path="/share/detail/leader"
           element={<ShareDetailLeader />}
