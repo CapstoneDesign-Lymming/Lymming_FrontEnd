@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLoginStore } from "../store/useLoginStore";
+import { useInfoStore, useLoginStore } from "../store/useLoginStore";
 import axios from "axios";
 
 const KakaoAuth = () => {
   const navigate = useNavigate();
-  const { setIsOpen } = useLoginStore();
+  const { setIsOpen, setLogin } = useLoginStore();
+  const { data, setData } = useInfoStore();
 
   useEffect(() => {
     postKakaoCode(code);
@@ -27,44 +28,31 @@ const KakaoAuth = () => {
       localStorage.setItem("token", result.data);
       console.log("로그인", result.data);
 
-      getUserData();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  // 서버로부터 사용자 data를 받아온다
-  // 토큰으로 사용자 data가 있을경우 홈으로 이동 없는경우 모달을 띄운다
-  const getUserData = async () => {
-    setIsOpen();
-    navigate("/login");
-    /*
-    const token = localStorage.getItem("token");
-    try {
-      // 임시 경로
-      const res = await axios.get("http://localhost:8080/api/kakao/login", {
-        params: { token },
-      });
-
-      console.log(res);
-
-      //데이터 요청후
-      //데이터 없을경우
-      if (res.data) {
-        //       setLogin(true);
-        // 서버에서 받은 data로 사용자 저장
-        useInfoStore(res.data);
+      // 있으면
+      //홈으로 이동
+      //userInfo 데이터를 불러온 데이터로 세팅한다
+      // 로그인 상태를 true로 만든다
+      if (result.data.nickname) {
+        setData(result.data);
+        setLogin();
         navigate("/");
-      } else {
-        //데이터 있는경우
+      }
+
+      // 회원가입 정보중 닉네임등의 정보가 추가되어 있지 않으면
+      // 회원 가입 모달을 띄운다
+      //로그인 페이지로 네비게이트 한다
+      else {
         setIsOpen();
         navigate("/login");
       }
     } catch (e) {
       console.error(e);
     }
-      */
   };
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="KakaoAuth">

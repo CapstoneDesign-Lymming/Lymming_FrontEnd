@@ -14,15 +14,23 @@ interface LoginState {
 }
 
 interface UserInfo {
-  name: string;
-  gender: string;
-  job: string;
+  bio: string;
   category: string;
-  skills: string[];
-  interest: string[];
-  time: string;
-  introduce: string;
-  profileImage: string;
+  devStyle: string;
+  favorites: number;
+  gender: string;
+  githubId: string;
+  interests: string[];
+  job: string;
+  loginType: string;
+  nickname: string;
+  position: string;
+  refreshToken: string;
+  stack: string[];
+  temperature: number;
+  userImg: string;
+  keyCode: string;
+  uid: number | null;
 }
 
 interface InfoState {
@@ -48,17 +56,28 @@ export const useLoginStore = create<LoginState>((set) => ({
 // 회원 정보 입력 data
 export const useInfoStore = create<InfoState>((set) => ({
   data: {
-    name: "",
-    gender: "",
-    job: "",
+    bio: "",
     category: "",
-    skills: [],
-    interest: [],
-    time: "",
-    introduce: "",
-    profileImage: "",
+    devStyle: "",
+    favorites: 0,
+    gender: "",
+    githubId: "",
+    interests: [],
+    job: "",
+    loginType: "",
+    nickname: "",
+    position: "",
+    refreshToken: "",
+    stack: [],
+    temperature: 0,
+    userImg: "",
+    keyCode: "",
+    uid: 0,
   },
 
-  setData: (newData: any) =>
-    set((state: any) => ({ data: { ...state.data, ...newData } })),
+  setData: (newData: Partial<UserInfo>) =>
+    set((state) => {
+      console.log("Updating data with:", newData);
+      return { data: { ...state.data, ...newData } };
+    }),
 }));
