@@ -113,7 +113,7 @@ const Participate = () => {
       });
     }
 
-    setData(filteredData);
+    setData(filteredData as ParticipateItem[]);
   }, [selectTab, selectedSkills, selectSecondTab]);
 
   const handleClickOutside = (e: MouseEvent) => {
