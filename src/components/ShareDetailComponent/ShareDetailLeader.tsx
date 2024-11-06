@@ -38,7 +38,7 @@ const ShareDetailLeader = () => {
       <Header />
       <div className="ShareDetailLeaderWrapper">
         <div className="ShareDetailLeader">
-          <div className="ShareDetailLeader-InputBox__Bunddle">
+          <div className="ShareDetailLeader-InputBox_Bunddle">
             <div className="InputBox_NameBundle">
               <div className="teamNameWrapper">
                 <div className="nameText">팀 이름 </div>
@@ -55,7 +55,7 @@ const ShareDetailLeader = () => {
             </div>
             <div className="InputBox_descriptionBuncle">
               <div>프로젝트 설명</div>
-              <input></input>
+              <textarea></textarea>
             </div>
           </div>
           <div className="ShareDetailLeader-AddImage_Bundle">

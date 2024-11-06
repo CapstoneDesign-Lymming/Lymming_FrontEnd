@@ -22,7 +22,7 @@
   .ShareDetailLeader {
     width: 80%;
     height: 100%;
-    &-InputBox__Bunddle {
+    &-InputBox_Bunddle {
       width: 100%;
       height: 60vh;
       .InputBox_NameBundle {
@@ -50,6 +50,17 @@
           height: 3vh;
           border: none;
           border-bottom: 1px solid #adb5bd;
+        }
+      }
+      .InputBox_descriptionBuncle {
+        margin-bottom: 3%;
+        textarea {
+          width: 40vw;
+          height: 23vh;
+          border-radius: 8px;
+          border: 1px solid #adb5bd;
+          font-size: 17px;
+          padding: 0.7%;
         }
       }
     }
