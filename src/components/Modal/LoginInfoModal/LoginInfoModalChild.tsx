@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useInfoStore } from "../../../store/useLoginStore";
 import "./LoginInfoModalChild.scss";
 import infoData from "../../../data/loginInfoData.json";
+import loginok from "../../../assets/img/loginok.png";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -268,7 +269,7 @@ export const Child5 = () => {
 export const Child6 = () => {
   return (
     <div className="Child6">
-      <img />
+      <img src={loginok} />
       <div className="title">회원가입 완료</div>
 
       <div className="intro">이제 리밍을 마음껏 이용해 보세요</div>
