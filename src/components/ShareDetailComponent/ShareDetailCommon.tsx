@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
+import { useInfoStore } from "../../store/useLoginStore";
 import "./ShareDetailCommon.scss";
 interface ShareDetailLeaderProps {
   data: {
