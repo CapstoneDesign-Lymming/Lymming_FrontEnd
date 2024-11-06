@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
 import { ReactNode } from "react";
+import back from "../../../assets/img/leftrrow.png";
 
 interface Props {
   children: ReactNode;
@@ -75,8 +76,9 @@ const LoginInfoModal = ({ children }: Props) => {
               setCountDown();
             }
           }}
+          style={{ display: count == 1 ? "none" : "inline" }}
         >
-          뒤로
+          <img src={back} />
         </button>
       </div>
       <div className="child_wrqpper">{children}</div>

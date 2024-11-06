@@ -53,6 +53,16 @@
       width: 8vw;
       margin: 10px;
     }
+
+    .chat {
+      width: 5%;
+      .chat_img {
+        width: 20px;
+        height: 20px;
+        filter: grayscale(100%);
+      }
+    }
+
     .login_aft {
       display: flex;
       flex-direction: column;
