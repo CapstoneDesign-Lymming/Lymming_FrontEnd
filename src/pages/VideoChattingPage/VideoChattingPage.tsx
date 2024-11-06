@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import "./VideoChattingPage.scss";
@@ -21,7 +21,8 @@ import RootModal from "../../components/Modal/RootModal/RootModal";
  */
 const VideoChattingPage = () => {
   const navigate = useNavigate();
-
+  const { roomId } = useParams();
+  console.log("para", roomId);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -51,8 +52,8 @@ const VideoChattingPage = () => {
     //signaling server url 변경
     const nextSocket = io(import.meta.env.VITE_SIGNALING_SERVER_URL);
     setSocket(nextSocket);
-    setRoom("test_room"); //TODO: 추후 사용자 room id로 변경
-
+    setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
+    console.log("iseEffct 1 roomId", roomId);
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
@@ -217,6 +218,10 @@ const VideoChattingPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConfirmVideo]);
 
+  useEffect(() => {
+    setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
+    console.log("roomId", roomId);
+  }, [roomId]);
   // /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
   const startVideoChatting = () => {
     console.log("startVideoChatting");

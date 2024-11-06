@@ -21,7 +21,10 @@ function App() {
         <Route path="/" element={<Main />}></Route>
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/auth" element={<KakaoAuth />}></Route>
-        <Route path="/videochat" element={<VideoChattingPage />}></Route>
+        <Route
+          path="/videochat/:roomId"
+          element={<VideoChattingPage />}
+        ></Route>
         <Route path="/participate" element={<Participate />}></Route>
         <Route
           path="/participate/detail/:id"
