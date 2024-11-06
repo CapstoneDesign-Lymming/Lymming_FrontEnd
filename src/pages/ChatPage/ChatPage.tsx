@@ -43,7 +43,7 @@ const ChatPage = () => {
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
-  const [roomId, setRoomId] = useState<String>("");
+  const [roomId, setRoomId] = useState<string>("");
   console.log(partner);
 
   // msg time 전달하기
@@ -109,6 +109,7 @@ const ChatPage = () => {
     if (partner) {
       const roomId = await sortChatRoomId(currentUser, partner);
       setRoomId(roomId);
+      console.log("roomId는!", roomId);
       const payload = {
         roomId: roomId,
         userId1: currentUser,
@@ -189,9 +190,8 @@ const ChatPage = () => {
     }
   };
 
-  const sortChatRoomId = (userId1: String, userId2: String): string => {
-    //FIXME: String -> string으로 타입 변경
-    let arr = [userId1, userId2];
+  const sortChatRoomId = (userId1: string, userId2: string): string => {
+    const arr = [userId1, userId2];
 
     arr.sort();
 
