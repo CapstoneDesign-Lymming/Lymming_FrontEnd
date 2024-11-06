@@ -14,6 +14,7 @@ interface ParticipateItem {
   type: string;
   title: string;
   end: string;
+  uploadTime: string;
   position: string[];
   style: string[];
   userId: string;
@@ -33,6 +34,36 @@ const Participate = () => {
     position: "",
     method: "",
   });
+  const [userModalData, setUserModalData] = useState("");
+
+  const remainingTime = (upload: string, end: string) => {
+    const uploadTime = new Date(upload);
+    const endTime = new Date(end);
+    const remainTime = endTime.getTime() - uploadTime.getTime();
+    if (remainTime > 0) {
+      const days = Math.floor(remainTime / (1000 * 60 * 60 * 24)); // 남은 일수
+
+      return `D-${days}`;
+    } else {
+      return "종료됨"; // 종료된 경우
+    }
+  };
+
+  const checkNewData = (upload: string) => {
+    const nowTime = new Date();
+    const uploadTime = new Date(upload);
+
+    // 7일을 밀리초로 계산 (7일 * 24시간 * 60분 * 60초 * 1000밀리초)
+    const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
+
+    // 현재 시간과 업로드 시간 차이 계산
+    const timeDifference = nowTime.getTime() - uploadTime.getTime();
+
+    // 업로드 시간이 7일 이내인지 확인
+    const isNew = timeDifference <= sevenDaysInMillis;
+
+    return isNew;
+  };
 
   const onSkillClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -68,8 +99,6 @@ const Participate = () => {
       });
     }
 
-    console.log(selectSecondTab);
-
     // 포지션 필터링
     if (selectSecondTab.position) {
       filteredData = filteredData.filter((it) => {
@@ -84,7 +113,7 @@ const Participate = () => {
       });
     }
 
-    setData(filteredData);
+    setData(filteredData as ParticipateItem[]);
   }, [selectTab, selectedSkills, selectSecondTab]);
 
   const handleClickOutside = (e: MouseEvent) => {
@@ -111,7 +140,7 @@ const Participate = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} />
+          <Usermodal close={setUserModalOpen} userId={userModalData} />
         </>
       )}
       {visible && (
@@ -214,8 +243,15 @@ const Participate = () => {
                 <div className="content-item-top-label">
                   <div className="content-item-top-label-left">{it.type}</div>
                   <div className="content-item-top-label-right">
-                    <img src={newImg} />
-                    <span>D-20</span>
+                    <img
+                      src={newImg}
+                      style={{
+                        display: checkNewData(it.uploadTime)
+                          ? "inline"
+                          : "none",
+                      }}
+                    />
+                    <span>{remainingTime(it.uploadTime, it.end)}</span>
                   </div>
                 </div>
                 <div className="content-item-top-title">{it.title}</div>
@@ -242,7 +278,11 @@ const Participate = () => {
               <div className="content-item-bottom">
                 <div
                   className="content-item-bottom-left"
-                  onClick={() => setUserModalOpen(true)}
+                  onClick={() => {
+                    setUserModalData(it.userId);
+
+                    setUserModalOpen(true);
+                  }}
                 >
                   <img />
                   <span>{it.userId}</span>

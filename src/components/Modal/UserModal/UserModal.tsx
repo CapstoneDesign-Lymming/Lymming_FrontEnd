@@ -1,11 +1,31 @@
 import "./UserModal.scss";
 import back from "../../../assets/img/leftrrow.png";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface UsermodalProps {
   close: (value: boolean) => void;
+  userId: String;
 }
 
-const Usermodal: React.FC<UsermodalProps> = ({ close }) => {
+const Usermodal: React.FC<UsermodalProps> = ({ close, userId }) => {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  // 유저 아이디로 유저 디테일 서버에서 불러오는 코드 추가하기
+  const getUserData = async () => {
+    const res = await axios.get("", {
+      params: { userId },
+    });
+    setUserData(userData);
+    console.log(res);
+  };
+
   return (
     <div className="Usermodal">
       <div className="back">
@@ -34,8 +54,11 @@ const Usermodal: React.FC<UsermodalProps> = ({ close }) => {
         </div>
       </div>
 
+      {/* 유저아이디로 채팅방 접근하기 */}
       <div className="bottom">
-        <button>채팅하기</button>
+        <button onClick={() => navigate("/chat", { state: { userId } })}>
+          채팅하기
+        </button>
       </div>
     </div>
   );

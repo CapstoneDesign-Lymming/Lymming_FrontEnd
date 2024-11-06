@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
+    position: relative;
     align-items: center;
 
     span {
@@ -21,6 +21,15 @@
     input {
       width: 50%;
       height: 30%;
+      border-radius: 5px;
+    }
+
+    &-namecheck {
+      position: absolute;
+      left: 78%;
+      top: 55%;
+      background-color: #007bff;
+      color: white;
       border-radius: 5px;
     }
   }
@@ -291,9 +300,28 @@
 
   .img {
     width: 40%;
-    padding-top: 40%;
+    height: 35%;
     border-radius: 100%;
-    background-color: antiquewhite;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 100px;
+      padding: 2%;
+      box-sizing: border-box;
+      object-fit: cover;
+    }
+
+    button {
+      position: absolute;
+      background-color: #007bff;
+      color: white;
+      border-radius: 100px;
+      top: 80%;
+      left: 80%;
+      border: none;
+    }
   }
   .intro {
     display: flex;
@@ -328,8 +356,6 @@
 
   img {
     width: 10%;
-    padding-top: 10%;
-    background-color: antiquewhite;
   }
 
   .title {

@@ -2,13 +2,14 @@ import { useState } from "react";
 import Header from "../../components/header/Header";
 import "./ParticipateDetail.scss";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const location = useLocation();
-
+  const navigate = useNavigate();
   const data = location.state;
+  console.log(data);
 
   return (
     <div className="ParticipateDetail">
@@ -17,7 +18,7 @@ const ParticipateDetail = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} />
+          <Usermodal close={setUserModalOpen} userId={data.userId} />
         </>
       )}
 
@@ -25,7 +26,7 @@ const ParticipateDetail = () => {
         <div className="content-name">
           <img />
           <span className="bold_name" onClick={() => setUserModalOpen(true)}>
-            {data.name}
+            {data.userId}
           </span>
           <span>{data.uploadTime}</span>
         </div>
@@ -68,7 +69,12 @@ const ParticipateDetail = () => {
         <hr />
         <div className="content-text">{data.content}</div>
       </div>
-      <button className="bottom_btn">채팅하기</button>
+      <button
+        className="bottom_btn"
+        onClick={() => navigate("/chat", { state: { id: data.userId } })}
+      >
+        채팅하기
+      </button>
     </div>
   );
 };
