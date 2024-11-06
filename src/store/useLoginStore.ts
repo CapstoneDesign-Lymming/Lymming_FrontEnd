@@ -4,11 +4,13 @@ interface LoginState {
   login: boolean;
   count: number;
   isOpen: boolean;
+  isExist: boolean;
 
   setCount: () => void;
   setCountDown: () => void;
   setIsOpen: () => void;
   setLogin: () => void;
+  setIsExist: () => void;
 }
 
 interface UserInfo {
@@ -34,10 +36,13 @@ export const useLoginStore = create<LoginState>((set) => ({
   // login: false,
   count: 1,
   isOpen: false,
+  //닉네임 중복체크
+  isExist: false,
   setCount: () => set((state: any) => ({ count: state.count + 1 })),
   setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
   setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
   setLogin: () => set((state: any) => ({ login: !state.login })),
+  setIsExist: () => set((state: any) => ({ isExist: !state.isExist })),
 }));
 
 // 회원 정보 입력 data

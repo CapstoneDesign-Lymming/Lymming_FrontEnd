@@ -9,7 +9,7 @@ interface Props {
 }
 
 const LoginInfoModal = ({ children }: Props) => {
-  const { count, setCount, setCountDown, setIsOpen, setLogin } =
+  const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
     useLoginStore();
   const { data } = useInfoStore();
 
@@ -21,6 +21,8 @@ const LoginInfoModal = ({ children }: Props) => {
       case 1:
         if (!data.name || !data.gender || !data.job || !data.category) {
           window.alert("모든 항목을 완료해주세요");
+        } else if (isExist == false) {
+          window.alert("닉네임 중복체크를 완료해주세요");
         } else {
           setCount();
         }
