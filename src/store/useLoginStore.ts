@@ -20,6 +20,7 @@ interface UserInfo {
   interest: string[];
   time: string;
   introduce: string;
+  profileImage: string;
 }
 
 interface InfoState {
@@ -50,6 +51,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     interest: [],
     time: "",
     introduce: "",
+    profileImage: "",
   },
 
   setData: (newData: any) =>

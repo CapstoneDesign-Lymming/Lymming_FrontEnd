@@ -273,54 +273,59 @@ const ChatPage = () => {
               })}
           </div>
         </div>
-        <div className="content-right">
-          <div className="content-right-info">
-            <div className="content-right-info-profile">
-              <img />
-              <span>{partner}</span>
-            </div>
-            <button className="content-right-info-video">
-              <img className="video" src={video} />
-            </button>
-          </div>
-          <hr />
-          <div className="content-right-body">
-            {chatHistory &&
-              chatHistory.map((msg, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    className={`content-right-body-wrapper ${
-                      msg.userId === currentUser
-                        ? "own-message"
-                        : "other-message"
-                    }`}
-                  >
-                    <img />
-                    <div className="container">
-                      <div key={index} className={`message`}>
-                        {msg.content}
-                      </div>
-                      <span className="time">{msg.timestamp}</span>
-                    </div>
-                  </div>
-                </React.Fragment>
-              ))}
 
-            <div ref={messageEndRef}></div>
+        {partner ? (
+          <div className="content-right">
+            <div className="content-right-info">
+              <div className="content-right-info-profile">
+                <img />
+                <span>{partner}</span>
+              </div>
+              <button className="content-right-info-video">
+                <img className="video" src={video} />
+              </button>
+            </div>
+            <hr />
+            <div className="content-right-body">
+              {chatHistory &&
+                chatHistory.map((msg, index) => (
+                  <React.Fragment key={index}>
+                    <div
+                      className={`content-right-body-wrapper ${
+                        msg.userId === currentUser
+                          ? "own-message"
+                          : "other-message"
+                      }`}
+                    >
+                      <img />
+                      <div className="container">
+                        <div key={index} className={`message`}>
+                          {msg.content}
+                        </div>
+                        <span className="time">{msg.timestamp}</span>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                ))}
+
+              <div ref={messageEndRef}></div>
+            </div>
+            <div className="content-right-input">
+              <textarea
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+              />
+              <button
+                onClick={sendChatMessage}
+                style={{ pointerEvents: inputMessage === "" ? "none" : "all" }}
+              >
+                <img src={inputMessage === "" ? chatsendDisable : chatsend} />
+              </button>
+            </div>
           </div>
-          <div className="content-right-input">
-            <textarea
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-            />
-            <button
-              onClick={sendChatMessage}
-              style={{ pointerEvents: inputMessage === "" ? "none" : "all" }}
-            >
-              <img src={inputMessage === "" ? chatsendDisable : chatsend} />
-            </button>
-          </div>
-        </div>
+        ) : (
+          <div className="no_user">채팅방을 선택하세요</div>
+        )}
       </div>
     </div>
   );
