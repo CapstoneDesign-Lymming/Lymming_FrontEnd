@@ -66,9 +66,9 @@ const VideoChattingPage = () => {
         { urls: "stun:stun2.l.google.com:19302" },
         { urls: "stun:stun3.l.google.com:19302" },
         {
-          urls: turnUrl,
-          username: turnUsername,
-          credential: turnCredential,
+          urls: "turn:15.165.220.179:3478",
+          username: "lymming",
+          credential: "2020",
         },
       ],
     });
