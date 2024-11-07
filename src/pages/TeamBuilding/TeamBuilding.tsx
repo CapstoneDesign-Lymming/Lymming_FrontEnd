@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../components/header/Header";
 import "./TeamBuilding.scss";
 import imgs from "../../assets/img/noimage.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import skills from "../../data/skills.json";
 
 interface State {
   type: string;
@@ -14,14 +15,16 @@ interface State {
   position: string;
   style: string;
   title: string;
-  img: File | string; // 이미지가 파일 또는 URL일 경우
+  img: File | null;
   content: string;
+  techStack: string[];
 }
 
 const TeamBuilding = () => {
   const navigate = useNavigate();
-  const [img, setImg] = useState<File | null>();
+  const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [state, setState] = useState<State>({
     type: "",
     member: "",
@@ -31,8 +34,9 @@ const TeamBuilding = () => {
     position: "",
     style: "",
     title: "",
-    img: "",
+    img: null,
     content: "",
+    techStack: [],
   });
 
   const onBtnClick = () => {
@@ -46,9 +50,9 @@ const TeamBuilding = () => {
 
     if (file) {
       setImg(file[0]);
-      setState({ ...state, [target.name]: file[0] });
+      setState({ ...state, img: file[0] });
       console.log(target.name);
-      console.log(file[0]);
+      console.log(state);
     }
   };
 
@@ -62,7 +66,15 @@ const TeamBuilding = () => {
     console.log(target.value);
   };
 
-  const onsubmit = () => {
+  const onSkillsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setSelectedSkills(selectedOptions);
+  };
+
+  const onsubmit = async () => {
     const requiredFields = [
       { field: "type", message: "모집 구분을 선택하세요." },
       { field: "member", message: "모집 인원을 입력하세요." },
@@ -84,38 +96,38 @@ const TeamBuilding = () => {
     }
 
     const formData = new FormData();
+    // 임시로 사용자 아이디둠, 나중에 로그인 후 아이디로 바꿔야함
+    formData.append("userId", JSON.stringify(123123));
+    formData.append("studyType", state.type);
+    formData.append("recruitmentCount", state.member);
+    formData.append("studyMethod", state.method);
+    formData.append("projectDuration", state.duration);
+    formData.append("deadline", state.end);
+    formData.append("recruitmentField", state.position);
+    formData.append("workType", state.style);
+    formData.append("projectName", state.title);
+    formData.append("uploadTime", new Date().toISOString());
+    formData.append("description", state.content);
 
-    formData.append("type", state.type);
-    formData.append("member", state.member);
-    formData.append("method", state.method);
-    formData.append("duration", state.duration);
-    formData.append("end", state.end);
-    formData.append("position", state.position);
-    formData.append("style", state.style);
-    formData.append("title", state.title);
+    formData.append("techStack", JSON.stringify(selectedSkills));
 
-    // 파일이 있을 경우에만 추가
-    if (state.img) {
-      formData.append("img", state.img);
+    if (img) {
+      console.log("이미지 파일이 존재합니다:", img);
+      formData.append("projectImg", img);
+    } else {
+      console.log("이미지 없음");
     }
 
-    formData.append("content", state.content);
-
-    console.log(state);
-
     // 서버 전송 로직 짜기
-    postData();
-
-    navigate("/participate");
-  };
-  const postData = async () => {
     try {
-      const res = await axios.post("", state);
+      const res = await axios.post("http://localhost:8080/teambuild", formData);
       console.log(res);
+      navigate("/participate");
     } catch (e) {
       console.error(e);
     }
   };
+
   const imgPreviewUrl = img ? URL.createObjectURL(img) : imgs;
 
   return (
@@ -154,9 +166,7 @@ const TeamBuilding = () => {
               <div className="content-top-right-1">
                 <span>모집 인원</span>
                 <select onChange={onChange} name="member">
-                  <option value="" disabled hidden>
-                    선택하세요
-                  </option>
+                  <option value="">선택</option>
                   <option value="1">1명</option>
                   <option value="2">2명</option>
                   <option value="3">3명</option>
@@ -170,6 +180,7 @@ const TeamBuilding = () => {
                   <option value="" disabled hidden>
                     선택하세요
                   </option>
+                  <option value="">선택</option>
                   <option value="online">온라인</option>
                   <option value="offline">오프라인</option>
                   <option value="mix">혼합</option>
@@ -182,9 +193,7 @@ const TeamBuilding = () => {
             <div className="content-center-left">
               <span>프로젝트 기간</span>
               <select onChange={onChange} name="duration">
-                <option value="" disabled hidden>
-                  선택하세요
-                </option>
+                <option value="">선택</option>
                 <option value="less_than_1_month">1달 이하</option>
                 <option value="1_month">1달</option>
                 <option value="3_months">3개월</option>
@@ -201,9 +210,7 @@ const TeamBuilding = () => {
             <div className="content-center-left">
               <span>모집 포지션</span>
               <select onChange={onChange} name="position">
-                <option value="" disabled hidden>
-                  선택하세요
-                </option>
+                <option value="">선택</option>
                 <option value="front">프론트</option>
                 <option value="back">벡</option>
                 <option value="ai">ai</option>
@@ -213,15 +220,27 @@ const TeamBuilding = () => {
                 <option value="etc">기타</option>
               </select>
             </div>
+
             <div className="content-center-right">
               <span>원하는 개발 스타일</span>
               <select onChange={onChange} name="style">
-                <option value="" disabled hidden>
-                  선택하세요
-                </option>
+                <option value="">선택</option>
                 <option value="enthusiastic">열정적</option>
                 <option value="independent">독립적</option>
                 <option value="diligent">성실</option>
+              </select>
+            </div>
+            <div className="content-center-middle">
+              <span>모집 스킬</span>
+              <select onChange={onSkillsChange} name="position" multiple>
+                <option value="">선택</option>
+                {skills.skills.map((it, index) => {
+                  return (
+                    <option value={it.name} key={index}>
+                      {it.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
