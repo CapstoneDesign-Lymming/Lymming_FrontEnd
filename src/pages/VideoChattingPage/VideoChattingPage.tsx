@@ -52,21 +52,23 @@ const VideoChattingPage = () => {
     const nextSocket = io(import.meta.env.VITE_SIGNALING_SERVER_URL);
     setSocket(nextSocket);
     setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
-    console.log("iseEffct 1 roomId", roomId);
+    console.log("화상채팅 roomId", roomId);
+
+    const turnUrl = import.meta.env.VITE_COTURN_SERVER_IP;
+    const turnUsername = import.meta.env.VITE_COTURN_ID;
+    const turnCredential = import.meta.env.VITE_COTURN_PW;
+    console.log("turn정보", turnUrl, turnUsername, turnCredential);
+
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
-        // { urls: "stun:stun.l.google.com:19302" },
-
-        // { urls: "stun:stun1.l.google.com:19302" },
-        // { urls: "stun:stun2.l.google.com:19302" },
-        // { urls: "stun:stun3.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" },
+        { urls: "stun:stun2.l.google.com:19302" },
+        { urls: "stun:stun3.l.google.com:19302" },
         {
-          // urls: import.meta.env.VITE_COTURN_SERVER_IP,
-          urls: "turn:15.165.220.179:3478",
-
-          username: import.meta.env.VITE_COTURN_ID,
-          credential: import.meta.env.VITE_COTURN_PW,
+          urls: turnUrl,
+          username: turnUsername,
+          credential: turnCredential,
         },
       ],
     });
