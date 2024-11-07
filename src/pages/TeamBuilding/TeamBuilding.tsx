@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "../../components/header/Header";
 import "./TeamBuilding.scss";
 import imgs from "../../assets/img/noimage.jpg";
