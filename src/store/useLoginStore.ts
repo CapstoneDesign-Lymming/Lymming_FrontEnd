@@ -19,7 +19,7 @@ interface UserInfo {
   devStyle: string;
   favorites: number;
   gender: string;
-  githubId: string;
+  serverNickname: string;
   interests: string[];
   job: string;
   loginType: string;
@@ -28,10 +28,11 @@ interface UserInfo {
   refreshToken: string;
   stack: string[];
   temperature: number;
-  userImg: string;
+  userImg: string | null;
   keyCode: string;
   uid: number | null;
-  user_img: string | null;
+
+  work_time: string;
 }
 
 interface InfoState {
@@ -42,7 +43,7 @@ interface InfoState {
 // 로그인 data
 export const useLoginStore = create<LoginState>((set) => ({
   // 로그인 상태 임시 true
-  login: true,
+  login: false,
   count: 1,
   isOpen: false,
   //닉네임 중복체크
@@ -62,7 +63,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     devStyle: "",
     favorites: 0,
     gender: "",
-    githubId: "",
+    serverNickname: "",
     interests: [],
     job: "",
     loginType: "",
@@ -74,7 +75,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     userImg: "",
     keyCode: "",
     uid: 0,
-    user_img: null,
+    work_time: "",
   },
 
   setData: (newData: Partial<UserInfo>) =>
