@@ -8,7 +8,7 @@ import axios from "axios";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
-  const { isExist, setIsExist } = useLoginStore();
+  const { setIsExist } = useLoginStore();
   const [name, setName] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
