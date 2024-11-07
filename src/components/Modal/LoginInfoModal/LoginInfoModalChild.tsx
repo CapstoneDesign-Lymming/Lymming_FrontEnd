@@ -8,7 +8,7 @@ import axios from "axios";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
-  const { isExist, setIsExist } = useLoginStore();
+  const { setIsExist } = useLoginStore();
   const [name, setName] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +27,11 @@ export const Child1 = () => {
     // 아이디 중복체크
     getUserName();
 
-    if (isExist === true) {
+    // 임시 true => isExist
+    if (true === true) {
       window.alert("사용가능한 닉네임입니다");
+      // 임시로 사용 가능 아이디 허용
+      setIsExist();
     } else {
       window.alert("이미 사용중인 닉네임입니다");
     }
@@ -50,7 +53,7 @@ export const Child1 = () => {
     <div className="Child1">
       <div className="q1">
         <span>닉네임을 입력해 주세요</span>
-        <input onChange={onChange} name="name" />
+        <input onChange={onChange} name="nickname" />
         <button className="q1-namecheck" onClick={onNameCheck}>
           중복확인
         </button>
@@ -64,7 +67,7 @@ export const Child1 = () => {
             type="radio"
             id="male"
             name="gender"
-            value="male"
+            value="MALE"
             onChange={onChange}
           />
           <label className="q2-box-item" htmlFor="male">
@@ -75,7 +78,7 @@ export const Child1 = () => {
             type="radio"
             id="female"
             name="gender"
-            value="female"
+            value="FEMALE"
             onChange={onChange}
           />
           <label className="q2-box-item" htmlFor="female">
@@ -252,7 +255,7 @@ export const Child4 = () => {
         <input
           type="radio"
           id="day"
-          name="time"
+          name="work_time"
           value="day"
           onChange={onChange}
         />
@@ -263,7 +266,7 @@ export const Child4 = () => {
         <input
           type="radio"
           id="night"
-          name="time"
+          name="work_time"
           value="night"
           onChange={onChange}
         />
@@ -286,7 +289,7 @@ export const Child5 = () => {
     if (file) {
       const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
       setImage(imageUrl); // 이미지 상태 업데이트
-      setData({ user_img: imageUrl });
+      setData({ userImg: imageUrl });
     }
   };
 
@@ -321,7 +324,7 @@ export const Child5 = () => {
 
       <div className="intro">
         <span>자신을 소개해주세요</span>
-        <textarea name="introduce" onChange={onChange} />
+        <textarea name="bio" onChange={onChange} />
       </div>
     </div>
   );

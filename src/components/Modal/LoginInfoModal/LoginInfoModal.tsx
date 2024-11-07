@@ -3,6 +3,7 @@ import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
 import { ReactNode } from "react";
 import back from "../../../assets/img/leftrrow.png";
+import axios from "axios";
 
 interface Props {
   children: ReactNode;
@@ -12,6 +13,8 @@ const LoginInfoModal = ({ children }: Props) => {
   const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
     useLoginStore();
   const { data } = useInfoStore();
+  const token = localStorage.getItem("token");
+  console.log(token);
 
   const navigate = useNavigate();
 
@@ -40,13 +43,13 @@ const LoginInfoModal = ({ children }: Props) => {
           setCount();
         }
         break;
-      // case 4:
-      //   if (!data.time) {
-      //     window.alert("항목을 선택해주세요");
-      //   } else {
-      //     setCount();
-      //   }
-      // break;
+      case 4:
+        if (!data.work_time) {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
       case 5:
         if (!data.bio) {
           window.alert("소개글을 작성해주세요");
@@ -60,8 +63,16 @@ const LoginInfoModal = ({ children }: Props) => {
   const postData = async () => {
     console.log(data);
     //폼데이터 서버에 보내는 로직추가하기
-    //데이터 존재하면 로그인 완료
-    // 데이터 없으면 모달 open
+    try {
+      const res = await axios.put("http://localhost:8080/api/auth/sign-up", {
+        ...data,
+        refreshToken: token,
+      });
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+
     setIsOpen();
 
     navigate("/");
