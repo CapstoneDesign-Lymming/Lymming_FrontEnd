@@ -62,9 +62,7 @@ const VideoChattingPage = () => {
         // { urls: "stun:stun2.l.google.com:19302" },
         // { urls: "stun:stun3.l.google.com:19302" },
         {
-          // urls: import.meta.env.VITE_COTURN_SERVER_IP,
-          urls: "turn:15.165.220.179:3478",
-
+          urls: import.meta.env.VITE_COTURN_SERVER_IP,
           username: import.meta.env.VITE_COTURN_ID,
           credential: import.meta.env.VITE_COTURN_PW,
         },
