@@ -56,17 +56,21 @@ const VideoChattingPage = () => {
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
+        // { urls: "stun:stun.l.google.com:19302" },
+
         // { urls: "stun:stun1.l.google.com:19302" },
         // { urls: "stun:stun2.l.google.com:19302" },
         // { urls: "stun:stun3.l.google.com:19302" },
         {
-          urls: import.meta.env.VITE_COTURN_SERVER_IP,
+          // urls: import.meta.env.VITE_COTURN_SERVER_IP,
+          urls: "turn:15.165.220.179:3478",
+
           username: import.meta.env.VITE_COTURN_ID,
           credential: import.meta.env.VITE_COTURN_PW,
         },
       ],
     });
-
+    console.log(import.meta.env.VITE_COTURN_SERVER_IP);
     pc.onicecandidate = (event) => {
       //on_ice_candidate
       if (!event.candidate) return;
