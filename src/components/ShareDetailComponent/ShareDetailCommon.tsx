@@ -60,7 +60,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               </div>
             ))}
           </div>
-          {propData && propData.team_leader === data.name && (
+          {propData && propData.team_leader === data.nickname && (
             <div className="leader_btn_bundle">
               <div
                 className="leader_btn"

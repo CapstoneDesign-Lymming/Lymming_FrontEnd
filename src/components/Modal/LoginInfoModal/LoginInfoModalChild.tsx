@@ -180,7 +180,7 @@ export const Child2 = () => {
   };
 
   useEffect(() => {
-    setData({ skills });
+    setData({ stack: skills });
   }, [skills]);
 
   return (
@@ -216,7 +216,7 @@ export const Child3 = () => {
   };
 
   useEffect(() => {
-    setData({ interest });
+    setData({ interests: interest });
   }, [interest]);
   return (
     <div className="Child2">
@@ -286,7 +286,7 @@ export const Child5 = () => {
     if (file) {
       const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
       setImage(imageUrl); // 이미지 상태 업데이트
-      setData({ profileImage: imageUrl });
+      setData({ user_img: imageUrl });
     }
   };
 

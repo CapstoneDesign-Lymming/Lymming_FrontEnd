@@ -48,7 +48,6 @@ const VideoChattingPage = () => {
   // const [isVideoOn,setIsVideoOn]=useState(true);
 
   useEffect(() => {
-    console.log("🔥🔥", isCalling);
     //signaling server url 변경
     const nextSocket = io(import.meta.env.VITE_SIGNALING_SERVER_URL);
     setSocket(nextSocket);
@@ -57,9 +56,11 @@ const VideoChattingPage = () => {
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" },
-        { urls: "stun:stun2.l.google.com:19302" },
-        { urls: "stun:stun3.l.google.com:19302" },
+        // { urls: "stun:stun.l.google.com:19302" },
+
+        // { urls: "stun:stun1.l.google.com:19302" },
+        // { urls: "stun:stun2.l.google.com:19302" },
+        // { urls: "stun:stun3.l.google.com:19302" },
         {
           urls: import.meta.env.VITE_COTURN_SERVER_IP,
           username: import.meta.env.VITE_COTURN_ID,
@@ -67,7 +68,7 @@ const VideoChattingPage = () => {
         },
       ],
     });
-
+    console.log(import.meta.env.VITE_COTURN_SERVER_IP);
     pc.onicecandidate = (event) => {
       //on_ice_candidate
       if (!event.candidate) return;
