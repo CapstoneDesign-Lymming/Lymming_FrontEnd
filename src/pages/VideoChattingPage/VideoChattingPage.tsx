@@ -83,6 +83,7 @@ const VideoChattingPage = () => {
     pc.ontrack = (event) => {
       if (!remoteVideoRef.current || !event.streams[0]) return;
       console.log("# ontrack");
+      //dddd
       remoteVideoRef.current.srcObject = event.streams[0];
     };
 
