@@ -72,7 +72,7 @@ const VideoChattingPage = () => {
         },
       ],
     });
-    console.log(import.meta.env.VITE_COTURN_SERVER_IP);
+
     pc.onicecandidate = (event) => {
       //on_ice_candidate
       if (!event.candidate) return;
@@ -83,6 +83,7 @@ const VideoChattingPage = () => {
     pc.ontrack = (event) => {
       if (!remoteVideoRef.current || !event.streams[0]) return;
       console.log("# ontrack");
+
       remoteVideoRef.current.srcObject = event.streams[0];
     };
 
