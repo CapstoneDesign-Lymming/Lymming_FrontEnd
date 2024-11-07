@@ -1,17 +1,49 @@
 import { useEffect, useState } from "react";
-import { useInfoStore } from "../../../store/useLoginStore";
+import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModalChild.scss";
 import infoData from "../../../data/loginInfoData.json";
 import loginok from "../../../assets/img/loginok.png";
+import nouserImage from "../../../assets/img/no-profile.webp";
+import axios from "axios";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
+  const { isExist, setIsExist } = useLoginStore();
+  const [name, setName] = useState("");
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
 
+    if (name === name) {
+      setName(value);
+    }
+
     setData({ [name]: value });
+  };
+
+  const onNameCheck = () => {
+    // 아이디 중복체크
+    getUserName();
+
+    if (isExist === true) {
+      window.alert("사용가능한 닉네임입니다");
+    } else {
+      window.alert("이미 사용중인 닉네임입니다");
+    }
+  };
+
+  // 서버에서 닉네임으로 이미 사용자가 존재하는지 체크
+  const getUserName = async () => {
+    try {
+      const res = await axios.get("", { params: { nickname: name } });
+      if (res.data === true) {
+        setIsExist();
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -19,7 +51,9 @@ export const Child1 = () => {
       <div className="q1">
         <span>닉네임을 입력해 주세요</span>
         <input onChange={onChange} name="name" />
-        <img />
+        <button className="q1-namecheck" onClick={onNameCheck}>
+          중복확인
+        </button>
       </div>
 
       <div className="q2">
@@ -146,7 +180,7 @@ export const Child2 = () => {
   };
 
   useEffect(() => {
-    setData({ skills });
+    setData({ stack: skills });
   }, [skills]);
 
   return (
@@ -182,7 +216,7 @@ export const Child3 = () => {
   };
 
   useEffect(() => {
-    setData({ interest });
+    setData({ interests: interest });
   }, [interest]);
   return (
     <div className="Child2">
@@ -243,6 +277,19 @@ export const Child4 = () => {
 
 export const Child5 = () => {
   const { setData } = useInfoStore();
+
+  const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
+      setImage(imageUrl); // 이미지 상태 업데이트
+      setData({ user_img: imageUrl });
+    }
+  };
+
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
@@ -255,7 +302,21 @@ export const Child5 = () => {
       <div className="title">프로필을 설정해주세요</div>
 
       <div className="img">
-        <img />
+        <img src={image || nouserImage} />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          style={{ display: "none" }}
+          id="image-upload"
+          name="profileImage"
+        />
+        <button
+          className="img-add"
+          onClick={() => document.getElementById("image-upload")?.click()}
+        >
+          +
+        </button>
       </div>
 
       <div className="intro">

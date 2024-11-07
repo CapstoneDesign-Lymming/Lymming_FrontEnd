@@ -4,22 +4,34 @@ interface LoginState {
   login: boolean;
   count: number;
   isOpen: boolean;
+  isExist: boolean;
 
   setCount: () => void;
   setCountDown: () => void;
   setIsOpen: () => void;
   setLogin: () => void;
+  setIsExist: () => void;
 }
 
 interface UserInfo {
-  name: string;
-  gender: string;
-  job: string;
+  bio: string;
   category: string;
-  skills: string[];
-  interest: string[];
-  time: string;
-  introduce: string;
+  devStyle: string;
+  favorites: number;
+  gender: string;
+  githubId: string;
+  interests: string[];
+  job: string;
+  loginType: string;
+  nickname: string;
+  position: string;
+  refreshToken: string;
+  stack: string[];
+  temperature: number;
+  userImg: string;
+  keyCode: string;
+  uid: number | null;
+  user_img: string | null;
 }
 
 interface InfoState {
@@ -29,29 +41,45 @@ interface InfoState {
 
 // 로그인 data
 export const useLoginStore = create<LoginState>((set) => ({
-  login: false,
-  // login: false,
+  // 로그인 상태 임시 true
+  login: true,
   count: 1,
   isOpen: false,
+  //닉네임 중복체크
+  isExist: false,
   setCount: () => set((state: any) => ({ count: state.count + 1 })),
   setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
   setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
   setLogin: () => set((state: any) => ({ login: !state.login })),
+  setIsExist: () => set((state: any) => ({ isExist: !state.isExist })),
 }));
 
 // 회원 정보 입력 data
 export const useInfoStore = create<InfoState>((set) => ({
   data: {
-    name: "",
-    gender: "",
-    job: "",
+    bio: "",
     category: "",
-    skills: [],
-    interest: [],
-    time: "",
-    introduce: "",
+    devStyle: "",
+    favorites: 0,
+    gender: "",
+    githubId: "",
+    interests: [],
+    job: "",
+    loginType: "",
+    nickname: "",
+    position: "",
+    refreshToken: "",
+    stack: [],
+    temperature: 0,
+    userImg: "",
+    keyCode: "",
+    uid: 0,
+    user_img: null,
   },
 
-  setData: (newData: any) =>
-    set((state: any) => ({ data: { ...state.data, ...newData } })),
+  setData: (newData: Partial<UserInfo>) =>
+    set((state) => {
+      console.log("Updating data with:", newData);
+      return { data: { ...state.data, ...newData } };
+    }),
 }));
