@@ -13,6 +13,7 @@ const Header = () => {
   const [isHiddenBtnOn, setIsHiddenBtnOn] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [myPageOption, setMypageOption] = useState(false);
 
   useEffect(() => {
     if (pageLocation.pathname == "/") setIsMain(true);
@@ -61,7 +62,10 @@ const Header = () => {
         </li>
 
         {login == true ? (
-          <li className="login_aft">
+          <li
+            className="login_aft"
+            onClick={() => setMypageOption(!myPageOption)}
+          >
             <img />
             <span>username</span>
           </li>
@@ -81,6 +85,23 @@ const Header = () => {
           </div>
           <div id="btn2" onClick={() => navigate("/exhibition")}>
             전시회
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="Header-mypage_hidden"
+        style={{ display: myPageOption ? "block" : "none" }}
+      >
+        <div className={`hidden_btn`} onClick={() => setIsHiddenBtnOn(false)}>
+          <div id="btn1" onClick={() => navigate("/member")}>
+            문의하기
+          </div>
+          <div id="btn2" onClick={() => navigate("/exhibition")}>
+            글 모아보기
+          </div>
+          <div id="btn1" onClick={() => navigate("/member")}>
+            마이페이지
           </div>
         </div>
       </div>
