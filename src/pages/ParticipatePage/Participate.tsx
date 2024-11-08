@@ -6,6 +6,7 @@ import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
 import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { ParticipateItem } from "../../interfaces/participate";
+import axios from "axios";
 
 const Participate = () => {
   const inside = useRef<HTMLDivElement>(null);
@@ -86,6 +87,20 @@ const Participate = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [visible]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("https://lymming-back.link/participate");
+        setData(res.data);
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getData();
+  }, []);
   //서버에서 리스트 받아오는 걸로 수정해야함
 
   return (
