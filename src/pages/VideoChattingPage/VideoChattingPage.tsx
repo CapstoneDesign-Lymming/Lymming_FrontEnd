@@ -91,6 +91,7 @@ const VideoChattingPage = () => {
 
       remoteVideoRef.current.srcObject = event.streams[0];
       console.log("remoteVideoRef: ", remoteVideoRef);
+      console.log("event.streams[0]: ", event.streams[0]);
     };
 
     try {
