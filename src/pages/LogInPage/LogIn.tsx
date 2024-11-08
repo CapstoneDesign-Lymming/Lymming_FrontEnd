@@ -46,9 +46,6 @@ const LogIn = () => {
 
   const gitlink = `https://github.com/login/oauth/authorize?client_id=${GIT_REST_API_KEY}&redirect_uri=${GIT_REDIRECT_URI}`;
 
-  console.log("KAKAO_CLIENT_ID:", import.meta.env.VITE_KAKAO_CLIENT_ID);
-  console.log("KAKAO_REDIRECT_URI:", import.meta.env.VITE_KAKAO_REDIRECT_URI);
-
   const onKakaoBtnClick = () => {
     window.location.href = kakaolink;
   };
