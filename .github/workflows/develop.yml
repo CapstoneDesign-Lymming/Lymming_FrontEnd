@@ -8,13 +8,13 @@ jobs: # job 설정
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code # Repo checkout 
+      - name: Checkout source code # Repo checkout
         uses: actions/checkout@v3
 
       - name: Set up Node.js #node js 설정
         uses: actions/setup-node@v3
         with:
-          node-version: '20' #node.js 20버전 사용
+          node-version: "20" #node.js 20버전 사용
 
       - name: Cache node modules # node modules 캐싱
         uses: actions/cache@v3
@@ -41,5 +41,9 @@ jobs: # job 설정
           AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ap-northeast-2
+          VITE_REST_API_KEY: ${{ secrets.VITE_REST_API_KEY }}
+          VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
+          VITE_GIT_REST_API_KEY: ${{ secrets.VITE_GIT_REST_API_KEY }}
+          VITE_GIT_REDIRECT_URI: ${{ secrets.VITE_GIT_REDIRECT_URI }}
         run: |
-          aws s3 cp dist s3://lymming.link/ --recursive 
+          aws s3 cp dist s3://lymming.link/ --recursive

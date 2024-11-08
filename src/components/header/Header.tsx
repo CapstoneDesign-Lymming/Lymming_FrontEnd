@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Header.scss";
-import { useLoginStore } from "../../store/useLoginStore";
+import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import headerImg from "../../assets/img/lymming_logo.png";
 import headerChat from "../../assets/img/header_chat.png";
 import { useEffect, useState } from "react";
@@ -14,6 +14,9 @@ const Header = () => {
   const [headerVisible, setHeaderVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [myPageOption, setMypageOption] = useState(false);
+  const { data } = useInfoStore();
+
+  console.log(data.userImg);
 
   useEffect(() => {
     if (pageLocation.pathname == "/") setIsMain(true);
@@ -56,6 +59,7 @@ const Header = () => {
 
         <li
           className="chat"
+          style={{ display: login === true ? "block" : "none" }}
           onClick={() => navigate("/chat", { state: { id: "" } })}
         >
           <img className="chat_img" src={headerChat} />
@@ -66,8 +70,8 @@ const Header = () => {
             className="login_aft"
             onClick={() => setMypageOption(!myPageOption)}
           >
-            <img />
-            <span>username</span>
+            <img src={data.userImg || undefined} />
+            <span>{data.nickname}</span>
           </li>
         ) : (
           <li onClick={() => navigate("/login")}>로그인</li>
@@ -97,7 +101,7 @@ const Header = () => {
           <div id="btn1" onClick={() => navigate("/member")}>
             문의하기
           </div>
-          <div id="btn2" onClick={() => navigate("/exhibition")}>
+          <div id="btn2" onClick={() => navigate("/collect")}>
             글 모아보기
           </div>
           <div id="btn1" onClick={() => navigate("/member")}>

@@ -75,7 +75,7 @@
 
         select {
           width: 90%;
-          height: 35%;
+          height: 45%;
 
           display: block;
           border: 1px solid gray;
@@ -112,6 +112,12 @@
         font-weight: bold;
       }
 
+      &-middle {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+      }
+
       &-left {
         display: flex;
         flex-direction: column;
@@ -144,6 +150,7 @@
           border: 1px solid gray;
           font-size: 1vw;
           width: 100%;
+          height: 40%;
           border-radius: 5px;
           padding: 1%;
           text-align: center;

@@ -49,26 +49,35 @@ const VideoChattingPage = () => {
 
   useEffect(() => {
     //signaling server url 변경
-    const nextSocket = io(import.meta.env.VITE_SIGNALING_SERVER_URL);
+    const nextSocket = io(
+      "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
+      {
+        transports: ["websocket"], //websocket우선 사용
+      }
+    );
     setSocket(nextSocket);
     setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
-    console.log("iseEffct 1 roomId", roomId);
+    console.log("화상채팅 roomId", roomId);
+
+    const turnUrl = import.meta.env.VITE_COTURN_SERVER_IP;
+    const turnUsername = import.meta.env.VITE_COTURN_ID;
+    const turnCredential = import.meta.env.VITE_COTURN_PW;
+    console.log("turn정보", turnUrl, turnUsername, turnCredential);
+
     const pc = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
-        // { urls: "stun:stun.l.google.com:19302" },
-
-        // { urls: "stun:stun1.l.google.com:19302" },
-        // { urls: "stun:stun2.l.google.com:19302" },
-        // { urls: "stun:stun3.l.google.com:19302" },
+        { urls: "stun:stun1.l.google.com:19302" },
+        { urls: "stun:stun2.l.google.com:19302" },
+        { urls: "stun:stun3.l.google.com:19302" },
         {
-          urls: import.meta.env.VITE_COTURN_SERVER_IP,
-          username: import.meta.env.VITE_COTURN_ID,
-          credential: import.meta.env.VITE_COTURN_PW,
+          urls: "turn:15.165.220.179:3478",
+          username: "lymming",
+          credential: "2020",
         },
       ],
     });
-    console.log(import.meta.env.VITE_COTURN_SERVER_IP);
+
     pc.onicecandidate = (event) => {
       //on_ice_candidate
       if (!event.candidate) return;
@@ -77,9 +86,14 @@ const VideoChattingPage = () => {
       nextSocket.emit("candidate", { candidate: event.candidate, room });
     };
     pc.ontrack = (event) => {
+      console.log("remoteVideoRef 1: ", remoteVideoRef);
+
       if (!remoteVideoRef.current || !event.streams[0]) return;
       console.log("# ontrack");
+
       remoteVideoRef.current.srcObject = event.streams[0];
+      console.log("remoteVideoRef 2: ", remoteVideoRef);
+      console.log("event.streams[0]: ", event.streams[0]);
     };
 
     try {

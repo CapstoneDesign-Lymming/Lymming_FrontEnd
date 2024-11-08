@@ -8,6 +8,7 @@ import axios from "axios";
 import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useInfoStore } from "../../store/useLoginStore";
 
 interface ChatMessage {
   content: string;
@@ -30,7 +31,8 @@ interface chatRoom {
 const ChatPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const currentUser = "user123"; // 토큰을 통해 로그인된 사용자 id 확인해야함
+  const { data } = useInfoStore();
+  const currentUser = data.nickname; // 토큰을 통해 로그인된 사용자 id 확인해야함
 
   // 채팅방 정보 받아오기 - 채팅 기록등
   const [chatRoom, setChatRoom] = useState<chatRoom | null>(null);

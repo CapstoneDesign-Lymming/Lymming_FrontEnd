@@ -1,29 +1,13 @@
 import Header from "../../components/header/Header";
 import "./Participate.scss";
 import dummy from "../../data/participateDummyData.json";
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
-import newImg from "../../assets/img/new.png";
-import watch from "../../assets/img/watch.png";
-import chat from "../../assets/img/chat.png";
-import heart from "../../assets/img/heart.png";
-
-interface ParticipateItem {
-  type: string;
-  title: string;
-  end: string;
-  uploadTime: string;
-  position: string[];
-  style: string[];
-  userId: string;
-  skill: string[];
-  skillicon: string[];
-}
+import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
+import { ParticipateItem } from "../../interfaces/participate";
 
 const Participate = () => {
-  const navigate = useNavigate();
   const inside = useRef<HTMLDivElement>(null);
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [selectTab, setSelectTab] = useState("전체");
@@ -35,35 +19,6 @@ const Participate = () => {
     method: "",
   });
   const [userModalData, setUserModalData] = useState("");
-
-  const remainingTime = (upload: string, end: string) => {
-    const uploadTime = new Date(upload);
-    const endTime = new Date(end);
-    const remainTime = endTime.getTime() - uploadTime.getTime();
-    if (remainTime > 0) {
-      const days = Math.floor(remainTime / (1000 * 60 * 60 * 24)); // 남은 일수
-
-      return `D-${days}`;
-    } else {
-      return "종료됨"; // 종료된 경우
-    }
-  };
-
-  const checkNewData = (upload: string) => {
-    const nowTime = new Date();
-    const uploadTime = new Date(upload);
-
-    // 7일을 밀리초로 계산 (7일 * 24시간 * 60분 * 60초 * 1000밀리초)
-    const sevenDaysInMillis = 7 * 24 * 60 * 60 * 1000;
-
-    // 현재 시간과 업로드 시간 차이 계산
-    const timeDifference = nowTime.getTime() - uploadTime.getTime();
-
-    // 업로드 시간이 7일 이내인지 확인
-    const isNew = timeDifference <= sevenDaysInMillis;
-
-    return isNew;
-  };
 
   const onSkillClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -232,81 +187,15 @@ const Participate = () => {
 
       <div className="content">
         {data.map((it, index) => {
+          // 인덱스 프롭 임시 설정 나중에는 게시물 아이디로 할거임
           return (
-            <div className="content-item" key={index}>
-              <div
-                className="content-item-top"
-                onClick={() =>
-                  navigate(`/participate/detail/${index}`, { state: it })
-                }
-              >
-                <div className="content-item-top-label">
-                  <div className="content-item-top-label-left">{it.type}</div>
-                  <div className="content-item-top-label-right">
-                    <img
-                      src={newImg}
-                      style={{
-                        display: checkNewData(it.uploadTime)
-                          ? "inline"
-                          : "none",
-                      }}
-                    />
-                    <span>{remainingTime(it.uploadTime, it.end)}</span>
-                  </div>
-                </div>
-                <div className="content-item-top-title">{it.title}</div>
-                <div className="content-item-top-info">
-                  <span>마감</span> <span>|</span> <span>{it.end}</span>
-                </div>
-                <div className="content-item-top-feature">
-                  {it.position.map((it, index) => {
-                    return <span key={index}>{it}</span>;
-                  })}
-                </div>
-                <div className="content-item-top-style">
-                  {it.style.map((it, index) => {
-                    return <span key={index}>{it}</span>;
-                  })}
-                </div>
-                <div className="content-item-top-skills">
-                  {it.skillicon.map((it, index) => {
-                    return <img src={it} key={index} />;
-                  })}
-                </div>
-                <hr />
-              </div>
-              <div className="content-item-bottom">
-                <div
-                  className="content-item-bottom-left"
-                  onClick={() => {
-                    setUserModalData(it.userId);
-
-                    setUserModalOpen(true);
-                  }}
-                >
-                  <img />
-                  <span>{it.userId}</span>
-                </div>
-                <div className="content-item-bottom-right">
-                  <div className="content-item-bottom-right-watch">
-                    <img src={watch} />
-                    <span>10</span>
-                  </div>
-                  <div
-                    className="content-item-bottom-right-chat"
-                    onClick={() =>
-                      navigate("/chat", { state: { id: it.userId } })
-                    }
-                  >
-                    <img src={chat} />
-                    <span>채팅하기</span>
-                  </div>
-                  <div className="content-item-bottom-right-heart">
-                    <img src={heart} />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ParticipateBoard
+              data={it}
+              key={index}
+              index={index}
+              setUserModalData={setUserModalData}
+              setUserModalOpen={setUserModalOpen}
+            />
           );
         })}
       </div>
