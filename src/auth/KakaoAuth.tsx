@@ -20,12 +20,9 @@ const KakaoAuth = () => {
   const postKakaoCode = async (code: any) => {
     console.log("로그인", code);
     try {
-      const result = await axios.post(
-        "https://lymming-back.link/api/kakao/login",
-        {
-          code,
-        }
-      );
+      const result = await axios.post("https://lymming.link/api/kakao/login", {
+        code,
+      });
 
       // 리턴값으로 토큰 날라온다
       localStorage.setItem("token", result.data.refresh_token);
