@@ -23,8 +23,8 @@ const LogIn = () => {
   const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
   const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
 
-  const GIT_REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
-  const GIT_REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
+  const GIT_REST_API_KEY: string = import.meta.env.GIT_REST_API_KEY;
+  const GIT_REDIRECT_URI: string = import.meta.env.GIT_REDIRECT_URI;
 
   const navigate = useNavigate();
   const KakaoLoginButton = createButton({
