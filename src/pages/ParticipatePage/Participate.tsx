@@ -92,7 +92,7 @@ const Participate = () => {
     const getData = async () => {
       try {
         const res = await axios.get("https://lymming-back.link/participate");
-        setData(res.data);
+        setData(res.data as ParticipateItem[]);
         console.log(res);
       } catch (e) {
         console.log(e);
