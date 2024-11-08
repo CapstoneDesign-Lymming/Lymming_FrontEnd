@@ -90,6 +90,7 @@ const VideoChattingPage = () => {
       console.log("# ontrack");
 
       remoteVideoRef.current.srcObject = event.streams[0];
+      console.log("remoteVideoRef: ", remoteVideoRef);
     };
 
     try {
