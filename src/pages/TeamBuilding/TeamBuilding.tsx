@@ -122,7 +122,7 @@ const TeamBuilding = () => {
     try {
       const res = await axios.post("https://lymming.link/teambuild", formData);
       console.log(res);
-      navigate("/participate");
+      //navigate("/participate");
     } catch (e) {
       console.error(e);
     }
