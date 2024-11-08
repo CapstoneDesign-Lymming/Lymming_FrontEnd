@@ -101,7 +101,7 @@ const Header = () => {
           <div id="btn1" onClick={() => navigate("/member")}>
             문의하기
           </div>
-          <div id="btn2" onClick={() => navigate("/exhibition")}>
+          <div id="btn2" onClick={() => navigate("/collect")}>
             글 모아보기
           </div>
           <div id="btn1" onClick={() => navigate("/member")}>

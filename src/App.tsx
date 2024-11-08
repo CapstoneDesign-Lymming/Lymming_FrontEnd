@@ -13,6 +13,7 @@ import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
 import SharePage from "./pages/SharePage/SharePage";
 import ShareDetailPage from "./pages/ShareDetailPage/ShareDetailPage";
 import ShareDetailLeader from "./components/ShareDetailComponent/ShareDetailLeader";
+import CollectPage from "./pages/CollectPage/CollectPae";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           path="/share/detail/leader"
           element={<ShareDetailLeader />}
         ></Route>
+        <Route path="/collect" element={<CollectPage />}></Route>
       </Routes>
     </div>
   );
