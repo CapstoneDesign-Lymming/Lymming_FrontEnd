@@ -23,8 +23,8 @@ const LogIn = () => {
   const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
   const REDIRECT_URI: string = import.meta.env.VITE_REDIRECT_URI;
 
-  const GIT_REST_API_KEY: string = import.meta.env.GIT_REST_API_KEY;
-  const GIT_REDIRECT_URI: string = import.meta.env.GIT_REDIRECT_URI;
+  const GIT_REST_API_KEY: string = import.meta.env.VITE_GIT_REST_API_KEY;
+  const GIT_REDIRECT_URI: string = import.meta.env.VITE_GIT_REDIRECT_URI;
 
   const navigate = useNavigate();
   const KakaoLoginButton = createButton({
@@ -43,7 +43,7 @@ const LogIn = () => {
   const { count, isOpen } = useLoginStore();
 
   const kakaolink = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  // 여기는 깃허브 링크로 따로 추가해야함
+
   const gitlink = `https://github.com/login/oauth/authorize?client_id=${GIT_REST_API_KEY}&redirect_uri=${GIT_REDIRECT_URI}`;
 
   const onKakaoBtnClick = () => {
