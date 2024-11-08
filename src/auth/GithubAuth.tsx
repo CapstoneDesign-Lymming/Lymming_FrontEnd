@@ -20,7 +20,7 @@ const GithubAuth = () => {
     console.log("로그인", code);
     try {
       const result = await axios.post(
-        "https://lymming-back.link/api/login/oauth2/redirect/github",
+        "https://lymming.link/api/login/oauth2/redirect/github",
         {
           code,
         }
