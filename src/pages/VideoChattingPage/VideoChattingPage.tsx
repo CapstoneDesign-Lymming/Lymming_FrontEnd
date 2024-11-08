@@ -49,9 +49,12 @@ const VideoChattingPage = () => {
 
   useEffect(() => {
     //signaling server url 변경
-    const nextSocket = io(import.meta.env.VITE_SIGNALING_SERVER_URL, {
-      transports: ["websocket"], //websocket우선 사용
-    });
+    const nextSocket = io(
+      "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
+      {
+        transports: ["websocket"], //websocket우선 사용
+      }
+    );
     setSocket(nextSocket);
     setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
     console.log("화상채팅 roomId", roomId);
