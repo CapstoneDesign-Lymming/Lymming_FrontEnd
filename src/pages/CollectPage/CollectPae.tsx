@@ -1,6 +1,5 @@
 import Header from "../../components/header/Header";
 import "./CollectPage.scss";
-
 import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { useEffect, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";

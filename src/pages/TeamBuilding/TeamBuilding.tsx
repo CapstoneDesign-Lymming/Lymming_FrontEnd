@@ -120,7 +120,7 @@ const TeamBuilding = () => {
 
     // 서버 전송 로직 짜기
     try {
-      const res = await axios.post("http://localhost:8080/teambuild", formData);
+      const res = await axios.post("https://lymming.link/teambuild", formData);
       console.log(res);
       navigate("/participate");
     } catch (e) {
