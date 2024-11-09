@@ -51,6 +51,28 @@ const LoginInfoModal = ({ children }: Props) => {
         }
         break;
       case 5:
+        if (!data.work_time) {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
+      case 6:
+        if (!data.work_time) {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
+      case 7:
+        if (!data.work_time) {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
+
+      case 8:
         if (!data.bio) {
           window.alert("소개글을 작성해주세요");
         } else {
@@ -98,7 +120,7 @@ const LoginInfoModal = ({ children }: Props) => {
       </div>
       <div className="child_wrqpper">{children}</div>
       <div className="btn_wrqpper">
-        {count === 6 ? (
+        {count === 9 ? (
           <button onClick={postData}>완료</button>
         ) : (
           <button onClick={onBtnClick}>다음</button>

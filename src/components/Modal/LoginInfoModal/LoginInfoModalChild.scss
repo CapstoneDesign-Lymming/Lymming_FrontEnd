@@ -243,7 +243,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20%;
+  gap: 10%;
 
   align-items: center;
   .title {
@@ -254,29 +254,67 @@
 
   .time {
     width: 80%;
-    height: 100%;
+    height: 80%;
     display: flex;
     gap: 5%;
+    flex-direction: column;
 
-    &-item {
-      width: 80%;
-      height: 50%;
+    &-top {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid #ced4da;
-      color: #b5bcc2;
-      border-radius: 7px;
+      width: 100%;
+      height: 50%;
+      gap: 5%;
+      &-item {
+        word-break: keep-all;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #ced4da;
+        color: #b5bcc2;
+        border-radius: 7px;
+      }
+      input[type="radio"] {
+        display: none;
+      }
+
+      input[type="radio"]:checked + .time-top-item {
+        color: white;
+        border-color: #868e96;
+        color: #868e96;
+      }
     }
 
-    input[type="radio"] {
-      display: none;
-    }
+    &-bottom {
+      display: flex;
+      width: 100%;
+      height: 50%;
+      gap: 5%;
+      &-item {
+        word-break: keep-all;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #ced4da;
+        color: #b5bcc2;
+        border-radius: 7px;
+      }
+      input[type="radio"] {
+        display: none;
+      }
 
-    input[type="radio"]:checked + .time-item {
-      color: white;
-      border-color: #868e96;
-      color: #868e96;
+      input[type="radio"]:checked + .time-bottom-item {
+        color: white;
+        border-color: #868e96;
+        color: #868e96;
+      }
     }
 
     &-item:hover {
@@ -285,7 +323,7 @@
   }
 }
 
-.Child5 {
+.Child9 {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -346,7 +384,7 @@
   }
 }
 
-.Child6 {
+.Child10 {
   height: 100%;
   display: flex;
   flex-direction: column;

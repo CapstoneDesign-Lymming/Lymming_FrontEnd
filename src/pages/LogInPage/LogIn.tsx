@@ -9,11 +9,15 @@ import {
 import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import {
   Child1,
+  Child10,
   Child2,
   Child3,
   Child4,
   Child5,
   Child6,
+  Child7,
+  Child8,
+  Child9,
 } from "../../components/Modal/LoginInfoModal/LoginInfoModalChild";
 import { useLoginStore } from "../../store/useLoginStore";
 import logo from "../../assets/img/lymming_logo.png";
@@ -70,6 +74,13 @@ const LogIn = () => {
         return <Child5 />;
       case 6:
         return <Child6 />;
+      case 7:
+        return <Child7 />;
+      case 8:
+        return <Child8 />;
+      case 9:
+        return <Child9 />;
+
       default:
         return null; // 예외 처리
     }
