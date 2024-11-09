@@ -20,7 +20,7 @@ const KakaoAuth = () => {
   const postKakaoCode = async (code: any) => {
     console.log("로그인", code);
     try {
-      const result = await axios.post("http://localhost:8080/api/kakao/login", {
+      const result = await axios.post("https://lymming.link/api/kakao/login", {
         code,
       });
 

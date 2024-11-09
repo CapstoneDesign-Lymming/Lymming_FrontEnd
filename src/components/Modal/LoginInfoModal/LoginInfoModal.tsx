@@ -64,10 +64,13 @@ const LoginInfoModal = ({ children }: Props) => {
     console.log(data);
     //폼데이터 서버에 보내는 로직추가하기
     try {
-      const res = await axios.put("http://localhost:8080/api/auth/sign-up", {
-        ...data,
-        refreshToken: token,
-      });
+      const res = await axios.put(
+        "https://lymming-back.link/api/auth/sign-up",
+        {
+          ...data,
+          refreshToken: token,
+        }
+      );
       console.log(res);
     } catch (e) {
       console.error(e);

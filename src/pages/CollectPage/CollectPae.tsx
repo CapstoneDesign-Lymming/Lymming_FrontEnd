@@ -1,6 +1,5 @@
 import Header from "../../components/header/Header";
 import "./CollectPage.scss";
-import dummy from "../../data/participateDummyData.json";
 import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { useEffect, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
@@ -15,7 +14,7 @@ const CollectPage = () => {
   const [selectTab, setSelectTab] = useState("내가쓴글");
   const { data } = useInfoStore();
   useEffect(() => {
-    setList(dummy.dummy as ParticipateItem[]);
+    //setList(dummy.dummy as ParticipateItem[]);
   }, []);
 
   // 좋아요 누를 게시물 가져오기
