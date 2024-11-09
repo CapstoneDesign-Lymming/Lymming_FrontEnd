@@ -29,23 +29,31 @@ const MemberPage = () => {
   return (
     <>
       <Header />
-      <div className="Member">
-        <div className="Member-header">
-          <div className="Member-header-text">
-            {nickname}님께 어울리는 사람을 추천해드립니다.
-          </div>
+      <div className="MemberWrapper">
+        <div className="Member">
+          <div className="Member-header">
+            <div className="Member-header-text">
+              {nickname}님께 어울리는 사람을 추천해드립니다.
+            </div>
 
-          <div className="Member-header-recommend">
-            {data.recommendData.map((item: itemType) => (
-              <div className="recommendCard">
-                <div>{item.name}</div>
-                <div>{item.position}</div>
-                <img src={`${item.userImg}`} alt="" />
-              </div>
-            ))}
+            <div className="Member-header-recommend">
+              {data.recommendData.map((item: itemType) => (
+                <div className="recommendCard">
+                  <div className="front">
+                    <div id="recommend_name">{item.name}</div>
+                    <div id="recommend_position">{item.position}</div>
+                    <img src={`${item.userImg}`} alt="" />
+                  </div>
+                  <div className="back">
+                    <div id="recommend_name">{item.name}</div>
+                    <div id="recommend_position">{item.position}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
+          <div className="Member-body"></div>
         </div>
-        <div className="Member-body"></div>
       </div>
     </>
   );
