@@ -17,6 +17,8 @@
   display: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   font-family: Pretendard-Regular;
   .ShareDetailLeader {
@@ -24,7 +26,7 @@
     height: 100%;
     &-InputBox_Bunddle {
       width: 100%;
-      height: 60vh;
+      height: 45vh;
       .InputBox_NameBundle {
         display: flex;
         align-items: center;
@@ -55,6 +57,7 @@
       .InputBox_descriptionBuncle {
         margin-bottom: 3%;
         textarea {
+          margin-top: 1%;
           width: 40vw;
           height: 23vh;
           border-radius: 8px;
@@ -65,10 +68,74 @@
       }
     }
     &-AddImage_Bundle {
+      margin-top: 5%;
+      .Addimage_box {
+        margin-top: 1%;
+        width: 300px;
+        height: 300px;
+        border-radius: 18px;
+        border: solid 1px #c4c4c4;
+        @include flex-center;
+
+        .Addimage_btn {
+          @include flex-center;
+          height: 25px;
+          width: 50%;
+          background-color: #47576a;
+          border-radius: 7px;
+          color: white;
+        }
+      }
     }
     &-Members_Bundle {
+      margin-top: 3%;
+      width: 100%;
+      height: 30%;
+      .memberCard_Wrapper_Root {
+        display: flex;
+        align-items: center;
+        .memberCard_Wrapper {
+          width: 10vw;
+          height: 50%;
+          margin-top: 3%;
+          border-radius: 8px;
+          border: 1px solid #c4c4c4;
+          @include flex-column-center;
+          margin: 1%;
+          &-imgWrapper {
+            width: 100%;
+            height: 60%;
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 8px 8px 0px 0px;
+            }
+          }
+        }
+        .AddMember {
+          width: 8%;
+          height: 10vh;
+          background-color: #47576a;
+          color: white;
+          border-radius: 7px;
+          @include flex-center;
+        }
+      }
     }
     &-Footer_BtnWrapper {
+      margin-top: 3%;
+      width: 100%;
+      height: 10%;
+      display: flex;
+      justify-content: center;
+      .saveBtn {
+        @include flex-center;
+        border-radius: 8px;
+        width: 13vw;
+        height: 5vh;
+        background-color: #ff4444;
+        color: white;
+      }
     }
   }
 }

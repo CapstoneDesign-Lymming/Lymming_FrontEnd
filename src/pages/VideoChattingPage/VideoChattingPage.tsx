@@ -530,7 +530,6 @@ const VideoChattingPage = () => {
             </svg>
           </video>
         </div>
-
         <div className="VideoChattingWrapper-Navigater">
           {isMicOn ? (
             <div className="NavMenu" onClick={toggleMic}>

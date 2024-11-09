@@ -1,0 +1,29 @@
+@import "/src/style/mixin.scss";
+
+.ShareInviteModal {
+  width: 27vw;
+  height: 14vh;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  padding: 3px;
+  border-radius: 9px;
+  &-body {
+    margin-top: 5%;
+    width: 60%;
+    height: 30%;
+    border-radius: 5px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 3%;
+  }
+  &-footer {
+    @include flex-center;
+    width: 60%;
+    height: 30%;
+    border-radius: 5px;
+    background-color: #ff4444;
+    color: white;
+  }
+}
