@@ -153,7 +153,7 @@ const ChatPage = () => {
   };
 
   const connectSocket = () => {
-    const socket = new SockJS("https://lymming-back.link/chatting");
+    const socket = new SockJS("/chatting");
 
     client.current = Stomp.over(socket);
 
