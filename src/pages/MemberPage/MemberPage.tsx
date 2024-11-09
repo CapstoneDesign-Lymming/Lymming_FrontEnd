@@ -39,9 +39,15 @@ const MemberPage = () => {
             <div className="Member-header-recommend">
               {data.recommendData.map((item: itemType) => (
                 <div className="recommendCard">
-                  <div id="recommend_name">{item.name}</div>
-                  <div id="recommend_position">{item.position}</div>
-                  <img src={`${item.userImg}`} alt="" />
+                  <div className="front">
+                    <div id="recommend_name">{item.name}</div>
+                    <div id="recommend_position">{item.position}</div>
+                    <img src={`${item.userImg}`} alt="" />
+                  </div>
+                  <div className="back">
+                    <div id="recommend_name">{item.name}</div>
+                    <div id="recommend_position">{item.position}</div>
+                  </div>
                 </div>
               ))}
             </div>
