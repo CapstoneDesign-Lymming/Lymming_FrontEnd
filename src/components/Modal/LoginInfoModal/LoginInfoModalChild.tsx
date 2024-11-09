@@ -541,7 +541,7 @@ export const Child8 = () => {
 
 export const Child9 = () => {
   return (
-    <div className="Child10">
+    <div className="Child9">
       <img src={loginok} />
       <div className="title">회원가입 완료</div>
 

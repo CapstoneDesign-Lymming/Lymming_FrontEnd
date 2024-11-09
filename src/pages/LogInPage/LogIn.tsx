@@ -9,7 +9,6 @@ import {
 import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import {
   Child1,
-  Child10,
   Child2,
   Child3,
   Child4,
