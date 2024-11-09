@@ -49,3 +49,13 @@ jobs: # job 설정
 
         run: |
           aws s3 cp dist s3://lymming.link/ --recursive
+
+      - name: Invalidate CloudFront Cache # CloudFront 캐시 무효화
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
+          CLOUD_FRONT_ID: ${{ secrets.DEV_AWS_DISTRIBUTION_ID }}
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id "$CLOUD_FRONT_ID" \
+            --paths "/*"

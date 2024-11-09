@@ -66,7 +66,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     interests: [],
     job: "",
     loginType: "",
-    nickname: "", //임시데이터
+    nickname: "기훈", //임시데이터
     position: "",
     refreshToken: "",
     stack: [],
