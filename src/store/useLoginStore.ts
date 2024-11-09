@@ -42,7 +42,6 @@ interface InfoState {
 
 // 로그인 data
 export const useLoginStore = create<LoginState>((set) => ({
-  // 로그인 상태 임시 true
   login: false,
   count: 1,
   isOpen: false,
@@ -67,7 +66,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     interests: [],
     job: "",
     loginType: "",
-    nickname: "",
+    nickname: "", //임시데이터
     position: "",
     refreshToken: "",
     stack: [],

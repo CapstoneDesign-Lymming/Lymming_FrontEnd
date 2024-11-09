@@ -86,11 +86,13 @@ const VideoChattingPage = () => {
       nextSocket.emit("candidate", { candidate: event.candidate, room });
     };
     pc.ontrack = (event) => {
+      console.log("remoteVideoRef 1: ", remoteVideoRef);
+
       if (!remoteVideoRef.current || !event.streams[0]) return;
       console.log("# ontrack");
 
       remoteVideoRef.current.srcObject = event.streams[0];
-      console.log("remoteVideoRef: ", remoteVideoRef);
+      console.log("remoteVideoRef 2: ", remoteVideoRef);
       console.log("event.streams[0]: ", event.streams[0]);
     };
 
@@ -528,7 +530,6 @@ const VideoChattingPage = () => {
             </svg>
           </video>
         </div>
-
         <div className="VideoChattingWrapper-Navigater">
           {isMicOn ? (
             <div className="NavMenu" onClick={toggleMic}>

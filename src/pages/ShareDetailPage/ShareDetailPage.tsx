@@ -9,6 +9,7 @@ const ShareDetailPage = () => {
   //3.
   const location = useLocation();
   const data = location.state;
+  console.log("ShareDetailPage", data);
   return (
     <>
       <Header />
