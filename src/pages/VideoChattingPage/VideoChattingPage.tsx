@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import "./VideoChattingPage.scss";
-// import ComfirmVideoModal from "../../components/Modal/VideoChattingModal/ComfirmVideoModal";
 import useModalStore from "../../store/useModalState";
 import useConfirmVideoStore from "../../store/useComfirmVideoStore";
 import RootModal from "../../components/Modal/RootModal/RootModal";
@@ -22,7 +21,7 @@ import RootModal from "../../components/Modal/RootModal/RootModal";
 const VideoChattingPage = () => {
   const navigate = useNavigate();
   const { roomId } = useParams();
-  console.log("para", roomId);
+  console.log("para roomId", roomId);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -46,8 +45,8 @@ const VideoChattingPage = () => {
   useEffect(() => {
     //signaling server url 변경
     const nextSocket = io(
-      // "http://localhost:8080"
-      "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
+      "http://localhost:8080",
+      // "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
       {
         transports: ["websocket"], //websocket우선 사용
       }
@@ -55,11 +54,6 @@ const VideoChattingPage = () => {
     setSocket(nextSocket);
     setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
     console.log("화상채팅 roomId", roomId);
-
-    const turnUrl = import.meta.env.VITE_COTURN_SERVER_IP;
-    const turnUsername = import.meta.env.VITE_COTURN_ID;
-    const turnCredential = import.meta.env.VITE_COTURN_PW;
-    console.log("turn정보", turnUrl, turnUsername, turnCredential);
 
     const pc = new RTCPeerConnection({
       iceServers: [
@@ -112,27 +106,47 @@ const VideoChattingPage = () => {
 
     nextSocket.on("offer", async (msg) => {
       if (msg.sender === socket?.id) return;
-      console.log("offer받음");
-
-      await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
-
-      const answer = await pc.createAnswer();
-      await pc.setLocalDescription(answer);
-      nextSocket.emit("answer", { sdp: pc.localDescription, room });
+      console.log("🚀offer받음"); //ok offer은 받음
+      try {
+        await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+        console.log("🌳🌳"); //ok
+      } catch (error) {
+        console.log("setRemoteDescription", error);
+      }
+      try {
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+      } catch (error) {
+        console.log("answer", error);
+      }
+      try {
+        nextSocket.emit("answer", { sdp: pc.localDescription, room });
+        console.log("🌳answer🌳"); //ok offer받고 answer서버로 보냄
+      } catch (error) {
+        console.log("emit answer", error);
+      }
     });
 
     nextSocket.on("answer", (msg) => {
-      console.log("answer");
+      console.log("🎁answer"); //FIXME: 못받고 있음 (answer을)
+      /**
+       * 1.offer받음
+       * 2.answer보냄
+       * 3.서버가 answer받음
+       * 4.서버가 answer보냄 실패
+       * 5.클라가 answer받음 실패
+       */
       if (msg.sender === socket?.id) return;
       try {
         pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+        console.log("answer, setRemoteDescription");
       } catch (error) {
         console.log("answer에서 setRemoteDescription Error!", error);
       }
     });
 
     nextSocket.on("candidate", (msg) => {
-      console.log("🧐🔨candidate");
+      console.log("🚀candidate"); //FIXME: 못받음
       if (msg.sender === socket?.id) return;
 
       const candidate = msg.candidate;
