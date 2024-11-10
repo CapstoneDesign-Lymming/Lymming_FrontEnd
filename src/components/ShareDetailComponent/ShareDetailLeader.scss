@@ -71,20 +71,21 @@
       margin-top: 5%;
       .Addimage_box {
         margin-top: 1%;
-        width: 300px;
-        height: 300px;
+        width: 30%;
+        height: 30vh;
         border-radius: 18px;
         border: solid 1px #c4c4c4;
         @include flex-center;
+      }
+      .upload_btn {
+        margin-top: 1%;
+        @include flex-center;
 
-        .Addimage_btn {
-          @include flex-center;
-          height: 25px;
-          width: 50%;
-          background-color: #47576a;
-          border-radius: 7px;
-          color: white;
-        }
+        background-color: #47576a;
+        width: 30%;
+        height: 4vh;
+        border-radius: 8px;
+        color: white;
       }
     }
     &-Members_Bundle {
