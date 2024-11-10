@@ -252,33 +252,242 @@ export const Child4 = () => {
     <div className="Child4">
       <div className="title">작업이 더 잘되는 시간은?</div>
       <div className="time">
-        <input
-          type="radio"
-          id="day"
-          name="work_time"
-          value="day"
-          onChange={onChange}
-        />
-        <label className="time-item" htmlFor="day">
-          낮
-        </label>
-
-        <input
-          type="radio"
-          id="night"
-          name="work_time"
-          value="night"
-          onChange={onChange}
-        />
-        <label className="time-item" htmlFor="night">
-          밤
-        </label>
+        <div className="time-top">
+          <input
+            type="radio"
+            id="새벽"
+            name="work_time"
+            value="day"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="새벽">
+            새벽
+          </label>
+          <input
+            type="radio"
+            id="오전"
+            name="work_time"
+            value="night"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="오전">
+            오전
+          </label>
+        </div>
+        <div className="time-bottom">
+          <input
+            type="radio"
+            id="오후"
+            name="work_time"
+            value="day"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="오후">
+            오후
+          </label>
+          <input
+            type="radio"
+            id="밤"
+            name="work_time"
+            value="night"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="밤">
+            밤
+          </label>
+        </div>
       </div>
     </div>
   );
 };
 
 export const Child5 = () => {
+  const { setData } = useInfoStore();
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Store에서 setData 가져오기
+    const name = e.target.name;
+    const value = e.target.value; // 입력된 값 가져오기
+
+    setData({ [name]: value });
+  };
+  return (
+    <div className="Child4">
+      <div className="title">팀원과 작업 할때</div>
+      <div className="time">
+        <div className="time-top">
+          <input
+            type="radio"
+            id="독립적으로"
+            name="work_style"
+            value="독립적으로"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="독립적으로">
+            독립적으로
+          </label>
+          <input
+            type="radio"
+            id="온라인 선호"
+            name="work_style"
+            value="온라인 선호"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="온라인 선호">
+            온라인 선호
+          </label>
+        </div>
+        <div className="time-bottom">
+          <input
+            type="radio"
+            id="팀과함께"
+            name="work_style"
+            value="팀과함께"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="팀과함께">
+            팀과함께
+          </label>
+          <input
+            type="radio"
+            id="오프라인 선호"
+            name="work_style"
+            value="오프라인 선호"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="오프라인 선호">
+            오프라인 선호
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const Child6 = () => {
+  const { setData } = useInfoStore();
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Store에서 setData 가져오기
+    const name = e.target.name;
+    const value = e.target.value; // 입력된 값 가져오기
+
+    setData({ [name]: value });
+  };
+  return (
+    <div className="Child4">
+      <div className="title">작업할 때 선호하는 방식</div>
+      <div className="time">
+        <div className="time-top">
+          <input
+            type="radio"
+            id="즉흥적"
+            name="method"
+            value="즉흥적"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="즉흥적">
+            즉흥적
+          </label>
+          <input
+            type="radio"
+            id="계획적"
+            name="method"
+            value="계획적"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="계획적">
+            계획적
+          </label>
+        </div>
+        <div className="time-bottom">
+          <input
+            type="radio"
+            id="단기 프로젝트"
+            name="method"
+            value="단기 프로젝트"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="단기 프로젝트">
+            단기 프로젝트
+          </label>
+          <input
+            type="radio"
+            id="장기 프로젝트"
+            name="method"
+            value="장기 프로젝트"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="장기 프로젝트">
+            장기 프로젝트
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const Child7 = () => {
+  const { setData } = useInfoStore();
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Store에서 setData 가져오기
+    const name = e.target.name;
+    const value = e.target.value; // 입력된 값 가져오기
+
+    setData({ [name]: value });
+  };
+  return (
+    <div className="Child4">
+      <div className="title">사람들과 함께 있을때 나는</div>
+      <div className="time">
+        <div className="time-top">
+          <input
+            type="radio"
+            id="조용한 리더"
+            name="me"
+            value="조용한 리더"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="조용한 리더">
+            조용한 리더
+          </label>
+          <input
+            type="radio"
+            id="활발한 리더"
+            name="me"
+            value="활발한 리더"
+            onChange={onChange}
+          />
+          <label className="time-top-item" htmlFor="활발한 리더">
+            활발한 리더
+          </label>
+        </div>
+        <div className="time-bottom">
+          <input
+            type="radio"
+            id="조용한 보조"
+            name="me"
+            value="조용한 보조"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="조용한 보조">
+            조용한 보조
+          </label>
+          <input
+            type="radio"
+            id="활발한 보조"
+            name="me"
+            value="활발한 보조"
+            onChange={onChange}
+          />
+          <label className="time-bottom-item" htmlFor="활발한 보조">
+            활발한 보조
+          </label>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const Child8 = () => {
   const { setData } = useInfoStore();
 
   const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
@@ -301,7 +510,7 @@ export const Child5 = () => {
     setData({ [name]: value });
   };
   return (
-    <div className="Child5">
+    <div className="Child9">
       <div className="title">프로필을 설정해주세요</div>
 
       <div className="img">
@@ -330,9 +539,9 @@ export const Child5 = () => {
   );
 };
 
-export const Child6 = () => {
+export const Child9 = () => {
   return (
-    <div className="Child6">
+    <div className="Child9">
       <img src={loginok} />
       <div className="title">회원가입 완료</div>
 
