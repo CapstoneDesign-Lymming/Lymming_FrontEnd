@@ -51,6 +51,8 @@ const ShareDetailLeader = () => {
   //   console.log(isModalOpen);
   // };
 
+  // TODO: 1. 프론트에서 s3로 직접 이미지 업로드
+  //2.이미지 링크 받아와서 str로 백엔드에게 전달
   /** 멤버 초대 모달 열기 */
   const invalidateInstance = () => {
     setModalName("shareInviteModal");
