@@ -29,8 +29,6 @@ const VideoChattingPage = () => {
   const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
   const [isMicOn, setIsMicOn] = useState(true);
 
-  // const [isVideoChatting,setInVideoChattng]=useState<boolean>(false);
-  // const [isMicOn,setIsMicOn]=useState<boolean>(true);
   const [room, setRoom] = useState<string>("test_room"); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
   const [socket, setSocket] = useState<Socket | null>(null);
   const peerConnection = useRef<RTCPeerConnection | null>(null);
@@ -45,11 +43,10 @@ const VideoChattingPage = () => {
   const { isModalOpen, openModal } = useModalStore();
   const { isConfirmVideo } = useConfirmVideoStore();
 
-  // const [isVideoOn,setIsVideoOn]=useState(true);
-
   useEffect(() => {
     //signaling server url 변경
     const nextSocket = io(
+      // "http://localhost:8080"
       "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
       {
         transports: ["websocket"], //websocket우선 사용
@@ -79,12 +76,16 @@ const VideoChattingPage = () => {
     });
 
     pc.onicecandidate = (event) => {
-      //on_ice_candidate
       if (!event.candidate) return;
       console.log("# onicecandidate");
       console.log("💧💧");
       console.log("ICE Candidate: ", event.candidate);
-      nextSocket.emit("candidate", { candidate: event.candidate, room });
+      try {
+        nextSocket.emit("candidate", { candidate: event.candidate, room });
+        console.log("emit candidtate함 🚀");
+      } catch (error) {
+        console.log("emit candidate Error!", error);
+      }
     };
 
     pc.ontrack = (event) => {
@@ -123,11 +124,15 @@ const VideoChattingPage = () => {
     nextSocket.on("answer", (msg) => {
       console.log("answer");
       if (msg.sender === socket?.id) return;
-      pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+      try {
+        pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+      } catch (error) {
+        console.log("answer에서 setRemoteDescription Error!", error);
+      }
     });
 
     nextSocket.on("candidate", (msg) => {
-      console.log("candidate");
+      console.log("🧐🔨candidate");
       if (msg.sender === socket?.id) return;
 
       const candidate = msg.candidate;
@@ -146,6 +151,7 @@ const VideoChattingPage = () => {
               });
           }
           setIsCalling(true);
+          console.log(isCalling);
           console.log("🔥🔥");
         } catch (error) {
           console.error("Error constructing RTCIceCandidate", error);
@@ -237,7 +243,7 @@ const VideoChattingPage = () => {
     if (isConfirmVideo) startVideoChatting();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConfirmVideo]);
-
+  //FIXME:추가됨
   useEffect(() => {
     setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
     console.log("roomId", roomId);
