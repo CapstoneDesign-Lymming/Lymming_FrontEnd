@@ -83,17 +83,22 @@ const VideoChattingPage = () => {
       if (!event.candidate) return;
       console.log("# onicecandidate");
       console.log("💧💧");
+      console.log("ICE Candidate: ", event.candidate);
       nextSocket.emit("candidate", { candidate: event.candidate, room });
     };
+
     pc.ontrack = (event) => {
       console.log("remoteVideoRef 1: ", remoteVideoRef);
+      try {
+        if (!remoteVideoRef.current || !event.streams[0]) return;
+        console.log("# ontrack");
 
-      if (!remoteVideoRef.current || !event.streams[0]) return;
-      console.log("# ontrack");
-
-      remoteVideoRef.current.srcObject = event.streams[0];
-      console.log("remoteVideoRef 2: ", remoteVideoRef);
-      console.log("event.streams[0]: ", event.streams[0]);
+        remoteVideoRef.current.srcObject = event.streams[0];
+        console.log("remoteVideoRef 2: ", remoteVideoRef);
+        console.log("event.streams[0]: ", event.streams[0]);
+      } catch (error) {
+        console.log("ontrack에서 발생한 ", error);
+      }
     };
 
     try {
