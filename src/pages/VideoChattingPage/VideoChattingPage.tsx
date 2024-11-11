@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import "./VideoChattingPage.scss";
-// import ComfirmVideoModal from "../../components/Modal/VideoChattingModal/ComfirmVideoModal";
 import useModalStore from "../../store/useModalState";
 import useConfirmVideoStore from "../../store/useComfirmVideoStore";
 import RootModal from "../../components/Modal/RootModal/RootModal";
@@ -22,16 +21,16 @@ import RootModal from "../../components/Modal/RootModal/RootModal";
 const VideoChattingPage = () => {
   const navigate = useNavigate();
   const { roomId } = useParams();
-  console.log("para", roomId);
+  console.log("para roomId", roomId);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
   const [isMicOn, setIsMicOn] = useState(true);
 
-  // const [isVideoChatting,setInVideoChattng]=useState<boolean>(false);
-  // const [isMicOn,setIsMicOn]=useState<boolean>(true);
-  const [room, setRoom] = useState<string>("test_room"); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
+  // const [roomName, setRoom] = useState<string>("test_room"); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
+  const roomName = useRef<string | undefined>("test_room");
+
   const [socket, setSocket] = useState<Socket | null>(null);
   const peerConnection = useRef<RTCPeerConnection | null>(null);
   const [isLocalScreenSharing, setIsLocalScreenSharing] =
@@ -45,24 +44,19 @@ const VideoChattingPage = () => {
   const { isModalOpen, openModal } = useModalStore();
   const { isConfirmVideo } = useConfirmVideoStore();
 
-  // const [isVideoOn,setIsVideoOn]=useState(true);
-
   useEffect(() => {
     //signaling server url 변경
     const nextSocket = io(
+      // "http://localhost:8080",
       "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
       {
         transports: ["websocket"], //websocket우선 사용
       }
     );
     setSocket(nextSocket);
-    setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
+    // setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
+    roomName.current = roomId;
     console.log("화상채팅 roomId", roomId);
-
-    const turnUrl = import.meta.env.VITE_COTURN_SERVER_IP;
-    const turnUsername = import.meta.env.VITE_COTURN_ID;
-    const turnCredential = import.meta.env.VITE_COTURN_PW;
-    console.log("turn정보", turnUrl, turnUsername, turnCredential);
 
     const pc = new RTCPeerConnection({
       iceServers: [
@@ -77,14 +71,29 @@ const VideoChattingPage = () => {
         },
       ],
     });
-
+    pc.oniceconnectionstatechange = () => {
+      console.log("ICE connection state: ", pc.iceConnectionState);
+      if (pc.iceConnectionState === "connected") {
+        console.log("iceconnect 연결됨💧");
+      } else {
+        console.log("아직 iceconnect 연결 x❌❌");
+      }
+    };
     pc.onicecandidate = (event) => {
-      //on_ice_candidate
-      if (!event.candidate) return;
-      console.log("# onicecandidate");
-      console.log("💧💧");
+      if (!event.candidate) {
+        console.log("🥇🥇🥇"); //후보 연결을 완료하면 더 이상 새로운 후보가 생성되지 않거나 전달되지 않게 된다.
+        return;
+      }
       console.log("ICE Candidate: ", event.candidate);
-      nextSocket.emit("candidate", { candidate: event.candidate, room });
+      try {
+        nextSocket.emit("candidate", {
+          candidate: event.candidate,
+          room: roomName.current,
+        });
+        console.log("emit candidtate함 🚀");
+      } catch (error) {
+        console.log("emit candidate Error!", error);
+      }
     };
 
     pc.ontrack = (event) => {
@@ -110,26 +119,60 @@ const VideoChattingPage = () => {
     }
 
     nextSocket.on("offer", async (msg) => {
+      //1.상대가 call-> 방으로 offer감->offer받음
       if (msg.sender === socket?.id) return;
-      console.log("offer받음");
+      console.log("🚀offer받음"); //ok offer은 받음
+      try {
+        //2. offer받고 sdp설정
+        await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+        console.log("🌳🌳"); //ok
+      } catch (error) {
+        console.log("setRemoteDescription", error);
+      }
+      try {
+        const answer = await pc.createAnswer();
+        await pc.setLocalDescription(answer);
+      } catch (error) {
+        console.log("answer", error);
+      }
+      try {
+        //3. answer 보냄
+        console.log("👍👍👍👍👍👍", roomName.current);
 
-      await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
-
-      const answer = await pc.createAnswer();
-      await pc.setLocalDescription(answer);
-      nextSocket.emit("answer", { sdp: pc.localDescription, room });
+        nextSocket.emit("answer", {
+          sdp: pc.localDescription,
+          room: roomName.current,
+        });
+        console.log("🌳answer🌳"); //ok offer받고 answer서버로 보냄
+      } catch (error) {
+        console.log("emit answer", error);
+      }
     });
 
     nextSocket.on("answer", (msg) => {
-      console.log("answer");
-      if (msg.sender === socket?.id) return;
-      pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
+      console.log("🎁answer", msg); //FIXME: 못받고 있음 (answer을)
+      /**
+       * 1.offer받음
+       * 2.answer보냄
+       * 3.서버가 answer받음
+       * 4.서버가 answer보냄 실패
+       * 5.클라가 answer받음 실패
+       */
+      if (msg.sender === socket?.id) {
+        return;
+      }
+      try {
+        const sdp = msg.sdp;
+        pc.setRemoteDescription(new RTCSessionDescription(sdp));
+        console.log("answer, setRemoteDescription");
+      } catch (error) {
+        console.log("answer에서 setRemoteDescription Error!", error);
+      }
     });
 
     nextSocket.on("candidate", (msg) => {
-      console.log("candidate");
+      console.log("🚀candidate"); //FIXME: 못받음
       if (msg.sender === socket?.id) return;
-
       const candidate = msg.candidate;
       if (
         candidate &&
@@ -146,6 +189,7 @@ const VideoChattingPage = () => {
               });
           }
           setIsCalling(true);
+          console.log(isCalling);
           console.log("🔥🔥");
         } catch (error) {
           console.error("Error constructing RTCIceCandidate", error);
@@ -237,11 +281,11 @@ const VideoChattingPage = () => {
     if (isConfirmVideo) startVideoChatting();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConfirmVideo]);
-
-  useEffect(() => {
-    setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
-    console.log("roomId", roomId);
-  }, [roomId]);
+  //FIXME:추가됨
+  // useEffect(() => {
+  //   setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
+  //   console.log("roomId", roomId);
+  // }, [roomId]);
   // /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
   const startVideoChatting = () => {
     console.log("startVideoChatting");
@@ -281,8 +325,8 @@ const VideoChattingPage = () => {
   const joinRoom = () => {
     console.log("joinRoom 방 입성");
     console.log("joinRoom에서 peerConnection상태", peerConnection);
-    if (!socket || !room) return;
-    socket.emit("join", { room });
+    if (!socket || !roomName.current) return;
+    socket.emit("join", { room: roomName.current });
   };
 
   const call = async () => {
@@ -297,7 +341,7 @@ const VideoChattingPage = () => {
     if (peerConnection.current) {
       const offer = await peerConnection.current.createOffer();
       await peerConnection.current.setLocalDescription(offer); //SDP세팅
-      socket?.emit("offer", { sdp: offer, room });
+      socket?.emit("offer", { sdp: offer, room: roomName.current });
     } //offer생성
     //offer전송
     console.log("🌦️");
@@ -319,7 +363,10 @@ const VideoChattingPage = () => {
         localVideoRef.current.srcObject = screenStream;
       }
       //소켓을 활용해 화면공유 여부를 서버로 전송함
-      socket?.emit("screenSharing", { room, isScreenSharing: true });
+      socket?.emit("screenSharing", {
+        room: roomName.current,
+        isScreenSharing: true,
+      });
       if (peerConnection.current) {
         const videoSender = peerConnection.current
           .getSenders()
@@ -358,7 +405,10 @@ const VideoChattingPage = () => {
         }
 
         //화면공유 종료 상태를 서버에 알림
-        socket?.emit("screenSharing", { room, isScreenSharing: false });
+        socket?.emit("screenSharing", {
+          room: roomName.current,
+          isScreenSharing: false,
+        });
         setIsLocalScreenSharing(false);
       };
     } catch (error) {
@@ -391,7 +441,10 @@ const VideoChattingPage = () => {
           }
         }
         // 화면 공유 종료 상태를 서버에 알림
-        socket?.emit("screenSharing", { room, isScreenSharing: false });
+        socket?.emit("screenSharing", {
+          room: roomName.current,
+          isScreenSharing: false,
+        });
         setIsLocalScreenSharing(false);
       }
     }
@@ -408,7 +461,7 @@ const VideoChattingPage = () => {
       peerConnection.current = null;
     }
     if (socket) {
-      socket.emit("callEnded", { room });
+      socket.emit("callEnded", { room: roomName });
       socket.disconnect();
       setSocket(null);
     }
@@ -433,7 +486,7 @@ const VideoChattingPage = () => {
       setIsVideoOn(false);
       //소켓으로 toggleVideo값 전송
       socket?.emit("toggleVideo", {
-        room: room,
+        room: roomName.current,
         userId: socket.id,
         isVideoOn: false,
       });
@@ -455,7 +508,7 @@ const VideoChattingPage = () => {
       });
       setIsVideoOn(true);
       socket?.emit("toggleVideo", {
-        room: room,
+        room: roomName.current,
         userId: socket.id,
         isVideoOn: true,
       });
@@ -472,7 +525,7 @@ const VideoChattingPage = () => {
       tracks?.forEach((track: MediaStreamTrack) => track.stop()); // 모든 오디오 트랙 중지
       setIsMicOn(false);
       socket?.emit("toggleMic", {
-        room: room,
+        room: roomName,
         userId: socket.id,
         isMicOn: false,
       });
@@ -493,7 +546,7 @@ const VideoChattingPage = () => {
       });
       setIsMicOn(true);
       socket?.emit("toggleMic", {
-        room: room,
+        room: roomName.current,
         userId: socket.id,
         isMicOn: true,
       });
