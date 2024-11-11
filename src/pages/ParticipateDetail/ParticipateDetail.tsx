@@ -17,7 +17,7 @@ const ParticipateDetail = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} userId={data.userId} />
+          <Usermodal close={setUserModalOpen} nickname={data.userId} />
         </>
       )}
 

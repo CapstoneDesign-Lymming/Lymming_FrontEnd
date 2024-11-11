@@ -71,7 +71,7 @@ const CollectPage = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} userId={userModalData} />
+          <Usermodal close={setUserModalOpen} nickname={userModalData} />
         </>
       )}
       <div className="content">
