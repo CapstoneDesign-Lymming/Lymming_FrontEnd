@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import UserInfo from "../interfaces/user";
 
 interface LoginState {
   login: boolean;
@@ -11,29 +12,6 @@ interface LoginState {
   setIsOpen: () => void;
   setLogin: () => void;
   setIsExist: () => void;
-}
-
-interface UserInfo {
-  bio: string;
-  category: string;
-  devStyle: string;
-  favorites: number;
-  gender: string;
-  serverNickname: string;
-  interests: string[];
-  job: string;
-  loginType: string;
-  nickname: string;
-  position: string;
-  refreshToken: string;
-  stack: string[];
-  temperature: number;
-  userImg: string | null;
-  keyCode: string;
-  uid: number | null;
-  work_time: string;
-  working_team: string;
-  with_people: string;
 }
 
 interface InfoState {
