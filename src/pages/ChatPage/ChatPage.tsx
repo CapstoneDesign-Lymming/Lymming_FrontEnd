@@ -161,8 +161,10 @@ const ChatPage = () => {
       {},
       () => {
         console.log("STOMP 연결 성공");
+        console.log(chatRoom?.roomId);
         client.current?.subscribe(
-          `/sub/chat/room/${chatRoom?.id}`,
+          `/sub/chat/room/${chatRoom?.roomId}`,
+
           (message) => {
             const msg = JSON.parse(message.body);
 
