@@ -112,13 +112,13 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         <div
           className="item-bottom-left"
           onClick={() => {
-            setUserModalData(data.userId);
+            setUserModalData(data.nickname);
 
             setUserModalOpen(true);
           }}
         >
           <img />
-          <span>{data.userId}</span>
+          <span>{data.nickname}</span>
         </div>
         <div className="item-bottom-right">
           <div className="item-bottom-right-watch">
@@ -127,7 +127,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           </div>
           <div
             className="item-bottom-right-chat"
-            onClick={() => navigate("/chat", { state: { id: data.userId } })}
+            onClick={() => navigate("/chat", { state: { id: data.nickname } })}
           >
             <img src={chat} />
             <span>채팅하기</span>
