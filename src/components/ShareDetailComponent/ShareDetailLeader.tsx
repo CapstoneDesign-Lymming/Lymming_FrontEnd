@@ -4,6 +4,8 @@ import { useState } from "react";
 import Header from "../header/Header";
 import "./ShareDetailLeader.scss";
 import RootModal from "../Modal/RootModal/RootModal";
+import nouserImage from "../../assets/img/noimage.jpg";
+import { useInfoStore } from "../../store/useLoginStore";
 
 interface ShareDetailLeaderProps {
   userId: number;
@@ -25,7 +27,9 @@ const ShareDetailLeader = () => {
   const { isModalOpen, openModal } = useModalStore();
   const [modalName, setModalName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
-
+  const [projectLink, setProjectLink] = useState("");
+  const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
+  const { setData } = useInfoStore();
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,20 +40,34 @@ const ShareDetailLeader = () => {
       [name]: value,
     }));
   };
-
-  /** 이미지 업로드 */
-  const uploadProjectImg = () => {
-    openModal();
-    console.log(isModalOpen);
+  const handleProjectLink = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setProjectLink(e.target.value);
   };
+  /** 이미지 업로드 */
+  // const uploadProjectImg = () => {
+  //   openModal();
+  //   console.log(isModalOpen);
+  // };
 
+  // TODO: 1. 프론트에서 s3로 직접 이미지 업로드
+  //2.이미지 링크 받아와서 str로 백엔드에게 전달
   /** 멤버 초대 모달 열기 */
   const invalidateInstance = () => {
     setModalName("shareInviteModal");
     openModal();
     console.log(isModalOpen);
   };
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
+    if (file) {
+      const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
+      setImage(imageUrl); // 이미지 상태 업데이트
+      setData({ userImg: imageUrl });
+    }
+  };
   return (
     <>
       <Header />
@@ -57,7 +75,7 @@ const ShareDetailLeader = () => {
         <div className="ShareDetailLeader">
           <div className="ShareDetailLeader-InputBox_Bunddle">
             <div className="InputBox_NameBundle">
-              <div className="teamNameWrapper">
+              {/* <div className="teamNameWrapper">
                 <div className="nameText">팀 이름</div>
                 <input
                   className="nameInput"
@@ -65,7 +83,7 @@ const ShareDetailLeader = () => {
                   value={formData.team_leader}
                   onChange={handleInputChange}
                 />
-              </div>
+              </div> */}
               <div className="projectNameWrapper">
                 <div className="nameText">프로젝트 이름</div>
                 <input
@@ -81,8 +99,8 @@ const ShareDetailLeader = () => {
               <input
                 className="InputBox_linkBundle-inputBox"
                 name="project_url"
-                value={formData.project_url}
-                onChange={handleInputChange}
+                value={projectLink}
+                onChange={handleProjectLink}
               />
             </div>
             <div className="InputBox_descriptionBuncle">
@@ -96,10 +114,19 @@ const ShareDetailLeader = () => {
           </div>
           <div className="ShareDetailLeader-AddImage_Bundle">
             <div className="Addimage_title">프로젝트 사진</div>
-            <div className="Addimage_box">
-              <div className="Addimage_btn" onClick={uploadProjectImg}>
-                업로드
-              </div>
+            <img className="Addimage_box" src={image || nouserImage} />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              id="image-upload"
+              onChange={handleImageChange}
+            ></input>
+            <div
+              className="upload_btn"
+              onClick={() => document.getElementById("image-upload")?.click()}
+            >
+              이미지 업로드
             </div>
           </div>
           <div className="ShareDetailLeader-Members_Bundle">
