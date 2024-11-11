@@ -70,12 +70,12 @@ const ChatPage = () => {
     if (roomExists) {
       console.log("채팅방 존재");
       // 소켓 연결
-      connectSocket();
+      // connectSocket();
     } else {
       console.log("채팅방 없음");
       // 채팅방 생성 함수
       await createChatRoom();
-      connectSocket();
+      //connectSocket();
     }
     getChatRooms();
   };
@@ -236,6 +236,9 @@ const ChatPage = () => {
 
   useEffect(() => {
     loadChatHistory();
+    if (chatRoom?.roomId) {
+      connectSocket();
+    }
   }, [chatRoom]);
 
   useEffect(() => {
