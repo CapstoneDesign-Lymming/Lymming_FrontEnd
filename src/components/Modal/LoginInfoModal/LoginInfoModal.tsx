@@ -44,28 +44,28 @@ const LoginInfoModal = ({ children }: Props) => {
         }
         break;
       case 4:
-        if (!data.work_time) {
+        if (data.work_time === "") {
           window.alert("항목을 선택해주세요");
         } else {
           setCount();
         }
         break;
       case 5:
-        if (!data.work_time) {
+        if (data.working_team === "") {
           window.alert("항목을 선택해주세요");
         } else {
           setCount();
         }
         break;
       case 6:
-        if (!data.work_time) {
+        if (data.devStyle === "") {
           window.alert("항목을 선택해주세요");
         } else {
           setCount();
         }
         break;
       case 7:
-        if (!data.work_time) {
+        if (data.with_people === "") {
           window.alert("항목을 선택해주세요");
         } else {
           setCount();
