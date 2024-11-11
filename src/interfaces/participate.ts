@@ -4,9 +4,8 @@ export interface ParticipateItem {
   deadline: string;
   uploadTime: string;
   recruitmentField: string[];
-
   workType: string[];
-  userId: string;
+  nickname: string;
   techStack: string[];
   skillicon: string[];
   studyMethod: string;
