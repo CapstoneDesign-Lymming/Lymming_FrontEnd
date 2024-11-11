@@ -47,8 +47,8 @@ const VideoChattingPage = () => {
   useEffect(() => {
     //signaling server url 변경
     const nextSocket = io(
-      "http://localhost:8080",
-      // "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
+      // "http://localhost:8080",
+      "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
       {
         transports: ["websocket"], //websocket우선 사용
       }
