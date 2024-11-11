@@ -49,7 +49,7 @@ export const useInfoStore = create<InfoState>((set) => ({
 
     position: "",
     refreshToken: "",
-    stack: [],
+    stack: "",
     temperature: 0,
     userImg: "",
     keyCode: "",

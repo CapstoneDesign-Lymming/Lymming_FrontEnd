@@ -37,27 +37,26 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, nickname }) => {
       <div className="top">
         <img />
         <span className="top-name">{userData?.nickname}</span>
-        <span className="top-introduce">안녕하세요 박준서입니다</span>
+        <span className="top-introduce">{userData?.bio}</span>
       </div>
       <div className="center">
         <div className="center-job">
-          <span>프론트</span>
-          <span>대학생</span>
+          <span>{userData?.job}</span>
         </div>
         <div className="center-feature">
-          <span>밤</span>
-          <span>계획</span>
-          <span>조용</span>
-          <span>온라인</span>
+          {userData?.devStyle.split(",").map((it) => {
+            return <span>{it}</span>;
+          })}
         </div>
         <div className="center-skills">
-          <span>밤</span> <span>밤</span> <span>밤</span> <span>밤</span>
+          {userData?.stack.split(",").map((it) => {
+            return <span>{it}</span>;
+          })}
         </div>
       </div>
 
-      {/* 유저아이디로 채팅방 접근하기 */}
       <div className="bottom">
-        <button onClick={() => navigate("/chat", { state: { nickname } })}>
+        <button onClick={() => navigate("/chat", { state: { id: nickname } })}>
           채팅하기
         </button>
       </div>
