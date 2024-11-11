@@ -193,7 +193,7 @@ const ChatPage = () => {
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
-      setChatHistory((prev) => [...prev, msgData]);
+      //  setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
       console.log(inputMessage);
     }
