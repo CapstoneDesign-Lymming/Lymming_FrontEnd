@@ -153,6 +153,7 @@ const ChatPage = () => {
   };
 
   const connectSocket = () => {
+    if (!chatRoom?.roomId) return;
     const socket = new SockJS("https://lymming-back.link/chatting");
 
     client.current = Stomp.over(socket);
@@ -161,9 +162,9 @@ const ChatPage = () => {
       {},
       () => {
         console.log("STOMP 연결 성공");
-        console.log(chatRoom?.roomId);
+        console.log(chatRoom.roomId);
         client.current?.subscribe(
-          `/sub/chat/room/${chatRoom?.roomId}`,
+          `/sub/chat/room/${chatRoom.roomId}`,
 
           (message) => {
             const msg = JSON.parse(message.body);
@@ -237,6 +238,7 @@ const ChatPage = () => {
   useEffect(() => {
     loadChatHistory();
     if (chatRoom?.roomId) {
+      console.log("채팅방 연결 준비: ", chatRoom.roomId);
       connectSocket();
     }
   }, [chatRoom]);
