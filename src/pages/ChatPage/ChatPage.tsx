@@ -160,6 +160,7 @@ const ChatPage = () => {
     client.current.connect(
       {},
       () => {
+        console.log("STOMP 연결 성공");
         client.current?.subscribe(
           `/sub/chat/room/${chatRoom?.id}`,
           (message) => {

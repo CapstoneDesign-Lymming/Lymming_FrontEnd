@@ -245,7 +245,8 @@ export const Child4 = () => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
-
+    console.log(name);
+    console.log(value);
     setData({ [name]: value });
   };
   return (
@@ -307,7 +308,8 @@ export const Child5 = () => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
-
+    console.log(name);
+    console.log(value);
     setData({ [name]: value });
   };
   return (
@@ -318,7 +320,7 @@ export const Child5 = () => {
           <input
             type="radio"
             id="독립적으로"
-            name="work_style"
+            name="working_team"
             value="독립적으로"
             onChange={onChange}
           />
@@ -328,7 +330,7 @@ export const Child5 = () => {
           <input
             type="radio"
             id="온라인 선호"
-            name="work_style"
+            name="working_team"
             value="온라인 선호"
             onChange={onChange}
           />
@@ -340,7 +342,7 @@ export const Child5 = () => {
           <input
             type="radio"
             id="팀과함께"
-            name="work_style"
+            name="working_team"
             value="팀과함께"
             onChange={onChange}
           />
@@ -350,7 +352,7 @@ export const Child5 = () => {
           <input
             type="radio"
             id="오프라인 선호"
-            name="work_style"
+            name="working_team"
             value="오프라인 선호"
             onChange={onChange}
           />
@@ -369,7 +371,8 @@ export const Child6 = () => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
-
+    console.log(name);
+    console.log(value);
     setData({ [name]: value });
   };
   return (
@@ -380,7 +383,7 @@ export const Child6 = () => {
           <input
             type="radio"
             id="즉흥적"
-            name="method"
+            name="devStyle"
             value="즉흥적"
             onChange={onChange}
           />
@@ -390,7 +393,7 @@ export const Child6 = () => {
           <input
             type="radio"
             id="계획적"
-            name="method"
+            name="devStyle"
             value="계획적"
             onChange={onChange}
           />
@@ -402,7 +405,7 @@ export const Child6 = () => {
           <input
             type="radio"
             id="단기 프로젝트"
-            name="method"
+            name="devStyle"
             value="단기 프로젝트"
             onChange={onChange}
           />
@@ -412,7 +415,7 @@ export const Child6 = () => {
           <input
             type="radio"
             id="장기 프로젝트"
-            name="method"
+            name="devStyle"
             value="장기 프로젝트"
             onChange={onChange}
           />
@@ -431,7 +434,8 @@ export const Child7 = () => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
-
+    console.log(name);
+    console.log(value);
     setData({ [name]: value });
   };
   return (
@@ -442,7 +446,7 @@ export const Child7 = () => {
           <input
             type="radio"
             id="조용한 리더"
-            name="me"
+            name="with_people"
             value="조용한 리더"
             onChange={onChange}
           />
@@ -452,7 +456,7 @@ export const Child7 = () => {
           <input
             type="radio"
             id="활발한 리더"
-            name="me"
+            name="with_people"
             value="활발한 리더"
             onChange={onChange}
           />
@@ -464,7 +468,7 @@ export const Child7 = () => {
           <input
             type="radio"
             id="조용한 보조"
-            name="me"
+            name="with_people"
             value="조용한 보조"
             onChange={onChange}
           />
@@ -474,7 +478,7 @@ export const Child7 = () => {
           <input
             type="radio"
             id="활발한 보조"
-            name="me"
+            name="with_people"
             value="활발한 보조"
             onChange={onChange}
           />

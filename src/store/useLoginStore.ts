@@ -31,8 +31,9 @@ interface UserInfo {
   userImg: string | null;
   keyCode: string;
   uid: number | null;
-
   work_time: string;
+  working_team: string;
+  with_people: string;
 }
 
 interface InfoState {
@@ -44,7 +45,7 @@ interface InfoState {
 export const useLoginStore = create<LoginState>((set) => ({
   login: false,
   count: 1,
-  isOpen: false,
+  isOpen: true,
   //닉네임 중복체크
   isExist: false,
   setCount: () => set((state: any) => ({ count: state.count + 1 })),
@@ -59,14 +60,13 @@ export const useInfoStore = create<InfoState>((set) => ({
   data: {
     bio: "",
     category: "",
-    devStyle: "",
     favorites: 0,
     gender: "",
     serverNickname: "",
     interests: [],
     job: "",
     loginType: "",
-    nickname: "", //임시데이터
+    nickname: "",
     position: "",
     refreshToken: "",
     stack: [],
@@ -74,7 +74,14 @@ export const useInfoStore = create<InfoState>((set) => ({
     userImg: "",
     keyCode: "",
     uid: 0,
+    // 작업 잘되는 시간
     work_time: "",
+    // 팀원과 작업할때
+    working_team: "",
+    // 작업할때 선호하는 방식
+    devStyle: "",
+    // 사람들과 함께 있을때
+    with_people: "",
   },
 
   setData: (newData: Partial<UserInfo>) =>
