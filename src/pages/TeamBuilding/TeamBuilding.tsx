@@ -5,6 +5,7 @@ import imgs from "../../assets/img/noimage.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import skills from "../../data/skills.json";
+import useImgUpload2S3 from "../../hooks/useImgUpload2S3";
 
 interface State {
   type: string;
@@ -22,11 +23,10 @@ interface State {
 
 const TeamBuilding = () => {
   const navigate = useNavigate();
-
   const { imageUrl, handleFileChange, handleUpload, uploadedFileUrl } =
     useImgUpload2S3();
 
-
+  //  const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [state, setState] = useState<State>({
@@ -43,22 +43,22 @@ const TeamBuilding = () => {
     techStack: [],
   });
 
-  const onBtnClick = () => {
-    if (imgRef.current) {
-      imgRef.current.click();
-    }
-  };
-  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
-    const file = target.files;
+  // const onBtnClick = () => {
+  //   if (imgRef.current) {
+  //     imgRef.current.click();
+  //   }
+  // };
+  // const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const target = e.target;
+  //   const file = target.files;
 
-    if (file) {
-      setImg(file[0]);
-      setState({ ...state, img: file[0] });
-      console.log(target.name);
-      console.log(state);
-    }
-  };
+  //   if (file) {
+  //     setImg(file[0]);
+  //     setState({ ...state, img: file[0] });
+  //     console.log(target.name);
+  //     console.log(state);
+  //   }
+  // };
 
   const onChange = (
     e: React.ChangeEvent<
@@ -83,6 +83,8 @@ const TeamBuilding = () => {
   };
 
   const onsubmit = async () => {
+    handleUpload(); //사진 업로드
+    console.log(uploadedFileUrl); //TODO: 사진 url 백엔드로 전송하는 로직 필요
     const requiredFields = [
       { field: "type", message: "모집 구분을 선택하세요." },
       { field: "member", message: "모집 인원을 입력하세요." },
@@ -119,12 +121,12 @@ const TeamBuilding = () => {
 
     formData.append("techStack", JSON.stringify(selectedSkills));
 
-    if (img) {
-      console.log("이미지 파일이 존재합니다:", img);
-      formData.append("projectImg", img);
-    } else {
-      console.log("이미지 없음");
-    }
+    // if (img) {
+    //   console.log("이미지 파일이 존재합니다:", img);
+    //   formData.append("projectImg", img);
+    // } else {
+    //   console.log("이미지 없음");
+    // }
 
     // 서버 전송 로직 짜기
     try {
@@ -139,7 +141,7 @@ const TeamBuilding = () => {
     }
   };
 
-  const imgPreviewUrl = img ? URL.createObjectURL(img) : imgs;
+  // const imgPreviewUrl = img ? URL.createObjectURL(img) : imgs;
 
   return (
     <>
@@ -271,11 +273,15 @@ const TeamBuilding = () => {
               type="file"
               accept="image/*"
               ref={imgRef}
-              onChange={onImageChange}
+              onChange={handleFileChange}
               name=""
             />
-            <img src={imgPreviewUrl}></img>
-            <button onClick={onBtnClick}>사진추가</button>
+            <img src={imageUrl ?? imgs}></img>
+            <button
+              onClick={() => document.getElementById("image-upload")?.click()}
+            >
+              사진추가
+            </button>
           </div>
 
           <div className="input_content">
