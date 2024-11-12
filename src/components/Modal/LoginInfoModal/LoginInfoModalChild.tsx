@@ -504,7 +504,8 @@ export const Child8 = () => {
       reader.onloadend = () => {
         const base64Image = reader.result as string; // base64로 변환된 이미지 URL
         setImage(base64Image); // 이미지 상태 업데이트
-        setData({ userImg: base64Image }); // 스토어에 base64 이미지 저장
+        // 임시 이미지 전송
+        setData({ userImg: "base64Image" }); // 스토어에 base64 이미지 저장
       };
 
       reader.readAsDataURL(file); // 파일을 base64로 읽기
