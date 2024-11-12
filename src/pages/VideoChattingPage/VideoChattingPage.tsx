@@ -28,7 +28,6 @@ const VideoChattingPage = () => {
   const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
   const [isMicOn, setIsMicOn] = useState(true);
 
-  // const [roomName, setRoom] = useState<string>("test_room"); //TODO: 추후 room id는 url에 담아서 전달하고 이를 파싱해오기
   const roomName = useRef<string | undefined>("test_room");
 
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -316,9 +315,6 @@ const VideoChattingPage = () => {
     }
     console.log("setVideo에서 peerConnection상태", peerConnection);
 
-    //stream: MediaStream의 객체로 비디오 및 오디오 트랙의 모음을 나타냄
-    //getTracks: MediaStream객체의 메서드, 스트림에 포함된 모든 MediaStreamTrack객체를 배열형태로 변환함
-    //MediaStremaTrack: 비디오나 오디오 같은 미디어 데이터의 단일 트랙을 나타냄
     setIsVideoOn(true);
   };
 
