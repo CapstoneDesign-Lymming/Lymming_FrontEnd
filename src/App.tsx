@@ -23,10 +23,7 @@ function App() {
         <Route path="/" element={<Main />}></Route>
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/auth" element={<KakaoAuth />}></Route>
-        <Route
-          path="/api/login/oauth2/redirect/github"
-          element={<GithubAuth />}
-        ></Route>
+        <Route path="/api/callback" element={<GithubAuth />}></Route>
         <Route
           path="/videochat/:roomId"
           element={<VideoChattingPage />}
