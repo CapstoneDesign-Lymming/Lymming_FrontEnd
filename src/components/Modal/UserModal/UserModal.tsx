@@ -49,7 +49,7 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, nickname }) => {
           })}
         </div>
         <div className="center-skills">
-          {userData?.stack.split(",").map((it) => {
+          {userData?.stack.map((it) => {
             return <span>{it}</span>;
           })}
         </div>
