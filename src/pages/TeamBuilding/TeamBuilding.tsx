@@ -26,7 +26,7 @@ const TeamBuilding = () => {
   const { imageUrl, handleFileChange, handleUpload, uploadedFileUrl } =
     useImgUpload2S3();
 
-  // const [img, setImg] = useState<File | null>(null);
+  //  const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [state, setState] = useState<State>({
