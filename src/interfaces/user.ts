@@ -10,7 +10,6 @@ interface UserInfo {
   loginType: string;
   nickname: string;
   position: string;
-  refreshToken: string;
   stack: string[];
   temperature: number;
   userImg: string | null;

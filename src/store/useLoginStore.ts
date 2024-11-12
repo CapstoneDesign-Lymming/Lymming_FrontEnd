@@ -48,7 +48,6 @@ export const useInfoStore = create<InfoState>((set) => ({
     nickname: "",
 
     position: "",
-    refreshToken: "",
     stack: [],
     temperature: 0,
     userImg: "",
