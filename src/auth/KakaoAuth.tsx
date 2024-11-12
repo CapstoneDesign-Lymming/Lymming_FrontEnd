@@ -28,7 +28,7 @@ const KakaoAuth = () => {
       );
 
       // 리턴값으로 토큰 날라온다
-      localStorage.setItem("token", result.data.jwt);
+      localStorage.setItem("token", result.data.refreshToken);
       console.log("로그인", result.data);
 
       // 있으면
