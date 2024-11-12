@@ -497,12 +497,17 @@ export const Child8 = () => {
   const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
+    const file = event.target.files?.[0]; // 선택한 파일 가져오기
     if (file) {
-      const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
-      setImage(imageUrl); // 이미지 상태 업데이트
-      setData({ userImg: imageUrl });
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64Image = reader.result as string; // base64로 변환된 이미지 URL
+        setImage(base64Image); // 이미지 상태 업데이트
+        setData({ userImg: base64Image }); // 스토어에 base64 이미지 저장
+      };
+
+      reader.readAsDataURL(file); // 파일을 base64로 읽기
     }
   };
 
