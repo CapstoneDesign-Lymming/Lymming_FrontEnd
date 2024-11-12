@@ -22,7 +22,11 @@ interface State {
 
 const TeamBuilding = () => {
   const navigate = useNavigate();
-  const [img, setImg] = useState<File | null>(null);
+
+  const { imageUrl, handleFileChange, handleUpload, uploadedFileUrl } =
+    useImgUpload2S3();
+
+
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [state, setState] = useState<State>({
