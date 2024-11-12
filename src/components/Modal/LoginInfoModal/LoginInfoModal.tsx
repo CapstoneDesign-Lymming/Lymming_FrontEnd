@@ -44,13 +44,35 @@ const LoginInfoModal = ({ children }: Props) => {
         }
         break;
       case 4:
-        if (!data.work_time) {
+        if (data.work_time === "") {
           window.alert("항목을 선택해주세요");
         } else {
           setCount();
         }
         break;
       case 5:
+        if (data.working_team === "") {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
+      case 6:
+        if (data.devStyle === "") {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
+      case 7:
+        if (data.with_people === "") {
+          window.alert("항목을 선택해주세요");
+        } else {
+          setCount();
+        }
+        break;
+
+      case 8:
         if (!data.bio) {
           window.alert("소개글을 작성해주세요");
         } else {
@@ -64,10 +86,13 @@ const LoginInfoModal = ({ children }: Props) => {
     console.log(data);
     //폼데이터 서버에 보내는 로직추가하기
     try {
-      const res = await axios.put("http://localhost:8080/api/auth/sign-up", {
-        ...data,
-        refreshToken: token,
-      });
+      const res = await axios.put(
+        "https://lymming-back.link/api/auth/sign-up",
+        {
+          ...data,
+          refreshToken: token,
+        }
+      );
       console.log(res);
     } catch (e) {
       console.error(e);
@@ -95,7 +120,7 @@ const LoginInfoModal = ({ children }: Props) => {
       </div>
       <div className="child_wrqpper">{children}</div>
       <div className="btn_wrqpper">
-        {count === 6 ? (
+        {count === 9 ? (
           <button onClick={postData}>완료</button>
         ) : (
           <button onClick={onBtnClick}>다음</button>

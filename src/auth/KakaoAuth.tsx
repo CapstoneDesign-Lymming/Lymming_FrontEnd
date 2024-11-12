@@ -16,13 +16,16 @@ const KakaoAuth = () => {
   const urlParams = new URLSearchParams(queryString);
   const code = urlParams.get("code"); // 'code' 파라미터 값을 가져오기
 
-  // 서버로 인가코드 전송
+  // 서버로 인가코드 전
   const postKakaoCode = async (code: any) => {
     console.log("로그인", code);
     try {
-      const result = await axios.post("http://localhost:8080/api/kakao/login", {
-        code,
-      });
+      const result = await axios.post(
+        "https://lymming-back.link/api/kakao/login",
+        {
+          code,
+        }
+      );
 
       // 리턴값으로 토큰 날라온다
       localStorage.setItem("token", result.data.refresh_token);

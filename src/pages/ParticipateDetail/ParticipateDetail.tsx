@@ -8,9 +8,8 @@ const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const data = location.state;
+  const data = location.state || {}; // 기본값 설정
   console.log(data);
-
   return (
     <div className="ParticipateDetail">
       <Header />
@@ -18,7 +17,7 @@ const ParticipateDetail = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} userId={data.userId} />
+          <Usermodal close={setUserModalOpen} nickname={data.userId} />
         </>
       )}
 
@@ -39,35 +38,32 @@ const ParticipateDetail = () => {
           <div className="content-info-center">
             <div className="content-info-center-left">
               <span className="bold_span_center">모집하는 분야</span>
-              {data.position.map((it: any, index: any) => {
-                return (
+              {data.recruitmentField
+                .split(",")
+                .map((it: string, index: number) => (
                   <span className="round_span" key={index}>
-                    {it}
+                    {it.trim()}
                   </span>
-                );
-              })}
+                ))}
             </div>
             <div className="content-info-center-right">
               <span className="bold_span_center">원하는 작업유형</span>
-
-              {data.style.map((it: any, index: any) => {
-                return (
-                  <span className="round_span" key={index}>
-                    {it}
-                  </span>
-                );
-              })}
+              {data.workType.split(",").map((it: string, index: number) => (
+                <span className="round_span" key={index}>
+                  {it.trim()}
+                </span>
+              ))}
             </div>
           </div>
           <div className="content-info-bottom">
             <span className="bold_span">원하는 기술 스택</span>
-            {data.skillicon.map((it: any, index: any) => {
-              return <img key={index} src={it} />;
-            })}
+            {data.techStack.split(",").map((it: string, index: number) => (
+              <img key={index} src={it.trim()} />
+            ))}
           </div>
         </div>
         <hr />
-        <div className="content-text">{data.content}</div>
+        <div className="content-text">{data.description}</div>
       </div>
       <button
         className="bottom_btn"

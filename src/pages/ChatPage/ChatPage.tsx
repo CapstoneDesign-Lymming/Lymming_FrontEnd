@@ -70,12 +70,12 @@ const ChatPage = () => {
     if (roomExists) {
       console.log("채팅방 존재");
       // 소켓 연결
-      connectSocket();
+      // connectSocket();
     } else {
       console.log("채팅방 없음");
       // 채팅방 생성 함수
       await createChatRoom();
-      connectSocket();
+      //connectSocket();
     }
     getChatRooms();
   };
@@ -85,9 +85,12 @@ const ChatPage = () => {
     if (partner) {
       const roomId = await sortChatRoomId(currentUser, partner);
       try {
-        const res = await axios.post("http://localhost:8080/chat/existroom", {
-          roomId: roomId,
-        });
+        const res = await axios.post(
+          "https://lymming-back.link/chat/existroom",
+          {
+            roomId: roomId,
+          }
+        );
 
         console.log(res.data.type);
 
@@ -119,7 +122,7 @@ const ChatPage = () => {
       };
       try {
         const res = await axios.post(
-          "http://localhost:8080/chat/room/create",
+          "https://lymming-back.link/chat/room/create",
           payload
         );
 
@@ -138,7 +141,7 @@ const ChatPage = () => {
       console.log("채팅기록 불러오기");
       try {
         const res = await axios.get(
-          `http://localhost:8080/chat/${chatRoom.roomId}/history`
+          `https://lymming-back.link/chat/${chatRoom.roomId}/history`
         );
         setChatHistory(res.data);
 
@@ -150,15 +153,19 @@ const ChatPage = () => {
   };
 
   const connectSocket = () => {
-    const socket = new SockJS("http://localhost:8080/chatting");
+    if (!chatRoom?.roomId) return;
+    const socket = new SockJS("https://lymming-back.link/chatting");
 
     client.current = Stomp.over(socket);
 
     client.current.connect(
       {},
       () => {
+        console.log("STOMP 연결 성공");
+        console.log(chatRoom.roomId);
         client.current?.subscribe(
-          `/sub/chat/room/${chatRoom?.id}`,
+          `/sub/chat/room/${chatRoom.roomId}`,
+
           (message) => {
             const msg = JSON.parse(message.body);
 
@@ -186,7 +193,7 @@ const ChatPage = () => {
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
-      setChatHistory((prev) => [...prev, msgData]);
+      //  setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
       console.log(inputMessage);
     }
@@ -203,7 +210,7 @@ const ChatPage = () => {
   // 채팅방 목록 불러오기
   const getChatRooms = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/chat/chatrooms", {
+      const res = await axios.get("https://lymming-back.link/chat/chatrooms", {
         // 올바른 URL 경로 확인
         params: { userId: currentUser }, // userId를 파라미터로 전달
       });
@@ -230,6 +237,10 @@ const ChatPage = () => {
 
   useEffect(() => {
     loadChatHistory();
+    if (chatRoom?.roomId) {
+      console.log("채팅방 연결 준비: ", chatRoom.roomId);
+      connectSocket();
+    }
   }, [chatRoom]);
 
   useEffect(() => {

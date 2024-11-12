@@ -1,11 +1,17 @@
 export interface ParticipateItem {
-  type: string;
-  title: string;
-  end: string;
+  studyType: string;
+  projectName: string;
+  deadline: string;
   uploadTime: string;
-  position: string[];
-  style: string[];
-  userId: string;
-  skill: string[];
+  recruitmentField: string[];
+  workType: string[];
+  nickname: string;
+  techStack: string[];
   skillicon: string[];
+  studyMethod: string;
+  projectDuration: string;
+  recruitmentCount: number;
+  viewCount: number;
+  teamMember: number;
+  description: string;
 }

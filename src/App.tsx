@@ -13,7 +13,8 @@ import ExhibitionPage from "./pages/ExhibitionPage/ExhibitionPage";
 import SharePage from "./pages/SharePage/SharePage";
 import ShareDetailPage from "./pages/ShareDetailPage/ShareDetailPage";
 import ShareDetailLeader from "./components/ShareDetailComponent/ShareDetailLeader";
-import CollectPage from "./pages/CollectPage/CollectPae";
+import CollectPage from "./pages/CollectPage/CollectPage";
+import GithubAuth from "./auth/GithubAuth";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<Main />}></Route>
         <Route path="/login" element={<LogIn />}></Route>
         <Route path="/auth" element={<KakaoAuth />}></Route>
+        <Route path="/api/callback" element={<GithubAuth />}></Route>
         <Route
           path="/videochat/:roomId"
           element={<VideoChattingPage />}

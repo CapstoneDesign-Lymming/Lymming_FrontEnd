@@ -59,7 +59,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         }
       >
         <div className="item-top-label">
-          <div className="item-top-label-left">{data.type}</div>
+          <div className="item-top-label-left">{data.studyType}</div>
           <div className="item-top-label-right">
             <img
               src={newImg}
@@ -67,41 +67,58 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
                 display: checkNewData(data.uploadTime) ? "inline" : "none",
               }}
             />
-            <span>{remainingTime(data.uploadTime, data.end)}</span>
+            <span>{remainingTime(data.uploadTime, data.deadline)}</span>
           </div>
         </div>
-        <div className="item-top-title">{data.title}</div>
+        <div className="item-top-title">{data.projectName}</div>
         <div className="item-top-info">
-          <span>마감</span> <span>|</span> <span>{data.end}</span>
+          <span>마감</span> <span>|</span> <span>{data.deadline}</span>
         </div>
         <div className="item-top-feature">
-          {data.position.map((it, index) => {
-            return <span key={index}>{it}</span>;
-          })}
+          {Array.isArray(data.recruitmentField) &&
+          data.recruitmentField.length > 0 ? (
+            data.recruitmentField.map((it, index) => {
+              return <span key={index}>{it}</span>;
+            })
+          ) : (
+            <span>{data.recruitmentField}</span>
+          )}
         </div>
+
         <div className="item-top-style">
-          {data.style.map((it, index) => {
-            return <span key={index}>{it}</span>;
-          })}
+          {Array.isArray(data.workType) && data.workType.length > 0 ? (
+            data.workType.map((it, index) => {
+              return <span key={index}>{it}</span>;
+            })
+          ) : (
+            <span>{data.workType}</span>
+          )}
         </div>
+
+        {/* 이미지로 수정하기 */}
         <div className="item-top-skills">
-          {data.skillicon.map((it, index) => {
-            return <img src={it} key={index} />;
-          })}
+          {Array.isArray(data.skillicon) && data.skillicon.length > 0 ? (
+            data.techStack.map((it, index) => {
+              return <img src={it} key={index} />;
+            })
+          ) : (
+            <span>{data.techStack}</span>
+          )}
         </div>
+
         <hr />
       </div>
       <div className="item-bottom">
         <div
           className="item-bottom-left"
           onClick={() => {
-            setUserModalData(data.userId);
+            setUserModalData(data.nickname);
 
             setUserModalOpen(true);
           }}
         >
           <img />
-          <span>{data.userId}</span>
+          <span>{data.nickname}</span>
         </div>
         <div className="item-bottom-right">
           <div className="item-bottom-right-watch">
@@ -110,7 +127,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           </div>
           <div
             className="item-bottom-right-chat"
-            onClick={() => navigate("/chat", { state: { id: data.userId } })}
+            onClick={() => navigate("/chat", { state: { id: data.nickname } })}
           >
             <img src={chat} />
             <span>채팅하기</span>

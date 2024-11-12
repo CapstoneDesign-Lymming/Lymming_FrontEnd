@@ -32,6 +32,15 @@ jobs: # job 설정
         run: npm install
 
       - name: Build # React Build
+        env:
+          VITE_REST_API_KEY: ${{ secrets.VITE_REST_API_KEY }}
+          VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
+          VITE_GIT_REST_API_KEY: ${{ secrets.VITE_GIT_REST_API_KEY }}
+          VITE_GIT_REDIRECT_URI: ${{ secrets.VITE_GIT_REDIRECT_URI }}
+          VITE_COTURN_SERVER_IP: ${{ secrets.VITE_COTURN_SERVER_IP}}
+          VITE_COTURN_ID: ${{secrets.VITE_COTURN_ID}}
+          VITE_COTURN_PW: ${{secrets.VITE_COTURN_PW}}
+          VITE_SIGNALING_SERVER_URL: ${{secrets.VITE_SIGNALING_SERVER_URL}}
         run: npm run build
         # env:
         #   CI: "false"
@@ -41,9 +50,6 @@ jobs: # job 설정
           AWS_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ap-northeast-2
-          VITE_REST_API_KEY: ${{ secrets.VITE_REST_API_KEY }}
-          VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
-          VITE_GIT_REST_API_KEY: ${{ secrets.VITE_GIT_REST_API_KEY }}
-          VITE_GIT_REDIRECT_URI: ${{ secrets.VITE_GIT_REDIRECT_URI }}
+
         run: |
           aws s3 cp dist s3://lymming.link/ --recursive

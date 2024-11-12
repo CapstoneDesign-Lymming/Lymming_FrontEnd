@@ -1,11 +1,11 @@
 import Header from "../../components/header/Header";
 import "./Participate.scss";
-import dummy from "../../data/participateDummyData.json";
 import React, { useEffect, useRef, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
 import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { ParticipateItem } from "../../interfaces/participate";
+import axios from "axios";
 
 const Participate = () => {
   const inside = useRef<HTMLDivElement>(null);
@@ -45,26 +45,30 @@ const Participate = () => {
   useEffect(() => {
     let filteredData =
       selectTab === "전체"
-        ? dummy.dummy
-        : dummy.dummy.filter((it) => it.type === selectTab);
+        ? data
+        : data.filter((it) => it.studyType === selectTab);
 
     if (selectedSkills.length > 0) {
       filteredData = filteredData.filter((it) => {
-        return it.skill.some((skill) => selectedSkills.includes(skill));
+        // techStack이 배열인지 확인하고, 배열일 때만 .some 메서드를 사용
+        return (
+          Array.isArray(it.techStack) &&
+          it.techStack.some((skill) => selectedSkills.includes(skill))
+        );
       });
     }
 
     // 포지션 필터링
     if (selectSecondTab.position) {
       filteredData = filteredData.filter((it) => {
-        return it.position.includes(selectSecondTab.position);
+        return it.recruitmentField.includes(selectSecondTab.position);
       });
     }
 
     // 진행 방식 필터링
     if (selectSecondTab.method) {
       filteredData = filteredData.filter((it) => {
-        return it.method.includes(selectSecondTab.method);
+        return it.studyMethod.includes(selectSecondTab.method);
       });
     }
 
@@ -86,6 +90,20 @@ const Participate = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [visible]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const res = await axios.get("https://lymming-back.link/participate");
+        setData(res.data as ParticipateItem[]);
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getData();
+  }, []);
   //서버에서 리스트 받아오는 걸로 수정해야함
 
   return (
@@ -95,7 +113,7 @@ const Participate = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} userId={userModalData} />
+          <Usermodal close={setUserModalOpen} nickname={userModalData} />
         </>
       )}
       {visible && (
