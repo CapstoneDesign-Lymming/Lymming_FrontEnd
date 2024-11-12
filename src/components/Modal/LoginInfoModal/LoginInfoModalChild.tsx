@@ -183,7 +183,7 @@ export const Child2 = () => {
   };
 
   useEffect(() => {
-    setData({ stack: skills.join(", ") });
+    setData({ stack: skills });
   }, [skills]);
 
   return (
