@@ -37,6 +37,10 @@ jobs: # job 설정
           VITE_REDIRECT_URI: ${{ secrets.VITE_REDIRECT_URI }}
           VITE_GIT_REST_API_KEY: ${{ secrets.VITE_GIT_REST_API_KEY }}
           VITE_GIT_REDIRECT_URI: ${{ secrets.VITE_GIT_REDIRECT_URI }}
+          VITE_COTURN_SERVER_IP: ${{ secrets.VITE_COTURN_SERVER_IP}}
+          VITE_COTURN_ID: ${{secrets.VITE_COTURN_ID}}
+          VITE_COTURN_PW: ${{secrets.VITE_COTURN_PW}}
+          VITE_SIGNALING_SERVER_URL: ${{secrets.VITE_SIGNALING_SERVER_URL}}
         run: npm run build
         # env:
         #   CI: "false"
