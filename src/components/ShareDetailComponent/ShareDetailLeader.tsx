@@ -29,12 +29,10 @@ const ShareDetailLeader = () => {
   const [modalName, setModalName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
   const [projectLink, setProjectLink] = useState("");
-  const { imageUrl, handleFileChange, handleUpload } = useImgUpload2S3();
-  // const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
-  // const { setData } = useInfoStore();
-  //------------------------------------------
-  // const [selectedFile, setSelectedFile] = useState<File | null>(null); //FIXME: 추가됨
-  // const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  const { imageUrl, handleFileChange, handleUpload, uploadedFileUrl } =
+    useImgUpload2S3();
+
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,59 +53,12 @@ const ShareDetailLeader = () => {
     openModal();
     console.log(isModalOpen);
   };
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
 
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
-  //     setImage(imageUrl); // 이미지 상태 업데이트
-  //     setData({ userImg: imageUrl });
-  //   }
-  // };
-
-  //------------------------------------------
-  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0] || null;
-  //   if (file) {
-  //     setSelectedFile(file);
-  //     const objectUrl = URL.createObjectURL(file);
-  //     setImageUrl(objectUrl);
-  //     console.log("⭐미리보기:", imageUrl);
-  //   }
-  // };
-  // const handleUpload = () => {
-  //   if (!selectedFile) {
-  //     alert("파일을 선택해주세요");
-  //     return;
-  //   }
-  //   console.log(selectedFile);
-  //   AWS.config.update({
-  //     accessKeyId: import.meta.env.VITE_SECRET_KEY,
-  //     secretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY,
-  //     region: "ap-northeast-2",
-  //   });
-
-  //   const s3 = new AWS.S3();
-  //   console.log(selectedFile);
-  //   const uploadParams = {
-  //     Bucket: import.meta.env.VITE_IMG_S3,
-  //     Key: `folder${selectedFile.name}`, // S3에 저장될 경로와 파일명
-  //     Body: selectedFile,
-  //   };
-  //   s3.upload(
-  //     uploadParams,
-  //     (err: unknown, data: { ETag: unknown; Location: unknown }) => {
-  //       if (err) {
-  //         console.error("Error uploading file:", err);
-  //       } else {
-  //         console.log("File uploaded successfully. ETag:", data.ETag);
-  //         const uploadedFileUrl = data.Location;
-  //         console.log(uploadedFileUrl);
-  //         //TODO: uploadedFileUrl은 s3에 저장된 이미지의 url로 백엔드에게 전달해주기
-  //       }
-  //     }
-  //   );
-  // };
+  //TODO: 이미지 url 저장하면 백엔드로 보내기
+  const saveShareProject = () => {
+    handleUpload(); //사진 업로드
+    console.log(uploadedFileUrl);
+  };
   return (
     <>
       <Header />
@@ -162,13 +113,13 @@ const ShareDetailLeader = () => {
               onChange={handleFileChange}
               className="Addimage_box_1"
             ></input>
+
             <div
               className="upload_btn"
               onClick={() => document.getElementById("image-upload")?.click()}
             >
-              클릭
+              업로드 하기
             </div>
-            <div onClick={handleUpload}>업로드 하기</div>
             {/* TODO: 추후에 저장하기 에서 업로드하기로 변경 */}
           </div>
           <div className="ShareDetailLeader-Members_Bundle">
@@ -194,7 +145,9 @@ const ShareDetailLeader = () => {
             </div>
           </div>
           <div className="ShareDetailLeader-Footer_BtnWrapper">
-            <div className="saveBtn">저장하기</div>
+            <div className="saveBtn" onClick={saveShareProject}>
+              저장하기
+            </div>
           </div>
         </div>
         {isModalOpen && modalName === "shareInviteModal" && (

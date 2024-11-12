@@ -4,7 +4,7 @@ import { useState } from "react";
 const useImgUpload2S3 = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null); //FIXME: 추가됨
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-
+  const [uploadedFileUrl, setUploadFileUrl] = useState("");
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
@@ -41,14 +41,15 @@ const useImgUpload2S3 = () => {
           console.error("Error uploading file:", err);
         } else {
           console.log("File uploaded successfully. ETag:", data.ETag);
-          const uploadedFileUrl = data.Location;
+          const uploadedFileUrl = data.Location as string;
           console.log(uploadedFileUrl);
+          setUploadFileUrl(uploadedFileUrl);
           //TODO: uploadedFileUrl은 s3에 저장된 이미지의 url로 백엔드에게 전달해주기
         }
       }
     );
   };
 
-  return { imageUrl, handleFileChange, handleUpload };
+  return { imageUrl, handleFileChange, handleUpload, uploadedFileUrl };
 };
 export default useImgUpload2S3;
