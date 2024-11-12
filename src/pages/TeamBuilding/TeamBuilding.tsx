@@ -60,7 +60,11 @@ const TeamBuilding = () => {
   //   }
   // };
 
-  const onChange = (e: any) => {
+  const onChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
     const target = e.target;
 
     if (target) {

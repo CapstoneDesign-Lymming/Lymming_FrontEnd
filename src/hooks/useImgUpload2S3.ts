@@ -5,6 +5,7 @@ const useImgUpload2S3 = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null); //FIXME: 추가됨
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [uploadedFileUrl, setUploadFileUrl] = useState("");
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
