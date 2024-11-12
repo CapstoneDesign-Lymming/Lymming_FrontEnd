@@ -27,9 +27,9 @@ const GithubAuth = () => {
       );
 
       //  사용자 정보를 로컬 스터리지에 저장
-      localStorage.setItem("token", result.data);
+      localStorage.setItem("token", result.data.jwt);
 
-      console.log("로그인", result.data);
+      console.log("로그인", result.data.jwt);
       getUserData();
     } catch (e) {
       console.error(e);
