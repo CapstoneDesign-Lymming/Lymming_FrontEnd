@@ -11,7 +11,7 @@ interface UserInfo {
   nickname: string;
   position: string;
   refreshToken: string;
-  stack: string;
+  stack: string[];
   temperature: number;
   userImg: string | null;
   keyCode: string;

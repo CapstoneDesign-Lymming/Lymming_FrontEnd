@@ -36,7 +36,6 @@
 //             role: "user",
 //             content: `사용자의 특성: 개발 스타일 - ${userInfo.devStyle}, 팀과의 작업 - ${userInfo.with_people}, 작업 시간대 - ${userInfo.work_time}, 팀 작업 방식 - ${userInfo.working_team}`,
 //           },
-
 //         ],
 //       });
 
