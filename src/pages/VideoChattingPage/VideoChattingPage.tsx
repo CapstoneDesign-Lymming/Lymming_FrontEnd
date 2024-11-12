@@ -48,7 +48,7 @@ const VideoChattingPage = () => {
     //signaling server url 변경
     const nextSocket = io(
       // "http://localhost:8080",
-      "https://stark-shelf-17313-f07c01ad9fd0.herokuapp.com/",
+      import.meta.env.VITE_SIGNALING_SERVER_URL,
       {
         transports: ["websocket"], //websocket우선 사용
       }
@@ -65,9 +65,9 @@ const VideoChattingPage = () => {
         { urls: "stun:stun2.l.google.com:19302" },
         { urls: "stun:stun3.l.google.com:19302" },
         {
-          urls: "turn:15.165.220.179:3478",
-          username: "lymming",
-          credential: "2020",
+          urls: import.meta.env.VITE_COTURN_SERVER_IP,
+          username: import.meta.env.VITE_COTURN_ID,
+          credential: import.meta.env.VITE_COTURN_PW,
         },
       ],
     });
