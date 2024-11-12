@@ -5,7 +5,8 @@ import Header from "../header/Header";
 import "./ShareDetailLeader.scss";
 import RootModal from "../Modal/RootModal/RootModal";
 import nouserImage from "../../assets/img/noimage.jpg";
-import { useInfoStore } from "../../store/useLoginStore";
+// import { useInfoStore } from "../../store/useLoginStore";
+import AWS from "aws-sdk";
 
 interface ShareDetailLeaderProps {
   userId: number;
@@ -28,8 +29,64 @@ const ShareDetailLeader = () => {
   const [modalName, setModalName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
   const [projectLink, setProjectLink] = useState("");
-  const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
-  const { setData } = useInfoStore();
+  // const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
+
+  //---------------------------------------------------------------------------------
+
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); //FIXME: 추가됨
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [uploadedFileUrl, setUploadFileUrl] = useState("");
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    if (file) {
+      setSelectedFile(file);
+      const objectUrl = URL.createObjectURL(file);
+      setImageUrl(objectUrl);
+      console.log("⭐미리보기:", imageUrl);
+    }
+  };
+  const handleUpload = () => {
+    if (!selectedFile) {
+      alert("파일을 선택해주세요");
+      return;
+    }
+    console.log(selectedFile);
+    AWS.config.update({
+      accessKeyId: import.meta.env.VITE_SECRET_KEY,
+      secretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY,
+      region: "ap-northeast-2",
+    });
+
+    const s3 = new AWS.S3();
+    console.log(selectedFile);
+    const uploadParams = {
+      Bucket: import.meta.env.VITE_IMG_S3,
+      Key: `folder${selectedFile.name}`, // S3에 저장될 경로와 파일명
+      Body: selectedFile,
+    };
+    s3.upload(
+      uploadParams,
+      (err: unknown, data: { ETag: unknown; Location: unknown }) => {
+        if (err) {
+          console.error("Error uploading file:", err);
+        } else {
+          console.log("File uploaded successfully. ETag:", data.ETag);
+          const uploadedFileUrl = data.Location as string;
+          console.log(uploadedFileUrl);
+          setUploadFileUrl(uploadedFileUrl);
+          //TODO: uploadedFileUrl은 s3에 저장된 이미지의 url로 백엔드에게 전달해주기
+        }
+      }
+    );
+  };
+  const saveShareDetail = () => {
+    handleUpload();
+    console.log(uploadedFileUrl); //TODO: 여기서 upload된 파일의 경로를 백엔드에게 보내기
+  };
+  //---------------------------------------------------------------------------------
+
+  // const { setData } = useInfoStore();
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -59,15 +116,15 @@ const ShareDetailLeader = () => {
     openModal();
     console.log(isModalOpen);
   };
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
 
-    if (file) {
-      const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
-      setImage(imageUrl); // 이미지 상태 업데이트
-      setData({ userImg: imageUrl });
-    }
-  };
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
+  //     setImage(imageUrl); // 이미지 상태 업데이트
+  //     setData({ userImg: imageUrl });
+  //   }
+  // };
   return (
     <>
       <Header />
@@ -114,13 +171,13 @@ const ShareDetailLeader = () => {
           </div>
           <div className="ShareDetailLeader-AddImage_Bundle">
             <div className="Addimage_title">프로젝트 사진</div>
-            <img className="Addimage_box" src={image || nouserImage} />
+            <img className="Addimage_box" src={imageUrl || nouserImage} />
             <input
               type="file"
               accept="image/*"
               style={{ display: "none" }}
               id="image-upload"
-              onChange={handleImageChange}
+              onChange={handleFileChange}
             ></input>
             <div
               className="upload_btn"
@@ -152,7 +209,9 @@ const ShareDetailLeader = () => {
             </div>
           </div>
           <div className="ShareDetailLeader-Footer_BtnWrapper">
-            <div className="saveBtn">저장하기</div>
+            <div className="saveBtn" onClick={saveShareDetail}>
+              저장하기
+            </div>
           </div>
         </div>
         {isModalOpen && modalName === "shareInviteModal" && (
