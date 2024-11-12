@@ -82,7 +82,7 @@ const ShareDetailLeader = () => {
                   name="team_leader"
                   value={formData.team_leader}
                   onChange={handleInputChange}
-                />
+                />  
               </div> */}
               <div className="projectNameWrapper">
                 <div className="nameText">프로젝트 이름</div>
