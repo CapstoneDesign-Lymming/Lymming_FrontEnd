@@ -273,6 +273,7 @@ const TeamBuilding = () => {
               type="file"
               accept="image/*"
               ref={imgRef}
+              id="image-upload"
               onChange={handleFileChange}
               name=""
             />
