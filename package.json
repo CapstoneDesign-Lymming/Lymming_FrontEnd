@@ -14,7 +14,6 @@
     "@react-three/fiber": "^8.17.10",
     "@stomp/stompjs": "^7.0.0",
     "@types/sockjs-client": "^1.5.4",
-    "aws-sdk": "^2.1692.0",
     "axios": "^1.7.7",
     "framer-motion": "^11.11.9",
     "http-proxy-middleware": "^3.0.3",
