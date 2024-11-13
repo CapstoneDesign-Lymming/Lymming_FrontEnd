@@ -214,7 +214,21 @@ const ChatPage = () => {
         params: { userId: currentUser }, // userId를 파라미터로 전달
       });
       console.log("채팅방 목록을 불러옵니다", res.data);
-      setChatRooms(res.data);
+      setChatRooms(
+        res.data.map((room: any) => {
+          const [user1, user2] = room.roomId.split("_");
+
+          const adjustedUserId1 = user1 === currentUser ? user1 : user2;
+          const adjustedUserId2 = user1 === currentUser ? user2 : user1;
+
+          return {
+            roomId: room.roomId,
+            userId1: adjustedUserId1, // 로그인된 사용자를 user1로 설정
+            userId2: adjustedUserId2, // 반대 사용자를 user2로 설정
+            lastMessage: room.lastMessage || { content: "", timestamp: "" }, // lastMessage가 없을 경우 처리
+          };
+        })
+      );
     } catch (e) {
       console.error(e);
     }
