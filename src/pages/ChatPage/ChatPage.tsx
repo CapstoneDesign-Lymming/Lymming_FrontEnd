@@ -46,7 +46,6 @@ const ChatPage = () => {
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   const [roomId, setRoomId] = useState<string>("");
-  console.log(partner);
 
   // msg time 전달하기
   const getMsgTime = () => {
@@ -67,15 +66,8 @@ const ChatPage = () => {
   const enterChatRoom = async () => {
     const roomExists = await isExistChatRoom();
 
-    if (roomExists) {
-      console.log("채팅방 존재");
-      // 소켓 연결
-      // connectSocket();
-    } else {
-      console.log("채팅방 없음");
-      // 채팅방 생성 함수
+    if (!roomExists) {
       await createChatRoom();
-      //connectSocket();
     }
     getChatRooms();
   };
@@ -112,9 +104,11 @@ const ChatPage = () => {
 
   const createChatRoom = async () => {
     if (partner) {
+      console.log("채팅방을 생성합니다");
+
       const roomId = await sortChatRoomId(currentUser, partner);
       setRoomId(roomId);
-      console.log("roomId는!", roomId);
+      console.log("채팅방 아이디 생성 ", roomId);
       const payload = {
         roomId: roomId,
         userId1: currentUser,
@@ -128,6 +122,7 @@ const ChatPage = () => {
 
         if (res.data) {
           setChatRoom(res.data);
+          console.log("생성된 채팅방의 roomid는", res.data);
         } else {
           console.log("채팅방이 존재하지 않습니다.");
         }
@@ -195,7 +190,7 @@ const ChatPage = () => {
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
       //  setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
-      console.log(inputMessage);
+      console.log("전송한메세지", inputMessage);
     }
   };
 
@@ -223,9 +218,8 @@ const ChatPage = () => {
 
   useEffect(() => {
     const initializeChatRoom = async () => {
+      console.log("상대방은", partner);
       await enterChatRoom(); // enterChatRoom이 완료될 때까지 대기
-      console.log(chatRoom);
-      console.log(partner);
     };
 
     initializeChatRoom();
