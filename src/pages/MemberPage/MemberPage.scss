@@ -32,10 +32,10 @@
         margin-top: 1.4%;
         .recommendCard {
           display: inline-grid; /* 추가 */
-          transition: transform 0.3s; /* 추가 */
+          transition: transform 0.4s; /* 추가 */
           transform: perspective(800px) rotateY(0deg); /* 추가 */
           transform-style: preserve-3d; /* 추가 */
-
+          position: relative;
           .front {
             width: 12vw;
             height: 32vh;
@@ -47,13 +47,13 @@
             backface-visibility: hidden; /* 추가 */
             grid-area: 1 / 1 / 1 / 1; /* 추가 */
 
-            #recommend_name {
+            .recommend_name {
               font-size: 19px;
               font-weight: 600;
               width: 100%;
               height: 12%;
             }
-            #recommend_position {
+            .recommend_position {
               font-size: 15px;
             }
             img {
@@ -67,31 +67,48 @@
             width: 12vw;
             height: 32vh;
             border-radius: 8px;
-            // margin-right: 2%;
             padding: 3%;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
               0 3px 6px rgba(0, 0, 0, 0.23);
             backface-visibility: hidden; /* 추가 */
             grid-area: 1 / 1 / 1 / 1; /* 추가 */
-
             transform: rotateY(180deg); /* 추가 */
-            #recommend_name {
+            .recommend_name {
               font-size: 19px;
               font-weight: 600;
               width: 100%;
               height: 12%;
             }
-            #recommend_position {
+            .recommend_position {
               font-size: 15px;
+            }
+            .back_body {
+              width: 100%;
+              height: 68%;
+              // background-color: rgb(206, 235, 235);
+            }
+            .back_footerWrapper {
+              width: 100%;
+              height: 10%;
+              @include flex-center;
+
+              .back_footer {
+                width: 80%;
+                height: 100%;
+                background-color: #e9ecef;
+                color: #47576a;
+                border-radius: 8px;
+                @include flex-center;
+              }
             }
           }
         }
-        .recommendCard:hover {
-          transform: rotateY(180deg); /* 추가 */
+        .flipped {
+          transform: rotateY(180deg); /* 클릭시 뒤집히도록 */
         }
       }
     }
-    &-body {
-    }
+    // &-body {
+    // }
   }
 }

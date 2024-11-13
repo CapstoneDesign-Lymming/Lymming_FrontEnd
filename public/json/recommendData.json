@@ -2,7 +2,7 @@
   "recommendData": [
     {
       "name": "노기훈",
-      "userImg": "../../src/assets/img/no-profile.webp",
+      "userImg": "/img/no-profile.webp",
       "githubUrl": "https://github.com/kihoon-dev",
       "keywords": ["Fullstack", "JavaScript", "React", "Node.js"],
       "skills": ["JavaScript", "TypeScript", "React"],
@@ -10,7 +10,7 @@
     },
     {
       "name": "박민수",
-      "userImg": "../../src/assets/img/no-profile.webp",
+      "userImg": "/img/no-profile.webp",
       "githubUrl": "https://github.com/minsu-park",
       "keywords": ["Frontend", "Vue", "Design"],
       "skills": ["Vue.js", "Figma", "CSS"],
@@ -18,7 +18,7 @@
     },
     {
       "name": "이서연",
-      "userImg": "../../src/assets/img/no-profile.webp",
+      "userImg": "/img/no-profile.webp",
       "githubUrl": "https://github.com/seoyeon-lee",
       "keywords": ["Backend", "API", "Security"],
       "skills": ["Node.js", "Nest.js", "PostgreSQL"],
@@ -26,7 +26,7 @@
     },
     {
       "name": "정다인",
-      "userImg": "../../src/assets/img/no-profile.webp",
+      "userImg": "/img/no-profile.webp",
       "githubUrl": "https://github.com/dain-jung",
       "keywords": ["Mobile", "React Native", "UI/UX"],
       "skills": ["React Native", "Dart", "Figma"],
@@ -34,7 +34,7 @@
     },
     {
       "name": "최준영",
-      "userImg": "../../src/assets/img/no-profile.webp",
+      "userImg": "/img/no-profile.webp",
       "githubUrl": "https://github.com/junyoung-choi",
       "keywords": ["DevOps", "Cloud", "CI/CD"],
       "skills": ["Docker", "Kubernetes", "Terraform"],
