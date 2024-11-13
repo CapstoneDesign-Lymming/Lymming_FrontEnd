@@ -99,9 +99,13 @@ const Header = () => {
           <div id="btn1" onClick={() => navigate("/member")}>
             참여자
           </div>
-          <div id="btn2" onClick={() => navigate("/exhibition")}>
+          <a
+            id="btn2"
+            href="http://lymming-meta.s3-website.ap-northeast-2.amazonaws.com/"
+            target="_blank"
+          >
             전시회
-          </div>
+          </a>
         </div>
       </div>
 
