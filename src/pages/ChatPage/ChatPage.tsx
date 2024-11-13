@@ -146,9 +146,11 @@ const ChatPage = () => {
 
   const connectSocket = () => {
     if (!chatRoom?.roomId) return;
-    const socket = new SockJS("https://lymming-back.link/chatting");
 
-    client.current = Stomp.over(socket);
+    const socketFactory = () =>
+      new SockJS("https://lymming-back.link/chatting");
+
+    client.current = Stomp.over(socketFactory);
 
     client.current.connect(
       {},
