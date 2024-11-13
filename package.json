@@ -10,14 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.689.0",
     "@react-three/drei": "^9.115.0",
     "@react-three/fiber": "^8.17.10",
     "@stomp/stompjs": "^7.0.0",
     "@types/sockjs-client": "^1.5.4",
+    "aws-sdk": "^2.1692.0",
     "axios": "^1.7.7",
     "framer-motion": "^11.11.9",
     "http-proxy-middleware": "^3.0.3",
-    "openai": "^4.71.1",
+    "openai": "^4.72.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-query": "^3.39.3",

@@ -58,8 +58,6 @@ const LogIn = () => {
 
   // 로그인 페이지 렌더링 함수
   const renderLoginPage = () => {
-    console.log(count);
-
     switch (count) {
       case 1:
         return <Child1 />;
