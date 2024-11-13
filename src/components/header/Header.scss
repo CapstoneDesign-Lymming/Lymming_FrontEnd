@@ -89,7 +89,7 @@
     position: absolute;
     top: 6vh;
     right: 11.5vw;
-    .hidden_btn {
+    .hidden_btnBundle {
       @include flex-column-center;
       width: 8vw;
       height: 48px;
@@ -111,7 +111,7 @@
     .logined {
       position: absolute;
       // top: 6vh;
-      right: 8vw;
+      right: 15vw;
     }
     .HiddenBtnOff {
       display: none;
