@@ -313,7 +313,10 @@ const ChatPage = () => {
                 <span>{partner}</span>
               </div>
               <button
-                onClick={() => navigate(`/videochat/${roomId}`)}
+                onClick={() => {
+                  console.log("🌳roomId", roomId);
+                  navigate(`/videochat/${roomId}`);
+                }}
                 className="content-right-info-video"
               >
                 <img className="video" src={video} />
