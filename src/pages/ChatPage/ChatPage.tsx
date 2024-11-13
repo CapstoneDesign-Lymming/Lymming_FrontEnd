@@ -145,6 +145,10 @@ const ChatPage = () => {
   };
 
   const connectSocket = () => {
+    if (client.current) {
+      client.current.disconnect();
+    }
+
     if (!chatRoom?.roomId) return;
 
     const socketFactory = () =>
