@@ -20,7 +20,6 @@ const useImageUpload = () => {
       setSelectedFile(file);
       const objectUrl = URL.createObjectURL(file);
       setImageUrl(objectUrl);
-      console.log("⭐미리보기:", imageUrl);
     }
   };
 

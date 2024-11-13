@@ -5,6 +5,7 @@ import infoData from "../../../data/loginInfoData.json";
 import loginok from "../../../assets/img/loginok.png";
 import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
+import useImageUpload from "../../../hooks/useImageUpload";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -494,25 +495,27 @@ export const Child7 = () => {
 };
 
 export const Child8 = () => {
+  const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
+    useImageUpload();
   const { setData } = useInfoStore();
 
-  const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
+  // const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // 선택한 파일 가져오기
-    if (file) {
-      const reader = new FileReader();
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0]; // 선택한 파일 가져오기
+  //   if (file) {
+  //     const reader = new FileReader();
 
-      reader.onloadend = () => {
-        const base64Image = reader.result as string; // base64로 변환된 이미지 URL
-        setImage(base64Image); // 이미지 상태 업데이트
-        // 임시 이미지 전송
-        setData({ userImg: "base64Image" }); // 스토어에 base64 이미지 저장
-      };
+  //     reader.onloadend = () => {
+  //       const base64Image = reader.result as string; // base64로 변환된 이미지 URL
+  //       setImage(base64Image); // 이미지 상태 업데이트
+  //       // 임시 이미지 전송
+  //       setData({ userImg: "base64Image" }); // 스토어에 base64 이미지 저장
+  //     };
 
-      reader.readAsDataURL(file); // 파일을 base64로 읽기
-    }
-  };
+  //     reader.readAsDataURL(file); // 파일을 base64로 읽기
+  //   }
+  // };
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
@@ -521,16 +524,22 @@ export const Child8 = () => {
 
     setData({ [name]: value });
   };
+  const saveShareDetail = async () => {
+    const s3ImageUrl = await handleUpload();
+    postUplodFileUrl(s3ImageUrl);
+  };
+  saveShareDetail();
+
   return (
     <div className="Child9">
       <div className="title">프로필을 설정해주세요</div>
 
       <div className="img">
-        <img src={image || nouserImage} />
+        <img src={imageUrl || nouserImage} />
         <input
           type="file"
           accept="image/*"
-          onChange={handleImageChange}
+          onChange={handleFileChange}
           style={{ display: "none" }}
           id="image-upload"
           name="profileImage"
