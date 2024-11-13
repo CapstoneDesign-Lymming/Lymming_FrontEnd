@@ -1,12 +1,10 @@
 import { useLocation } from "react-router-dom";
 import useModalStore from "../../store/useModalState";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "../header/Header";
 import "./ShareDetailLeader.scss";
 import RootModal from "../Modal/RootModal/RootModal";
 import nouserImage from "../../assets/img/noimage.jpg";
-// import { useInfoStore } from "../../store/useLoginStore";
-// import AWS from "aws-sdk";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 interface ShareDetailLeaderProps {
@@ -30,13 +28,10 @@ const ShareDetailLeader = () => {
   const [modalName, setModalName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
   const [projectLink, setProjectLink] = useState("");
-  // const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
-
-  //---------------------------------------------------------------------------------
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null); //FIXME: 추가됨
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [uploadedFileUrl, setUploadFileUrl] = useState("");
+  const s3ImageUrl = useRef("");
 
   const s3Client = new S3Client({
     region: "ap-northeast-2",
@@ -74,20 +69,22 @@ const ShareDetailLeader = () => {
 
       const uploadedUrl = `https://${
         import.meta.env.VITE_IMG_S3
-      }.s3.amazonaws.com/folder/${selectedFile.name}`;
-      setUploadFileUrl(uploadedUrl);
-      console.log(uploadedUrl);
+      }.s3.ap-northeast-2.amazonaws.com/folder${encodeURIComponent(
+        selectedFile.name
+      )}`;
+      s3ImageUrl.current = uploadedUrl;
     } catch (error) {
       console.error("Error uploading file: ", error);
     }
   };
+  const postUplodFileUrl = () => {
+    console.log("preImgUrl", s3ImageUrl.current);
+  };
   const saveShareDetail = () => {
     handleUpload();
-    console.log(uploadedFileUrl); //TODO: 여기서 upload된 파일의 경로를 백엔드에게 보내기
+    postUplodFileUrl();
   };
-  //---------------------------------------------------------------------------------
 
-  // const { setData } = useInfoStore();
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -103,11 +100,6 @@ const ShareDetailLeader = () => {
   ) => {
     setProjectLink(e.target.value);
   };
-  /** 이미지 업로드 */
-  // const uploadProjectImg = () => {
-  //   openModal();
-  //   console.log(isModalOpen);
-  // };
 
   // TODO: 1. 프론트에서 s3로 직접 이미지 업로드
   //2.이미지 링크 받아와서 str로 백엔드에게 전달
@@ -117,15 +109,7 @@ const ShareDetailLeader = () => {
     openModal();
     console.log(isModalOpen);
   };
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
 
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file); // 선택한 파일의 URL 생성
-  //     setImage(imageUrl); // 이미지 상태 업데이트
-  //     setData({ userImg: imageUrl });
-  //   }
-  // };
   return (
     <>
       <Header />
@@ -209,6 +193,12 @@ const ShareDetailLeader = () => {
               </div>
             </div>
           </div>
+          <img
+            className="abc"
+            src="https://lymming-img.s3.amazonaws.com/folder/외주요청.png
+"
+            alt=""
+          />
           <div className="ShareDetailLeader-Footer_BtnWrapper">
             <div className="saveBtn" onClick={saveShareDetail}>
               저장하기

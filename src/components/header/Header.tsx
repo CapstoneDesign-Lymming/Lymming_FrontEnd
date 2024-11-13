@@ -51,7 +51,10 @@ const Header = () => {
           lymming
         </span>
       </div>
-      <ul className="Header-ul">
+      <ul
+        className={`Header-ul
+          ${login ? "Header-loginUl" : ""}`}
+      >
         <li onClick={() => navigate("/participate")}>참여하기</li>
         <li onClick={() => navigate("/teambuild")}>팀 꾸리기</li>
         <li onClick={() => setIsHiddenBtnOn(!isHiddenBtnOn)}>둘러보기</li>
@@ -81,7 +84,8 @@ const Header = () => {
         <div
           className={`hidden_btn ${
             isHiddenBtnOn ? "HiddenBtnOn" : "HiddenBtnOff"
-          }`}
+          } ${login ? "logined" : ""}
+          `}
           onClick={() => setIsHiddenBtnOn(false)}
         >
           <div id="btn1" onClick={() => navigate("/member")}>

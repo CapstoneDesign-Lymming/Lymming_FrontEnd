@@ -82,10 +82,13 @@
       }
     }
   }
+  &-loginUl {
+    width: 50%;
+  }
   &-hidden {
     position: absolute;
     top: 6vh;
-    right: 15vw;
+    right: 11.5vw;
     .hidden_btn {
       @include flex-column-center;
       width: 8vw;
@@ -104,6 +107,11 @@
         text-align: center;
         padding: 2px;
       }
+    }
+    .logined {
+      position: absolute;
+      // top: 6vh;
+      right: 8vw;
     }
     .HiddenBtnOff {
       display: none;
