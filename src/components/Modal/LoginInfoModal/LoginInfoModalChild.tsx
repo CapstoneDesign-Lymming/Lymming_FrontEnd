@@ -431,6 +431,7 @@ export const Child6 = () => {
 
 export const Child7 = () => {
   const { setData } = useInfoStore();
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
@@ -439,6 +440,7 @@ export const Child7 = () => {
     console.log(value);
     setData({ [name]: value });
   };
+
   return (
     <div className="Child4">
       <div className="title">사람들과 함께 있을때 나는</div>

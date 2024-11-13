@@ -83,14 +83,14 @@ const LoginInfoModal = ({ children }: Props) => {
   };
 
   const postData = async () => {
-    console.log(data);
-    //폼데이터 서버에 보내는 로직추가하기
     try {
       const res = await axios.put(
         "https://lymming-back.link/api/auth/sign-up",
         {
           ...data,
           refreshToken: token,
+          //여기는 백엔드 api 수정되면 열기
+          //developer_type: userType,
         }
       );
       console.log(res);
