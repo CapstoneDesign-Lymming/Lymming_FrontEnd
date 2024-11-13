@@ -15,7 +15,7 @@ const Header = () => {
   const [myPageOption, setMypageOption] = useState(false);
   const { data } = useInfoStore();
 
-  console.log(data.userImg);
+  // console.log(data.userImg);
 
   useEffect(() => {
     if (pageLocation.pathname == "/") setIsMain(true);
@@ -90,7 +90,7 @@ const Header = () => {
       </ul>
       <div className="Header-hidden">
         <div
-          className={`hidden_btn ${
+          className={`hidden_btnBundle ${
             isHiddenBtnOn ? "HiddenBtnOn" : "HiddenBtnOff"
           } ${login ? "logined" : ""}
           `}
