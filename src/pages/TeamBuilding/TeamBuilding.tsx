@@ -5,6 +5,7 @@ import imgs from "../../assets/img/noimage.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import skills from "../../data/skills.json";
+import useImageUpload from "../../hooks/useImageUpload";
 
 interface State {
   type: string;
@@ -22,7 +23,7 @@ interface State {
 
 const TeamBuilding = () => {
   const navigate = useNavigate();
-  const [img, setImg] = useState<File | null>(null);
+  // const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [state, setState] = useState<State>({
@@ -38,23 +39,25 @@ const TeamBuilding = () => {
     content: "",
     techStack: [],
   });
+  const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
+    useImageUpload();
 
   const onBtnClick = () => {
     if (imgRef.current) {
       imgRef.current.click();
     }
   };
-  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
-    const file = target.files;
+  // const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const target = e.target;
+  //   const file = target.files;
 
-    if (file) {
-      setImg(file[0]);
-      setState({ ...state, img: file[0] });
-      console.log(target.name);
-      console.log(state);
-    }
-  };
+  //   if (file) {
+  //     setImg(file[0]);
+  //     setState({ ...state, img: file[0] });
+  //     console.log(target.name);
+  //     console.log(state);
+  //   }
+  // };
 
   const onChange = (e: any) => {
     const target = e.target;
@@ -111,12 +114,12 @@ const TeamBuilding = () => {
 
     formData.append("techStack", JSON.stringify(selectedSkills));
 
-    if (img) {
-      console.log("이미지 파일이 존재합니다:", img);
-      formData.append("projectImg", img);
-    } else {
-      console.log("이미지 없음");
-    }
+    // if (img) {
+    //   console.log("이미지 파일이 존재합니다:", img);
+    //   formData.append("projectImg", img);
+    // } else {
+    //   console.log("이미지 없음");
+    // }
 
     // 서버 전송 로직 짜기
     try {
@@ -129,9 +132,14 @@ const TeamBuilding = () => {
     } catch (e) {
       console.error(e);
     }
+    uploadImage(); //
   };
 
-  const imgPreviewUrl = img ? URL.createObjectURL(img) : imgs;
+  const uploadImage = async () => {
+    const s3ImageUrl = await handleUpload();
+    postUplodFileUrl(s3ImageUrl);
+  };
+  // const imgPreviewUrl = imgs ? imageUrl : imgs;
 
   return (
     <>
@@ -263,10 +271,10 @@ const TeamBuilding = () => {
               type="file"
               accept="image/*"
               ref={imgRef}
-              onChange={onImageChange}
+              onChange={handleFileChange}
               name=""
             />
-            <img src={imgPreviewUrl}></img>
+            <img src={imageUrl || imgs}></img>
             <button onClick={onBtnClick}>사진추가</button>
           </div>
 

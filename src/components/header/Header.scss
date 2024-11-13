@@ -55,12 +55,12 @@
     }
 
     .chat {
-      width: 5%;
-      .chat_img {
-        width: 20px;
-        height: 20px;
-        filter: grayscale(100%);
-      }
+      width: 3%;
+      // .chat_img {
+      //   width: 20px;
+      //   height: 20px;
+      //   filter: grayscale(100%);
+      // }
     }
 
     .login_aft {
@@ -83,7 +83,7 @@
     }
   }
   &-loginUl {
-    width: 50%;
+    width: 57%;
   }
   &-hidden {
     position: absolute;
