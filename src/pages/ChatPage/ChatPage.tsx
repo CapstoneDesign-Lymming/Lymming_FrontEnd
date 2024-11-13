@@ -209,7 +209,7 @@ const ChatPage = () => {
         // 올바른 URL 경로 확인
         params: { userId: currentUser }, // userId를 파라미터로 전달
       });
-      console.log(res.data);
+      console.log("채팅방 목록을 불러옵니다", res.data);
       setChatRooms(res.data);
     } catch (e) {
       console.error(e);
