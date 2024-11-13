@@ -12,16 +12,26 @@
   font-style: normal;
 }
 .MemberWrapper {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   .Member {
+    position: relative;
     font-family: Pretendard-Regular;
-    width: 80%;
+    width: 100%;
     height: 100%;
     // background-color: aliceblue;
     margin-top: 7vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &-header {
+      width: 80%;
+      height: 40%;
       margin-top: 3%;
+      // background-color: rgb(224, 221, 221);
+
       &-text {
         font-size: 23px;
         font-weight: 700;
@@ -134,7 +144,55 @@
         }
       }
     }
-    // &-body {
-    // }
+    .hide_notLogin_nav {
+      display: none;
+    }
+    .notLogin_nav {
+      position: absolute;
+      top: 0; /* Member-header의 상단에 맞춰 배치 */
+      left: 0;
+
+      width: 100vw;
+      height: 47%;
+      // margin-top: 2%;
+
+      background-color: #3183f611;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(49, 131, 246, 0.1); // 흐림 효과 추가
+      color: rgb(61, 62, 63);
+      &-head {
+        margin-top: 5%;
+        font-size: 30px;
+        font-weight: 800;
+      }
+      &-body {
+        margin-top: 2%;
+        font-size: 23px;
+      }
+      &-foot {
+        margin-top: 2.7%;
+        @include flex-center;
+        width: 16vw;
+        height: 5vh;
+        background-color: #3182f6;
+        color: white;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 19px;
+      }
+    }
+    .notLogin_MemberHeader {
+      // width: 100vw;
+      // background-color: #c6d2e2b0;
+      filter: blur(10px);
+      box-shadow: 0 0 10px rgba(49, 131, 246, 0.1); // 흐림 효과 추가
+
+      left: 0;
+    }
+    &-body {
+      margin-top: 2%;
+    }
   }
 }
