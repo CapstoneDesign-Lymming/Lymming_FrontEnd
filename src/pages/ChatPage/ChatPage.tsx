@@ -46,7 +46,7 @@ const ChatPage = () => {
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   const [roomId, setRoomId] = useState<string>("");
-
+  const videoChatRoomId = useRef("");
   // msg time 전달하기
   const getMsgTime = () => {
     const currentTime = new Date();
@@ -105,6 +105,7 @@ const ChatPage = () => {
 
       const roomId = await sortChatRoomId(currentUser, partner);
       setRoomId(roomId);
+      videoChatRoomId.current = roomId; //비디오채팅으로 넘겨주는 roomId
       console.log("채팅방 아이디 생성 ", roomId);
       const payload = {
         roomId: roomId,
@@ -314,8 +315,8 @@ const ChatPage = () => {
               </div>
               <button
                 onClick={() => {
-                  console.log("🌳roomId", roomId);
-                  navigate(`/videochat/${roomId}`);
+                  console.log("🌳roomId", videoChatRoomId.current);
+                  navigate(`/videochat/${videoChatRoomId.current}`);
                 }}
                 className="content-right-info-video"
               >
