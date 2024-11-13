@@ -40,7 +40,6 @@ const ShareDetailLeader = () => {
       secretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY,
     },
   });
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     if (file) {
@@ -50,7 +49,6 @@ const ShareDetailLeader = () => {
       console.log("⭐미리보기:", imageUrl);
     }
   };
-
   const handleUpload = async () => {
     if (!selectedFile) {
       alert("파일을 선택해주세요");
@@ -84,7 +82,6 @@ const ShareDetailLeader = () => {
     handleUpload();
     postUplodFileUrl();
   };
-
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -100,10 +97,6 @@ const ShareDetailLeader = () => {
   ) => {
     setProjectLink(e.target.value);
   };
-
-  // TODO: 1. 프론트에서 s3로 직접 이미지 업로드
-  //2.이미지 링크 받아와서 str로 백엔드에게 전달
-  /** 멤버 초대 모달 열기 */
   const invalidateInstance = () => {
     setModalName("shareInviteModal");
     openModal();
@@ -193,12 +186,6 @@ const ShareDetailLeader = () => {
               </div>
             </div>
           </div>
-          <img
-            className="abc"
-            src="https://lymming-img.s3.amazonaws.com/folder/외주요청.png
-"
-            alt=""
-          />
           <div className="ShareDetailLeader-Footer_BtnWrapper">
             <div className="saveBtn" onClick={saveShareDetail}>
               저장하기
