@@ -45,7 +45,7 @@ const ChatPage = () => {
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
-  const [roomId, setRoomId] = useState<string>("");
+  // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
   const videoChatRoomId = useRef("");
   // msg time 전달하기
   const getMsgTime = () => {
@@ -104,7 +104,8 @@ const ChatPage = () => {
       console.log("채팅방을 생성합니다");
 
       const roomId = await sortChatRoomId(currentUser, partner);
-      setRoomId(roomId);
+      // setRoomId(roomId);
+      console.log(roomId);
       videoChatRoomId.current = roomId; //비디오채팅으로 넘겨주는 roomId
       console.log("채팅방 아이디 생성 ", roomId);
       const payload = {
