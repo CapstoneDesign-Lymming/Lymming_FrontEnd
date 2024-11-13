@@ -4,14 +4,12 @@ import "./LoginInfoModal.scss";
 import { ReactNode } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
-import { useOpenAicCassification } from "../../../hooks/UseopenAicCassification";
 
 interface Props {
   children: ReactNode;
 }
 
 const LoginInfoModal = ({ children }: Props) => {
-  const { userType } = useOpenAicCassification();
   const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
     useLoginStore();
   const { data } = useInfoStore();
