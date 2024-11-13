@@ -83,9 +83,6 @@ const ChatPage = () => {
             roomId: roomId,
           }
         );
-
-        console.log(res.data.type);
-
         if (res.data === "") {
           console.log("채팅방 없음");
           return false; // 채팅방이 없으므로 false 반환
