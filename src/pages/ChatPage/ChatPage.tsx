@@ -105,7 +105,7 @@ const ChatPage = () => {
 
       const roomId = await sortChatRoomId(currentUser, partner);
       // setRoomId(roomId);
-      console.log(roomId);
+      console.log("💧💧", roomId);
       videoChatRoomId.current = roomId; //비디오채팅으로 넘겨주는 roomId
       console.log("채팅방 아이디 생성 ", roomId);
       const payload = {
@@ -244,6 +244,7 @@ const ChatPage = () => {
     const initializeChatRoom = async () => {
       console.log("상대방은", partner);
       await enterChatRoom(); // enterChatRoom이 완료될 때까지 대기
+      console.log("상대방은🔨videoChatRoomId", videoChatRoomId);
     };
 
     initializeChatRoom();
@@ -258,6 +259,7 @@ const ChatPage = () => {
     if (chatRoom?.roomId) {
       console.log("채팅방 연결 준비: ", chatRoom.roomId);
       connectSocket();
+      console.log("채팅방 연결 준비:🔨videoChatRoomId", videoChatRoomId);
     }
   }, [chatRoom]);
 
@@ -266,6 +268,7 @@ const ChatPage = () => {
       behavior: "smooth",
       block: "end",
     });
+    console.log("behavior:🔨videoChatRoomId", videoChatRoomId);
   }, [chatHistory]);
 
   return (
