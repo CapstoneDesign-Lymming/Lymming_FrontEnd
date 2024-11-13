@@ -37,7 +37,7 @@ const GithubAuth = () => {
       //userInfo 데이터를 불러온 데이터로 세팅한다
       // 로그인 상태를 true로 만든다
       if (result.data.user.nickname) {
-        setData(result.data);
+        setData(result.data.user);
         setLogin();
         navigate("/");
       }
