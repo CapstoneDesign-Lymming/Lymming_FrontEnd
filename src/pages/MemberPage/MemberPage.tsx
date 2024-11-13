@@ -127,7 +127,7 @@ const MemberPage = () => {
             </div>
           </div>
 
-          <div className="Member-body">dddddddd</div>
+          <div className="Member-body"></div>
         </div>
       </div>
     </>
