@@ -2,7 +2,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Header.scss";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import headerImg from "../../assets/img/lymming_logo.png";
-import headerChat from "../../assets/img/header_chat.png";
 import { useEffect, useState } from "react";
 
 const Header = () => {
