@@ -4,12 +4,14 @@ import "./LoginInfoModal.scss";
 import { ReactNode } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
+import { useOpenAicCassification } from "../../../hooks/UseopenAicCassification";
 
 interface Props {
   children: ReactNode;
 }
 
 const LoginInfoModal = ({ children }: Props) => {
+  const { userType } = useOpenAicCassification();
   const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
     useLoginStore();
   const { data } = useInfoStore();
@@ -83,14 +85,14 @@ const LoginInfoModal = ({ children }: Props) => {
   };
 
   const postData = async () => {
-    console.log(data);
-    //폼데이터 서버에 보내는 로직추가하기
     try {
       const res = await axios.put(
         "https://lymming-back.link/api/auth/sign-up",
         {
           ...data,
           refreshToken: token,
+          //여기는 백엔드 api 수정되면 열기
+          //developer_type: userType,
         }
       );
       console.log(res);
