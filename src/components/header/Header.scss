@@ -55,12 +55,12 @@
     }
 
     .chat {
-      width: 5%;
-      .chat_img {
-        width: 20px;
-        height: 20px;
-        filter: grayscale(100%);
-      }
+      width: 3%;
+      // .chat_img {
+      //   width: 20px;
+      //   height: 20px;
+      //   filter: grayscale(100%);
+      // }
     }
 
     .login_aft {
@@ -83,13 +83,13 @@
     }
   }
   &-loginUl {
-    width: 50%;
+    width: 57%;
   }
   &-hidden {
     position: absolute;
     top: 6vh;
     right: 11.5vw;
-    .hidden_btn {
+    .hidden_btnBundle {
       @include flex-column-center;
       width: 8vw;
       height: 48px;
@@ -103,6 +103,8 @@
         padding: 2px;
       }
       #btn2 {
+        text-decoration: none;
+        color: rgb(255, 255, 255);
         width: 86%;
         text-align: center;
         padding: 2px;
@@ -111,7 +113,7 @@
     .logined {
       position: absolute;
       // top: 6vh;
-      right: 8vw;
+      right: 15vw;
     }
     .HiddenBtnOff {
       display: none;

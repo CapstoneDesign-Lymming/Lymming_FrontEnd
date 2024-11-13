@@ -21,7 +21,7 @@ interface InfoState {
 
 // 로그인 data
 export const useLoginStore = create<LoginState>((set) => ({
-  login: true,
+  login: false,
   count: 1,
   isOpen: false,
   //닉네임 중복체크
@@ -36,6 +36,7 @@ export const useLoginStore = create<LoginState>((set) => ({
 // 회원 정보 입력 data
 export const useInfoStore = create<InfoState>((set) => ({
   data: {
+    //한 줄 소개
     bio: "",
     category: "",
     favorites: 0,
@@ -44,7 +45,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     interests: [],
     job: "",
     loginType: "",
-    nickname: "노기훈",
+    nickname: "",
     position: "",
     stack: [],
     temperature: 0,

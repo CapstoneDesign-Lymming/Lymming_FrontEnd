@@ -45,9 +45,8 @@ const ChatPage = () => {
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
-  const [roomId, setRoomId] = useState<string>("");
-  console.log(partner);
-
+  // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
+  const videoChatRoomId = useRef("");
   // msg time 전달하기
   const getMsgTime = () => {
     const currentTime = new Date();
@@ -67,15 +66,8 @@ const ChatPage = () => {
   const enterChatRoom = async () => {
     const roomExists = await isExistChatRoom();
 
-    if (roomExists) {
-      console.log("채팅방 존재");
-      // 소켓 연결
-      // connectSocket();
-    } else {
-      console.log("채팅방 없음");
-      // 채팅방 생성 함수
+    if (!roomExists) {
       await createChatRoom();
-      //connectSocket();
     }
     getChatRooms();
   };
@@ -91,9 +83,6 @@ const ChatPage = () => {
             roomId: roomId,
           }
         );
-
-        console.log(res.data.type);
-
         if (res.data === "") {
           console.log("채팅방 없음");
           return false; // 채팅방이 없으므로 false 반환
@@ -112,9 +101,13 @@ const ChatPage = () => {
 
   const createChatRoom = async () => {
     if (partner) {
+      console.log("채팅방을 생성합니다");
+
       const roomId = await sortChatRoomId(currentUser, partner);
-      setRoomId(roomId);
-      console.log("roomId는!", roomId);
+      // setRoomId(roomId);
+      console.log("createChatRoom에서 roomId", roomId);
+      videoChatRoomId.current = roomId; //비디오채팅으로 넘겨주는 roomId TODO:처음 방이 생성될 경우에 videoChatRoomId를 설정
+      console.log("채팅방 아이디 생성 ", roomId);
       const payload = {
         roomId: roomId,
         userId1: currentUser,
@@ -128,6 +121,7 @@ const ChatPage = () => {
 
         if (res.data) {
           setChatRoom(res.data);
+          console.log("생성된 채팅방의 roomid는", res.data);
         } else {
           console.log("채팅방이 존재하지 않습니다.");
         }
@@ -153,10 +147,21 @@ const ChatPage = () => {
   };
 
   const connectSocket = () => {
-    if (!chatRoom?.roomId) return;
-    const socket = new SockJS("https://lymming-back.link/chatting");
+    if (client.current) {
+      client.current.disconnect();
+    }
 
-    client.current = Stomp.over(socket);
+    if (!chatRoom?.roomId) return;
+
+    const socketFactory = () =>
+      new SockJS("https://lymming-back.link/chatting");
+
+    client.current = Stomp.over(socketFactory);
+
+    // 자동 재연결을 설정하는 옵션을 추가
+    client.current.reconnect_delay = 5000; // 재연결 지연 시간 (5초)
+    client.current.heartbeat.outgoing = 20000; // 서버로 보내는 heartbeat 간격
+    client.current.heartbeat.incoming = 0; // 서버에서 보내는 heartbeat 간격
 
     client.current.connect(
       {},
@@ -195,7 +200,7 @@ const ChatPage = () => {
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
       //  setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
-      console.log(inputMessage);
+      console.log("전송한메세지", inputMessage);
     }
   };
 
@@ -214,8 +219,22 @@ const ChatPage = () => {
         // 올바른 URL 경로 확인
         params: { userId: currentUser }, // userId를 파라미터로 전달
       });
-      console.log(res.data);
-      setChatRooms(res.data);
+      console.log("채팅방 목록을 불러옵니다", res.data);
+      setChatRooms(
+        res.data.map((room: any) => {
+          const [user1, user2] = room.roomId.split("_");
+
+          const adjustedUserId1 = user1 === currentUser ? user1 : user2;
+          const adjustedUserId2 = user1 === currentUser ? user2 : user1;
+
+          return {
+            roomId: room.roomId,
+            userId1: adjustedUserId1, // 로그인된 사용자를 user1로 설정
+            userId2: adjustedUserId2, // 반대 사용자를 user2로 설정
+            lastMessage: room.lastMessage || { content: "", timestamp: "" }, // lastMessage가 없을 경우 처리
+          };
+        })
+      );
     } catch (e) {
       console.error(e);
     }
@@ -223,9 +242,8 @@ const ChatPage = () => {
 
   useEffect(() => {
     const initializeChatRoom = async () => {
+      console.log("상대방은", partner);
       await enterChatRoom(); // enterChatRoom이 완료될 때까지 대기
-      console.log(chatRoom);
-      console.log(partner);
     };
 
     initializeChatRoom();
@@ -240,6 +258,11 @@ const ChatPage = () => {
     if (chatRoom?.roomId) {
       console.log("채팅방 연결 준비: ", chatRoom.roomId);
       connectSocket();
+      videoChatRoomId.current = chatRoom.roomId; //방 이름 세팅 TODO: 이 곳에서 videoChat으로 넘겨줄 roomId를 세팅합니다.
+      console.log(
+        "채팅방 연결 준비:👍videoChatRoomId",
+        videoChatRoomId.current
+      );
     }
   }, [chatRoom]);
 
@@ -297,7 +320,10 @@ const ChatPage = () => {
                 <span>{partner}</span>
               </div>
               <button
-                onClick={() => navigate(`/videochat/${roomId}`)}
+                onClick={() => {
+                  console.log("🌳roomId", videoChatRoomId.current);
+                  navigate(`/videochat/${videoChatRoomId.current}`);
+                }}
                 className="content-right-info-video"
               >
                 <img className="video" src={video} />
