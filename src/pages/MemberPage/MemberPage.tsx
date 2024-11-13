@@ -4,7 +4,7 @@ import { useInfoStore } from "../../store/useLoginStore";
 import "./MemberPage.scss";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
-
+import skills from "../../data/skills.json";
 interface itemType {
   name: string;
   userImg: string;
@@ -12,6 +12,8 @@ interface itemType {
   keywords: string[];
   skills: string[];
   position: string;
+  devStyle: string;
+  bio: string;
 }
 
 const fetchLocalData = async () => {
@@ -67,7 +69,30 @@ const MemberPage = () => {
                   <div className="back">
                     <div className="recommend_name">{item.name}</div>
                     <div className="recommend_position">{item.position}</div>
-                    <div className="back_body"></div>
+                    <div className="back_body">
+                      <div className="back_body-devStyle">{item.devStyle}</div>
+                      <div className="back_body-skillWrapper">
+                        {" "}
+                        {item.skills.map((skill, index) => {
+                          // 이름이 일치하는 skill 객체를 찾습니다.
+                          const matchedSkill = skills.skills.find(
+                            (s) => s.name === skill
+                          );
+
+                          return (
+                            <div key={index} className="back_body-skill">
+                              {matchedSkill && (
+                                <img
+                                  src={matchedSkill.url}
+                                  alt={skill}
+                                  className="skill_icon"
+                                />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                     <div
                       className="back_footerWrapper"
                       onClick={(e) => handleChatClick(e, item.name)}
