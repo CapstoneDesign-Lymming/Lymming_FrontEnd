@@ -44,9 +44,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     interests: [],
     job: "",
     loginType: "",
-
     nickname: "",
-
     position: "",
     stack: [],
     temperature: 0,
