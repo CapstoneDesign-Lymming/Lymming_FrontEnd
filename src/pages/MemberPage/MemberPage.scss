@@ -153,8 +153,8 @@
       left: 0;
 
       width: 100vw;
-      height: 40%;
-      margin-top: 3%;
+      height: 47%;
+      // margin-top: 2%;
 
       background-color: #3183f611;
       display: flex;
@@ -191,7 +191,8 @@
 
       left: 0;
     }
-    // &-body {
-    // }
+    &-body {
+      margin-top: 2%;
+    }
   }
 }
