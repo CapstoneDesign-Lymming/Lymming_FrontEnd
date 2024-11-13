@@ -42,7 +42,8 @@ jobs: # job 설정
           VITE_COTURN_PW: ${{secrets.VITE_COTURN_PW}}
           VITE_SIGNALING_SERVER_URL: ${{secrets.VITE_SIGNALING_SERVER_URL}}
           VITE_IMG_S3: ${{secrets.VITE_IMG_S3}}
-
+          VITE_SECRET_KEY: ${{secrets.VITE_SECRET_KEY}}
+          VITE_SECRET_ACCESS_KEY: ${{secrets.VITE_SECRET_ACCESS_KEY}}
         run: npm run build
         # env:
         #   CI: "false"
