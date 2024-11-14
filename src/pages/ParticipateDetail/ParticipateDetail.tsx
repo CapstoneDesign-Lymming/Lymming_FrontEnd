@@ -85,7 +85,7 @@ const ParticipateDetail = () => {
       </div>
       <button
         className="bottom_btn"
-        onClick={() => navigate("/chat", { state: { id: data?.userId } })}
+        onClick={() => navigate("/chat", { state: { id: data?.nickname } })}
       >
         채팅하기
       </button>
