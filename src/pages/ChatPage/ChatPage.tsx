@@ -41,7 +41,8 @@ const ChatPage = () => {
 
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
-
+  // 구독상태
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
@@ -148,46 +149,51 @@ const ChatPage = () => {
 
   const connectSocket = () => {
     if (client.current) {
+      // 기존에 연결된 클라이언트가 있으면 연결 종료
       client.current.disconnect();
     }
 
     if (!chatRoom?.roomId) return;
 
-    const socketFactory = () =>
-      new SockJS("https://lymming-back.link/chatting");
+    client.current = Stomp.over(
+      () => new SockJS("https://lymming-back.link/chatting")
+    );
 
-    client.current = Stomp.over(socketFactory);
-
-    // 자동 재연결을 설정하는 옵션을 추가
-    client.current.reconnect_delay = 5000; // 재연결 지연 시간 (5초)
-    client.current.heartbeat.outgoing = 20000; // 서버로 보내는 heartbeat 간격
-    client.current.heartbeat.incoming = 0; // 서버에서 보내는 heartbeat 간격
-
+    // STOMP 연결 설정
     client.current.connect(
       {},
       () => {
         console.log("STOMP 연결 성공");
         console.log(chatRoom.roomId);
+        // 채팅방 구독
         client.current?.subscribe(
           `/sub/chat/room/${chatRoom.roomId}`,
-
           (message) => {
             const msg = JSON.parse(message.body);
-
-            if (chatRoom) {
-              setChatHistory((prev) => [...prev, msg]);
-            }
+            setChatHistory((prev) => [...prev, msg]);
           }
         );
+        console.log("구독 성공");
+        setIsSubscribed(true);
       },
       (error: any) => {
-        console.error("STOMP connection error: ", error); // 연결 실패 시 오류 로그
+        console.error("STOMP 연결 오류:", error); // 연결 실패 시 오류 로그
+        // 연결 실패 시 재연결 시도
+        reconnectSocket();
       }
     );
   };
 
+  // 재연결 시도 함수
+  const reconnectSocket = () => {
+    setTimeout(() => {
+      console.log("자동 재연결 시도...");
+      connectSocket(); // 재연결을 위한 함수 호출
+    }, 5000); // 5초 후 재연결
+  };
+
   const sendChatMessage = () => {
-    if (client.current && client.current.connected) {
+    if (client.current && isSubscribed) {
       const msgData = {
         type: "TALK",
         roomId: chatRoom!.roomId,
@@ -201,6 +207,8 @@ const ChatPage = () => {
       //  setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
       console.log("전송한메세지", inputMessage);
+    } else {
+      console.log("메시지를 보낼 수 없습니다. 구독이 완료되지 않았습니다.");
     }
   };
 
@@ -240,6 +248,16 @@ const ChatPage = () => {
     }
   };
 
+  const enterKeyPress = (e: React.KeyboardEvent) => {
+    //FIXME: shift키와 enter를 누르면 다음 줄로 이동하게 구현
+    if (e.key === "Enter" && !e.shiftKey) {
+      if (inputMessage !== "") {
+        console.log("enter perss!!");
+        sendChatMessage();
+      }
+    }
+  };
+
   useEffect(() => {
     const initializeChatRoom = async () => {
       console.log("상대방은", partner);
@@ -255,15 +273,36 @@ const ChatPage = () => {
 
   useEffect(() => {
     loadChatHistory();
+
     if (chatRoom?.roomId) {
       console.log("채팅방 연결 준비: ", chatRoom.roomId);
+
+      // 기존 소켓 연결 해제 (필요할 경우)
+      if (client.current) {
+        client.current.disconnect(() => {
+          console.log("이전 소켓 연결 해제 완료");
+        });
+      }
+
+      // 새로운 소켓 연결 및 구독 설정
       connectSocket();
-      videoChatRoomId.current = chatRoom.roomId; //방 이름 세팅 TODO: 이 곳에서 videoChat으로 넘겨줄 roomId를 세팅합니다.
+
+      // videoChatRoomId 업데이트
+      videoChatRoomId.current = chatRoom.roomId;
       console.log(
         "채팅방 연결 준비:👍videoChatRoomId",
         videoChatRoomId.current
       );
     }
+
+    // 정리(clean-up) 함수: 이전 소켓 연결 해제
+    return () => {
+      if (client.current) {
+        client.current.disconnect(() => {
+          console.log("소켓 연결 해제 (chatRoom 변경 시)");
+        });
+      }
+    };
   }, [chatRoom]);
 
   useEffect(() => {
@@ -358,6 +397,7 @@ const ChatPage = () => {
               <textarea
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
+                onKeyDown={enterKeyPress}
               />
               <button
                 onClick={sendChatMessage}
