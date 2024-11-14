@@ -158,11 +158,6 @@ const ChatPage = () => {
 
     client.current = Stomp.over(socketFactory);
 
-    // 자동 재연결을 설정하는 옵션을 추가
-    client.current.reconnect_delay = 5000; // 재연결 지연 시간 (5초)
-    client.current.heartbeat.outgoing = 20000; // 서버로 보내는 heartbeat 간격
-    client.current.heartbeat.incoming = 0; // 서버에서 보내는 heartbeat 간격
-
     client.current.connect(
       {},
       () => {
