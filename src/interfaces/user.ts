@@ -1,4 +1,5 @@
 interface UserInfo {
+  userId: number;
   bio: string;
   category: string;
   devStyle: string;

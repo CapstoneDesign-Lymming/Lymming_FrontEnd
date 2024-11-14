@@ -12,7 +12,7 @@ interface Props {
 const LoginInfoModal = ({ children }: Props) => {
   const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
     useLoginStore();
-  const { data } = useInfoStore();
+  const { data, setData } = useInfoStore();
   const token = localStorage.getItem("token");
   console.log(token);
 
@@ -93,6 +93,7 @@ const LoginInfoModal = ({ children }: Props) => {
           //developer_type: userType,
         }
       );
+      setData(res.data);
       console.log(res);
     } catch (e) {
       console.error(e);
