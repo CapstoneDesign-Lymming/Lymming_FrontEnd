@@ -63,12 +63,13 @@ const TeamBuilding = () => {
 
   const onChange = (e: any) => {
     const target = e.target;
-
     if (target) {
-      setState({ ...state, [target.name]: target.value });
+      const value =
+        target.name === "recruitmentCount"
+          ? parseInt(target.value, 10)
+          : target.value;
+      setState({ ...state, [target.name]: value });
     }
-    console.log(target.name);
-    console.log(target.value);
   };
 
   const onSkillsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
