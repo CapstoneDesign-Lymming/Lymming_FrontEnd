@@ -250,7 +250,7 @@ const ChatPage = () => {
   const enterKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && inputMessage !== "") {
       console.log("enter perss!!");
-      sendChatMessage();
+      // sendChatMessage();
     }
   };
   useEffect(() => {
