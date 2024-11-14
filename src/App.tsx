@@ -30,7 +30,7 @@ function App() {
         ></Route>
         <Route path="/participate" element={<Participate />}></Route>
         <Route
-          path="/participate/detail/:id"
+          path="/participate/detail/:projectId"
           element={<ParticipateDetail />}
         ></Route>
         <Route path="/teambuild" element={<TeamBuilding />}></Route>

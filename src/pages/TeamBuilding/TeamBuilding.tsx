@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../../components/header/Header";
 import "./TeamBuilding.scss";
 import imgs from "../../assets/img/noimage.jpg";
@@ -6,38 +6,40 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import skills from "../../data/skills.json";
 import useImageUpload from "../../hooks/useImageUpload";
+import { useInfoStore } from "../../store/useLoginStore";
 
 interface State {
-  type: string;
-  member: string;
-  method: string;
-  duration: string;
-  end: string;
-  position: string;
-  style: string;
-  title: string;
-  img: File | null;
-  content: string;
-  techStack: string[];
+  studyType: string;
+  recruitmentCount: number;
+  studyMethod: string;
+  projectDuration: string;
+  deadline: string;
+  recruitmentField: string;
+  workType: string;
+  projectName: string;
+  projectImg: string;
+  description: string;
+  techStack: string;
 }
 
 const TeamBuilding = () => {
   const navigate = useNavigate();
   // const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  const { data } = useInfoStore();
   const [state, setState] = useState<State>({
-    type: "",
-    member: "",
-    method: "",
-    duration: "",
-    end: "",
-    position: "",
-    style: "",
-    title: "",
-    img: null,
-    content: "",
-    techStack: [],
+    studyType: "",
+    recruitmentCount: 0,
+    studyMethod: "",
+    projectDuration: "",
+    deadline: "",
+    recruitmentField: "",
+    workType: "",
+    projectName: "",
+    projectImg: "",
+    description: "",
+    techStack: "",
   });
   const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
     useImageUpload();
@@ -61,12 +63,13 @@ const TeamBuilding = () => {
 
   const onChange = (e: any) => {
     const target = e.target;
-
     if (target) {
-      setState({ ...state, [target.name]: target.value });
+      const value =
+        target.name === "recruitmentCount"
+          ? parseInt(target.value, 10)
+          : target.value;
+      setState({ ...state, [target.name]: value });
     }
-    console.log(target.name);
-    console.log(target.value);
   };
 
   const onSkillsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -74,21 +77,23 @@ const TeamBuilding = () => {
       e.target.selectedOptions,
       (option) => option.value
     );
-    setSelectedSkills(selectedOptions);
+
+    setState({ ...state, techStack: selectedOptions.join(", ") });
   };
 
   const onsubmit = async () => {
     const requiredFields = [
-      { field: "type", message: "모집 구분을 선택하세요." },
-      { field: "member", message: "모집 인원을 입력하세요." },
-      { field: "method", message: "진행 방식을 선택하세요." },
-      { field: "duration", message: "기간을 선택하세요." },
-      { field: "end", message: "마감 날짜를 선택하세요." },
-      { field: "position", message: "포지션을 입력하세요." },
-      { field: "style", message: "스타일을 선택하세요." },
-      { field: "title", message: "제목을 입력하세요." },
-      { field: "img", message: "이미지를 첨부하세요." },
-      { field: "content", message: "내용을 입력하세요." },
+      { field: "studyType", message: "모집 구분을 선택하세요." },
+      { field: "recruitmentCount", message: "모집 인원을 입력하세요." },
+      { field: "studyMethod", message: "진행 방식을 선택하세요." },
+      { field: "projectDuration", message: "기간을 선택하세요." },
+      { field: "deadline", message: "마감 날짜를 선택하세요." },
+      { field: "recruitmentField", message: "포지션을 입력하세요." },
+      { field: "workType", message: "스타일을 선택하세요." },
+      { field: "projectName", message: "제목을 입력하세요." },
+      { field: "projectImg", message: "이미지를 첨부하세요." },
+      { field: "description", message: "내용을 입력하세요." },
+      { field: "techStack", message: "기술을 입력하세요." },
     ];
 
     for (const { field, message } of requiredFields) {
@@ -98,21 +103,7 @@ const TeamBuilding = () => {
       }
     }
 
-    const formData = new FormData();
-    // 임시로 사용자 아이디둠, 나중에 로그인 후 아이디로 바꿔야함
-    formData.append("userId", JSON.stringify(123123));
-    formData.append("studyType", state.type);
-    formData.append("recruitmentCount", state.member);
-    formData.append("studyMethod", state.method);
-    formData.append("projectDuration", state.duration);
-    formData.append("deadline", state.end);
-    formData.append("recruitmentField", state.position);
-    formData.append("workType", state.style);
-    formData.append("projectName", state.title);
-    formData.append("uploadTime", new Date().toISOString());
-    formData.append("description", state.content);
-
-    formData.append("techStack", JSON.stringify(selectedSkills));
+    await uploadImage();
 
     // if (img) {
     //   console.log("이미지 파일이 존재합니다:", img);
@@ -122,24 +113,44 @@ const TeamBuilding = () => {
     // }
 
     // 서버 전송 로직 짜기
+
     try {
-      const res = await axios.post(
-        "https://lymming-back.link/teambuild",
-        formData
-      );
+      const res = await axios.post("https://lymming-back.link/teambuild", {
+        userId: data.userId,
+        studyType: state.studyType,
+        recruitmentCount: state.recruitmentCount,
+        studyMethod: state.studyMethod,
+        projectDuration: state.projectDuration,
+        projectImg: state.projectImg,
+        projectName: state.projectName,
+        recruitmentField: state.recruitmentField,
+        techStack: state.techStack,
+        workType: state.workType,
+        deadline: state.deadline,
+        description: state.description,
+        uploadTime: new Date().toISOString().substring(0, 10),
+      });
       console.log(res);
-      //navigate("/participate");
+      navigate("/participate");
     } catch (e) {
       console.error(e);
     }
-    uploadImage(); //
   };
 
   const uploadImage = async () => {
     const s3ImageUrl = await handleUpload();
-    postUplodFileUrl(s3ImageUrl);
+    if (s3ImageUrl) {
+      console.log(state.projectImg, "state에 이미지 추가");
+      postUplodFileUrl(s3ImageUrl);
+    } else {
+      console.error("Image upload failed; URL is undefined");
+    }
   };
   // const imgPreviewUrl = imgs ? imageUrl : imgs;
+
+  useEffect(() => {
+    setState({ ...state, projectImg: imageUrl! });
+  }, [imageUrl]);
 
   return (
     <>
@@ -155,7 +166,7 @@ const TeamBuilding = () => {
                   <input
                     type="radio"
                     id="project"
-                    name="type"
+                    name="studyType"
                     onChange={onChange}
                     value="project"
                   />
@@ -164,7 +175,7 @@ const TeamBuilding = () => {
                 <div className="content-top-left-body-box">
                   <input
                     type="radio"
-                    name="type"
+                    name="studyType"
                     id="study"
                     onChange={onChange}
                     value="study"
@@ -176,7 +187,7 @@ const TeamBuilding = () => {
             <div className="content-top-right">
               <div className="content-top-right-1">
                 <span>모집 인원</span>
-                <select onChange={onChange} name="member">
+                <select onChange={onChange} name="recruitmentCount">
                   <option value="">선택</option>
                   <option value="1">1명</option>
                   <option value="2">2명</option>
@@ -187,7 +198,7 @@ const TeamBuilding = () => {
               </div>
               <div className="content-top-right-2">
                 <span>진행 방식</span>
-                <select onChange={onChange} name="method">
+                <select onChange={onChange} name="studyMethod">
                   <option value="" disabled hidden>
                     선택하세요
                   </option>
@@ -203,7 +214,7 @@ const TeamBuilding = () => {
           <div className="content-center">
             <div className="content-center-left">
               <span>프로젝트 기간</span>
-              <select onChange={onChange} name="duration">
+              <select onChange={onChange} name="projectDuration">
                 <option value="">선택</option>
                 <option value="less_than_1_month">1달 이하</option>
                 <option value="1_month">1달</option>
@@ -214,13 +225,13 @@ const TeamBuilding = () => {
             </div>
             <div className="content-center-right">
               <span>모집 마감일</span>
-              <input type="date" onChange={onChange} name="end" />
+              <input type="date" onChange={onChange} name="deadline" />
             </div>
           </div>
           <div className="content-center">
             <div className="content-center-left">
               <span>모집 포지션</span>
-              <select onChange={onChange} name="position">
+              <select onChange={onChange} name="recruitmentField">
                 <option value="">선택</option>
                 <option value="front">프론트</option>
                 <option value="back">벡</option>
@@ -234,7 +245,7 @@ const TeamBuilding = () => {
 
             <div className="content-center-right">
               <span>원하는 개발 스타일</span>
-              <select onChange={onChange} name="style">
+              <select onChange={onChange} name="workType">
                 <option value="">선택</option>
                 <option value="enthusiastic">열정적</option>
                 <option value="independent">독립적</option>
@@ -243,7 +254,7 @@ const TeamBuilding = () => {
             </div>
             <div className="content-center-middle">
               <span>모집 스킬</span>
-              <select onChange={onSkillsChange} name="position" multiple>
+              <select onChange={onSkillsChange} name="techStack" multiple>
                 <option value="">선택</option>
                 {skills.skills.map((it, index) => {
                   return (
@@ -261,7 +272,7 @@ const TeamBuilding = () => {
               type="text"
               placeholder="제목을 입력해 주세요"
               onChange={onChange}
-              name="title"
+              name="projectName"
             />
           </div>
 
@@ -272,7 +283,7 @@ const TeamBuilding = () => {
               accept="image/*"
               ref={imgRef}
               onChange={handleFileChange}
-              name=""
+              name="projectImg"
             />
             <img src={imageUrl || imgs}></img>
             <button onClick={onBtnClick}>사진추가</button>
@@ -282,7 +293,7 @@ const TeamBuilding = () => {
             <span>내용</span>
             <textarea
               placeholder="내용을 입력해 주세요."
-              name="content"
+              name="description"
               onChange={onChange}
             />
           </div>
