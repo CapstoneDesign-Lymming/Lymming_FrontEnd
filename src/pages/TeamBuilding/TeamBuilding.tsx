@@ -26,7 +26,7 @@ const TeamBuilding = () => {
   const navigate = useNavigate();
   // const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
-
+  const localProjectImg = useRef<string>("");
   const { data } = useInfoStore();
   const [state, setState] = useState<State>({
     studyType: "",
@@ -137,11 +137,15 @@ const TeamBuilding = () => {
   };
 
   const uploadImage = async () => {
-    const s3ImageUrl = await handleUpload(); //TODO:
+    const s3ImageUrl = await handleUpload();
+    if (s3ImageUrl) {
+      localProjectImg.current = s3ImageUrl;
+      console.log("👍ref로 선언한 localProjectImg", localProjectImg.current);
+    }
     if (s3ImageUrl) {
       console.log(state.projectImg, "state에 이미지 추가");
       // postUplodFileUrl(s3ImageUrl);
-      setState({ ...state, projectImg: s3ImageUrl });
+      setState({ ...state, projectImg: localProjectImg.current });
       console.log("⭐setState이후 이미지 경로", state.projectImg);
     } else {
       console.error("Image upload failed; URL is undefined");
