@@ -131,7 +131,7 @@ const TeamBuilding = () => {
         uploadTime: new Date().toISOString().substring(0, 10),
       });
       console.log(res);
-      //navigate("/participate");
+      navigate("/participate");
     } catch (e) {
       console.error(e);
     }
