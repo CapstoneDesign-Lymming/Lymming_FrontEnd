@@ -158,6 +158,19 @@ const ChatPage = () => {
 
     client.current = Stomp.over(socket);
 
+    socket.onopen = function (event) {
+      console.log("WebSocket 연결됨:", event);
+    };
+    socket.onmessage = function (event) {
+      console.log("수신된 메시지:", event.data);
+    };
+    socket.onclose = function (event) {
+      console.log("WebSocket 연결 종료:", event);
+    };
+    socket.onerror = function (error) {
+      console.log("WebSocket 오류:", error);
+    };
+
     client.current.connect(
       {},
       () => {
