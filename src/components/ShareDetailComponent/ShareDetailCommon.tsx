@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./ShareDetailCommon.scss";
+import useModalStore from "../../store/useModalState";
+import { useState } from "react";
+import RootModal from "../Modal/RootModal/RootModal";
 interface ShareDetailLeaderProps {
   data: {
     userId: number;
@@ -20,6 +23,14 @@ interface ShareDetailLeaderProps {
 const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { data } = useInfoStore();
   const navigate = useNavigate();
+  const { isModalOpen, openModal } = useModalStore();
+  const [modalName, setModalName] = useState("");
+  const clickEndShareProject = () => {
+    //TODO:종료하기 로직은 endmodal 내부에서 진행
+    setModalName("shareEndModal");
+    openModal();
+  };
+
   return (
     <>
       {/* <div>공통 페이지</div>
@@ -63,17 +74,23 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
           {propData && propData.team_leader === data.nickname && (
             <div className="leader_btn_bundle">
               <div
-                className="leader_btn"
+                className="leader_btn_put"
                 onClick={() => {
                   navigate("/share/detail/leader", { state: propData });
                 }}
               >
                 수정하기
               </div>
+              <div className="leader_btn_end" onClick={clickEndShareProject}>
+                종료하기
+              </div>
             </div>
           )}
         </div>
       </div>
+      {isModalOpen && modalName === "shareEndModal" && (
+        <RootModal modalName="shareEndModal" />
+      )}
     </>
   );
 };

@@ -93,16 +93,30 @@
       }
     }
     .leader_btn_bundle {
+      width: 30%;
       margin-top: 6%;
-      .leader_btn {
-        width: 16vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .leader_btn_put {
+        width: 9vw;
         height: 5vh;
         line-height: 5vh;
-        background-color: #ff4444;
-        color: white;
+        // background-color: #ff4444;
+        border: 1px solid #ff4444;
+        color: #ff4444;
         text-align: center;
         border-radius: 5px;
         font-size: 17px;
+      }
+      .leader_btn_end {
+        width: 9vw;
+        height: 5vh;
+        line-height: 5vh;
+        color: white;
+        background-color: #ff4444;
+        text-align: center;
+        border-radius: 5px;
       }
     }
   }

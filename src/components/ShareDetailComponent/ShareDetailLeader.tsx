@@ -6,6 +6,8 @@ import "./ShareDetailLeader.scss";
 import RootModal from "../Modal/RootModal/RootModal";
 import nouserImage from "../../assets/img/noimage.jpg";
 import useImageUpload from "../../hooks/useImageUpload";
+import { useToastStore } from "../../store/useToastState";
+import RootToast from "../Toast/RootToast/RootToast";
 
 interface ShareDetailLeaderProps {
   userId: number;
@@ -26,15 +28,13 @@ const ShareDetailLeader = () => {
   const initialData: ShareDetailLeaderProps = location.state;
   const { isModalOpen, openModal } = useModalStore();
   const [modalName, setModalName] = useState("");
+  const { isToastOpen, openToast } = useToastStore();
+  const [toastName, setToastName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
   const [projectLink, setProjectLink] = useState("");
   const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
     useImageUpload();
 
-  const saveShareDetail = async () => {
-    const s3ImageUrl = await handleUpload();
-    postUplodFileUrl(s3ImageUrl);
-  };
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,15 +45,24 @@ const ShareDetailLeader = () => {
       [name]: value,
     }));
   };
+
   const handleProjectLink = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setProjectLink(e.target.value);
   };
+
   const invalidateInstance = () => {
     setModalName("shareInviteModal");
     openModal();
     console.log(isModalOpen);
+  };
+
+  const saveShareDetail = async () => {
+    setToastName("successToast");
+    openToast();
+    const s3ImageUrl = await handleUpload();
+    postUplodFileUrl(s3ImageUrl);
   };
 
   return (
@@ -128,14 +137,14 @@ const ShareDetailLeader = () => {
                       alt="team member"
                     />
                   </div>
-                  <div>
+                  <div className="memberCard_Wrapper-memberInfoWrapper">
                     <div>{formData.team_member_name[idx]}</div>
                     <div>{formData.team_member_position[idx]}</div>
                   </div>
                 </div>
               ))}
               <div className="AddMember" onClick={invalidateInstance}>
-                초대하기
+                멤버 초대하기
               </div>
             </div>
           </div>
@@ -145,10 +154,13 @@ const ShareDetailLeader = () => {
             </div>
           </div>
         </div>
-        {isModalOpen && modalName === "shareInviteModal" && (
-          <RootModal modalName="shareInviteModal" />
-        )}
       </div>
+      {isModalOpen && modalName === "shareInviteModal" && (
+        <RootModal modalName="shareInviteModal" />
+      )}
+      {isToastOpen && toastName === "successToast" && (
+        <RootToast toastName="successToast" />
+      )}
     </>
   );
 };
