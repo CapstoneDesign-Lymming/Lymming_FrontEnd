@@ -117,7 +117,17 @@ const TeamBuilding = () => {
     try {
       const res = await axios.post("https://lymming-back.link/teambuild", {
         userId: data.userId,
-        state,
+        studyType: state.studyType,
+        recruitmentCount: state.recruitmentCount,
+        studyMethod: state.studyMethod,
+        projectDuration: state.projectDuration,
+        projectImg: state.projectImg,
+        projectName: state.projectName,
+        recruitmentField: state.recruitmentField,
+        techStack: state.techStack,
+        workType: state.workType,
+        deadline: state.deadline,
+        description: state.description,
         uploadTime: new Date().toISOString().substring(0, 10),
       });
       console.log(res);
