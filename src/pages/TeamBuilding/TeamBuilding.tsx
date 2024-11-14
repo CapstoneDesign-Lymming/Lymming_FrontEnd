@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Header from "../../components/header/Header";
 import "./TeamBuilding.scss";
 import imgs from "../../assets/img/noimage.jpg";
@@ -41,7 +41,7 @@ const TeamBuilding = () => {
     description: "",
     techStack: "",
   });
-  const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
+  const { imageUrl, handleFileChange, handleUpload } =
     useImageUpload();
 
   const onBtnClick = () => {
@@ -138,19 +138,20 @@ const TeamBuilding = () => {
   };
 
   const uploadImage = async () => {
-    const s3ImageUrl = await handleUpload();
+    const s3ImageUrl = await handleUpload();//TODO:
     if (s3ImageUrl) {
       console.log(state.projectImg, "state에 이미지 추가");
-      postUplodFileUrl(s3ImageUrl);
-    } else {
+      // postUplodFileUrl(s3ImageUrl);
+      setState({ ...state, projectImg: s3ImageUrl });
+} else {
       console.error("Image upload failed; URL is undefined");
     }
   };
   // const imgPreviewUrl = imgs ? imageUrl : imgs;
 
-  useEffect(() => {
-    setState({ ...state, projectImg: imageUrl! });
-  }, [imageUrl]);
+  // useEffect(() => {
+  //   setState({ ...state, projectImg: imageUrl! });
+  // }, [imageUrl]);
 
   return (
     <>
