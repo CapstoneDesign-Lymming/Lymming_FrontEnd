@@ -1,5 +1,13 @@
+import useModalClose from "../../../../hooks/useModalClose";
+import "./ShareEndModal.scss";
 const ShareEndModal = () => {
-  return <div>ShareEndModal</div>;
+  const { modalRef } = useModalClose();
+
+  return (
+    <div ref={modalRef} className="ShareEndModal">
+      ShareEndModal
+    </div>
+  );
 };
 
 export default ShareEndModal;
