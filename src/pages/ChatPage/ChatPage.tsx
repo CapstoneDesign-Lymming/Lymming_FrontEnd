@@ -149,6 +149,7 @@ const ChatPage = () => {
 
   const connectSocket = () => {
     if (client.current) {
+      // 기존에 연결된 클라이언트가 있으면 연결 종료
       client.current.disconnect();
     }
 
@@ -158,41 +159,58 @@ const ChatPage = () => {
 
     client.current = Stomp.over(socket);
 
-    socket.onopen = function (event) {
+    // WebSocket 이벤트 처리
+    socket.onopen = (event) => {
       console.log("WebSocket 연결됨:", event);
     };
-    socket.onmessage = function (event) {
+
+    socket.onmessage = (event) => {
       console.log("수신된 메시지:", event.data);
     };
-    socket.onclose = function (event) {
+
+    socket.onclose = (event) => {
       console.log("WebSocket 연결 종료:", event);
-    };
-    socket.onerror = function (error) {
-      console.log("WebSocket 오류:", error);
+      // 연결 종료 시 재연결 시도
+      reconnectSocket();
     };
 
+    socket.onerror = (error) => {
+      console.log("WebSocket 오류:", error);
+      // 오류 시 재연결 시도
+      reconnectSocket();
+    };
+
+    // STOMP 연결 설정
     client.current.connect(
       {},
       () => {
         console.log("STOMP 연결 성공");
         console.log(chatRoom.roomId);
+        // 채팅방 구독
         client.current?.subscribe(
           `/sub/chat/room/${chatRoom.roomId}`,
-
           (message) => {
             const msg = JSON.parse(message.body);
-
             setChatHistory((prev) => [...prev, msg]);
           }
         );
         console.log("구독 성공");
         setIsSubscribed(true);
       },
-
       (error: any) => {
-        console.error("STOMP connection error: ", error); // 연결 실패 시 오류 로그
+        console.error("STOMP 연결 오류:", error); // 연결 실패 시 오류 로그
+        // 연결 실패 시 재연결 시도
+        reconnectSocket();
       }
     );
+  };
+
+  // 재연결 시도 함수
+  const reconnectSocket = () => {
+    setTimeout(() => {
+      console.log("자동 재연결 시도...");
+      connectSocket(); // 재연결을 위한 함수 호출
+    }, 5000); // 5초 후 재연결
   };
 
   const sendChatMessage = () => {
