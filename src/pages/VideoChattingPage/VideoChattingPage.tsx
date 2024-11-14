@@ -26,7 +26,7 @@ const VideoChattingPage = () => {
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
 
   const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
-  const [isMicOn, setIsMicOn] = useState(true);
+  // const [isMicOn, setIsMicOn] = useState(true);
 
   const roomName = useRef<string | undefined>("test_room");
 
@@ -512,43 +512,43 @@ const VideoChattingPage = () => {
     }
   };
 
-  const toggleMic = async () => {
-    if (isMicOn) {
-      // 마이크 끄기
-      const tracks = (
-        localVideoRef.current?.srcObject as MediaStream
-      )?.getAudioTracks();
-      tracks?.forEach((track: MediaStreamTrack) => track.stop()); // 모든 오디오 트랙 중지
-      setIsMicOn(false);
-      socket?.emit("toggleMic", {
-        room: roomName,
-        userId: socket.id,
-        isMicOn: false,
-      });
-      console.log("🔨toggleMic off");
-    } else {
-      // 마이크 켜기
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-      if (localVideoRef.current) {
-        localVideoRef.current.srcObject = stream; // 오디오 재설정
-      }
-      stream.getTracks().forEach((track: MediaStreamTrack) => {
-        if (peerConnection.current) {
-          peerConnection.current.addTrack(track, stream);
-        }
-      });
-      setIsMicOn(true);
-      socket?.emit("toggleMic", {
-        room: roomName.current,
-        userId: socket.id,
-        isMicOn: true,
-      });
-      console.log("🔨toggleMic on");
-    }
-  };
+  // const toggleMic = async () => {
+  //   if (isMicOn) {
+  //     // 마이크 끄기
+  //     const tracks = (
+  //       localVideoRef.current?.srcObject as MediaStream
+  //     )?.getAudioTracks();
+  //     tracks?.forEach((track: MediaStreamTrack) => track.stop()); // 모든 오디오 트랙 중지
+  //     setIsMicOn(false);
+  //     socket?.emit("toggleMic", {
+  //       room: roomName,
+  //       userId: socket.id,
+  //       isMicOn: false,
+  //     });
+  //     console.log("🔨toggleMic off");
+  //   } else {
+  //     // 마이크 켜기
+  //     const stream = await navigator.mediaDevices.getUserMedia({
+  //       video: true,
+  //       audio: true,
+  //     });
+  //     if (localVideoRef.current) {
+  //       localVideoRef.current.srcObject = stream; // 오디오 재설정
+  //     }
+  //     stream.getTracks().forEach((track: MediaStreamTrack) => {
+  //       if (peerConnection.current) {
+  //         peerConnection.current.addTrack(track, stream);
+  //       }
+  //     });
+  //     setIsMicOn(true);
+  //     socket?.emit("toggleMic", {
+  //       room: roomName.current,
+  //       userId: socket.id,
+  //       isMicOn: true,
+  //     });
+  //     console.log("🔨toggleMic on");
+  //   }
+  // };
   return (
     <>
       <div className="VideoChattingWrapper">
@@ -585,7 +585,7 @@ const VideoChattingPage = () => {
           </video>
         </div>
         <div className="VideoChattingWrapper-Navigater">
-          {isMicOn ? (
+          {/* {isMicOn ? (
             <div className="NavMenu" onClick={toggleMic}>
               <svg
                 className="NavMenu-icon"
@@ -607,7 +607,7 @@ const VideoChattingPage = () => {
               </svg>
               <div className="NavMenu-icon_text">마이크</div>
             </div>
-          )}
+          )} */}
 
           {isVideoOn ? (
             <div className="NavMenu" onClick={toggleVideo}>
@@ -634,7 +634,7 @@ const VideoChattingPage = () => {
             </div>
           )}
 
-          <div className="NavMenu">
+          {/* <div className="NavMenu">
             <svg
               className="NavMenu-icon"
               xmlns="http://www.w3.org/2000/svg"
@@ -643,7 +643,7 @@ const VideoChattingPage = () => {
               <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
             </svg>
             <div>참여자</div>
-          </div>
+          </div> */}
 
           {isLocalScreenSharing ? (
             <div className="NavMenu" onClick={stopScreenSharing}>
