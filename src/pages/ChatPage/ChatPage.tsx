@@ -154,10 +154,9 @@ const ChatPage = () => {
 
     if (!chatRoom?.roomId) return;
 
-    const socketFactory = () =>
-      new SockJS("https://lymming-back.link/chatting");
+    const socket = new SockJS("https://lymming-back.link/chatting");
 
-    client.current = Stomp.over(socketFactory);
+    client.current = Stomp.over(socket);
 
     client.current.connect(
       {},
@@ -198,6 +197,8 @@ const ChatPage = () => {
       //  setChatHistory((prev) => [...prev, msgData]);
       setInputMessage("");
       console.log("전송한메세지", inputMessage);
+    } else {
+      console.log("메시지를 보낼 수 없습니다. 구독이 완료되지 않았습니다.");
     }
   };
 
