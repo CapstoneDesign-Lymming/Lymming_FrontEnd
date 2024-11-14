@@ -247,7 +247,12 @@ const ChatPage = () => {
       console.error(e);
     }
   };
-
+  const enterKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      console.log("enter perss!!");
+      sendChatMessage();
+    }
+  };
   useEffect(() => {
     const initializeChatRoom = async () => {
       console.log("상대방은", partner);
@@ -387,6 +392,7 @@ const ChatPage = () => {
               <textarea
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
+                onKeyDown={enterKeyPress}
               />
               <button
                 onClick={sendChatMessage}
