@@ -36,6 +36,7 @@ export const useLoginStore = create<LoginState>((set) => ({
 // 회원 정보 입력 data
 export const useInfoStore = create<InfoState>((set) => ({
   data: {
+    userId: 0,
     //한 줄 소개
     bio: "",
     category: "",
