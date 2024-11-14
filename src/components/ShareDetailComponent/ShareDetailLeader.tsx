@@ -137,14 +137,14 @@ const ShareDetailLeader = () => {
                       alt="team member"
                     />
                   </div>
-                  <div>
+                  <div className="memberCard_Wrapper-memberInfoWrapper">
                     <div>{formData.team_member_name[idx]}</div>
                     <div>{formData.team_member_position[idx]}</div>
                   </div>
                 </div>
               ))}
               <div className="AddMember" onClick={invalidateInstance}>
-                초대하기
+                멤버 초대하기
               </div>
             </div>
           </div>
