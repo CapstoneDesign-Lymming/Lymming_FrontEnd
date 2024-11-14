@@ -31,10 +31,6 @@ const ShareDetailLeader = () => {
   const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
     useImageUpload();
 
-  const saveShareDetail = async () => {
-    const s3ImageUrl = await handleUpload();
-    postUplodFileUrl(s3ImageUrl);
-  };
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,15 +41,24 @@ const ShareDetailLeader = () => {
       [name]: value,
     }));
   };
+
   const handleProjectLink = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setProjectLink(e.target.value);
   };
+
   const invalidateInstance = () => {
     setModalName("shareInviteModal");
     openModal();
     console.log(isModalOpen);
+  };
+
+  const saveShareDetail = async () => {
+    setModalName("shareEndModal");
+    openModal();
+    const s3ImageUrl = await handleUpload();
+    postUplodFileUrl(s3ImageUrl);
   };
 
   return (
@@ -145,10 +150,13 @@ const ShareDetailLeader = () => {
             </div>
           </div>
         </div>
-        {isModalOpen && modalName === "shareInviteModal" && (
-          <RootModal modalName="shareInviteModal" />
-        )}
       </div>
+      {isModalOpen && modalName === "shareInviteModal" && (
+        <RootModal modalName="shareInviteModal" />
+      )}
+      {isModalOpen && modalName === "shareEndModal" && (
+        <RootModal modalName="shareEndModal" />
+      )}
     </>
   );
 };
