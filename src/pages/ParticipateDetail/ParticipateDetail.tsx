@@ -13,17 +13,20 @@ const ParticipateDetail = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
 
-  console.log(data);
+  console.log(projectId);
 
   useEffect(() => {
     getData();
   }, []);
   const getData = async () => {
-    const res = await axios.get(
-      `https://lymming-back.link/participate/detail/${projectId}`
-    );
-
-    setData(res.data);
+    try {
+      const res = await axios.get(
+        `https://lymming-back.link/participate/detail/${projectId}`
+      );
+      setData(res.data);
+    } catch (e) {
+      console.error(e);
+    }
   };
   return (
     <div className="ParticipateDetail">
