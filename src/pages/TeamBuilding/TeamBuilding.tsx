@@ -82,8 +82,11 @@ const TeamBuilding = () => {
     console.log(state.projectImg);
   };
 
-  const onsubmit = async () => {
+  const onsubmit = () => {
+    console.log("❌1");
+
     uploadImage();
+    console.log("❌2 localprojectimg", localProjectImg.current);
 
     const requiredFields = [
       { field: "studyType", message: "모집 구분을 선택하세요." },
@@ -98,6 +101,7 @@ const TeamBuilding = () => {
       { field: "description", message: "내용을 입력하세요." },
       { field: "techStack", message: "기술을 입력하세요." },
     ];
+    console.log("❌3");
 
     for (const { field, message } of requiredFields) {
       if (!state[field as keyof State]) {
@@ -105,6 +109,7 @@ const TeamBuilding = () => {
         break;
       }
     }
+    console.log("❌4");
 
     // if (img) {
     //   console.log("이미지 파일이 존재합니다:", img);
@@ -116,6 +121,8 @@ const TeamBuilding = () => {
     // 서버 전송 로직 짜기
 
     try {
+      console.log("❌5");
+
       const res = axios.post("https://lymming-back.link/teambuild", {
         userId: data.userId,
         studyType: state.studyType,
@@ -133,9 +140,11 @@ const TeamBuilding = () => {
       });
       console.log(res);
       navigate("/participate");
+      console.log("❌6");
     } catch (e) {
       console.error(e);
     }
+    console.log("❌7");
   };
 
   const uploadImage = async () => {
