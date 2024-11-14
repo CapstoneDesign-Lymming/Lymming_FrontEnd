@@ -155,30 +155,9 @@ const ChatPage = () => {
 
     if (!chatRoom?.roomId) return;
 
-    const socket = new SockJS("https://lymming-back.link/chatting");
-
-    client.current = Stomp.over(socket);
-
-    // WebSocket 이벤트 처리
-    socket.onopen = (event) => {
-      console.log("WebSocket 연결됨:", event);
-    };
-
-    socket.onmessage = (event) => {
-      console.log("수신된 메시지:", event.data);
-    };
-
-    socket.onclose = (event) => {
-      console.log("WebSocket 연결 종료:", event);
-      // 연결 종료 시 재연결 시도
-      reconnectSocket();
-    };
-
-    socket.onerror = (error) => {
-      console.log("WebSocket 오류:", error);
-      // 오류 시 재연결 시도
-      reconnectSocket();
-    };
+    client.current = Stomp.over(
+      () => new SockJS("https://lymming-back.link/chatting")
+    );
 
     // STOMP 연결 설정
     client.current.connect(
@@ -284,15 +263,36 @@ const ChatPage = () => {
 
   useEffect(() => {
     loadChatHistory();
+
     if (chatRoom?.roomId) {
       console.log("채팅방 연결 준비: ", chatRoom.roomId);
+
+      // 기존 소켓 연결 해제 (필요할 경우)
+      if (client.current) {
+        client.current.disconnect(() => {
+          console.log("이전 소켓 연결 해제 완료");
+        });
+      }
+
+      // 새로운 소켓 연결 및 구독 설정
       connectSocket();
-      videoChatRoomId.current = chatRoom.roomId; //방 이름 세팅 TODO: 이 곳에서 videoChat으로 넘겨줄 roomId를 세팅합니다.
+
+      // videoChatRoomId 업데이트
+      videoChatRoomId.current = chatRoom.roomId;
       console.log(
         "채팅방 연결 준비:👍videoChatRoomId",
         videoChatRoomId.current
       );
     }
+
+    // 정리(clean-up) 함수: 이전 소켓 연결 해제
+    return () => {
+      if (client.current) {
+        client.current.disconnect(() => {
+          console.log("소켓 연결 해제 (chatRoom 변경 시)");
+        });
+      }
+    };
   }, [chatRoom]);
 
   useEffect(() => {
