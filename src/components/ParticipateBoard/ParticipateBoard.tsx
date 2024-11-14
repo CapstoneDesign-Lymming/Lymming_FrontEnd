@@ -15,7 +15,7 @@ interface ParticipateBoardProps {
 
 const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   data,
-  index,
+
   setUserModalData,
   setUserModalOpen,
 }) => {
@@ -54,9 +54,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
     <div className="item">
       <div
         className="item-top"
-        onClick={() =>
-          navigate(`/participate/detail/${index}`, { state: data })
-        }
+        onClick={() => navigate(`/participate/detail/${data.projectId}`)}
       >
         <div className="item-top-label">
           <div className="item-top-label-left">{data.studyType}</div>
@@ -95,12 +93,13 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           )}
         </div>
 
-        {/* 이미지로 수정하기 */}
         <div className="item-top-skills">
-          {Array.isArray(data.skillicon) && data.skillicon.length > 0 ? (
-            data.techStack.map((it, index) => {
-              return <img src={it} key={index} />;
-            })
+          {data.skillicon && data.techStack ? (
+            data.techStack
+              .split(",")
+              .map((it, index) => (
+                <img src={it.trim()} key={index} alt={`기술 아이콘 ${index}`} />
+              ))
           ) : (
             <span>{data.techStack}</span>
           )}
@@ -123,7 +122,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         <div className="item-bottom-right">
           <div className="item-bottom-right-watch">
             <img src={watch} />
-            <span>10</span>
+            <span>{data.viewCount}</span>
           </div>
           <div
             className="item-bottom-right-chat"

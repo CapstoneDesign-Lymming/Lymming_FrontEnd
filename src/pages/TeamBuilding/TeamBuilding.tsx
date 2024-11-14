@@ -102,14 +102,7 @@ const TeamBuilding = () => {
       }
     }
 
-    const formData = new FormData();
-    // 임시로 사용자 아이디둠, 나중에 로그인 후 아이디로 바꿔야함
-    formData.append("userId", JSON.stringify(123123));
-
     await uploadImage();
-
-    console.log(imageUrl, "이미지");
-    console.log(state.projectImg, "이미지");
 
     // if (img) {
     //   console.log("이미지 파일이 존재합니다:", img);
@@ -119,11 +112,12 @@ const TeamBuilding = () => {
     // }
 
     // 서버 전송 로직 짜기
+
     try {
       const res = await axios.post("https://lymming-back.link/teambuild", {
         userId: data.userId,
         state,
-        uploadTime: new Date().toISOString(),
+        uploadTime: new Date().toISOString().substring(0, 10),
       });
       console.log(res);
       //navigate("/participate");
