@@ -10,9 +10,9 @@
       "team_member_name": ["지우림", "노기훈", "박준서"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "노기훈"
@@ -33,11 +33,11 @@
         "백엔드"
       ],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": true,
       "team_leader": "조하영"
@@ -52,9 +52,9 @@
       "team_member_name": ["홍지영", "박현우", "최민지"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "홍지영"
@@ -69,10 +69,10 @@
       "team_member_name": ["김지훈", "이지아", "한예진", "최준영"],
       "team_member_position": ["백엔드", "프론트", "프론트", "백엔드"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": true,
       "team_leader": "김지훈"
@@ -87,9 +87,9 @@
       "team_member_name": ["이성훈", "박지민", "김나영"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": true,
       "team_leader": "이성훈"
@@ -104,10 +104,10 @@
       "team_member_name": ["손현주", "문성호", "고유리", "백승호"],
       "team_member_position": ["백엔드", "프론트", "프론트", "백엔드"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "손현주"
@@ -122,9 +122,9 @@
       "team_member_name": ["김도훈", "임채원", "윤서연"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "김도훈"
@@ -139,10 +139,10 @@
       "team_member_name": ["정해인", "안소희", "서민수", "조유진"],
       "team_member_position": ["백엔드", "프론트", "프론트", "백엔드"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": true,
       "team_leader": "정해인"
@@ -157,9 +157,9 @@
       "team_member_name": ["전승민", "류하늘", "최수정"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "전승민"
@@ -174,10 +174,10 @@
       "team_member_name": ["정수아", "김태현", "황도현", "이지원"],
       "team_member_position": ["백엔드", "프론트", "프론트", "백엔드"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "정수아"
@@ -192,9 +192,9 @@
       "team_member_name": ["박채은", "이승현", "김성찬"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "박채은"
@@ -209,10 +209,10 @@
       "team_member_name": ["하정우", "유정민", "오민석", "채수빈"],
       "team_member_position": ["백엔드", "프론트", "프론트", "백엔드"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "하정우"
@@ -227,9 +227,9 @@
       "team_member_name": ["조혜민", "박태수", "고영민"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "조혜민"
@@ -244,9 +244,9 @@
       "team_member_name": ["임가은", "황지훈", "문소현"],
       "team_member_position": ["백엔드", "프론트", "프론트"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": false,
       "team_leader": "임가은"
@@ -261,10 +261,10 @@
       "team_member_name": ["최지우", "이유진", "정세빈", "박상진"],
       "team_member_position": ["백엔드", "프론트", "프론트", "백엔드"],
       "team_member_url": [
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp",
-        "/public/img/no-profile.webp"
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp",
+        "/img/no-profile.webp"
       ],
       "is_completed": true,
       "team_leader": "최지우"
