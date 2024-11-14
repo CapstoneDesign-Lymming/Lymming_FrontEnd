@@ -68,6 +68,7 @@ const TeamBuilding = () => {
           ? parseInt(target.value, 10)
           : target.value;
       setState({ ...state, [target.name]: value });
+      console.log(state.projectImg);
     }
   };
 
@@ -78,6 +79,7 @@ const TeamBuilding = () => {
     );
 
     setState({ ...state, techStack: selectedOptions.join(", ") });
+    console.log(state.projectImg);
   };
 
   const onsubmit = async () => {
@@ -146,6 +148,7 @@ const TeamBuilding = () => {
       console.log(state.projectImg, "state에 이미지 추가");
       // postUplodFileUrl(s3ImageUrl);
       setState({ ...state, projectImg: localProjectImg.current });
+
       console.log("⭐setState이후 이미지 경로", state.projectImg);
     } else {
       console.error("Image upload failed; URL is undefined");
