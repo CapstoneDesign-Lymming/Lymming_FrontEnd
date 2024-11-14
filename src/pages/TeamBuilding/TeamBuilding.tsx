@@ -85,7 +85,6 @@ const TeamBuilding = () => {
   const onsubmit = () => {
     console.log("❌1");
 
-    uploadImage();
     console.log("❌2 localprojectimg", localProjectImg.current);
 
     const requiredFields = [
@@ -129,7 +128,7 @@ const TeamBuilding = () => {
         recruitmentCount: state.recruitmentCount,
         studyMethod: state.studyMethod,
         projectDuration: state.projectDuration,
-        projectImg: state.projectImg,
+        projectImg: localProjectImg.current,
         projectName: state.projectName,
         recruitmentField: state.recruitmentField,
         techStack: state.techStack,
@@ -154,6 +153,7 @@ const TeamBuilding = () => {
       console.log("👍ref로 선언한 localProjectImg", localProjectImg.current);
     }
     if (s3ImageUrl) {
+      console.log("s3ImageUrl", s3ImageUrl);
       console.log(state.projectImg, "state에 이미지 추가");
       // postUplodFileUrl(s3ImageUrl);
       setState({ ...state, projectImg: localProjectImg.current });
@@ -316,7 +316,13 @@ const TeamBuilding = () => {
           </div>
 
           <div className="btn_wrapper">
-            <button className="submit" onClick={onsubmit}>
+            <button
+              className="submit"
+              onClick={() => {
+                uploadImage();
+                onsubmit();
+              }}
+            >
               등록
             </button>
             <button className="cancel" onClick={() => navigate("/participate")}>
