@@ -1,4 +1,4 @@
-import ModalPortal from "../../../helper/Potal";
+import { ModalPortal } from "../../../helper/Potal";
 import ShareEndModal from "../SharepageModal/ShareEndModal/ShareEndModal";
 import ShareInviteModal from "../SharepageModal/ShareInviteModal/ShareInviteModal";
 import ComfirmVideoModal from "../VideoChattingModal/ComfirmVideoModal";
