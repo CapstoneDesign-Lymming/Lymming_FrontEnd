@@ -45,6 +45,7 @@ const useImageUpload = () => {
         selectedFile.name
       )}`;
       s3ImageUrl.current = uploadedUrl;
+      console.log("🎁🎁🎁", s3ImageUrl.current);
       return s3ImageUrl.current;
     } catch (error) {
       console.error("Error uploading file: ", error);
