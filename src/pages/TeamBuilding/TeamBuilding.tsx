@@ -81,6 +81,8 @@ const TeamBuilding = () => {
   };
 
   const onsubmit = async () => {
+    uploadImage();
+
     const requiredFields = [
       { field: "studyType", message: "모집 구분을 선택하세요." },
       { field: "recruitmentCount", message: "모집 인원을 입력하세요." },
@@ -101,8 +103,6 @@ const TeamBuilding = () => {
         break;
       }
     }
-
-    uploadImage();
 
     // if (img) {
     //   console.log("이미지 파일이 존재합니다:", img);
@@ -142,6 +142,7 @@ const TeamBuilding = () => {
       console.log(state.projectImg, "state에 이미지 추가");
       // postUplodFileUrl(s3ImageUrl);
       setState({ ...state, projectImg: s3ImageUrl });
+      console.log("⭐setState이후 이미지 경로", state.projectImg);
     } else {
       console.error("Image upload failed; URL is undefined");
     }
