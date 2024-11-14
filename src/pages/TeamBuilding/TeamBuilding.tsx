@@ -147,10 +147,11 @@ const TeamBuilding = () => {
   };
 
   const uploadImage = async () => {
+    console.log("💧💧💧");
     const s3ImageUrl = await handleUpload();
     if (s3ImageUrl) {
       localProjectImg.current = s3ImageUrl;
-      console.log("👍ref로 선언한 localProjectImg", localProjectImg.current);
+      console.log("👍ref로 선언한 localProjectImg", localProjectImg.current); //이미지 경로 들어감
     }
     if (s3ImageUrl) {
       console.log("s3ImageUrl", s3ImageUrl);
@@ -319,8 +320,7 @@ const TeamBuilding = () => {
             <button
               className="submit"
               onClick={() => {
-                uploadImage();
-                onsubmit();
+                uploadImage().then(() => onsubmit());
               }}
             >
               등록
