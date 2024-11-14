@@ -6,6 +6,8 @@ import "./ShareDetailLeader.scss";
 import RootModal from "../Modal/RootModal/RootModal";
 import nouserImage from "../../assets/img/noimage.jpg";
 import useImageUpload from "../../hooks/useImageUpload";
+import { useToastStore } from "../../store/useToastState";
+import RootToast from "../Toast/RootToast/RootToast";
 
 interface ShareDetailLeaderProps {
   userId: number;
@@ -26,6 +28,8 @@ const ShareDetailLeader = () => {
   const initialData: ShareDetailLeaderProps = location.state;
   const { isModalOpen, openModal } = useModalStore();
   const [modalName, setModalName] = useState("");
+  const { isToastOpen, openToast } = useToastStore();
+  const [toastName, setToastName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
   const [projectLink, setProjectLink] = useState("");
   const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
@@ -55,8 +59,8 @@ const ShareDetailLeader = () => {
   };
 
   const saveShareDetail = async () => {
-    setModalName("shareEndModal");
-    openModal();
+    setToastName("successToast");
+    openToast();
     const s3ImageUrl = await handleUpload();
     postUplodFileUrl(s3ImageUrl);
   };
@@ -154,8 +158,8 @@ const ShareDetailLeader = () => {
       {isModalOpen && modalName === "shareInviteModal" && (
         <RootModal modalName="shareInviteModal" />
       )}
-      {isModalOpen && modalName === "shareEndModal" && (
-        <RootModal modalName="shareEndModal" />
+      {isToastOpen && toastName === "successToast" && (
+        <RootToast toastName="successToast" />
       )}
     </>
   );
