@@ -39,7 +39,7 @@ const MemberPage = () => {
   };
 
   const handleChatClick = (e: React.MouseEvent, nickname: string) => {
-    e.stopPropagation(); // 이벤트 전파를 막아서 카드 뒤집기 동작을 막습니다.
+    e.stopPropagation();
     console.log("채팅하기 클릭됨");
     navigate("/chat", { state: { id: nickname } });
   };
