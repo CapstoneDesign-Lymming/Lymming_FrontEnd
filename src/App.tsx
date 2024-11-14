@@ -14,6 +14,7 @@ import ShareDetailPage from "./pages/ShareDetailPage/ShareDetailPage";
 import ShareDetailLeader from "./components/ShareDetailComponent/ShareDetailLeader";
 import CollectPage from "./pages/CollectPage/CollectPage";
 import GithubAuth from "./auth/GithubAuth";
+import Mypage from "./pages/Mypage/Mypage";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           element={<ShareDetailLeader />}
         ></Route>
         <Route path="/collect" element={<CollectPage />}></Route>
+        <Route path="/mypage" element={<Mypage />}></Route>
       </Routes>
     </div>
   );
