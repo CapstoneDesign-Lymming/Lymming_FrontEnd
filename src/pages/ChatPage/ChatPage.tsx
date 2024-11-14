@@ -45,8 +45,8 @@ const ChatPage = () => {
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
-  const [roomId, setRoomId] = useState<string>("");
-
+  // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
+  const videoChatRoomId = useRef("");
   // msg time 전달하기
   const getMsgTime = () => {
     const currentTime = new Date();
@@ -104,7 +104,9 @@ const ChatPage = () => {
       console.log("채팅방을 생성합니다");
 
       const roomId = await sortChatRoomId(currentUser, partner);
-      setRoomId(roomId);
+      // setRoomId(roomId);
+      console.log("createChatRoom에서 roomId", roomId);
+      videoChatRoomId.current = roomId; //비디오채팅으로 넘겨주는 roomId TODO:처음 방이 생성될 경우에 videoChatRoomId를 설정
       console.log("채팅방 아이디 생성 ", roomId);
       const payload = {
         roomId: roomId,
@@ -251,6 +253,11 @@ const ChatPage = () => {
     if (chatRoom?.roomId) {
       console.log("채팅방 연결 준비: ", chatRoom.roomId);
       connectSocket();
+      videoChatRoomId.current = chatRoom.roomId; //방 이름 세팅 TODO: 이 곳에서 videoChat으로 넘겨줄 roomId를 세팅합니다.
+      console.log(
+        "채팅방 연결 준비:👍videoChatRoomId",
+        videoChatRoomId.current
+      );
     }
   }, [chatRoom]);
 
@@ -308,7 +315,10 @@ const ChatPage = () => {
                 <span>{partner}</span>
               </div>
               <button
-                onClick={() => navigate(`/videochat/${roomId}`)}
+                onClick={() => {
+                  console.log("🌳roomId", videoChatRoomId.current);
+                  navigate(`/videochat/${videoChatRoomId.current}`);
+                }}
                 className="content-right-info-video"
               >
                 <img className="video" src={video} />

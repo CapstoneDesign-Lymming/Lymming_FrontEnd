@@ -12,16 +12,26 @@
   font-style: normal;
 }
 .MemberWrapper {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   .Member {
+    position: relative;
     font-family: Pretendard-Regular;
-    width: 80%;
+    width: 100%;
     height: 100%;
     // background-color: aliceblue;
     margin-top: 7vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     &-header {
+      width: 80%;
+      height: 40%;
       margin-top: 3%;
+      // background-color: rgb(224, 221, 221);
+
       &-text {
         font-size: 23px;
         font-weight: 700;
@@ -32,10 +42,10 @@
         margin-top: 1.4%;
         .recommendCard {
           display: inline-grid; /* 추가 */
-          transition: transform 0.3s; /* 추가 */
+          transition: transform 0.4s; /* 추가 */
           transform: perspective(800px) rotateY(0deg); /* 추가 */
           transform-style: preserve-3d; /* 추가 */
-
+          position: relative;
           .front {
             width: 12vw;
             height: 32vh;
@@ -47,13 +57,13 @@
             backface-visibility: hidden; /* 추가 */
             grid-area: 1 / 1 / 1 / 1; /* 추가 */
 
-            #recommend_name {
+            .recommend_name {
               font-size: 19px;
               font-weight: 600;
               width: 100%;
               height: 12%;
             }
-            #recommend_position {
+            .recommend_position {
               font-size: 15px;
             }
             img {
@@ -67,31 +77,122 @@
             width: 12vw;
             height: 32vh;
             border-radius: 8px;
-            // margin-right: 2%;
             padding: 3%;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
               0 3px 6px rgba(0, 0, 0, 0.23);
             backface-visibility: hidden; /* 추가 */
             grid-area: 1 / 1 / 1 / 1; /* 추가 */
-
             transform: rotateY(180deg); /* 추가 */
-            #recommend_name {
+            .recommend_name {
               font-size: 19px;
               font-weight: 600;
               width: 100%;
               height: 12%;
             }
-            #recommend_position {
+            .recommend_position {
               font-size: 15px;
+            }
+            .back_body {
+              width: 100%;
+              height: 68%;
+              position: relative;
+              // background-color: #454a4e;
+              &-devStyle {
+                position: absolute;
+                top: 30%;
+                width: 30%;
+                height: 20%;
+                background-color: #daedff;
+                color: #3182f6;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                @include flex-center;
+              }
+              &-skillWrapper {
+                width: 100%;
+                height: 20%;
+                display: flex;
+                gap: 1%;
+                position: relative;
+                top: 53%;
+                // background-color: #3182f6;
+              }
+
+              .skill_icon {
+                width: 30px;
+                width: 30px;
+              }
+            }
+            .back_footerWrapper {
+              width: 100%;
+              height: 10%;
+              @include flex-center;
+
+              .back_footer {
+                width: 80%;
+                height: 100%;
+                background-color: #e9ecef;
+                color: #47576a;
+                border-radius: 8px;
+                @include flex-center;
+              }
             }
           }
         }
-        .recommendCard:hover {
-          transform: rotateY(180deg); /* 추가 */
+        .flipped {
+          transform: rotateY(180deg); /* 클릭시 뒤집히도록 */
         }
       }
     }
+    .hide_notLogin_nav {
+      display: none;
+    }
+    .notLogin_nav {
+      position: absolute;
+      top: 0; /* Member-header의 상단에 맞춰 배치 */
+      left: 0;
+
+      width: 100vw;
+      height: 47%;
+      // margin-top: 2%;
+
+      background-color: #3183f611;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(49, 131, 246, 0.1); // 흐림 효과 추가
+      color: rgb(61, 62, 63);
+      &-head {
+        margin-top: 5%;
+        font-size: 30px;
+        font-weight: 800;
+      }
+      &-body {
+        margin-top: 2%;
+        font-size: 23px;
+      }
+      &-foot {
+        margin-top: 2.7%;
+        @include flex-center;
+        width: 16vw;
+        height: 5vh;
+        background-color: #3182f6;
+        color: white;
+        border-radius: 8px;
+        font-weight: 500;
+        font-size: 19px;
+      }
+    }
+    .notLogin_MemberHeader {
+      // width: 100vw;
+      // background-color: #c6d2e2b0;
+      filter: blur(10px);
+      box-shadow: 0 0 10px rgba(49, 131, 246, 0.1); // 흐림 효과 추가
+
+      left: 0;
+    }
     &-body {
+      margin-top: 2%;
     }
   }
 }
