@@ -247,12 +247,17 @@ const ChatPage = () => {
       console.error(e);
     }
   };
+
   const enterKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && inputMessage !== "") {
-      console.log("enter perss!!");
-      // sendChatMessage();
+    //FIXME: shift키와 enter를 누르면 다음 줄로 이동하게 구현
+    if (e.key === "Enter" && !e.shiftKey) {
+      if (inputMessage !== "") {
+        console.log("enter perss!!");
+        sendChatMessage();
+      }
     }
   };
+
   useEffect(() => {
     const initializeChatRoom = async () => {
       console.log("상대방은", partner);
