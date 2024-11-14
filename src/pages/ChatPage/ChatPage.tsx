@@ -41,7 +41,8 @@ const ChatPage = () => {
 
   const [chatHistory, setChatHistory] = useState<ChatMessage[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
-
+  // 구독상태
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const parterId = location.state.id;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
@@ -169,12 +170,13 @@ const ChatPage = () => {
           (message) => {
             const msg = JSON.parse(message.body);
 
-            if (chatRoom) {
-              setChatHistory((prev) => [...prev, msg]);
-            }
+            setChatHistory((prev) => [...prev, msg]);
           }
         );
+        console.log("구독 성공");
+        setIsSubscribed(true);
       },
+
       (error: any) => {
         console.error("STOMP connection error: ", error); // 연결 실패 시 오류 로그
       }
@@ -182,7 +184,7 @@ const ChatPage = () => {
   };
 
   const sendChatMessage = () => {
-    if (client.current && client.current.connected) {
+    if (client.current && isSubscribed) {
       const msgData = {
         type: "TALK",
         roomId: chatRoom!.roomId,
