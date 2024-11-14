@@ -2,6 +2,7 @@ import { create } from "zustand";
 
 interface ModalStore {
   isModalOpen: boolean;
+  modalName: string;
   openModal: () => void;
   closeModal: () => void;
 }

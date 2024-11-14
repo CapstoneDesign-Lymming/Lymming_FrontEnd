@@ -1,8 +1,13 @@
 import useModalClose from "../../../../hooks/useModalClose";
+import useModalStore from "../../../../store/useModalState";
 import "./ShareEndModal.scss";
 const ShareEndModal = () => {
   const { modalRef } = useModalClose();
-
+  const { closeModal } = useModalStore();
+  const clickEndProject = () => {
+    //TODO: 서버측으로 공유페이지 종료를 전달하는 로직 작성
+    closeModal();
+  };
   return (
     <div ref={modalRef} className="ShareEndModal">
       <div className="ShareEndModal-head">
@@ -19,8 +24,12 @@ const ShareEndModal = () => {
         <div className="info2">종료한 이후에는 수정할 수 없습니다.</div>
       </div>
       <div className="ShareEndModal-foot">
-        <div className="shareEndBtn btn1">이전</div>
-        <div className="shareEndBtn btn2">종료하기</div>
+        <div className="shareEndBtn btn1" onClick={closeModal}>
+          이전
+        </div>
+        <div className="shareEndBtn btn2" onClick={clickEndProject}>
+          종료하기
+        </div>
       </div>
     </div>
   );
