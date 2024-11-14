@@ -41,8 +41,7 @@ const TeamBuilding = () => {
     description: "",
     techStack: "",
   });
-  const { imageUrl, handleFileChange, handleUpload } =
-    useImageUpload();
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
 
   const onBtnClick = () => {
     if (imgRef.current) {
@@ -103,7 +102,7 @@ const TeamBuilding = () => {
       }
     }
 
-    await uploadImage();
+    uploadImage();
 
     // if (img) {
     //   console.log("이미지 파일이 존재합니다:", img);
@@ -138,12 +137,12 @@ const TeamBuilding = () => {
   };
 
   const uploadImage = async () => {
-    const s3ImageUrl = await handleUpload();//TODO:
+    const s3ImageUrl = await handleUpload(); //TODO:
     if (s3ImageUrl) {
       console.log(state.projectImg, "state에 이미지 추가");
       // postUplodFileUrl(s3ImageUrl);
       setState({ ...state, projectImg: s3ImageUrl });
-} else {
+    } else {
       console.error("Image upload failed; URL is undefined");
     }
   };
