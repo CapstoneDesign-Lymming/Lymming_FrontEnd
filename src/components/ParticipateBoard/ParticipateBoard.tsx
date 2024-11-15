@@ -7,21 +7,23 @@ import "./ParticipateBoard.scss";
 import { ParticipateItem } from "../../interfaces/participate";
 import { useState } from "react";
 import axios from "axios";
+import { useInfoStore } from "../../store/useLoginStore";
 
 interface ParticipateBoardProps {
-  data: ParticipateItem;
+  item: ParticipateItem;
   index: number;
   setUserModalData: React.Dispatch<React.SetStateAction<string>>;
   setUserModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
-  data,
+  item,
 
   setUserModalData,
   setUserModalOpen,
 }) => {
   const navigate = useNavigate();
+  const { data } = useInfoStore();
   const [isheartClic, setIsheartClic] = useState(false);
 
   const checkNewData = (upload: string) => {
@@ -90,54 +92,54 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
     <div className="item">
       <div
         className="item-top"
-        onClick={() => navigate(`/participate/detail/${data.projectId}`)}
+        onClick={() => navigate(`/participate/detail/${item.projectId}`)}
       >
         <div className="item-top-label">
-          <div className="item-top-label-left">{data.studyType}</div>
+          <div className="item-top-label-left">{item.studyType}</div>
           <div className="item-top-label-right">
             <img
               src={newImg}
               style={{
-                display: checkNewData(data.uploadTime) ? "inline" : "none",
+                display: checkNewData(item.uploadTime) ? "inline" : "none",
               }}
             />
-            <span>{remainingTime(data.uploadTime, data.deadline)}</span>
+            <span>{remainingTime(item.uploadTime, item.deadline)}</span>
           </div>
         </div>
-        <div className="item-top-title">{data.projectName}</div>
+        <div className="item-top-title">{item.projectName}</div>
         <div className="item-top-info">
-          <span>마감</span> <span>|</span> <span>{data.deadline}</span>
+          <span>마감</span> <span>|</span> <span>{item.deadline}</span>
         </div>
         <div className="item-top-feature">
-          {Array.isArray(data.recruitmentField) &&
-          data.recruitmentField.length > 0 ? (
-            data.recruitmentField.map((it, index) => {
+          {Array.isArray(item.recruitmentField) &&
+          item.recruitmentField.length > 0 ? (
+            item.recruitmentField.map((it, index) => {
               return <span key={index}>{it}</span>;
             })
           ) : (
-            <span>{data.recruitmentField}</span>
+            <span>{item.recruitmentField}</span>
           )}
         </div>
 
         <div className="item-top-style">
-          {Array.isArray(data.workType) && data.workType.length > 0 ? (
-            data.workType.map((it, index) => {
+          {Array.isArray(item.workType) && item.workType.length > 0 ? (
+            item.workType.map((it, index) => {
               return <span key={index}>{it}</span>;
             })
           ) : (
-            <span>{data.workType}</span>
+            <span>{item.workType}</span>
           )}
         </div>
 
         <div className="item-top-skills">
-          {data.skillicon && data.techStack ? (
-            data.techStack
+          {item.skillicon && item.techStack ? (
+            item.techStack
               .split(",")
               .map((it, index) => (
                 <img src={it.trim()} key={index} alt={`기술 아이콘 ${index}`} />
               ))
           ) : (
-            <span>{data.techStack}</span>
+            <span>{item.techStack}</span>
           )}
         </div>
 
@@ -147,29 +149,29 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         <div
           className="item-bottom-left"
           onClick={() => {
-            setUserModalData(data.nickname);
+            setUserModalData(item.nickname);
 
             setUserModalOpen(true);
           }}
         >
           <img />
-          <span>{data.nickname}</span>
+          <span>{item.nickname}</span>
         </div>
         <div className="item-bottom-right">
           <div className="item-bottom-right-watch">
             <img src={watch} />
-            <span>{data.viewCount}</span>
+            <span>{item.viewCount}</span>
           </div>
           <div
             className="item-bottom-right-chat"
-            onClick={() => navigate("/chat", { state: { id: data.nickname } })}
+            onClick={() => navigate("/chat", { state: { id: item.nickname } })}
           >
             <img src={chat} />
             <span>채팅하기</span>
           </div>
           <div
             className="item-bottom-right-heart"
-            onClick={() => onHeartClick(data.userId, data.projectId)}
+            onClick={() => onHeartClick(data.userId, item.projectId)}
           >
             <img
               className={`heart_img ${isheartClic ? "fill" : ""} `}
