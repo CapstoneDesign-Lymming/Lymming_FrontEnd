@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useState } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
@@ -19,7 +19,7 @@ const LoginInfoModal = ({ children }: Props) => {
 
   const { handleUpload } = useImageUpload();
   const navigate = useNavigate();
-  const loacalProfileImg = useRef<string>("");
+  const [localProfileImg, setLocalProfileImg] = useState<string | null>(null);
 
   const onBtnClick = () => {
     switch (count) {
@@ -90,7 +90,26 @@ const LoginInfoModal = ({ children }: Props) => {
         break;
     }
   };
+  const uploadImage = async () => {
+    console.log("💧uploadImage실행");
+    const s3ImageUrl = await handleUpload();
 
+    if (s3ImageUrl) {
+      setLocalProfileImg(s3ImageUrl);
+      console.log("👍ref로 선언한 loacalProfileImg", localProfileImg); //이미지 경로 들어감
+    }
+    // if (s3ImageUrl) {
+    //   console.log("s3ImageUrl", s3ImageUrl); //ok
+    //   setData({ userImg: loacalProfileImg.current });
+    //   console.log("s3에 업로드 후 data.userImg", data.userImg); //❌
+    // } else {
+    //   console.error("Image upload failed; URL is undefined");
+    // }
+  };
+
+  const updateUserImg = () => {
+    setData({ userImg: localProfileImg });
+  };
   const postData = async () => {
     try {
       const res = await axios.put(
@@ -125,21 +144,10 @@ const LoginInfoModal = ({ children }: Props) => {
     setLogin();
   };
 
-  const uploadImage = async () => {
-    console.log("💧uploadImage실행");
-    const s3ImageUrl = await handleUpload();
-
-    if (s3ImageUrl) {
-      loacalProfileImg.current = s3ImageUrl;
-      console.log("👍ref로 선언한 loacalProfileImg", loacalProfileImg.current); //이미지 경로 들어감
-    }
-    if (s3ImageUrl) {
-      console.log("s3ImageUrl", s3ImageUrl);
-      setData({ userImg: loacalProfileImg.current });
-      console.log("s3에 업로드 후 data.userImg", data.userImg);
-    } else {
-      console.error("Image upload failed; URL is undefined");
-    }
+  const handleUploadAndPost = async () => {
+    await uploadImage();
+    updateUserImg();
+    await postData();
   };
   return (
     <div className="LoginInfoModal">
@@ -158,13 +166,7 @@ const LoginInfoModal = ({ children }: Props) => {
       <div className="child_wrqpper">{children}</div>
       <div className="btn_wrqpper">
         {count === 9 ? (
-          <button
-            onClick={() => {
-              uploadImage().then(() => postData());
-            }}
-          >
-            완료
-          </button>
+          <button onClick={handleUploadAndPost}>완료</button>
         ) : (
           <button onClick={onBtnClick}>다음</button>
         )}
