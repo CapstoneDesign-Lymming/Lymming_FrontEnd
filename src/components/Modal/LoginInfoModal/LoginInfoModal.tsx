@@ -142,7 +142,7 @@ const LoginInfoModal = ({ children }: Props) => {
         {count === 9 ? (
           <button
             onClick={() => {
-              uploadImage().then(() => postData);
+              uploadImage().then(() => postData());
             }}
           >
             완료
