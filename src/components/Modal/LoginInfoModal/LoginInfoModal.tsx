@@ -13,9 +13,10 @@ interface Props {
 const LoginInfoModal = ({ children }: Props) => {
   const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
     useLoginStore();
+
   const { data, setData } = useInfoStore();
   const token = localStorage.getItem("token");
-  console.log(token);
+
   const { handleUpload } = useImageUpload();
   const navigate = useNavigate();
   const [localProfileImg, setLocalProfileImg] = useState<string | null>(null);
@@ -23,7 +24,7 @@ const LoginInfoModal = ({ children }: Props) => {
   const onBtnClick = () => {
     switch (count) {
       case 1:
-        if (!data.nickname || !data.gender || !data.job || !data.category) {
+        if (!data.nickname || !data.gender || !data.job) {
           window.alert("모든 항목을 완료해주세요");
         } else if (isExist == false) {
           window.alert("닉네임 중복체크를 완료해주세요");
@@ -39,8 +40,8 @@ const LoginInfoModal = ({ children }: Props) => {
         }
         break;
       case 3:
-        if (data.interests.length == 0) {
-          window.alert("최소 한개 이상의 항목을 선택해주세요");
+        if (data.position === "") {
+          window.alert("포지션을 골라주세요");
         } else {
           setCount();
         }
@@ -75,6 +76,12 @@ const LoginInfoModal = ({ children }: Props) => {
         break;
 
       case 8:
+        // 이부분 백엔드에 따라 변경하기
+        // 기존 devStyle 값이 있는지 확인하고, 없으면 빈 문자열로 초기화
+        const updatedDevStyle = `${data.devStyle}, ${data.work_time}, ${data.with_people}, ${data.working_team}`;
+
+        // devStyle을 업데이트
+        setData({ devStyle: updatedDevStyle });
         if (!data.bio) {
           window.alert("소개글을 작성해주세요");
         } else {
@@ -108,10 +115,21 @@ const LoginInfoModal = ({ children }: Props) => {
       const res = await axios.put(
         "https://lymming-back.link/api/auth/sign-up",
         {
-          ...data,
+          position: data.position,
+          // 이건 리스트로 넣어야한다
+          devStyle: data.devStyle,
+          userImg: data.userImg,
+          nickname: data.nickname,
+          //이거 배열로 가면 안됨
+          stack: data.stack,
+          gender: data.gender,
+          job: data.job,
+          bio: data.bio,
+          favorites: data.favorites,
+          temperature: data.temperature,
           refreshToken: token,
           //여기는 백엔드 api 수정되면 열기
-          //developer_type: userType,
+          //         developer_type: data.developer_type,
         }
       );
       setData(res.data);

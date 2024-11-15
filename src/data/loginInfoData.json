@@ -14,26 +14,22 @@
     "go",
     "rust"
   ],
-  "interest": [
-    "ai",
-    "web",
-    "mobile",
-    "data science",
-    "cloud ",
-
-    "devops",
-    "cybersecurity",
-    "blockchain",
-    "game ",
+  "position": [
+    "프론트엔드",
+    "백엔드",
+    "풀스택",
+    "AI개발",
+    "모바일 개발",
+    "클라우드",
+    "데브옵스",
+    "보안",
+    "블록체인",
+    "게임 개발",
     "AR/VR",
-    "UI/UX design",
-    "e-commerce",
-    "automation",
+    "UI/UX 디자인",
     "IoT",
-    "networking",
-    "database ",
-    "quantum ",
-    "robotics",
-    "big data"
+    "네트워크",
+    "데이터베이스",
+    "빅데이터"
   ]
 }
