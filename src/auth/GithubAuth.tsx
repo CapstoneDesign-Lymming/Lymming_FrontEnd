@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../store/useLoginStore";
+import LoginLoading from "../components/Loading/LoginLoading/LoginLoading";
 
 const GithubAuth = () => {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ const GithubAuth = () => {
 
   return (
     <div className="GithubAuth">
-      <h1>로그인 중입니다.</h1>
+      <LoginLoading />
     </div>
   );
 };
