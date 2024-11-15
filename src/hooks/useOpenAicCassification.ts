@@ -5,7 +5,7 @@ import { useInfoStore } from "../store/useLoginStore";
 //1차 테스트 완료후 사용자 정보 store에서 불러오기, 분류한 정보 사용자 정보에 넣고 회원가입시 같이 전달
 
 export const useOpenAicCassification = () => {
-  const [userType, setUserType] = useState<number | null>(null);
+  const [userType, setUserType] = useState<number>();
   const { data } = useInfoStore();
 
   const openai = new OpenAi({

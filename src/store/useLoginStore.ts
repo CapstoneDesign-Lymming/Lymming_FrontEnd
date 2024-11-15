@@ -39,11 +39,9 @@ export const useInfoStore = create<InfoState>((set) => ({
     userId: 0,
     //한 줄 소개
     bio: "",
-    category: "",
     favorites: 0,
     gender: "",
     serverNickname: "",
-    interests: [],
     job: "",
     loginType: "",
     nickname: "",
@@ -62,7 +60,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     // 사람들과 함께 있을때
     with_people: "",
     // 개발자 타입 분류
-    developer_type: 0,
+    developerType: 0,
   },
 
   setData: (newData: Partial<UserInfo>) =>
