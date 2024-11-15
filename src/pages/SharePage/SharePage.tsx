@@ -70,7 +70,7 @@ const SharePage = () => {
                             }`}
                           >
                             {item.sharePageName ||
-                              "프로젝트 이름을 추가해주세요"}
+                              "아직 프로젝트 이름이 설정되지 않았습니다"}
                           </div>
                         </div>
                         <div className="CardBody">
@@ -83,7 +83,7 @@ const SharePage = () => {
                           <div className="CardFooter-Description">
                             <div className="word">
                               {item.sharePageDescription ||
-                                "프로젝트 설명을 수정하기를 통해 추가해주세요"}
+                                "아직 프로젝트 설명이 설정되지 않았습니다"}
                             </div>
                           </div>
                           <div className="CardFooter-MembersWrapper">
