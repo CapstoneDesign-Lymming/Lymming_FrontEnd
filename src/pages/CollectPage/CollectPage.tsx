@@ -78,7 +78,7 @@ const CollectPage = () => {
         {list.map((it, index) => {
           return (
             <ParticipateBoard
-              data={it}
+              item={it}
               key={index}
               index={index}
               setUserModalData={setUserModalData}
