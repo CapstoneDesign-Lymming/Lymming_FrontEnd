@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
