@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "laundrygothic_font";
+  font-weight: normal;
+  src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  font-weight: normal;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+}
+.LoginLoadingWrapper {
+  font-family: "NanumSquareNeo";
+  width: 100%;
+  height: 100%;
+  .LoginLoading {
+    width: 100%;
+    height: 100%;
+    .nav_buncle {
+      width: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      img {
+        width: 3vw;
+        margin-right: 1%;
+      }
+      .nav {
+      }
+    }
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .login_loading {
+      width: 25vw;
+      height: 25vh;
+    }
+  }
+}

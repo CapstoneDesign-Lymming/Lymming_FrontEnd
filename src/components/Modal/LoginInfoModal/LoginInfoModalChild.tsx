@@ -6,6 +6,7 @@ import loginok from "../../../assets/img/loginok.png";
 import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
+import { useOpenAicCassification } from "../../../hooks/useOpenAicCassification";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -96,7 +97,7 @@ export const Child1 = () => {
             type="radio"
             id="std"
             name="job"
-            value="std"
+            value="학생"
             onChange={onChange}
           />
           <label className="q3-box-item" htmlFor="std">
@@ -107,7 +108,7 @@ export const Child1 = () => {
             type="radio"
             id="ca"
             name="job"
-            value="ca"
+            value="직장인"
             onChange={onChange}
           />
           <label className="q3-box-item" htmlFor="ca">
@@ -118,50 +119,11 @@ export const Child1 = () => {
             type="radio"
             id="etc"
             name="job"
-            value="etc"
+            value="기타"
             onChange={onChange}
           />
           <label className="q3-box-item" htmlFor="etc">
             기타
-          </label>
-        </div>
-      </div>
-
-      <div className="q4">
-        <span>직종을 선택해주세요</span>
-
-        <div className="q4-box">
-          <input
-            type="radio"
-            id="dev"
-            name="category"
-            value="dev"
-            onChange={onChange}
-          />
-          <label className="q4-box-item" htmlFor="dev">
-            개발
-          </label>
-
-          <input
-            type="radio"
-            id="head"
-            name="category"
-            value="head"
-            onChange={onChange}
-          />
-          <label className="q4-box-item" htmlFor="head">
-            기획
-          </label>
-
-          <input
-            type="radio"
-            id="desgin"
-            name="category"
-            value="desgin"
-            onChange={onChange}
-          />
-          <label className="q4-box-item" htmlFor="desgin">
-            디자인
           </label>
         </div>
       </div>
@@ -184,12 +146,15 @@ export const Child2 = () => {
   };
 
   useEffect(() => {
-    setData({ stack: skills });
+    setData({ stack: skills.join(", ") });
   }, [skills]);
 
   return (
     <div className="Child2">
-      <div className="title">스킬 및 도구를 선택하세요</div>
+      <div className="title">
+        사용가능한 스킬 및 도구를
+        <br /> 모두 선택하세요
+      </div>
       <div className="skills">
         {infoData.skills.map((it) => {
           return (
@@ -207,29 +172,37 @@ export const Child2 = () => {
 };
 
 export const Child3 = () => {
-  const [interest, setInterest] = useState<string[]>([]);
+  const [position, setPosition] = useState<string>();
   const { setData } = useInfoStore();
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value; // 입력된 값 가져오기
 
     if (e.target.checked) {
-      setInterest((prev) => [...prev, value]);
+      setPosition(value);
     } else {
-      setInterest((prev) => prev.filter((interest) => interest != value));
     }
   };
 
   useEffect(() => {
-    setData({ interests: interest });
-  }, [interest]);
+    setData({ position });
+  }, [position]);
   return (
     <div className="Child2">
-      <div className="title">관심 있는 분야를 선택하세요</div>
+      <div className="title">
+        희망하는 분야 또는 <br /> 직군을 선택해주세요
+      </div>
       <div className="skills">
-        {infoData.interest.map((it) => {
+        {infoData.position.map((it) => {
           return (
             <>
-              <input type="checkbox" id={it} value={it} onChange={onChange} />
+              <input
+                type="radio"
+                id={it}
+                value={it}
+                name="position"
+                onChange={onChange}
+              />
               <label className="skills-item" htmlFor={it}>
                 {it}
               </label>
@@ -314,53 +287,29 @@ export const Child5 = () => {
     setData({ [name]: value });
   };
   return (
-    <div className="Child4">
+    <div className="Child5">
       <div className="title">팀원과 작업 할때</div>
-      <div className="time">
-        <div className="time-top">
-          <input
-            type="radio"
-            id="독립적으로"
-            name="working_team"
-            value="독립적으로"
-            onChange={onChange}
-          />
-          <label className="time-top-item" htmlFor="독립적으로">
-            독립적으로
-          </label>
-          <input
-            type="radio"
-            id="온라인 선호"
-            name="working_team"
-            value="온라인 선호"
-            onChange={onChange}
-          />
-          <label className="time-top-item" htmlFor="온라인 선호">
-            온라인 선호
-          </label>
-        </div>
-        <div className="time-bottom">
-          <input
-            type="radio"
-            id="팀과함께"
-            name="working_team"
-            value="팀과함께"
-            onChange={onChange}
-          />
-          <label className="time-bottom-item" htmlFor="팀과함께">
-            팀과함께
-          </label>
-          <input
-            type="radio"
-            id="오프라인 선호"
-            name="working_team"
-            value="오프라인 선호"
-            onChange={onChange}
-          />
-          <label className="time-bottom-item" htmlFor="오프라인 선호">
-            오프라인 선호
-          </label>
-        </div>
+      <div className="content">
+        <input
+          type="radio"
+          id="독립적으로"
+          name="working_team"
+          value="독립적으로"
+          onChange={onChange}
+        />
+        <label className="content-item" htmlFor="독립적으로">
+          독립적으로
+        </label>
+        <input
+          type="radio"
+          id="온라인 선호"
+          name="working_team"
+          value="온라인 선호"
+          onChange={onChange}
+        />
+        <label className="content-item" htmlFor="온라인 선호">
+          온라인 선호
+        </label>
       </div>
     </div>
   );
@@ -377,53 +326,29 @@ export const Child6 = () => {
     setData({ [name]: value });
   };
   return (
-    <div className="Child4">
+    <div className="Child5">
       <div className="title">작업할 때 선호하는 방식</div>
-      <div className="time">
-        <div className="time-top">
-          <input
-            type="radio"
-            id="즉흥적"
-            name="devStyle"
-            value="즉흥적"
-            onChange={onChange}
-          />
-          <label className="time-top-item" htmlFor="즉흥적">
-            즉흥적
-          </label>
-          <input
-            type="radio"
-            id="계획적"
-            name="devStyle"
-            value="계획적"
-            onChange={onChange}
-          />
-          <label className="time-top-item" htmlFor="계획적">
-            계획적
-          </label>
-        </div>
-        <div className="time-bottom">
-          <input
-            type="radio"
-            id="단기 프로젝트"
-            name="devStyle"
-            value="단기 프로젝트"
-            onChange={onChange}
-          />
-          <label className="time-bottom-item" htmlFor="단기 프로젝트">
-            단기 프로젝트
-          </label>
-          <input
-            type="radio"
-            id="장기 프로젝트"
-            name="devStyle"
-            value="장기 프로젝트"
-            onChange={onChange}
-          />
-          <label className="time-bottom-item" htmlFor="장기 프로젝트">
-            장기 프로젝트
-          </label>
-        </div>
+      <div className="content">
+        <input
+          type="radio"
+          id="즉흥적"
+          name="devStyle"
+          value="즉흥적"
+          onChange={onChange}
+        />
+        <label className="content-item" htmlFor="즉흥적">
+          즉흥적
+        </label>
+        <input
+          type="radio"
+          id="계획적"
+          name="devStyle"
+          value="계획적"
+          onChange={onChange}
+        />
+        <label className="content-item" htmlFor="계획적">
+          계획적
+        </label>
       </div>
     </div>
   );
@@ -495,40 +420,20 @@ export const Child7 = () => {
 };
 
 export const Child8 = () => {
-  const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
-    useImageUpload();
+  const { userType } = useOpenAicCassification();
+  const { imageUrl, handleFileChange } = useImageUpload();
   const { setData } = useInfoStore();
-
-  // const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
-
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0]; // 선택한 파일 가져오기
-  //   if (file) {
-  //     const reader = new FileReader();
-
-  //     reader.onloadend = () => {
-  //       const base64Image = reader.result as string; // base64로 변환된 이미지 URL
-  //       setImage(base64Image); // 이미지 상태 업데이트
-  //       // 임시 이미지 전송
-  //       setData({ userImg: "base64Image" }); // 스토어에 base64 이미지 저장
-  //     };
-
-  //     reader.readAsDataURL(file); // 파일을 base64로 읽기
-  //   }
-  // };
-
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
-
     setData({ [name]: value });
   };
-  const saveShareDetail = async () => {
-    const s3ImageUrl = await handleUpload();
-    postUplodFileUrl(s3ImageUrl);
-  };
-  saveShareDetail();
+  useEffect(() => {
+    if (userType) {
+      setData({ developerType: userType });
+    }
+  }, [userType]); // userType이 변경될 때마다 실행
 
   return (
     <div className="Child9">

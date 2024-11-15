@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const Header = () => {
   const navigate = useNavigate();
   const pageLocation = useLocation();
-  const { login } = useLoginStore();
+  const { login, setLogin } = useLoginStore();
   const [isMain, setIsMain] = useState(false);
   const [isHiddenBtnOn, setIsHiddenBtnOn] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(true);
@@ -36,6 +36,12 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [lastScrollY]);
+
+  /**로그아웃  */
+  const handleLogout = () => {
+    setLogin();
+    setMypageOption(!myPageOption);
+  };
 
   return (
     <header
@@ -114,14 +120,14 @@ const Header = () => {
         style={{ display: myPageOption ? "block" : "none" }}
       >
         <div className={`hidden_btn`} onClick={() => setIsHiddenBtnOn(false)}>
-          <div id="btn1" onClick={() => navigate("/member")}>
-            문의하기
+          <div id="btn1" onClick={() => navigate("/mypage")}>
+            마이페이지
           </div>
           <div id="btn2" onClick={() => navigate("/collect")}>
             글 모아보기
           </div>
-          <div id="btn1" onClick={() => navigate("/member")}>
-            마이페이지
+          <div id="btn1" onClick={handleLogout}>
+            로그아웃
           </div>
         </div>
       </div>

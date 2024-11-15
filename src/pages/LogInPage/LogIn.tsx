@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import login_lottie from "../../assets/lottie/login_lottie.json";
 import "./LogIn.scss";
 import {
-  GoogleLoginButton,
+  // GoogleLoginButton,
   GithubLoginButton,
   createButton,
 } from "react-social-login-buttons";
@@ -21,6 +23,8 @@ import {
 import { useLoginStore } from "../../store/useLoginStore";
 import logo from "../../assets/img/lymming_logo.png";
 import left from "../../assets/img/leftrrow.png";
+import login_mid from "../../assets/img/login_mid.png";
+import { useRef } from "react";
 
 const LogIn = () => {
   const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
@@ -31,7 +35,7 @@ const LogIn = () => {
 
   const navigate = useNavigate();
   const KakaoLoginButton = createButton({
-    text: "카카오 로그인",
+    text: "카카오로 시작하기",
     icon: () => (
       <img
         src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"
@@ -42,6 +46,7 @@ const LogIn = () => {
     style: { background: "#FEE500", color: "#000" },
     activeStyle: { background: "#E5CC00" },
   });
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
 
   const { count, isOpen } = useLoginStore();
 
@@ -99,20 +104,42 @@ const LogIn = () => {
 
       <div className="content">
         <div className="left">
-          <div className="left-title">
-            <img className="left-title-img" src={logo} />
-            <span className="left-title-text"> lymming</span>
+          <div>
+            <div className="left-title">
+              <img className="left-title-img" src={logo} />
+              <span className="left-title-text"> lymming</span>
+            </div>
+
+            <h2>로그인</h2>
+
+            <span>로그인 이후에 리밍을 즐겨보세요!</span>
           </div>
-
-          <h2>로그인</h2>
-
-          <span>리밍과 함께 하세요!</span>
         </div>
-
-        <div className="right">
-          <KakaoLoginButton onClick={onKakaoBtnClick} />
-          <GoogleLoginButton text="구글 로그인" />
-          <GithubLoginButton text="깃허브 로그인" onClick={onGitBtnClick} />
+        <div className="mid">
+          <img src={login_mid} alt="" />
+        </div>
+        <div className="rightWrapper">
+          <div className="right">
+            <Lottie
+              animationData={login_lottie}
+              loop
+              autoPlay
+              lottieRef={lottieRef}
+              className="login_lottie"
+            />
+            <KakaoLoginButton
+              className="loginBtn"
+              onClick={onKakaoBtnClick}
+              style={{ width: "60%" }}
+            />
+            {/* <GoogleLoginButton text="구글 로그인" /> */}
+            <GithubLoginButton
+              className="loginBtn"
+              text="깃허브로 시작하기"
+              onClick={onGitBtnClick}
+              style={{ width: "60%", marginTop: "5%" }}
+            />
+          </div>
         </div>
       </div>
     </div>

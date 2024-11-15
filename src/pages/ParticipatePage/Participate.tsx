@@ -208,7 +208,7 @@ const Participate = () => {
           // 인덱스 프롭 임시 설정 나중에는 게시물 아이디로 할거임
           return (
             <ParticipateBoard
-              data={it}
+              item={it}
               key={index}
               index={index}
               setUserModalData={setUserModalData}
