@@ -1,5 +1,15 @@
+@font-face {
+  font-family: "laundrygothic_font";
+  font-weight: normal;
+  src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  font-weight: normal;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+}
 .LogIn {
-  width: 100%;
+  width: 100vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -7,7 +17,7 @@
   box-sizing: border-box;
   background-color: #ffffff;
   position: relative;
-
+  font-family: "NanumSquareNeo";
   // 배경 블러 효과를 위한 추가 스타일
   .backdrop {
     position: fixed;
@@ -34,16 +44,21 @@
   .content {
     display: flex;
     padding: 5%;
+    width: 100%;
     height: 100%;
     justify-content: start;
-
+    // align-items: center;
     .left {
       font-size: 2vw;
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 30%;
-
+      // justify-content: center;
+      margin-top: 5%;
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       &-title {
         font-size: 1.2vw;
         font-weight: bolder;
@@ -54,27 +69,38 @@
           width: 30px;
         }
       }
-
       h2 {
         font-size: 4vw;
       }
-
       span {
         font-size: 1.2vw;
+        font-family: "laundrygothic_font";
       }
     }
-
-    .right {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .mid {
+      width: 40%;
+      margin-left: 6%;
+      img {
+        width: 100%;
+        height: 80%;
+      }
+    }
+    .rightWrapper {
       width: 30%;
-      gap: 5%;
-      padding-left: 35%;
-      padding-top: 10%;
+      height: 100%;
 
-      button {
-        height: 15%;
+      .right {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: center;
+        height: 100%;
+        padding-left: 0%;
+        // gap: 5%;
+        .login_lottie {
+          width: 30vw;
+          height: 30%;
+        }
       }
     }
   }
