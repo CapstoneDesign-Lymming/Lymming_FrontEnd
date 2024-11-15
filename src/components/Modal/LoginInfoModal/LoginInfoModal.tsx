@@ -86,7 +86,15 @@ const LoginInfoModal = ({ children }: Props) => {
 
   const postData = async () => {
     try {
+      console.log(
+        "postData내부에서 loacalProfileImg",
+        loacalProfileImg.current
+      );
+
       console.log("postData내부에서 data.userImg", data.userImg);
+      setData({ userImg: loacalProfileImg.current });
+      console.log("🌳postData내부에서 data.userImg 수정하고", data.userImg);
+
       const res = await axios.put(
         "https://lymming-back.link/api/auth/sign-up",
         {
@@ -116,13 +124,13 @@ const LoginInfoModal = ({ children }: Props) => {
       loacalProfileImg.current = s3ImageUrl;
       console.log("👍ref로 선언한 loacalProfileImg", loacalProfileImg.current); //이미지 경로 들어감
     }
-    if (s3ImageUrl) {
-      console.log("s3ImageUrl", s3ImageUrl); //ok
-      setData({ userImg: loacalProfileImg.current });
-      console.log("s3에 업로드 후 data.userImg", data.userImg); //❌
-    } else {
-      console.error("Image upload failed; URL is undefined");
-    }
+    // if (s3ImageUrl) {
+    //   console.log("s3ImageUrl", s3ImageUrl); //ok
+    //   setData({ userImg: loacalProfileImg.current });
+    //   console.log("s3에 업로드 후 data.userImg", data.userImg); //❌
+    // } else {
+    //   console.error("Image upload failed; URL is undefined");
+    // }
   };
   const handleUploadAndPost = async () => {
     await uploadImage();
