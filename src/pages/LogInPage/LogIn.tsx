@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./LogIn.scss";
 import {
-  GoogleLoginButton,
+  // GoogleLoginButton,
   GithubLoginButton,
   createButton,
 } from "react-social-login-buttons";
@@ -111,7 +111,7 @@ const LogIn = () => {
 
         <div className="right">
           <KakaoLoginButton onClick={onKakaoBtnClick} />
-          <GoogleLoginButton text="구글 로그인" />
+          {/* <GoogleLoginButton text="구글 로그인" /> */}
           <GithubLoginButton text="깃허브 로그인" onClick={onGitBtnClick} />
         </div>
       </div>
