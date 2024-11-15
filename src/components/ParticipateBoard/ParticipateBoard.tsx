@@ -5,6 +5,8 @@ import chat from "../../assets/img/chat.png";
 import heart from "../../assets/img/heart.png";
 import "./ParticipateBoard.scss";
 import { ParticipateItem } from "../../interfaces/participate";
+import { useState } from "react";
+import axios from "axios";
 
 interface ParticipateBoardProps {
   data: ParticipateItem;
@@ -20,6 +22,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   setUserModalOpen,
 }) => {
   const navigate = useNavigate();
+  const [isheartClic, setIsheartClic] = useState(false);
 
   const checkNewData = (upload: string) => {
     const nowTime = new Date();
@@ -47,6 +50,39 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
       return `D-${days}`;
     } else {
       return "종료됨"; // 종료된 경우
+    }
+  };
+
+  const onHeartClick = (user_id: number, project_id: number) => {
+    if (isheartClic === true) {
+      deleteHeart(user_id, project_id);
+    } else {
+      postHeart(user_id, project_id);
+    }
+    setIsheartClic(!isheartClic);
+  };
+
+  // 찜 누르기
+  const postHeart = async (user_id: number, project_id: number) => {
+    try {
+      const res = await axios.post(
+        `https://lymming-back.link/${user_id}/likes/${project_id}`
+      );
+      console.log("찜누르기 성공", res.data);
+    } catch (e) {
+      console.error("찜 누르기 실패", e);
+    }
+  };
+
+  // 찜 취소
+  const deleteHeart = async (user_id: number, project_id: number) => {
+    try {
+      const res = await axios.delete(
+        `https://lymming-back.link/${user_id}/likes/${project_id}`
+      );
+      console.log("찜누르기 성공", res.data);
+    } catch (e) {
+      console.error("찜 누르기 실패", e);
     }
   };
 
@@ -131,8 +167,14 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             <img src={chat} />
             <span>채팅하기</span>
           </div>
-          <div className="item-bottom-right-heart">
-            <img src={heart} />
+          <div
+            className="item-bottom-right-heart"
+            onClick={() => onHeartClick(data.userId, data.projectId)}
+          >
+            <img
+              className={`heart_img ${isheartClic ? "fill" : ""} `}
+              src={heart}
+            />
           </div>
         </div>
       </div>

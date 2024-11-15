@@ -168,10 +168,17 @@
         display: flex;
       }
 
-      img {
+      .heart_img {
         width: 20px;
         height: 20px;
         margin-right: 5%;
+      }
+
+      .fill {
+        width: 20px;
+        height: 20px;
+        margin-right: 5%;
+        filter: invert(28%) sepia(91%) saturate(620%) hue-rotate(-50deg);
       }
     }
   }
