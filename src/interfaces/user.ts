@@ -9,7 +9,7 @@ interface UserInfo {
   loginType: string;
   nickname: string;
   position: string;
-  stack: string[];
+  stack: string;
   temperature: number;
   userImg: string | null;
   keyCode: string;

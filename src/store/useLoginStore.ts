@@ -46,7 +46,7 @@ export const useInfoStore = create<InfoState>((set) => ({
     loginType: "",
     nickname: "노기훈",
     position: "",
-    stack: [],
+    stack: "",
     temperature: 0,
     userImg: "",
     keyCode: "",
