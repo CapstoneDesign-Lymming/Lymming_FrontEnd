@@ -21,7 +21,7 @@
         width: 100%;
         height: 100%;
         @include flex-center;
-        justify-content: space-between;
+        justify-content: start;
         // background-color: #47576A;
         flex-wrap: wrap;
         margin: 0 auto;
@@ -45,20 +45,29 @@
             margin-top: 4%;
             width: 100%;
             height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             .CardHeader {
               margin-top: 1%;
-              width: 100px;
+              width: 96%;
               height: 10%;
-              background-color: #b6e9ff;
+              padding-left: 2%;
+              padding-right: 2%;
+
+              // background-color: #b6e9ff;
+              border: 2px solid #b6e9ff;
               border-radius: 10px;
               color: #47576a;
               font-weight: 700;
-
-              @include flex-center;
+              display: flex;
+              align-items: center;
               flex-wrap: nowrap;
               &-Title {
                 @include flex-center;
               }
+              // &-emptyText {
+              // }
             }
             .CardBody {
               width: 100%;
