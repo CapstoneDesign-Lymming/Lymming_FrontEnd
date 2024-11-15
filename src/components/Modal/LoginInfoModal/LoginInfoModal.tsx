@@ -23,7 +23,7 @@ const LoginInfoModal = ({ children }: Props) => {
   const onBtnClick = () => {
     switch (count) {
       case 1:
-        if (!data.nickname || !data.gender || !data.job || !data.category) {
+        if (!data.nickname || !data.gender || !data.job) {
           window.alert("모든 항목을 완료해주세요");
         } else if (isExist == false) {
           window.alert("닉네임 중복체크를 완료해주세요");

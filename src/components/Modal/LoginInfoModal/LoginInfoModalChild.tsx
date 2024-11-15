@@ -126,45 +126,6 @@ export const Child1 = () => {
           </label>
         </div>
       </div>
-
-      <div className="q4">
-        <span>직종을 선택해주세요</span>
-
-        <div className="q4-box">
-          <input
-            type="radio"
-            id="dev"
-            name="category"
-            value="dev"
-            onChange={onChange}
-          />
-          <label className="q4-box-item" htmlFor="dev">
-            개발
-          </label>
-
-          <input
-            type="radio"
-            id="head"
-            name="category"
-            value="head"
-            onChange={onChange}
-          />
-          <label className="q4-box-item" htmlFor="head">
-            기획
-          </label>
-
-          <input
-            type="radio"
-            id="desgin"
-            name="category"
-            value="desgin"
-            onChange={onChange}
-          />
-          <label className="q4-box-item" htmlFor="desgin">
-            디자인
-          </label>
-        </div>
-      </div>
     </div>
   );
 };
@@ -189,7 +150,10 @@ export const Child2 = () => {
 
   return (
     <div className="Child2">
-      <div className="title">스킬 및 도구를 선택하세요</div>
+      <div className="title">
+        사용가능한 스킬 및 도구를
+        <br /> 모두 선택하세요
+      </div>
       <div className="skills">
         {infoData.skills.map((it) => {
           return (
@@ -224,7 +188,9 @@ export const Child3 = () => {
   }, [interest]);
   return (
     <div className="Child2">
-      <div className="title">관심 있는 분야를 선택하세요</div>
+      <div className="title">
+        희망하는 분야 또는 <br /> 직군을 선택해주세요
+      </div>
       <div className="skills">
         {infoData.interest.map((it) => {
           return (
