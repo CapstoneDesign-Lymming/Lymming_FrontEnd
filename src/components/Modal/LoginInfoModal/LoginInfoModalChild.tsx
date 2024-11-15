@@ -495,27 +495,14 @@ export const Child7 = () => {
 };
 
 export const Child8 = () => {
-  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
-  const { data, setData } = useInfoStore();
+  const { imageUrl, handleFileChange } = useImageUpload();
+  const { setData } = useInfoStore();
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
     setData({ [name]: value });
   };
-  const saveShareDetail = async () => {
-    console.log("saveShareDetail함수 내부");
-    const s3ImageUrl = await handleUpload();
-    setData({ userImg: s3ImageUrl });
-    console.log("🥇setData로 userImg세팅", data.userImg);
-    // postUplodFileUrl(s3ImageUrl);
-  };
-  try {
-    saveShareDetail();
-    console.log("saveShareDetail");
-  } catch (error) {
-    console.error(error);
-  }
 
   return (
     <div className="Child9">
