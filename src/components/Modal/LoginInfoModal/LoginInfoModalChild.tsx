@@ -495,40 +495,27 @@ export const Child7 = () => {
 };
 
 export const Child8 = () => {
-  const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
-    useImageUpload();
-  const { setData } = useInfoStore();
-
-  // const [image, setImage] = useState<string | null>(null); // 이미지 URL을 저장할 상태
-
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0]; // 선택한 파일 가져오기
-  //   if (file) {
-  //     const reader = new FileReader();
-
-  //     reader.onloadend = () => {
-  //       const base64Image = reader.result as string; // base64로 변환된 이미지 URL
-  //       setImage(base64Image); // 이미지 상태 업데이트
-  //       // 임시 이미지 전송
-  //       setData({ userImg: "base64Image" }); // 스토어에 base64 이미지 저장
-  //     };
-
-  //     reader.readAsDataURL(file); // 파일을 base64로 읽기
-  //   }
-  // };
-
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
+  const { data, setData } = useInfoStore();
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
-
     setData({ [name]: value });
   };
   const saveShareDetail = async () => {
+    console.log("saveShareDetail함수 내부");
     const s3ImageUrl = await handleUpload();
-    postUplodFileUrl(s3ImageUrl);
+    setData({ userImg: s3ImageUrl });
+    console.log("🥇setData로 userImg세팅", data.userImg);
+    // postUplodFileUrl(s3ImageUrl);
   };
-  saveShareDetail();
+  try {
+    saveShareDetail();
+    console.log("saveShareDetail");
+  } catch (error) {
+    console.error(error);
+  }
 
   return (
     <div className="Child9">
