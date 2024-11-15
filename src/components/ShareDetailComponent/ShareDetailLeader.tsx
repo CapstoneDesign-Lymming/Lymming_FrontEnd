@@ -32,8 +32,7 @@ const ShareDetailLeader = () => {
   const [toastName, setToastName] = useState("");
   const [formData, setFormData] = useState<ShareDetailLeaderProps>(initialData);
   const [projectLink, setProjectLink] = useState("");
-  const { imageUrl, handleFileChange, handleUpload, postUplodFileUrl } =
-    useImageUpload();
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
 
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
@@ -62,7 +61,9 @@ const ShareDetailLeader = () => {
     setToastName("successToast");
     openToast();
     const s3ImageUrl = await handleUpload();
-    postUplodFileUrl(s3ImageUrl);
+    console.log(s3ImageUrl);
+    //이후 수정하기 post하기
+    // postUplodFileUrl(s3ImageUrl);
   };
 
   return (
