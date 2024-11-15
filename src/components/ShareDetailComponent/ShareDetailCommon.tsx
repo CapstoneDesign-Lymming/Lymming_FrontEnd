@@ -7,16 +7,16 @@ import RootModal from "../Modal/RootModal/RootModal";
 interface ShareDetailLeaderProps {
   data: {
     userId: number;
-    project_id: number;
-    project_name: string;
-    project_url: string;
-    project_description: string;
-    team_member: number[];
-    team_member_name: string[];
-    team_member_url: string[];
-    team_member_position: string[];
-    team_leader: string;
-    is_completed: boolean;
+    projectId: number;
+    sharePageName: string;
+    sharePageUrl: string;
+    sharePageDescription: string;
+    teamMember: string;
+    team_member_name: string[]; //
+    team_member_url: string[]; //
+    team_member_position: string[]; //
+    leader: string;
+    end: boolean;
   };
 }
 
@@ -25,12 +25,22 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const navigate = useNavigate();
   const { isModalOpen, openModal } = useModalStore();
   const [modalName, setModalName] = useState("");
+
   const clickEndShareProject = () => {
     //TODO:종료하기 로직은 endmodal 내부에서 진행
     setModalName("shareEndModal");
     openModal();
   };
+  // const teamMember = propData.teamMember.split;
 
+  const teamMemberArr: string[] = [];
+  if (!propData.teamMember) {
+    console.log("❌❌❌❌");
+    propData.teamMember = propData.leader;
+    console.log("propData.teamMember", propData.teamMember);
+    teamMemberArr.push(propData.teamMember);
+  }
+  console.log("propData", propData);
   return (
     <>
       {/* <div>공통 페이지</div>
@@ -38,16 +48,18 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       <div className="ShareDetailCommonWrapper">
         <div className="ShareDetailCommon">
           <div className="ShareDetailCommon-Header">
-            {propData.project_name}
+            {propData.sharePageName ||
+              "수정하기를 통해 프로젝트 이름을 설정해주세요"}
           </div>
           <div className="ShareDetailCommon-Body">
-            <img src={`${propData.project_url}`} alt="" />
+            <img src={`${propData.sharePageUrl}`} alt="" />
             <div className="Body_description">
-              {propData.project_description}
+              {propData.sharePageDescription ||
+                "수정하기를 통해 프로젝트 설명을 설정해주세요"}
             </div>
           </div>
           <div className="ShareDetailCommon-Footer">
-            {propData.team_member.map((userId, idx) => (
+            {teamMemberArr.map((userId, idx) => (
               <div className="MemberCardWrapper">
                 {
                   <div className="MemberCard" key={userId}>
@@ -71,7 +83,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               </div>
             ))}
           </div>
-          {propData && propData.team_leader === data.nickname && (
+          {propData && propData.leader === data.nickname && (
             <div className="leader_btn_bundle">
               <div
                 className="leader_btn_put"

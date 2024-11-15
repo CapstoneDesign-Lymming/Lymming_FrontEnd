@@ -10,7 +10,7 @@ interface ItemType {
   userId: number;
   projectId: number;
   sharePageDescription: string | null;
-  teamMember: number[] | null;
+  teamMember: string | null;
   sharePageName: string | null;
   projectLink: string | null;
   sharePageUrl: string | null;
@@ -21,7 +21,7 @@ interface ItemType {
 
 const fetchLocalData = async () => {
   const response = await axios.get("https://lymming-back.link/share/list");
-  console.log("ddd", response.data);
+  console.log("sharepage 프로젝트 data", response.data);
   return response.data;
 };
 
@@ -40,9 +40,16 @@ const SharePage = () => {
         <div className="SharePage">
           <div className="SharePage-BodyWrapper">
             <div className="SharePage-BodyWrapper-CardBundle">
-              {data.map(
-                (item: ItemType) =>
-                  item.leader === nickname && (
+              {data.map((item: ItemType) => {
+                // teamMember가 null 또는 문자열인지 확인
+                const isTeamMember = item.teamMember
+                  ? item.teamMember.split(",").includes(nickname) // 문자열 분리 후 비교
+                  : false;
+
+                const isLeader = item.leader === nickname;
+
+                if (isLeader || isTeamMember) {
+                  return (
                     <div
                       className={`SharePage-BodyWrapper-CardBundle-CardWrapper 
                         ${item.end ? "completed" : ""}`}
@@ -85,8 +92,11 @@ const SharePage = () => {
                         </div>
                       </div>
                     </div>
-                  )
-              )}
+                  );
+                }
+
+                return null;
+              })}
             </div>
           </div>
         </div>
