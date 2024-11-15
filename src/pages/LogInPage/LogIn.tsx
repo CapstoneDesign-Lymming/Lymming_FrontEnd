@@ -112,7 +112,7 @@ const LogIn = () => {
 
             <h2>로그인</h2>
 
-            <span>리밍과 함께 하세요!</span>
+            <span>로그인 이후에 리밍을 즐겨보세요!</span>
           </div>
         </div>
         <div className="mid">
