@@ -35,7 +35,6 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
 
   const teamMemberArr: string[] = [];
   if (!propData.teamMember) {
-    console.log("❌❌❌❌");
     propData.teamMember = propData.leader;
     console.log("propData.teamMember", propData.teamMember);
     teamMemberArr.push(propData.teamMember);
@@ -49,13 +48,13 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
         <div className="ShareDetailCommon">
           <div className="ShareDetailCommon-Header">
             {propData.sharePageName ||
-              "수정하기를 통해 프로젝트 이름을 설정해주세요"}
+              "아직 프로젝트 이름이 설정되지 않았습니다"}
           </div>
           <div className="ShareDetailCommon-Body">
             <img src={`${propData.sharePageUrl}`} alt="" />
             <div className="Body_description">
               {propData.sharePageDescription ||
-                "수정하기를 통해 프로젝트 설명을 설정해주세요"}
+                "아직 프로젝트 설명이 설정되지 않았습니다"}
             </div>
           </div>
           <div className="ShareDetailCommon-Footer">
