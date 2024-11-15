@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
@@ -18,7 +18,7 @@ const LoginInfoModal = ({ children }: Props) => {
   console.log(token);
   const { handleUpload } = useImageUpload();
   const navigate = useNavigate();
-  const [localProfileImg, setLocalProfileImg] = useState<string | null>(null);
+  const loacalProfileImg = useRef<string>("");
 
   const onBtnClick = () => {
     switch (count) {
@@ -88,8 +88,8 @@ const LoginInfoModal = ({ children }: Props) => {
     const s3ImageUrl = await handleUpload();
 
     if (s3ImageUrl) {
-      setLocalProfileImg(s3ImageUrl);
-      console.log("👍ref로 선언한 loacalProfileImg", localProfileImg); //이미지 경로 들어감
+      loacalProfileImg.current = s3ImageUrl;
+      console.log("👍ref로 선언한 loacalProfileImg", loacalProfileImg.current); //이미지 경로 들어감
     }
     // if (s3ImageUrl) {
     //   console.log("s3ImageUrl", s3ImageUrl); //ok
@@ -99,9 +99,8 @@ const LoginInfoModal = ({ children }: Props) => {
     //   console.error("Image upload failed; URL is undefined");
     // }
   };
-
   const updateUserImg = () => {
-    setData({ userImg: localProfileImg });
+    setData({ userImg: loacalProfileImg.current });
   };
   const postData = async () => {
     try {
