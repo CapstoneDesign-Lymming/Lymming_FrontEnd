@@ -18,7 +18,7 @@ interface MainData {
   info2: InfoItem[];
   info3: InfoItem[];
 }
-
+/**main page의 처음 올라오는 shpae요소의 framer motion */
 const shapeVariants = {
   hidden: { y: 100, opacity: 0 },
   visible: {
