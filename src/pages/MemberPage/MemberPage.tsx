@@ -9,6 +9,8 @@ import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
+import useModalStore from "../../store/useModalState";
+import RootModal from "../../components/Modal/RootModal/RootModal";
 interface itemType {
   name: string;
   userImg: string;
@@ -34,25 +36,11 @@ interface memberType {
   deadline: string[];
 }
 
-const fetchLocalData = async () => {
-  const response = await fetch("/json/recommendData.json");
-  if (!response.ok) {
-    throw new Error("Network error");
-  }
-  return response.json();
-};
-
-const fetchMember = async () => {
-  console.log("dddd");
-  const response = await axios.get("https://lymming-back.link/member/list");
-  console.log("member/list의 데이터", response.data);
-  return response.data;
-};
-
 const MemberPage = () => {
   const navigate = useNavigate();
   const { data: userData } = useInfoStore();
   const { login } = useLoginStore();
+  const { isModalOpen, openModal } = useModalStore();
   const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
     null
   ); // 현재 뒤집힌 카드의 인덱스를 관리
@@ -61,8 +49,21 @@ const MemberPage = () => {
   ); // 현재 뒤집힌 카드의 인덱스를 관리
 
   const nickname = userData.nickname;
-  console.log("login여부", login);
+  const [modalName, setModalName] = useState("");
+  const fetchLocalData = async () => {
+    const response = await fetch("/json/recommendData.json");
+    if (!response.ok) {
+      throw new Error("Network error");
+    }
+    return response.json();
+  };
 
+  const fetchMember = async () => {
+    console.log("dddd");
+    const response = await axios.get("https://lymming-back.link/member/list");
+    console.log("member/list의 데이터", response.data);
+    return response.data;
+  };
   const handleClickRecommend = (index: number) => {
     setFlippedRecommendIdx(index === flippedRecommendIdx ? null : index); // 이미 뒤집힌 카드 클릭시 원상복귀
   };
@@ -74,6 +75,15 @@ const MemberPage = () => {
     e.stopPropagation();
     console.log("채팅하기 클릭됨");
     navigate("/chat", { state: { id: nickname } });
+  };
+
+  const handleProjectClick = (e: React.MouseEvent) => {
+    if (!login) return; //login이 안되어있다면 return
+    e.stopPropagation();
+    console.log("프로젝트 자세히보기  클릭됨");
+    setModalName("memberPageModal");
+    openModal();
+    // navigate("/chat", { state: { id: nickname } });
   };
 
   const {
@@ -273,6 +283,9 @@ const MemberPage = () => {
                     </div>
                     <div className="bodyCard_back-footWrapper">
                       <div className="foot">
+                        <div className="project" onClick={handleProjectClick}>
+                          프로젝트 보기
+                        </div>
                         <img className="foot-img" src={lymming} />
                         <div className="foot-text">lymming</div>
                       </div>
@@ -284,6 +297,9 @@ const MemberPage = () => {
           </div>
         </div>
       </div>
+      {isModalOpen && modalName === "memberPageModal" && (
+        <RootModal modalName="memberPageModal" />
+      )}
     </>
   );
 };
