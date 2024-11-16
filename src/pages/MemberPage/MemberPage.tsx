@@ -59,7 +59,6 @@ const MemberPage = () => {
   };
 
   const fetchMember = async () => {
-    console.log("dddd");
     const response = await axios.get("https://lymming-back.link/member/list");
     console.log("member/list의 데이터", response.data);
     return response.data;
