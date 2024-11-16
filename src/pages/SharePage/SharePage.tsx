@@ -19,7 +19,7 @@ interface ItemType {
   leader: string;
 }
 
-const fetchLocalData = async () => {
+const fetchShareData = async () => {
   const response = await axios.get("https://lymming-back.link/share/list");
   console.log("sharepage 프로젝트 data", response.data);
   return response.data;
@@ -28,7 +28,7 @@ const fetchLocalData = async () => {
 const SharePage = () => {
   const navigate = useNavigate();
   const nickname = useInfoStore((state) => state.data.nickname); // nickname 가져오기
-  const { data, error, isLoading } = useQuery("localData", fetchLocalData);
+  const { data, error, isLoading } = useQuery("localData", fetchShareData);
 
   if (isLoading) return <div>로딩 중!</div>;
   if (error) return <div>에러</div>;
