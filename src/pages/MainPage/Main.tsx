@@ -1,11 +1,12 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Header from "../../components/header/Header";
 import "./Main.scss";
 import data from "../../../public/json/mainData.json";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import leftbtn from "../../assets/img/leftrrow.png";
 import rightbtn from "../../assets/img/rigntarrow.png";
 import logo from "../../assets/img/lymming_logo.png";
+import { useNavigate } from "react-router-dom";
 
 interface InfoItem {
   title: string;
@@ -18,11 +19,20 @@ interface MainData {
   info3: InfoItem[];
 }
 
+const shapeVariants = {
+  hidden: { y: 100, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 1.4, ease: "backOut" },
+  },
+};
+
 const Main = () => {
   const mainData: MainData = data;
   const [isBack, setIsBack] = useState(false);
   const [visible, setVisible] = useState(0);
-
+  const navigate = useNavigate();
   const contentVariants = {
     initial: (isBack: boolean) => ({
       x: isBack ? 500 : -500,
@@ -61,130 +71,154 @@ const Main = () => {
   };
 
   return (
-    <div className="Main">
+    <>
       <Header />
-      <div className="image_wrapper">
-        <img className="image_wrapper-img" />
-      </div>
+      <div className="Main">
+        <div className="Main-headerWrapper">
+          {/* <img className="image_wrapper-img" /> */}
+          <motion.div
+            className="shape1"
+            initial="hidden"
+            animate="visible"
+            variants={shapeVariants}
+          />
 
-      <div className="info1">
-        <div className="info1-content">
-          <div className="info1-content-left">
-            <span className="info1-content-left-head">lymming</span>
-            <span className="info1-content-left-body">
-              여러 서비스를 통해
-              <br /> 팀원 정보를 간편하게 <br /> 제공합니다
-            </span>
+          <div className="MainTitle">효율적인 프로젝트의 시작, 리밍에서</div>
+
+          <div className="MainSubTitle">
+            팀원 모집부터 프로젝트 참여, 내 프로젝트 전시까지 이곳에서
+            즐겨보세요.
           </div>
-          <div className="info1-content-right">
-            {mainData.info1.map((it: InfoItem, index: number) => {
+          <div className="MainNavbtn" onClick={() => navigate("/participate")}>
+            지금 시작하기
+          </div>
+        </div>
+
+        <div className="info1">
+          <div className="info1-content">
+            <div className="info1-content-left">
+              <span className="info1-content-left-head">lymming</span>
+              <span className="info1-content-left-body">
+                여러 서비스를 통해
+                <br /> 팀원 정보를 간편하게 <br /> 제공합니다
+              </span>
+            </div>
+            <div className="info1-content-right">
+              {mainData.info1.map((it: InfoItem, index: number) => {
+                return (
+                  <div className="info1-content-right-box" key={index}>
+                    <span className="info1-content-right-box-head">
+                      {it.title}
+                    </span>
+                    <span className="info1-content-left-body">{it.data}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="info2">
+          <div className="info2-left">
+            <span className="info2-left-txt1">혼자 고민했던 문제들</span>
+            <span className="info2-left-txt2">리밍으로 해결하세요</span>
+          </div>
+
+          <div className="info2-right">
+            {mainData.info2.map((it: InfoItem, index: number) => {
               return (
-                <div className="info1-content-right-box" key={index}>
-                  <span className="info1-content-right-box-head">
-                    {it.title}
-                  </span>
-                  <span className="info1-content-left-body">{it.data}</span>
+                <div className="info2-right-box" key={index}>
+                  <span className="info2-right-box-img">{it.title}</span>
+                  <span className="info2-right-box-txt">{it.data}</span>
                 </div>
               );
             })}
           </div>
         </div>
-      </div>
 
-      <div className="info2">
-        <div className="info2-left">
-          <span className="info2-left-txt1">혼자 고민했던 문제들</span>
-          <span className="info2-left-txt2">리밍으로 해결하세요</span>
-        </div>
-
-        <div className="info2-right">
-          {mainData.info2.map((it: InfoItem, index: number) => {
-            return (
-              <div className="info2-right-box" key={index}>
-                <span className="info2-right-box-img">{it.title}</span>
-                <span className="info2-right-box-txt">{it.data}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className="info3">
-        <div className="progressbar">
-          {mainData.info3.map((_, index: number) => (
-            <span
-              className={`circle ${index === visible ? "active" : ""}`}
-              key={index}
-            ></span>
-          ))}
-
-          <div className="progress-bar"></div>
-        </div>
-
-        <div className="btn-wrapper">
-          <button className="arrow" onClick={handlePrev}>
-            <img src={leftbtn} />
-          </button>
-
-          <button className="arrow" onClick={handleNext}>
-            <img src={rightbtn} />
-          </button>
-        </div>
-
-        <AnimatePresence>
-          {mainData.info3.map((it: InfoItem, index: number) => {
-            return visible === index ? (
-              <motion.div
+        <div className="info3">
+          <div className="progressbar">
+            {mainData.info3.map((_, index: number) => (
+              <span
+                className={`circle ${index === visible ? "active" : ""}`}
                 key={index}
-                custom={isBack} // custom 속성을 통해 isBack을 전달
-                variants={contentVariants}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                className="scroll"
-              >
-                <div className="title">
-                  <span className="title-step">{it.title}</span>
-                </div>
+              ></span>
+            ))}
 
-                <div className="img"></div>
-              </motion.div>
-            ) : null;
-          })}
-        </AnimatePresence>
+            <div className="progress-bar"></div>
+          </div>
+
+          <div className="btn-wrapper">
+            <button className="arrow" onClick={handlePrev}>
+              <img src={leftbtn} />
+            </button>
+
+            <button className="arrow" onClick={handleNext}>
+              <img src={rightbtn} />
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {mainData.info3.map((it: InfoItem, index: number) => {
+              return visible === index ? (
+                <motion.div
+                  key={index}
+                  custom={isBack} // custom 속성을 통해 isBack을 전달
+                  variants={contentVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  className="scroll"
+                >
+                  <div className="title">
+                    <span className="title-step">{it.title}</span>
+                  </div>
+
+                  <div className="img"></div>
+                </motion.div>
+              ) : null;
+            })}
+          </AnimatePresence>
+        </div>
+
+        <footer className="footer">
+          <div className="footer-title">
+            <img src={logo} />
+            <span>lymming</span>
+          </div>
+          <div className="footer-profile">
+            <div className="footer-profile-box">
+              <span className="footer-profile-box-span1">박준서</span>
+              <span className="footer-profile-box-span2">
+                빅데이터 20205175
+              </span>
+              <span>깃허브</span>
+            </div>
+            <div className="footer-profile-box">
+              <span className="footer-profile-box-span1">노기훈</span>
+              <span className="footer-profile-box-span2">
+                빅데이터 20205160
+              </span>
+              <span>깃허브</span>
+            </div>
+            <div className="footer-profile-box">
+              <span className="footer-profile-box-span1">지우림</span>
+              <span className="footer-profile-box-span2">
+                빅데이터 20202849
+              </span>
+              <span>깃허브</span>
+            </div>
+          </div>
+
+          <div className="footer-license">
+            <hr />
+            <span className="footer-license-txt">
+              © 2024 Hallym University Capstone Design
+            </span>
+          </div>
+        </footer>
       </div>
-
-      <footer className="footer">
-        <div className="footer-title">
-          <img src={logo} />
-          <span>lymming</span>
-        </div>
-        <div className="footer-profile">
-          <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">박준서</span>
-            <span className="footer-profile-box-span2">빅데이터 20205175</span>
-            <span>깃허브</span>
-          </div>
-          <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">노기훈</span>
-            <span className="footer-profile-box-span2">빅데이터 20205160</span>
-            <span>깃허브</span>
-          </div>
-          <div className="footer-profile-box">
-            <span className="footer-profile-box-span1">지우림</span>
-            <span className="footer-profile-box-span2">빅데이터 20202849</span>
-            <span>깃허브</span>
-          </div>
-        </div>
-
-        <div className="footer-license">
-          <hr />
-          <span className="footer-license-txt">
-            © 2024 Hallym University Capstone Design
-          </span>
-        </div>
-      </footer>
-    </div>
+    </>
   );
 };
 
