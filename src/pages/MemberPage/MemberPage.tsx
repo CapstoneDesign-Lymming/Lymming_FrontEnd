@@ -8,6 +8,7 @@ import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
+import lymming from "../../assets/img/lymming_logo.png";
 interface itemType {
   name: string;
   userImg: string;
@@ -69,6 +70,7 @@ const MemberPage = () => {
     setFlippedMemberIdx(index === flippedMemberdIdx ? null : index); // 이미 뒤집힌 카드 클릭시 원상복귀
   };
   const handleChatClick = (e: React.MouseEvent, nickname: string) => {
+    if (!login) return; //login이 안되어있다면 return
     e.stopPropagation();
     console.log("채팅하기 클릭됨");
     navigate("/chat", { state: { id: nickname } });
@@ -131,11 +133,11 @@ const MemberPage = () => {
                           {item.devStyle}
                         </div>
                         <div className="back_body-skillWrapper">
-                          {" "}
                           {item.skills.map((skill, index) => {
                             // 이름이 일치하는 skill 객체를 찾습니다.
                             const matchedSkill = skills.skills.find(
-                              (s) => s.name === skill
+                              (s) =>
+                                s.name.toUpperCase() === skill.toUpperCase()
                             );
 
                             return (
@@ -217,7 +219,65 @@ const MemberPage = () => {
                   </div>
                 </div>
                 <div className="bodyCard_backWrapper">
-                  <div className="bodyCard_back">asdasdf</div>
+                  <div className="bodyCard_back">
+                    <div className="bodyCard_back-head">
+                      <div className="nickname">
+                        {item.nickname || "리밍이"}
+                      </div>
+                      <div className="teamperature">
+                        {item.teamperature || 36.5}°C
+                      </div>
+                    </div>
+                    <div className="bodyCard_back-bodyWrapper">
+                      <div className="body">
+                        <div className="devStyle">
+                          {item.devStyle[0] !== "" &&
+                            item.devStyle.length > 0 &&
+                            item.devStyle.map((item, idx) => (
+                              <div key={idx}>#{item}</div>
+                            ))}
+                        </div>
+                        <div className="stackWrapper">
+                          {item.stack.map((skill, index) => {
+                            const arr = String(skill);
+                            const result = arr
+                              .replace(/[[\],]/g, "") // 대괄호와 쉼표를 제거
+                              .split(/\s+/); // 공백을 기준으로 나누어 배열로 만들기
+                            return (
+                              <div key={index} className="stackWrapper-skill">
+                                {result.map((skilL2, index2) => {
+                                  const matchedSkill = skills.skills.find(
+                                    (s) =>
+                                      s.name.toUpperCase() ===
+                                      skilL2.toUpperCase()
+                                  );
+                                  return (
+                                    <div
+                                      className="stackWrapper-skill-icons"
+                                      key={index2}
+                                    >
+                                      {matchedSkill && (
+                                        <img
+                                          src={matchedSkill.url}
+                                          alt={skilL2}
+                                        />
+                                      )}
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bodyCard_back-footWrapper">
+                      <div className="foot">
+                        <img className="foot-img" src={lymming} />
+                        <div className="foot-text">lymming</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
