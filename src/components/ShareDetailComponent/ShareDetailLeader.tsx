@@ -74,7 +74,7 @@ const ShareDetailLeader = () => {
   // };
 
   const invalidateInstance = () => {
-    setModalName("shareInviteModal");
+    setModalName("shareInviteModal ");
     openModal();
     console.log(isModalOpen);
   };
@@ -106,7 +106,7 @@ const ShareDetailLeader = () => {
   const saveShareDetail = async () => {
     const s3ImageUrl = await postS3ImageUrl();
     if (s3ImageUrl) {
-      console.log("s3ImageUrl 존재, putShareDetail실행");
+      console.log("s3ImageUrl 존재,  putShareDetail실행");
       putShareDetail(s3ImageUrl);
     }
     setToastName("successToast");
