@@ -8,6 +8,7 @@ import { ParticipateItem } from "../../interfaces/participate";
 import { useState } from "react";
 import axios from "axios";
 import { useInfoStore } from "../../store/useLoginStore";
+import skills from "../../data/skills.json";
 
 interface ParticipateBoardProps {
   item: ParticipateItem;
@@ -111,36 +112,22 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           <span>마감</span> <span>|</span> <span>{item.deadline}</span>
         </div>
         <div className="item-top-feature">
-          {Array.isArray(item.recruitmentField) &&
-          item.recruitmentField.length > 0 ? (
-            item.recruitmentField.map((it, index) => {
-              return <span key={index}>{it}</span>;
-            })
-          ) : (
-            <span>{item.recruitmentField}</span>
-          )}
+          {item.recruitmentField.split(",").map((it, index) => {
+            return <span key={index}>{it}</span>;
+          })}
         </div>
 
         <div className="item-top-style">
-          {Array.isArray(item.workType) && item.workType.length > 0 ? (
-            item.workType.map((it, index) => {
-              return <span key={index}>{it}</span>;
-            })
-          ) : (
-            <span>{item.workType}</span>
-          )}
+          {item.workType.split(",").map((it, index) => {
+            return <span key={index}>{it}</span>;
+          })}
         </div>
 
         <div className="item-top-skills">
-          {item.skillicon && item.techStack ? (
-            item.techStack
-              .split(",")
-              .map((it, index) => (
-                <img src={it.trim()} key={index} alt={`기술 아이콘 ${index}`} />
-              ))
-          ) : (
-            <span>{item.techStack}</span>
-          )}
+          {item.techStack.split(",").map((it, index) => {
+            const matchedSkill = skills.skills.find((s) => s.name === it);
+            return <img src={matchedSkill?.url} key={index} />;
+          })}
         </div>
 
         <hr />

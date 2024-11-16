@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserInfo from "../../../interfaces/user";
+import skills from "../../../data/skills.json";
 
 interface UsermodalProps {
   close: (value: boolean) => void;
@@ -44,13 +45,15 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, nickname }) => {
           <span>{userData?.job}</span>
         </div>
         <div className="center-feature">
-          {userData?.devStyle.split(",").map((it) => {
-            return <span>{it}</span>;
+          {userData?.devStyle.split(",").map((it, index) => {
+            return <span key={index}>{it}</span>;
           })}
         </div>
         <div className="center-skills">
-          {userData?.stack.map((it) => {
-            return <span>{it}</span>;
+          {userData?.stack.split(",").map((it, index) => {
+            const matchedSkill = skills.skills.find((s) => s.name === it);
+
+            return <img src={matchedSkill?.url} key={index} alt="as" />;
           })}
         </div>
       </div>
