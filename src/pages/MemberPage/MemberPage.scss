@@ -315,7 +315,7 @@
                 .devStyle {
                   width: 100%;
                   height: 50%;
-                  color: #bebfbf;
+                  color: #969797;
                 }
                 .stackWrapper {
                   width: 100%;
@@ -346,7 +346,14 @@
               .foot {
                 display: flex;
                 justify-content: end;
-
+                align-items: center;
+                position: relative;
+                .project {
+                  position: absolute;
+                  left: 0;
+                  font-size: 13px;
+                  color: #bebfbf;
+                }
                 &-img {
                   width: 10%;
                   height: 100%;
