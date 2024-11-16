@@ -51,19 +51,16 @@
     text-align: center;
     li {
       width: 8vw;
-      margin: 10px;
+      // margin: 10px;
     }
 
     .chat {
       width: 3%;
-      // .chat_img {
-      //   width: 20px;
-      //   height: 20px;
-      //   filter: grayscale(100%);
-      // }
+      fill: rgb(71, 75, 116);
     }
 
     .login_aft {
+      width: 10%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -83,7 +80,7 @@
     }
   }
   &-loginUl {
-    width: 57%;
+    width: 47%;
   }
   &-hidden {
     position: absolute;

@@ -1,19 +1,73 @@
+@import "../../style/mixin.scss";
+@font-face {
+  font-family: "laundrygothic_font";
+  font-weight: normal;
+  src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  font-weight: normal;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+}
 .Main {
   height: 100%;
   word-break: keep-all;
-  .image_wrapper {
+  margin-top: 7vh;
+  &-headerWrapper {
+    font-family: "NanumSquareNeo";
     height: 100%;
     width: 100%;
-    background-color: rgb(234, 228, 220);
-    background-image: url('../../assets/img/mainimg.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+
+    .shape1 {
+      width: 90vw;
+      height: 60vw;
+      position: absolute;
+      top: 40%;
+      border-radius: 380px;
+      background: rgb(16, 89, 193);
+      background: linear-gradient(
+        355deg,
+        rgba(16, 89, 193, 1) 0%,
+        rgba(232, 254, 241, 1) 100%
+      );
+      box-shadow: 0 0 60px 15px rgba(137, 193, 238, 0.5); /* 흐리게 */
+      z-index: -3;
+    }
+
+    .MainTitle {
+      position: absolute;
+      top: 20%;
+      font-size: 40px;
+      font-weight: 800;
+    }
+    .MainSubTitle {
+      position: absolute;
+      top: 30%;
+      color: #868686;
+    }
+    .MainNavbtn {
+      width: 13vw;
+      height: 7vh;
+      @include flex-center;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      font-size: 20px;
+      border-radius: 8px;
+    }
   }
 
   .info1 {
     height: 120%;
     width: 100%;
+
+    background-color: white;
 
     &-content {
       padding: 20% 5%;
