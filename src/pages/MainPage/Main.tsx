@@ -1,27 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import Header from "../../components/header/Header";
 import "./Main.scss";
-import data from "../../../public/json/mainData.json";
-import leftbtn from "../../assets/img/leftrrow.png";
-import rightbtn from "../../assets/img/rigntarrow.png";
+// import data from "../../../public/json/mainData.json";
+// import leftbtn from "../../assets/img/leftrrow.png";
+// import rightbtn from "../../assets/img/rigntarrow.png";
 import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";
 import main_lottie1 from "../../assets/lottie/main-lottie1.json";
 import main_lottie2 from "../../assets/lottie/main-lottie2.json";
 
-interface InfoItem {
-  title: string;
-  data: string;
-}
+// interface InfoItem {
+//   title: string;
+//   data: string;
+// }
 
-interface MainData {
-  info1: InfoItem[];
-  info2: InfoItem[];
-  info3: InfoItem[];
-}
+// interface MainData {
+//   info1: InfoItem[];
+//   info2: InfoItem[];
+//   info3: InfoItem[];
+// }
 /**main page의 처음 올라오는 shpae요소의 framer motion */
 const shapeVariants = {
   hidden: { y: 100, opacity: 0 },
@@ -33,9 +33,9 @@ const shapeVariants = {
 };
 
 const Main = () => {
-  const mainData: MainData = data;
-  const [isBack, setIsBack] = useState(false);
-  const [visible, setVisible] = useState(0);
+  // const mainData: MainData = data;
+  // const [isBack, setIsBack] = useState(false);
+  // const [visible, setVisible] = useState(0);
   const navigate = useNavigate();
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   useEffect(() => {
@@ -43,42 +43,42 @@ const Main = () => {
       lottieRef.current.setSpeed(0.5); // 속도를 0.5배로 설정 (느리게)
     }
   }, []);
-  const contentVariants = {
-    initial: (isBack: boolean) => ({
-      x: isBack ? 500 : -500,
-      opacity: 0,
-      scale: 0.5,
-    }),
-    animate: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.5,
-      },
-    },
-    exit: (isBack: boolean) => ({
-      x: isBack ? -500 : 500,
-      opacity: 0,
-      scale: 0,
-      transition: {
-        duration: 0.5,
-      },
-    }),
-  };
+  // const contentVariants = {
+  //   initial: (isBack: boolean) => ({
+  //     x: isBack ? 500 : -500,
+  //     opacity: 0,
+  //     scale: 0.5,
+  //   }),
+  //   animate: {
+  //     x: 0,
+  //     opacity: 1,
+  //     scale: 1,
+  //     transition: {
+  //       duration: 0.5,
+  //     },
+  //   },
+  //   exit: (isBack: boolean) => ({
+  //     x: isBack ? -500 : 500,
+  //     opacity: 0,
+  //     scale: 0,
+  //     transition: {
+  //       duration: 0.5,
+  //     },
+  //   }),
+  // };
 
-  const handleNext = () => {
-    setIsBack(true); // 앞으로 가는 애니메이션
-    console.log(visible);
-    setVisible((prevIndex) => (prevIndex + 1) % mainData.info3.length); // 다음 인덱스로
-  };
+  // const handleNext = () => {
+  //   setIsBack(true); // 앞으로 가는 애니메이션
+  //   console.log(visible);
+  //   setVisible((prevIndex) => (prevIndex + 1) % mainData.info3.length); // 다음 인덱스로
+  // };
 
-  const handlePrev = () => {
-    setIsBack(false); // 뒤로 가는 애니메이션
-    setVisible((prevIndex) =>
-      prevIndex === 0 ? mainData.info3.length - 1 : prevIndex - 1
-    ); // 이전 인덱스로
-  };
+  // const handlePrev = () => {
+  //   setIsBack(false); // 뒤로 가는 애니메이션
+  //   setVisible((prevIndex) =>
+  //     prevIndex === 0 ? mainData.info3.length - 1 : prevIndex - 1
+  //   ); // 이전 인덱스로
+  // };
 
   return (
     <>
@@ -96,8 +96,7 @@ const Main = () => {
           <div className="MainTitle">효율적인 프로젝트의 시작, 리밍에서</div>
 
           <div className="MainSubTitle">
-            팀원 모집부터 프로젝트 참여, 내 프로젝트 전시까지 이곳에서
-            즐겨보세요.
+            팀원 모집부터 프로젝트 참여, 프로젝트 전시까지 이곳에서 즐겨보세요.
           </div>
           <motion.div
             className="MainNavbtn"
@@ -113,7 +112,6 @@ const Main = () => {
             지금 시작하기
           </motion.div>
         </div>
-
         <div className="info1">
           <div className="info1-content">
             <motion.img className="iphone" src={iphone} alt="iphone" />
@@ -132,7 +130,7 @@ const Main = () => {
                   프로젝트를 시작하고 관리도 하고 싶은데...
                 </div>
                 {/* <div className="right_Msg">이번에 어디서</div> */}
-                <div className="left_Msg">리밍 한 번 써봐</div>
+                <div className="left_Msg">나야, 리밍...</div>
               </div>
             </div>
             <div className="rightWrapper">
@@ -145,7 +143,7 @@ const Main = () => {
                     lottieRef={lottieRef}
                     className="main_lottie"
                   />
-                  <div className="card_text1">프로젝트에 참가해보세요</div>
+                  <div className="card_text1">프로젝트에 참가해보세요.</div>
                   <div className="card_text2">
                     프로젝트는 물로, 스터디도 함께 실시간으로 참여할 수
                     있습니다.
@@ -171,10 +169,10 @@ const Main = () => {
                     className="main_lottie"
                   />
                   <div className="card_text1">
-                    나에게 잘 맞는 사람을 찾아보세요
+                    나에게 잘 맞는 사람을 찾아보세요.
                   </div>
                   <div className="card_text2">
-                    open ai가 여러분에게 맞는 최적의 사용자를 찾아드립니다
+                    open ai가 여러분에게 맞는 최적의 사용자를 찾아드립니다.
                   </div>
 
                   <div className="card_text3">
@@ -224,13 +222,45 @@ const Main = () => {
             </div> */}
           </div>
         </div>
-        <div className="page_intro">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+        <div className="Main-recommend">
+          <motion.div
+            className="Main-recommend-background"
+            animate={{
+              scale: [1, 1.2, 1], // 크기를 1배 -> 1.2배 -> 1배로 반복
+            }}
+            transition={{
+              duration: 2, // 2초 동안 애니메이션
+              repeat: Infinity, // 무한 반복
+              repeatType: "loop", // 애니메이션 반복 방식
+            }}
+          ></motion.div>{" "}
+          <div className="Main-recommend-recommend_title">
+            이런 분들께 추천드립니다.
+          </div>
+          <div className="Main-recommend-boxBundle">
+            <div className="recommend_box">
+              아이디어는 있는데 같이 할 사람을 찾는 분
+            </div>
+            <div className="recommend_box">
+              팀원과 마찰이 없이 프로젝트를 진행하고 싶으신 분
+            </div>
+            <div className="recommend_box">
+              내가 만든 프로젝트를 다른 사람드에게 보여주고 싶은 분
+            </div>
+            <div className="recommend_box">
+              협업을 통해 포트폴리오를 만들고 싶은 분
+            </div>
+          </div>
         </div>
-        <div className="info2">
+        <div className="Main-feature">
+          <div>이런 기능도 있어요</div>
+          <div>채팅</div>
+          <div>화상채팅</div>
+          <div>팀원 평가 시스템</div>
+          <div>월 말전시하기</div>
+        </div>
+
+        {/* <div className="info2">
           <div className="info2-left">
             <span className="info2-left-txt1">혼자 고민했던 문제들</span>
             <span className="info2-left-txt2">리밍으로 해결하세요</span>
@@ -246,9 +276,9 @@ const Main = () => {
               );
             })}
           </div>
-        </div>
+        </div> */}
 
-        <div className="info3">
+        {/* <div className="info3">
           <div className="progressbar">
             {mainData.info3.map((_, index: number) => (
               <span
@@ -291,7 +321,7 @@ const Main = () => {
               ) : null;
             })}
           </AnimatePresence>
-        </div>
+        </div> */}
 
         <footer className="footer">
           <div className="footer-title">

@@ -1,7 +1,6 @@
 @import "../../style/mixin.scss";
 @font-face {
   font-family: "laundrygothic_font";
-  font-weight: normal;
   src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
 }
 @font-face {
@@ -14,9 +13,7 @@
   word-break: keep-all;
   margin-top: 7vh;
   font-family: "NanumSquareNeo";
-
   &-headerWrapper {
-    font-family: "NanumSquareNeo";
     height: 100%;
     width: 100%;
     display: flex;
@@ -46,7 +43,6 @@
       position: absolute;
       top: 20%;
       font-size: 48px;
-      font-weight: 800;
     }
     .MainSubTitle {
       position: absolute;
@@ -70,6 +66,7 @@
     height: 100%;
     width: 100%;
     background-color: white;
+    margin-bottom: 10%;
     @include flex-center;
     position: relative;
     &-content {
@@ -157,7 +154,7 @@
               height: 50%;
             }
             .card_text1 {
-              font-size: 23px;
+              font-size: 27px;
               height: 30%;
               width: 100%;
             }
@@ -238,11 +235,56 @@
       // }
     }
   }
-  .page_intro {
+  &-recommend {
     width: 100%;
-    height: 100%;
-    border-top: 2px solid rgb(238, 238, 238);
+    height: 120%;
     border-bottom: 2px solid rgb(238, 238, 238);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid gainsboro;
+    position: relative;
+    &-background {
+      width: 60vw;
+      height: 66vh;
+      background-color: #69d5dd;
+      border-radius: 50%; /* 원 모양 */
+      filter: blur(100px); /* 흐림 효과 */
+      position: absolute;
+      top: 25%;
+      z-index: 1;
+    }
+    &-recommend_title {
+      width: 100%;
+      height: 10%;
+      font-size: 37px;
+      font-weight: 600;
+      @include flex-center;
+      z-index: 2;
+      margin-top: 10%;
+    }
+    &-boxBundle {
+      width: 50%;
+      height: 50%;
+      display: flex;
+      flex-wrap: wrap;
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      margin-top: 2%;
+      z-index: 2;
+      .recommend_box {
+        width: 41%;
+        height: 42%;
+        padding: 3%;
+        background-color: rgba(255, 255, 255, 0.329);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(231, 231, 231, 0.425);
+        @include flex-center;
+
+        margin: 1%;
+        border-radius: 33px;
+      }
+    }
   }
   .info2 {
     box-sizing: border-box;
