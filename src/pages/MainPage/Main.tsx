@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import Header from "../../components/header/Header";
 import "./Main.scss";
 import data from "../../../public/json/mainData.json";
@@ -8,11 +9,9 @@ import leftbtn from "../../assets/img/leftrrow.png";
 import rightbtn from "../../assets/img/rigntarrow.png";
 import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";
-import info1 from "../../assets/img/info_1.png";
-import info2 from "../../assets/img/info_2.png";
-import info3 from "../../assets/img/info_3.png";
+import main_lottie1 from "../../assets/lottie/main-lottie1.json";
+import main_lottie2 from "../../assets/lottie/main-lottie2.json";
 
-// import info4 from "../../assets/img/info_4.png";
 interface InfoItem {
   title: string;
   data: string;
@@ -38,15 +37,12 @@ const Main = () => {
   const [isBack, setIsBack] = useState(false);
   const [visible, setVisible] = useState(0);
   const navigate = useNavigate();
-  // const [currentImage, setCurrentImage] = useState(1);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentImage((prev) => (prev === 3 ? 1 : prev + 1));
-  //   }, 3000); // 3초마다 이미지 전환
-
-  //   return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 제거
-  // }, []);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+  useEffect(() => {
+    if (lottieRef.current) {
+      lottieRef.current.setSpeed(0.5); // 속도를 0.5배로 설정 (느리게)
+    }
+  }, []);
   const contentVariants = {
     initial: (isBack: boolean) => ({
       x: isBack ? 500 : -500,
@@ -141,13 +137,59 @@ const Main = () => {
             </div>
             <div className="rightWrapper">
               <div className="right">
-                <img id="img_info1" src={info2} alt="info" />
-                <img id="img_info2" src={info1} alt="info" />
-                <img id="img_info3" src={info3} alt="info" />
-                <div id="text_info4">
-                  프로젝트를 시작하기 전 고민을 줄이고 중요한 일에 집중해보세요
+                <div className="right-card1 cardBundle">
+                  <Lottie
+                    animationData={main_lottie1}
+                    loop
+                    autoPlay
+                    lottieRef={lottieRef}
+                    className="main_lottie"
+                  />
+                  <div className="card_text1">프로젝트에 참가해보세요</div>
+                  <div className="card_text2">
+                    프로젝트는 물로, 스터디도 함께 실시간으로 참여할 수
+                    있습니다.
+                  </div>
+
+                  <div className="card_text3">
+                    <div className="card_text3-text">자세히 보기</div>
+                    <svg
+                      className="card_text3-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                    >
+                      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                    </svg>
+                  </div>
                 </div>
-                <div id="text_info5">자세히 보기</div>
+                <div className="right-card2 cardBundle">
+                  <Lottie
+                    animationData={main_lottie2}
+                    loop
+                    autoPlay
+                    lottieRef={lottieRef}
+                    className="main_lottie"
+                  />
+                  <div className="card_text1">
+                    나에게 잘 맞는 사람을 찾아보세요
+                  </div>
+                  <div className="card_text2">
+                    open ai가 여러분에게 맞는 최적의 사용자를 찾아드립니다
+                  </div>
+
+                  <div className="card_text3">
+                    <div className="card_text3-text">자세히 보기</div>
+                    <svg
+                      className="card_text3-icon"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                    >
+                      <path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+                    </svg>
+                  </div>
+                </div>
+                {/* <img id="img_info2" src={info1} alt="info" /> */}
+
                 {/* <img src={info4} alt="info" /> */}
                 {/* {mainData.info1.map((it: InfoItem, index: number) => {
                   return (
@@ -182,7 +224,12 @@ const Main = () => {
             </div> */}
           </div>
         </div>
-
+        <div className="page_intro">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <div className="info2">
           <div className="info2-left">
             <span className="info2-left-txt1">혼자 고민했던 문제들</span>

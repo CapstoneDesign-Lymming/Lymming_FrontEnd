@@ -135,51 +135,53 @@
           height: 77%;
           border-radius: 30px 0px 0px 30px;
           // border: 1px solid rgb(236, 236, 236);
-          // border-right: none;
+          border-right: none;
           // box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
           //   0 15px 12px rgba(0, 0, 0, 0.103);
-          position: relative;
-          img {
-            position: absolute;
-          }
-          #img_info1 {
-            top: 6%;
-            left: 34%;
-            width: 33%;
-          }
-          #img_info2 {
-            top: 30%;
-            left: 50%;
-            width: 33%;
-          }
-          #img_info3 {
-            top: 55%;
-            left: 60%;
-            width: 33%;
-          }
-          #text_info4 {
-            position: absolute;
-            width: 20%;
-            height: 40%;
-            top: 20%;
-            left: 5%;
+          display: flex;
+          align-items: center;
+          .cardBundle {
+            height: 60%;
+            width: 36%;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            line-height: 50px;
-            font-size: 20px;
-          }
-          #text_info5 {
-            @include flex-center;
-            position: absolute;
-            top: 60%;
-            left: 5%;
-            font-size: 16px;
-            width: 20%;
-            height: 7%;
-            text-align: center;
-            background-color: #f3f3f3;
-            color: #727272;
-            border-radius: 8px;
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
+              0 15px 12px rgba(0, 0, 0, 0.103);
+            border-radius: 20px;
+            padding: 1%;
+            padding-top: 3%;
+            margin-left: 5%;
+            .main_lottie {
+              width: 60%;
+              height: 50%;
+            }
+            .card_text1 {
+              font-size: 23px;
+              height: 30%;
+              width: 100%;
+            }
+            .card_text2 {
+              height: 30%;
+              width: 100%;
+              display: flex;
+              color: #47576a;
+            }
+            .card_text3 {
+              width: 100%;
+              height: 10%;
+              color: #949494;
+              display: flex;
+              font-size: 14px;
+              &-text {
+                width: 24%;
+                @include flex-start;
+              }
+              &-icon {
+                width: 15px;
+                fill: #949494;
+              }
+            }
           }
         }
       }
@@ -236,7 +238,12 @@
       // }
     }
   }
-
+  .page_intro {
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid rgb(238, 238, 238);
+    border-bottom: 2px solid rgb(238, 238, 238);
+  }
   .info2 {
     box-sizing: border-box;
     height: 120%;
@@ -312,7 +319,6 @@
       }
     }
   }
-
   .info3 {
     box-sizing: border-box;
     height: 130%;
@@ -396,7 +402,6 @@
       }
     }
   }
-
   .footer {
     box-sizing: border-box;
     height: 80%;
