@@ -1,65 +1,249 @@
+@import "../../style/mixin.scss";
+@font-face {
+  font-family: "laundrygothic_font";
+  font-weight: normal;
+  src: url("../../assets/fonts/LaundryGothic_TTF/런드리고딕\ Regular.ttf");
+}
+@font-face {
+  font-family: "NanumSquareNeo";
+  font-weight: normal;
+  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+}
 .Main {
   height: 100%;
   word-break: keep-all;
-  .image_wrapper {
+  margin-top: 7vh;
+  font-family: "NanumSquareNeo";
+
+  &-headerWrapper {
+    font-family: "NanumSquareNeo";
     height: 100%;
     width: 100%;
-    background-color: rgb(234, 228, 220);
-    background-image: url('../../assets/img/mainimg.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
 
-  .info1 {
-    height: 120%;
-    width: 100%;
+    .shape1 {
+      width: 90vw;
+      height: 60vw;
+      position: absolute;
+      top: 40%;
+      border-radius: 380px;
+      background: rgb(16, 89, 193);
+      background: linear-gradient(
+        355deg,
+        rgba(16, 89, 193, 1) 0%,
+        rgba(232, 254, 241, 1) 100%
+      );
+      box-shadow: 0 0 60px 15px rgba(137, 193, 238, 0.5); /* 흐리게 */
+      z-index: -3;
+    }
 
-    &-content {
-      padding: 20% 5%;
-      display: flex;
-      justify-content: space-between;
-      height: 40%;
-
-      &-left {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-        font-size: 2vw;
-        gap: 5%;
-
-        &-head {
-          color: #1059c1;
-        }
-        &-body {
-          word-break: keep-all;
-        }
-      }
-
-      &-right {
-        width: 70%;
-        display: flex;
-        justify-content: space-between;
-
-        &-box {
-          box-sizing: border-box;
-          width: 30%;
-          border: 1px solid gray;
-          padding: 7% 3%;
-          text-align: center;
-          display: flex;
-          flex-direction: column;
-          /* 그림자 추가 */
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          &-head {
-            font-weight: bolder;
-            margin-bottom: 10%;
-          }
-        }
-      }
+    .MainTitle {
+      position: absolute;
+      top: 20%;
+      font-size: 48px;
+      font-weight: 800;
+    }
+    .MainSubTitle {
+      position: absolute;
+      font-size: 20px;
+      top: 31%;
+      color: #868686;
+    }
+    .MainNavbtn {
+      width: 13vw;
+      height: 7vh;
+      @include flex-center;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      font-size: 20px;
+      border-radius: 8px;
     }
   }
 
+  .info1 {
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    @include flex-center;
+    position: relative;
+    &-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      .iphone {
+        position: absolute;
+        top: 11%;
+        left: 5%;
+        width: 36vw;
+        height: 80vh;
+        z-index: 2;
+      }
+      .leftWrapper {
+        width: 35%;
+        height: 100%;
+        .in_iphone {
+          font-size: 13.4px;
+          position: absolute;
+          width: 15.8%;
+          height: 61%;
+          top: 17.4%;
+          left: 15%;
+          padding-top: 3%;
+          padding-left: 0.5%;
+          padding-right: 0.2%;
+          border-radius: 5%;
+          display: flex;
+          flex-direction: column;
+          align-items: end;
+          .right_Msg {
+            width: 90%;
+            height: 50px;
+            background-color: #3182f6;
+            color: white;
+            margin-bottom: 16%;
+            border-radius: 5px;
+            padding-left: 1.5%;
+            @include flex-center;
+          }
+          .left_Msg {
+            width: 80%;
+            height: 33px;
+            align-self: flex-start;
+            margin-top: 10%;
+            border: 1px solid #88b8ff;
+            border-radius: 5px;
+            padding-left: 1.5%;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+      .rightWrapper {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .right {
+          width: 100%;
+          height: 77%;
+          border-radius: 30px 0px 0px 30px;
+          // border: 1px solid rgb(236, 236, 236);
+          border-right: none;
+          // box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
+          //   0 15px 12px rgba(0, 0, 0, 0.103);
+          display: flex;
+          align-items: center;
+          .cardBundle {
+            height: 60%;
+            width: 36%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
+              0 15px 12px rgba(0, 0, 0, 0.103);
+            border-radius: 20px;
+            padding: 1%;
+            padding-top: 3%;
+            margin-left: 5%;
+            .main_lottie {
+              width: 60%;
+              height: 50%;
+            }
+            .card_text1 {
+              font-size: 23px;
+              height: 30%;
+              width: 100%;
+            }
+            .card_text2 {
+              height: 30%;
+              width: 100%;
+              display: flex;
+              color: #47576a;
+            }
+            .card_text3 {
+              width: 100%;
+              height: 10%;
+              color: #949494;
+              display: flex;
+              font-size: 14px;
+              &-text {
+                width: 24%;
+                @include flex-start;
+              }
+              &-icon {
+                width: 15px;
+                fill: #949494;
+              }
+            }
+          }
+        }
+      }
+      // padding: 20% 5%;
+      // display: flex;
+      // justify-content: space-between;
+      // height: 100%;
+      // width: 100%;
+      // position: relative;
+      // img {
+      //   width: 35vw;
+      //   height: 77vh;
+      //   position: absolute;
+      //   top: 17%;
+      //   left: -5%;
+      //   // z-index: -1;
+      // }
+      // &-left {
+      //   display: flex;
+      //   flex-direction: column;
+      //   text-align: center;
+      //   font-size: 2vw;
+      //   gap: 5%;
+
+      //   &-head {
+      //     color: #1059c1;
+      //   }
+      //   &-body {
+      //     word-break: keep-all;
+      //   }
+      // }
+
+      // &-right {
+      //   width: 70%;
+      //   height: 100%;
+      //   background-color: #1059c1;
+      //   display: flex;
+      //   justify-content: space-between;
+      //   &-box {
+      //     box-sizing: border-box;
+      //     width: 30%;
+      //     border: 1px solid gray;
+      //     padding: 7% 3%;
+      //     text-align: center;
+      //     display: flex;
+      //     flex-direction: column;
+      //     /* 그림자 추가 */
+      //     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      //     &-head {
+      //       font-weight: bolder;
+      //       margin-bottom: 10%;
+      //     }
+      //   }
+      // }
+    }
+  }
+  .page_intro {
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid rgb(238, 238, 238);
+    border-bottom: 2px solid rgb(238, 238, 238);
+  }
   .info2 {
     box-sizing: border-box;
     height: 120%;
@@ -135,7 +319,6 @@
       }
     }
   }
-
   .info3 {
     box-sizing: border-box;
     height: 130%;
@@ -219,7 +402,6 @@
       }
     }
   }
-
   .footer {
     box-sizing: border-box;
     height: 80%;

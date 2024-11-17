@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Header.scss";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import headerImg from "../../assets/img/lymming_logo.png";
-import { useEffect, useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,8 +10,6 @@ const Header = () => {
   const { login, setLogin } = useLoginStore();
   const [isMain, setIsMain] = useState(false);
   const [isHiddenBtnOn, setIsHiddenBtnOn] = useState(false);
-  const [headerVisible, setHeaderVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [myPageOption, setMypageOption] = useState(false);
   const { data } = useInfoStore();
 
@@ -20,22 +18,6 @@ const Header = () => {
   useEffect(() => {
     if (pageLocation.pathname == "/") setIsMain(true);
   }, [pageLocation]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      console.log("Current Scroll Y:", currentScrollY);
-      // setHeaderVisible(currentScrollY > lastScrollY ? false:true);
-      if (currentScrollY > lastScrollY) {
-        setHeaderVisible(false);
-      } else {
-        setHeaderVisible(true);
-      }
-      setLastScrollY(currentScrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   /**로그아웃  */
   const handleLogout = () => {
@@ -47,11 +29,10 @@ const Header = () => {
     <header
       className={`Header 
     ${isMain ? "MainHeader" : ""}
-    ${headerVisible ? "" : "headerUp"}
     `}
     >
       <div className="Header-title">
-        <img className="Header-title-img" src={headerImg} />
+        <img className="Header-title-img" src={headerImg} alt="리밍" />
         <span className="Header-title-txt" onClick={() => navigate("/")}>
           lymming
         </span>
@@ -64,14 +45,6 @@ const Header = () => {
         <li onClick={() => navigate("/teambuild")}>팀 꾸리기</li>
         <li onClick={() => setIsHiddenBtnOn(!isHiddenBtnOn)}>둘러보기</li>
         {login && <li onClick={() => navigate("/share")}>내 프로젝트</li>}
-        {/* <li
-          className="chat"
-          style={{ display: login === true ? "block" : "none" }}
-          onClick={() => navigate("/chat", { state: { id: "" } })}
-        >
-          <img className="chat_img" src={headerChat} />
-        </li> */}
-        {/* <div>메시지</div> */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 512 512"

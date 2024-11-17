@@ -30,7 +30,6 @@
       width: 80%;
       height: 40%;
       margin-top: 3%;
-      // background-color: rgb(224, 221, 221);
 
       &-text {
         font-size: 23px;
@@ -38,7 +37,7 @@
       }
       &-recommend {
         @include flex-start;
-        justify-content: space-around;
+        justify-content: space-between;
         margin-top: 1.4%;
         .recommendCard {
           display: inline-grid; /* 추가 */
@@ -139,7 +138,7 @@
             }
           }
         }
-        .flipped {
+        .recommendFlipped {
           transform: rotateY(180deg); /* 클릭시 뒤집히도록 */
         }
       }
@@ -191,8 +190,189 @@
 
       left: 0;
     }
-    &-body {
+    .line {
       margin-top: 2%;
+      width: 90%;
+      padding-top: 2%;
+      border-top: 1px solid rgb(229, 229, 229);
+      display: flex;
+    }
+    &-body {
+      margin-top: 5%;
+      width: 90%;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      .CardWrapper {
+        position: relative;
+        width: 19vw;
+        height: 23vh;
+        transition: 0.4s; /* 추가 */
+        transform-style: preserve-3d; /* 추가 */
+        cursor: pointer;
+        margin-right: 3%;
+        margin-bottom: 5%;
+
+        transform: perspective(800px) rotateY(0deg); /* 추가 */
+        .bodyCard_frontWrapper {
+          width: 100%;
+          height: 100%;
+          padding: 3%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          backface-visibility: hidden; /* 추가 */
+          border-radius: 8px;
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+            0 3px 6px rgba(0, 0, 0, 0.23);
+          .bodyCard_front {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            .top {
+              width: 100%;
+              height: 20%;
+              margin-bottom: 8%;
+              .nickname {
+                font-size: 23px;
+                font-weight: 600;
+                margin-bottom: 1%;
+              }
+              .position {
+                font-size: 13px;
+              }
+            }
+            .body {
+              width: 50%;
+              height: 66%;
+
+              img {
+                width: 100%;
+                height: 100%;
+                border-radius: 5px;
+              }
+            }
+            .foot {
+              .chatIcon {
+                width: 7.5%;
+                height: 10%;
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                fill: #3182f6;
+              }
+            }
+          }
+        }
+        .bodyCard_backWrapper {
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+          position: absolute;
+          top: 0;
+          left: -5%;
+          padding: 3%;
+          backface-visibility: hidden; /* 추가 */
+          transform: rotateY(180deg); /* 추가 */
+          box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16),
+            0 3px 6px rgba(0, 0, 0, 0.23);
+          .bodyCard_back {
+            width: 100%;
+            height: 100%;
+            &-head {
+              width: 100%;
+              height: 20%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              .nickname {
+                font-size: 23px;
+                font-weight: 600;
+              }
+              .teamperature {
+                @include flex-center;
+                width: 20%;
+                height: 80%;
+                background-color: #ffdfdf;
+                color: #ff4444;
+                border-radius: 8px;
+                font-size: 14.3px;
+                font-weight: 500;
+              }
+            }
+            &-bodyWrapper {
+              display: flex;
+              align-items: end;
+              width: 100%;
+              height: 57%;
+              border-bottom: 1px solid rgb(233, 233, 233);
+              padding-bottom: 3%;
+
+              .body {
+                width: 100%;
+                height: 60%;
+                .devStyle {
+                  width: 100%;
+                  height: 50%;
+                  color: #969797;
+                }
+                .stackWrapper {
+                  width: 100%;
+                  height: 50%;
+                  &-skill {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+
+                    &-icons {
+                      height: 100%;
+                      margin-right: 2%;
+                      img {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 5px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            &-footWrapper {
+              width: 100%;
+              height: 20%;
+              display: flex;
+              align-items: center;
+              .foot {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                position: relative;
+                .project {
+                  position: absolute;
+                  left: 0;
+                  font-size: 13px;
+                  color: #bebfbf;
+                }
+                &-img {
+                  width: 10%;
+                  height: 100%;
+                }
+                &-text {
+                  @include flex-center;
+                  font-size: 13px;
+                  font-weight: 600;
+                }
+              }
+            }
+          }
+        }
+      }
+      .memberflipped {
+        -webkit-transform: rotateY(180deg);
+
+        transform: rotateY(180deg); /* 클릭시 뒤집히도록 */
+      }
     }
   }
 }

@@ -96,7 +96,7 @@ const TeamBuilding = () => {
       { field: "recruitmentField", message: "포지션을 입력하세요." },
       { field: "workType", message: "스타일을 선택하세요." },
       { field: "projectName", message: "제목을 입력하세요." },
-      { field: "projectImg", message: "이미지를 첨부하세요." },
+      // { field: "projectImg", message: "이미지를 첨부하세요." },
       { field: "description", message: "내용을 입력하세요." },
       { field: "techStack", message: "기술을 입력하세요." },
     ];
