@@ -6,8 +6,8 @@ import data from "../../../public/json/mainData.json";
 import leftbtn from "../../assets/img/leftrrow.png";
 import rightbtn from "../../assets/img/rigntarrow.png";
 import logo from "../../assets/img/lymming_logo.png";
+import iphone from "../../assets/img/iphone.png";
 import { useNavigate } from "react-router-dom";
-
 interface InfoItem {
   title: string;
   data: string;
@@ -33,6 +33,7 @@ const Main = () => {
   const [isBack, setIsBack] = useState(false);
   const [visible, setVisible] = useState(0);
   const navigate = useNavigate();
+
   const contentVariants = {
     initial: (isBack: boolean) => ({
       x: isBack ? 500 : -500,
@@ -89,15 +90,58 @@ const Main = () => {
             팀원 모집부터 프로젝트 참여, 내 프로젝트 전시까지 이곳에서
             즐겨보세요.
           </div>
-          <div className="MainNavbtn" onClick={() => navigate("/participate")}>
+          <motion.div
+            className="MainNavbtn"
+            onClick={() => navigate("/participate")}
+            whileHover={{
+              scale: 1.1,
+            }}
+            initial="hidden"
+            animate="visible"
+            variants={shapeVariants}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
             지금 시작하기
-          </div>
+          </motion.div>
         </div>
 
         <div className="info1">
           <div className="info1-content">
+            <motion.img className="iphone" src={iphone} alt="iphone" />
+            <div className="leftWrapper">
+              <div className="in_iphone">
+                <div className="right_Msg">
+                  프로젝트를 시작하고 싶은데 어디서 구하지?
+                </div>
+                <div className="right_Msg">
+                  나에게 맞는 팀원으로 구하고 싶어
+                </div>
+                <div className="right_Msg">
+                  다른 사람들의 정보를 확인하고 싶어
+                </div>
+                <div className="right_Msg">
+                  프로젝트를 시작하고 관리도 하고 싶은데...
+                </div>
+                {/* <div className="right_Msg">이번에 어디서</div> */}
+                <div className="left_Msg">리밍 한 번 써봐</div>
+              </div>
+            </div>
+            <div className="rightWrapper">
+              <div className="right">
+                {mainData.info1.map((it: InfoItem, index: number) => {
+                  return (
+                    <div className="info1-content-right-box" key={index}>
+                      <span className="info1-content-right-box-head">
+                        {it.title}
+                      </span>
+                      <span className="info1-content-left-body">{it.data}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            {/*
             <div className="info1-content-left">
-              <span className="info1-content-left-head">lymming</span>
               <span className="info1-content-left-body">
                 여러 서비스를 통해
                 <br /> 팀원 정보를 간편하게 <br /> 제공합니다
@@ -114,7 +158,7 @@ const Main = () => {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
           </div>
         </div>
 
