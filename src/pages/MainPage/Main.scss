@@ -13,6 +13,8 @@
   height: 100%;
   word-break: keep-all;
   margin-top: 7vh;
+  font-family: "NanumSquareNeo";
+
   &-headerWrapper {
     font-family: "NanumSquareNeo";
     height: 100%;
@@ -77,13 +79,13 @@
       .iphone {
         position: absolute;
         top: 11%;
-        left: 0%;
+        left: 5%;
         width: 36vw;
         height: 80vh;
         z-index: 2;
       }
       .leftWrapper {
-        width: 30%;
+        width: 35%;
         height: 100%;
         .in_iphone {
           font-size: 13.4px;
@@ -91,7 +93,7 @@
           width: 15.8%;
           height: 61%;
           top: 17.4%;
-          left: 10%;
+          left: 15%;
           padding-top: 3%;
           padding-left: 0.5%;
           padding-right: 0.2%;
@@ -132,10 +134,53 @@
           width: 100%;
           height: 77%;
           border-radius: 30px 0px 0px 30px;
-          border: 1px solid rgb(236, 236, 236);
-          border-right: none;
-          box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
-            0 15px 12px rgba(0, 0, 0, 0.103);
+          // border: 1px solid rgb(236, 236, 236);
+          // border-right: none;
+          // box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
+          //   0 15px 12px rgba(0, 0, 0, 0.103);
+          position: relative;
+          img {
+            position: absolute;
+          }
+          #img_info1 {
+            top: 6%;
+            left: 34%;
+            width: 33%;
+          }
+          #img_info2 {
+            top: 30%;
+            left: 50%;
+            width: 33%;
+          }
+          #img_info3 {
+            top: 55%;
+            left: 60%;
+            width: 33%;
+          }
+          #text_info4 {
+            position: absolute;
+            width: 20%;
+            height: 40%;
+            top: 20%;
+            left: 5%;
+            display: flex;
+            align-items: center;
+            line-height: 50px;
+            font-size: 20px;
+          }
+          #text_info5 {
+            @include flex-center;
+            position: absolute;
+            top: 60%;
+            left: 5%;
+            font-size: 16px;
+            width: 20%;
+            height: 7%;
+            text-align: center;
+            background-color: #f3f3f3;
+            color: #727272;
+            border-radius: 8px;
+          }
         }
       }
       // padding: 20% 5%;

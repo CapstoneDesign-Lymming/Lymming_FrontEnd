@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Header from "../../components/header/Header";
 import "./Main.scss";
@@ -7,7 +8,11 @@ import leftbtn from "../../assets/img/leftrrow.png";
 import rightbtn from "../../assets/img/rigntarrow.png";
 import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";
-import { useNavigate } from "react-router-dom";
+import info1 from "../../assets/img/info_1.png";
+import info2 from "../../assets/img/info_2.png";
+import info3 from "../../assets/img/info_3.png";
+
+// import info4 from "../../assets/img/info_4.png";
 interface InfoItem {
   title: string;
   data: string;
@@ -33,7 +38,15 @@ const Main = () => {
   const [isBack, setIsBack] = useState(false);
   const [visible, setVisible] = useState(0);
   const navigate = useNavigate();
+  // const [currentImage, setCurrentImage] = useState(1);
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setCurrentImage((prev) => (prev === 3 ? 1 : prev + 1));
+  //   }, 3000); // 3초마다 이미지 전환
+
+  //   return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 제거
+  // }, []);
   const contentVariants = {
     initial: (isBack: boolean) => ({
       x: isBack ? 500 : -500,
@@ -128,7 +141,15 @@ const Main = () => {
             </div>
             <div className="rightWrapper">
               <div className="right">
-                {mainData.info1.map((it: InfoItem, index: number) => {
+                <img id="img_info1" src={info2} alt="info" />
+                <img id="img_info2" src={info1} alt="info" />
+                <img id="img_info3" src={info3} alt="info" />
+                <div id="text_info4">
+                  프로젝트를 시작하기 전 고민을 줄이고 중요한 일에 집중해보세요
+                </div>
+                <div id="text_info5">자세히 보기</div>
+                {/* <img src={info4} alt="info" /> */}
+                {/* {mainData.info1.map((it: InfoItem, index: number) => {
                   return (
                     <div className="info1-content-right-box" key={index}>
                       <span className="info1-content-right-box-head">
@@ -137,7 +158,7 @@ const Main = () => {
                       <span className="info1-content-left-body">{it.data}</span>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             </div>
             {/*
