@@ -13,6 +13,8 @@
   height: 100%;
   word-break: keep-all;
   margin-top: 7vh;
+  font-family: "NanumSquareNeo";
+
   &-headerWrapper {
     font-family: "NanumSquareNeo";
     height: 100%;
@@ -77,13 +79,13 @@
       .iphone {
         position: absolute;
         top: 11%;
-        left: 0%;
+        left: 5%;
         width: 36vw;
         height: 80vh;
         z-index: 2;
       }
       .leftWrapper {
-        width: 30%;
+        width: 35%;
         height: 100%;
         .in_iphone {
           font-size: 13.4px;
@@ -91,7 +93,7 @@
           width: 15.8%;
           height: 61%;
           top: 17.4%;
-          left: 10%;
+          left: 15%;
           padding-top: 3%;
           padding-left: 0.5%;
           padding-right: 0.2%;
@@ -132,10 +134,55 @@
           width: 100%;
           height: 77%;
           border-radius: 30px 0px 0px 30px;
-          border: 1px solid rgb(236, 236, 236);
+          // border: 1px solid rgb(236, 236, 236);
           border-right: none;
-          box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
-            0 15px 12px rgba(0, 0, 0, 0.103);
+          // box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
+          //   0 15px 12px rgba(0, 0, 0, 0.103);
+          display: flex;
+          align-items: center;
+          .cardBundle {
+            height: 60%;
+            width: 36%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 19px 38px rgba(0, 0, 0, 0.123),
+              0 15px 12px rgba(0, 0, 0, 0.103);
+            border-radius: 20px;
+            padding: 1%;
+            padding-top: 3%;
+            margin-left: 5%;
+            .main_lottie {
+              width: 60%;
+              height: 50%;
+            }
+            .card_text1 {
+              font-size: 23px;
+              height: 30%;
+              width: 100%;
+            }
+            .card_text2 {
+              height: 30%;
+              width: 100%;
+              display: flex;
+              color: #47576a;
+            }
+            .card_text3 {
+              width: 100%;
+              height: 10%;
+              color: #949494;
+              display: flex;
+              font-size: 14px;
+              &-text {
+                width: 24%;
+                @include flex-start;
+              }
+              &-icon {
+                width: 15px;
+                fill: #949494;
+              }
+            }
+          }
         }
       }
       // padding: 20% 5%;
@@ -191,7 +238,12 @@
       // }
     }
   }
-
+  .page_intro {
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid rgb(238, 238, 238);
+    border-bottom: 2px solid rgb(238, 238, 238);
+  }
   .info2 {
     box-sizing: border-box;
     height: 120%;
@@ -267,7 +319,6 @@
       }
     }
   }
-
   .info3 {
     box-sizing: border-box;
     height: 130%;
@@ -351,7 +402,6 @@
       }
     }
   }
-
   .footer {
     box-sizing: border-box;
     height: 80%;
