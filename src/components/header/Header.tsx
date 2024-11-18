@@ -17,6 +17,7 @@ const Header = () => {
 
   useEffect(() => {
     if (pageLocation.pathname == "/") setIsMain(true);
+    else setIsMain(false);
   }, [pageLocation]);
 
   /**로그아웃  */
