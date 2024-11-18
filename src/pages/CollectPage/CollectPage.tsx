@@ -1,4 +1,4 @@
-import Header from "../../components/Header/Header";
+import Header from "../../components/header/Header";
 import "./CollectPage.scss";
 import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { useEffect, useState } from "react";
