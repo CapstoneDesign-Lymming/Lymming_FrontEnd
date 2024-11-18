@@ -7,6 +7,8 @@ import useImageUpload from "../../hooks/useImageUpload";
 import { useInfoStore } from "../../store/useLoginStore";
 import imgs from "../../assets/img/noimage.jpg";
 import skills from "../../data/skills.json";
+import { useToastStore } from "../../store/useToastState";
+import RootToast from "../../components/Toast/RootToast/RootToast";
 
 interface State {
   studyType: string;
@@ -42,6 +44,8 @@ const TeamBuilding = () => {
     techStack: "",
   });
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
+  const { isToastOpen, openToast, setErrorText } = useToastStore();
+  const [toastName, setToastName] = useState("");
 
   const onBtnClick = () => {
     if (imgRef.current) {
@@ -139,9 +143,14 @@ const TeamBuilding = () => {
         uploadTime: new Date().toISOString().substring(0, 10),
       });
       console.log(res);
+      setToastName("successToast");
+      openToast();
       navigate("/participate");
       console.log("❌6");
     } catch (e) {
+      setToastName("errorToast");
+      setErrorText("등록에 실패하였습니다");
+      openToast();
       console.error(e);
     }
     console.log("❌7");
@@ -332,6 +341,12 @@ const TeamBuilding = () => {
           </div>
         </div>
       </div>
+      {isToastOpen && toastName === "successToast" && (
+        <RootToast toastName="successToast" />
+      )}
+      {isToastOpen && toastName === "errorToast" && (
+        <RootToast toastName="errorToast" />
+      )}
     </>
   );
 };
