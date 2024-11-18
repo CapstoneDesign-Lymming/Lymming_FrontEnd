@@ -222,7 +222,7 @@ const MemberPage = () => {
           </div>
           <div className="filterWrapper">
             <div className="filter">
-              <label> 포지션</label>
+              <label id="position"> 포지션</label>
               <select
                 onChange={(e) => setPositionFilter(e.target.value)}
                 value={positionFilter || ""}
