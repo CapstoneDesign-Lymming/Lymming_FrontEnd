@@ -61,7 +61,6 @@
       border-radius: 8px;
     }
   }
-
   .info1 {
     height: 100%;
     width: 100%;
@@ -237,12 +236,10 @@
   }
   &-recommend {
     width: 100%;
-    height: 120%;
-    border-bottom: 2px solid rgb(238, 238, 238);
+    height: 180%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-top: 1px solid gainsboro;
     position: relative;
     &-background {
       width: 60vw;
@@ -264,8 +261,8 @@
       margin-top: 10%;
     }
     &-boxBundle {
-      width: 50%;
-      height: 50%;
+      width: 40%;
+      height: 40%;
       display: flex;
       flex-wrap: wrap;
       color: rgb(0, 0, 0);
@@ -283,6 +280,35 @@
 
         margin: 1%;
         border-radius: 33px;
+      }
+    }
+  }
+  &-feature {
+    height: 150%;
+    width: 100%;
+    border-bottom: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &-title {
+      font-size: 27px;
+      width: 100%;
+      height: 10%;
+      @include flex-center;
+      font-size: 34px;
+    }
+    &-boxBundle {
+      width: 90%;
+      height: 26%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20%;
+      .BoxWrapper {
+        margin: 3%;
+        width: 20%;
+        height: 100%;
+        border: 1px solid rgb(231, 231, 231);
+        border-radius: 9px;
       }
     }
   }

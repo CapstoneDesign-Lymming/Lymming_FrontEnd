@@ -11,7 +11,7 @@ import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";
 import main_lottie1 from "../../assets/lottie/main-lottie1.json";
 import main_lottie2 from "../../assets/lottie/main-lottie2.json";
-
+import chat_img from "../../assets/img/chat_img.png";
 // interface InfoItem {
 //   title: string;
 //   data: string;
@@ -43,6 +43,7 @@ const Main = () => {
       lottieRef.current.setSpeed(0.5); // 속도를 0.5배로 설정 (느리게)
     }
   }, []);
+
   // const contentVariants = {
   //   initial: (isBack: boolean) => ({
   //     x: isBack ? 500 : -500,
@@ -253,11 +254,16 @@ const Main = () => {
           </div>
         </div>
         <div className="Main-feature">
-          <div>이런 기능도 있어요</div>
-          <div>채팅</div>
-          <div>화상채팅</div>
-          <div>팀원 평가 시스템</div>
-          <div>월 말전시하기</div>
+          <div className="Main-feature-title">
+            리밍이 제공하는 특별한 기능을 즐겨보세요
+          </div>
+          <div className="Main-feature-boxBundle">
+            <div className="BoxWrapper"></div>
+            <div className="BoxWrapper"></div>
+            <div className="BoxWrapper"></div>
+            <div className="BoxWrapper"></div>
+            {/*채팅 화상채팅 팀원 평가 시스템 월 말 전시회*/}
+          </div>
         </div>
 
         {/* <div className="info2">
