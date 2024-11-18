@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import Header from "../../components/Header/Header";
+import Header from "../../components/header/Header";
 import "./Main.scss";
 import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";

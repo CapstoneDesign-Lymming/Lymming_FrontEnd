@@ -1,4 +1,4 @@
-import Header from "../../components/Header/Header";
+import Header from "../../components/header/Header";
 import "./ChatPage.scss";
 import chatsend from "../../assets/img/chat_send.png";
 import chatsendDisable from "../../assets/img/chat_send_disabled.png";

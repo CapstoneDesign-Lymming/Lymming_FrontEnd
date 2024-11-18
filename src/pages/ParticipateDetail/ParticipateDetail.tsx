@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/Header/Header";
+import Header from "../../components/header/Header";
 import "./ParticipateDetail.scss";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import { useNavigate, useParams } from "react-router-dom";
