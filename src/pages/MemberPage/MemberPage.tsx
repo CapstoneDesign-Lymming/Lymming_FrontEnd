@@ -85,14 +85,14 @@ const MemberPage = () => {
       setToastName("errorToast");
       setErrorText("로그인 후 이용해 주세요");
       return;
-    } //login이 안되어있다면 return
+    }
     e.stopPropagation();
     console.log("프로젝트 자세히보기  클릭됨");
     setModalName("memberPageModal");
     openModal();
-    // navigate("/chat", { state: { id: nickname } });
   };
-
+  const [positionFilter, setPositionFilter] = useState<string | null>(null);
+  const [stackFilter, setStackFilter] = useState<string | null>(null);
   const {
     data: recommendQuery,
     error: recommendError,
@@ -104,6 +104,29 @@ const MemberPage = () => {
     error: memberError,
     isLoading: memberLoading,
   } = useQuery("memberData", fetchMember);
+
+  const filteredMembers = memberQuery?.filter((member: memberType) => {
+    // positionFilter가 있다면, position이 일치하는지 확인
+    const matchesPosition = positionFilter
+      ? member.position === positionFilter
+      : true;
+
+    // member.stack이 비어 있지 않고, member.stack[0]이 null이 아닌 경우에만 처리
+    const memberStackArr = member.stack[0]
+      ? member.stack[0]
+          .slice(1, -1) // 대괄호 제거
+          .split(",") // 쉼표로 분리
+          .map((item) => item.trim()) // 각 항목에서 공백 제거
+      : []; // null일 경우 빈 배열을 반환
+
+    // stackFilter가 있으면, member.stack 배열에 포함된 항목이 stackFilter와 일치하는지 확인
+    const matchesStack = stackFilter
+      ? memberStackArr.some((stackItem) => stackItem.includes(stackFilter)) // member.stack 내부에 stackFilter가 포함되는지 확인
+      : true;
+
+    // positionFilter와 stackFilter 모두 일치하는지 확인
+    return matchesPosition && matchesStack;
+  });
 
   if (recommendLoading || memberLoading)
     return (
@@ -197,12 +220,35 @@ const MemberPage = () => {
               로그인하고 바로보기
             </div>
           </div>
-          <div className="line">
-            <div>직무</div>
-            <div>스킬</div>
+          <div className="filterWrapper">
+            <div className="filter">
+              <label> 포지션</label>
+              <select
+                onChange={(e) => setPositionFilter(e.target.value)}
+                value={positionFilter || ""}
+              >
+                <option value="">전체</option>
+                <option value="프론트">프론트</option>
+                <option value="백엔드">백엔드</option>
+                <option value="디자이너">디자이너</option>
+              </select>
+            </div>
+
+            <div className="filter">
+              <label>스킬 스택</label>
+              <select
+                onChange={(e) => setStackFilter(e.target.value)}
+                value={stackFilter || ""}
+              >
+                <option value="">전체</option>
+                <option value="javascript">javascript</option>
+                <option value="typescript">typescript</option>
+                <option value="react">react</option>
+              </select>
+            </div>
           </div>
           <div className="Member-body">
-            {memberQuery.map((item: memberType, index: number) => (
+            {filteredMembers.map((item: memberType, index: number) => (
               <div
                 className={`CardWrapper ${
                   flippedMemberdIdx === index ? "memberflipped" : ""
