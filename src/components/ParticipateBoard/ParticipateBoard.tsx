@@ -107,11 +107,25 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             >
               <div>N</div>
             </div>
-            <span>{remainingTime(item.uploadTime, item.deadline)}</span>
+            <span
+              className={`${
+                remainingTime(item.uploadTime, item.deadline) === "종료됨"
+                  ? "endProject"
+                  : ""
+              }`}
+            >
+              {remainingTime(item.uploadTime, item.deadline)}
+            </span>
           </div>
         </div>
         <div className="item-top-title">{item.projectName}</div>
-        <div className="item-top-info">
+        <div
+          className={`item-top-info ${
+            remainingTime(item.uploadTime, item.deadline) === "종료됨"
+              ? "endProject_text"
+              : ""
+          }`}
+        >
           <span>마감</span> <span>|</span> <span>{item.deadline}</span>
         </div>
         <div className="item-top-feature_style">
