@@ -11,7 +11,12 @@ import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";
 import main_lottie1 from "../../assets/lottie/main-lottie1.json";
 import main_lottie2 from "../../assets/lottie/main-lottie2.json";
+import main_chat from "../../assets/lottie/main-chat.json";
+import main_videochat from "../../assets/lottie/main-videochat.json";
+import main_person from "../../assets/lottie/main-person.json";
+import main_exhibition from "../../assets/lottie/main-exhibition.json";
 
+// import chat_img from "../../assets/img/chat_img.png";
 // interface InfoItem {
 //   title: string;
 //   data: string;
@@ -38,11 +43,17 @@ const Main = () => {
   // const [visible, setVisible] = useState(0);
   const navigate = useNavigate();
   const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const chatLottieRef = useRef<LottieRefCurrentProps>(null);
+
   useEffect(() => {
     if (lottieRef.current) {
       lottieRef.current.setSpeed(0.5); // 속도를 0.5배로 설정 (느리게)
     }
+    if (chatLottieRef.current) {
+      chatLottieRef.current.setSpeed(0.2); // 속도를 0.5배로 설정 (느리게)
+    }
   }, []);
+
   // const contentVariants = {
   //   initial: (isBack: boolean) => ({
   //     x: isBack ? 500 : -500,
@@ -137,11 +148,11 @@ const Main = () => {
               <div className="right">
                 <div className="right-card1 cardBundle">
                   <Lottie
+                    className="main_lottie"
                     animationData={main_lottie1}
                     loop
                     autoPlay
                     lottieRef={lottieRef}
-                    className="main_lottie"
                   />
                   <div className="card_text1">프로젝트에 참가해보세요.</div>
                   <div className="card_text2">
@@ -149,7 +160,10 @@ const Main = () => {
                     있습니다.
                   </div>
 
-                  <div className="card_text3">
+                  <div
+                    className="card_text3"
+                    onClick={() => navigate("/participate")}
+                  >
                     <div className="card_text3-text">자세히 보기</div>
                     <svg
                       className="card_text3-icon"
@@ -175,7 +189,10 @@ const Main = () => {
                     open ai가 여러분에게 맞는 최적의 사용자를 찾아드립니다.
                   </div>
 
-                  <div className="card_text3">
+                  <div
+                    className="card_text3"
+                    onClick={() => navigate("/member")}
+                  >
                     <div className="card_text3-text">자세히 보기</div>
                     <svg
                       className="card_text3-icon"
@@ -224,28 +241,44 @@ const Main = () => {
         </div>
         <div className="Main-recommend">
           <motion.div
-            className="Main-recommend-background"
+            className="Main-recommend-background1"
             animate={{
-              scale: [1, 1.2, 1], // 크기를 1배 -> 1.2배 -> 1배로 반복
+              scale: [1.0, 1.0, 1.0, 1.0, 1.0],
+              x: [90, 90, -90, -90, 90],
+              y: [-90, 90, 90, -90, -90],
             }}
             transition={{
-              duration: 2, // 2초 동안 애니메이션
+              duration: 4, // 2초 동안 애니메이션
               repeat: Infinity, // 무한 반복
               repeatType: "loop", // 애니메이션 반복 방식
             }}
-          ></motion.div>{" "}
+          ></motion.div>
+          <motion.div
+            className="Main-recommend-background2"
+            animate={{
+              scale: [1.0, 1.2, 1.1, 0.9, 1.0],
+              x: [90, -90, -90, 90, 90],
+              y: [90, 90, -90, -90, 90],
+            }}
+            transition={{
+              duration: 4, // 2초 동안 애니메이션
+              repeat: Infinity, // 무한 반복
+              repeatType: "loop", // 애니메이션 반복 방식
+            }}
+          ></motion.div>
           <div className="Main-recommend-recommend_title">
             이런 분들께 추천드립니다.
           </div>
           <div className="Main-recommend-boxBundle">
             <div className="recommend_box">
-              아이디어는 있는데 같이 할 사람을 찾는 분
+              아이디어는 있는데 같이 할 팀원이 없어서 고민 중인 분
             </div>
             <div className="recommend_box">
               팀원과 마찰이 없이 프로젝트를 진행하고 싶으신 분
             </div>
             <div className="recommend_box">
-              내가 만든 프로젝트를 다른 사람드에게 보여주고 싶은 분
+              내가 만든 프로젝트를 다른 사람들에게 보여주고 홍보까지 하고 싶은
+              분
             </div>
             <div className="recommend_box">
               협업을 통해 포트폴리오를 만들고 싶은 분
@@ -253,11 +286,66 @@ const Main = () => {
           </div>
         </div>
         <div className="Main-feature">
-          <div>이런 기능도 있어요</div>
-          <div>채팅</div>
-          <div>화상채팅</div>
-          <div>팀원 평가 시스템</div>
-          <div>월 말전시하기</div>
+          <div className="Main-feature-title">
+            리밍이 제공하는 특별한 기능을 즐겨보세요
+          </div>
+          <div className="Main-feature-boxBundle">
+            <div className="BoxWrapper">
+              <div className="feature_title">1:1 채팅</div>
+              <Lottie
+                className="feature_lottie sizeDownLottie"
+                animationData={main_chat}
+                loop
+                autoPlay
+                lottieRef={chatLottieRef}
+              />
+              <div className="feature_article">
+                프로젝트에 참여하기 전 팀원이 될 사람과 직접 채팅을 통해 서로를
+                알아보세요.
+              </div>
+            </div>
+            <div className="BoxWrapper">
+              <div className="feature_title">화상 채팅</div>
+              <Lottie
+                className="feature_lottie"
+                animationData={main_videochat}
+                loop
+                autoPlay
+              />
+              <div className="feature_article">
+                1:1 화상채팅으로 온라인의 제약을 넘어 팀원과 소통해보세요.
+              </div>
+            </div>
+
+            <div className="BoxWrapper">
+              <div className="feature_title">팀원 평가 시스템</div>
+              <Lottie
+                className="feature_lottie sizeDownLottie"
+                animationData={main_person}
+                loop
+                autoPlay
+              />
+              <div className="feature_article">
+                프로젝트가 종료 후, 서로를 평가하는 시스템이 존재합니다. 이를
+                통해 나에게 가장 잘 맞는 팀원을 직접 선별할 수 있어요.
+              </div>
+            </div>
+
+            <div className="BoxWrapper">
+              <div className="feature_title">월 말 전시회</div>
+              <Lottie
+                className="feature_lottie"
+                animationData={main_exhibition}
+                loop
+                autoPlay
+              />
+              <div className="feature_article">
+                매월 마지막 수요일, 리밍에서 best project를 선정해서 3d 메타버스
+                전시관에 전시해 드립니다.
+              </div>
+            </div>
+            {/*채팅, 화상채팅, 팀원 평가, 월 말 전시회*/}
+          </div>
         </div>
 
         {/* <div className="info2">
