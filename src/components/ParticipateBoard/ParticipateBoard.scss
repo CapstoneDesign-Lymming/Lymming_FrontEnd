@@ -1,17 +1,16 @@
 .item {
   box-sizing: border-box;
   width: 30%;
-  height: 60vh;
+  height: 340px;
   border: 1px solid #dee2e6;
   padding: 1%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   &-top {
-    height: 80%;
-
+    width: 100%;
+    height: 90%;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -19,7 +18,9 @@
     &-label {
       display: flex;
       justify-content: space-between;
-      box-sizing: border-box;
+      width: 100%;
+      height: 16%;
+      margin-bottom: 3%;
       &-left {
         width: 20%;
 
@@ -35,72 +36,113 @@
       }
       &-right {
         width: 30%;
+        height: 100%;
         display: flex;
         align-items: center;
         gap: 5%;
         justify-content: end;
 
-        img {
+        .newIcon {
           width: 20px;
-
-          height: 20px;
+          height: 20.5px;
+          background-color: #ff4444;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          border-radius: 50%;
         }
 
         span {
           box-sizing: border-box;
           width: 50%;
+          height: 100%;
           border: 1px solid #ff4444;
           border-radius: 10px;
           padding: 5%;
-          font-size: 0.8vw;
+          font-size: 14px;
           color: #ff4444;
           text-align: center;
-          font-weight: bol;
+          font-weight: bold;
+        }
+        .endProject {
+          border: 1px solid #adb5bd;
+          color: #adb5bd;
         }
       }
     }
     &-title {
-      font-size: 1.3vw;
+      width: 100%;
+      height: 20%;
+      font-size: 18px;
       font-weight: bolder;
-      margin-top: 5%;
+      margin-top: 1%;
     }
     &-info {
-      margin-top: 3%;
+      // margin-top: 3%;
+      width: 100%;
+      height: 50%;
       color: #adb5bd;
       font-weight: bolder;
     }
-
-    &-feature {
-      padding-top: 7%;
-      display: flex;
-      gap: 2%;
-
-      span {
-        background-color: #e9ecef;
-        padding: 2%;
-        border-radius: 10px;
-        font-size: 1vw;
-        font-weight: bolder;
-      }
+    .endProject_text {
+      color: white;
     }
-
-    &-style {
+    &-feature_style {
+      width: 100%;
+      height: 20%;
+      align-items: center;
       display: flex;
-      gap: 2%;
+      &-feature {
+        height: 100%;
+        width: 20%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 2%;
+        span {
+          width: 100%;
+          height: 100%;
 
-      span {
-        background-color: #fff3eb;
-        padding: 2%;
-        border-radius: 10px;
-        font-size: 1vw;
-        font-weight: bolder;
-        color: #fc8129;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          background-color: #e9ecef;
+          border-radius: 10px;
+          font-size: 1vw;
+          font-weight: bolder;
+        }
+      }
+      &-style {
+        width: 30%;
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+
+        justify-content: center;
+        span {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #fff3eb;
+          border-radius: 10px;
+          font-size: 1vw;
+          font-weight: bolder;
+          color: #fc8129;
+        }
       }
     }
 
     &-skills {
-      padding-top: 5%;
-      box-sizing: border-box;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
       img {
         width: 30px;
         height: 30px;
@@ -114,16 +156,16 @@
     }
 
     hr {
-      border: 1px solid gray;
-      margin-top: 5%;
+      border: 0.3px solid rgb(233, 233, 233);
+      // margin-top: 5%;
       width: 100%;
     }
   }
   &-bottom {
     display: flex;
     justify-content: space-between;
+    width: 100%;
     height: 10%;
-
     &-left {
       font-weight: bolder;
       width: 40%;
@@ -139,26 +181,37 @@
     }
 
     &-right {
-      width: 50%;
+      width: 44%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-weight: bolder;
-
       &-watch {
+        width: 20%;
         display: flex;
-        font-size: 0.9vw;
 
+        justify-content: space-around;
+        font-size: 0.9vw;
+        .watch_icon {
+          width: 19px;
+          height: 19px;
+          fill: #adb5bd;
+        }
         span {
           display: flex;
           align-items: center;
         }
       }
       &-chat {
-        width: 50%;
+        width: 44%;
         display: flex;
+        justify-content: space-around;
         font-size: 0.9vw;
-
+        .chat_icon {
+          width: 19px;
+          height: 19px;
+          fill: #adb5bd;
+        }
         span {
           display: flex;
           align-items: center;
@@ -168,10 +221,11 @@
         display: flex;
       }
 
-      .heart_img {
+      .heart_icon {
         width: 20px;
         height: 20px;
         margin-right: 5%;
+        fill: #adb5bd;
       }
 
       .fill {
