@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./MemberPage.scss";
+import RootModal from "../../components/Modal/RootModal/RootModal";
 import Header from "../../components/header/Header";
-import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
+import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
+import useModalStore from "../../store/useModalState";
+import "./MemberPage.scss";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
-import useModalStore from "../../store/useModalState";
-import RootModal from "../../components/Modal/RootModal/RootModal";
+import RootToast from "../../components/Toast/RootToast/RootToast";
+import { useToastStore } from "../../store/useToastState";
+
 interface itemType {
   name: string;
   userImg: string;
@@ -41,6 +44,7 @@ const MemberPage = () => {
   const { data: userData } = useInfoStore();
   const { login } = useLoginStore();
   const { isModalOpen, openModal } = useModalStore();
+  const { isToastOpen, openToast, setErrorText } = useToastStore();
   const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
     null
   ); // 현재 뒤집힌 카드의 인덱스를 관리
@@ -50,6 +54,7 @@ const MemberPage = () => {
 
   const nickname = userData.nickname;
   const [modalName, setModalName] = useState("");
+  const [toastName, setToastName] = useState("");
   const fetchLocalData = async () => {
     const response = await fetch("/json/recommendData.json");
     if (!response.ok) {
@@ -57,7 +62,6 @@ const MemberPage = () => {
     }
     return response.json();
   };
-
   const fetchMember = async () => {
     const response = await axios.get("https://lymming-back.link/member/list");
     console.log("member/list의 데이터", response.data);
@@ -75,9 +79,13 @@ const MemberPage = () => {
     console.log("채팅하기 클릭됨");
     navigate("/chat", { state: { id: nickname } });
   };
-
   const handleProjectClick = (e: React.MouseEvent) => {
-    if (!login) return; //login이 안되어있다면 return
+    if (!login) {
+      openToast();
+      setToastName("errorToast");
+      setErrorText("로그인 후 이용해 주세요");
+      return;
+    } //login이 안되어있다면 return
     e.stopPropagation();
     console.log("프로젝트 자세히보기  클릭됨");
     setModalName("memberPageModal");
@@ -298,6 +306,9 @@ const MemberPage = () => {
       </div>
       {isModalOpen && modalName === "memberPageModal" && (
         <RootModal modalName="memberPageModal" />
+      )}
+      {isToastOpen && toastName === "errorToast" && (
+        <RootToast toastName="errorToast" />
       )}
     </>
   );
