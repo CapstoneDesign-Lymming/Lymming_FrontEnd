@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./MemberPage.scss";
-import Header from "../../components/header/Header";
+import Header from "../../components/Header/Header";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
 import skills from "../../data/skills.json";
