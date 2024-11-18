@@ -3,6 +3,8 @@ import Header from "../../components/header/Header";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./Mypage.scss";
 import no_profile from "../../assets/img/no-profile.webp";
+import Error from "../../components/Error/Error";
+import Loading from "../../components/Loading/Loading";
 const Mypage = () => {
   const { data } = useInfoStore();
   console.log(data.userImg);
@@ -23,8 +25,8 @@ const Mypage = () => {
   };
 
   const { error, isLoading } = useQuery("mypgage", fetchMypageData);
-  if (error) return <div>에러</div>;
-  if (isLoading) return <div>로딩중</div>;
+  if (error) return <Error />;
+  if (isLoading) return <Loading />;
   return (
     <>
       <Header />

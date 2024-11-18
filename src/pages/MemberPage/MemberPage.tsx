@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RootModal from "../../components/Modal/RootModal/RootModal";
 import Header from "../../components/header/Header";
-import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
+import Loading from "../../components/Loading/Loading";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import useModalStore from "../../store/useModalState";
 import "./MemberPage.scss";
@@ -132,7 +132,7 @@ const MemberPage = () => {
     return (
       <>
         <Header />
-        <LoginLoading />;
+        <Loading />;
       </>
     );
 

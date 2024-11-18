@@ -4,6 +4,8 @@ import Header from "../../components/header/Header";
 import "./SharePage.scss";
 import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
 
 interface ItemType {
   sharePageId: number;
@@ -21,6 +23,10 @@ interface ItemType {
 
 const fetchShareData = async () => {
   const response = await axios.get("https://lymming-back.link/share/list");
+  // const response = await axios.get(
+  //   "https://lymming-back.link/share/list1111111111"
+  // ); //에러페이지 동작시키기 위한 axios
+
   console.log("sharepage 프로젝트 data", response.data);
   return response.data;
 };
@@ -30,8 +36,8 @@ const SharePage = () => {
   const nickname = useInfoStore((state) => state.data.nickname); // nickname 가져오기
   const { data, error, isLoading } = useQuery("localData", fetchShareData);
 
-  if (isLoading) return <div>로딩 중!</div>;
-  if (error) return <div>에러</div>;
+  if (isLoading) return <Loading />;
+  if (error) return <Error />;
 
   return (
     <>
@@ -43,7 +49,7 @@ const SharePage = () => {
               {data.map((item: ItemType) => {
                 // teamMember가 null 또는 문자열인지 확인
                 const isTeamMember = item.teamMember
-                  ? item.teamMember.split(",").includes(nickname) // 문자열 분리 후 비교
+                  ? item.teamMember.split(",").includes(nickname) // 내 닉네임이 팀멤버에 속해 있는지 boolean으로 반환
                   : false;
 
                 const isLeader = item.leader === nickname;
