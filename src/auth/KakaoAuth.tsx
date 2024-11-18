@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../store/useLoginStore";
 import axios from "axios";
-import LoginLoading from "../components/Loading/LoginLoading/LoginLoading";
+import Loading from "../components/Loading/Loading";
 
 const KakaoAuth = () => {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const KakaoAuth = () => {
 
   return (
     <div className="KakaoAuth">
-      <LoginLoading />
+      <Loading />
     </div>
   );
 };

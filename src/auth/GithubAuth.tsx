@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../store/useLoginStore";
-import LoginLoading from "../components/Loading/LoginLoading/LoginLoading";
+import Loading from "../components/Loading/Loading";
 
 const GithubAuth = () => {
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const GithubAuth = () => {
 
   return (
     <div className="GithubAuth">
-      <LoginLoading />
+      <Loading />
     </div>
   );
 };

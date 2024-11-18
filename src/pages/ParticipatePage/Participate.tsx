@@ -1,11 +1,11 @@
-import Header from "../../components/header/Header";
-import "./Participate.scss";
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import "./Participate.scss";
+import Header from "../../components/header/Header";
+import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
-import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { ParticipateItem } from "../../interfaces/participate";
-import axios from "axios";
 
 const Participate = () => {
   const inside = useRef<HTMLDivElement>(null);

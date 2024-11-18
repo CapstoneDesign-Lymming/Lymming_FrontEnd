@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
-import Header from "../../components/header/Header";
-import "./TeamBuilding.scss";
-import imgs from "../../assets/img/noimage.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import skills from "../../data/skills.json";
+import "./TeamBuilding.scss";
+import Header from "../../components/header/Header";
 import useImageUpload from "../../hooks/useImageUpload";
 import { useInfoStore } from "../../store/useLoginStore";
+import imgs from "../../assets/img/noimage.jpg";
+import skills from "../../data/skills.json";
 
 interface State {
   studyType: string;
@@ -48,17 +48,6 @@ const TeamBuilding = () => {
       imgRef.current.click();
     }
   };
-  // const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const target = e.target;
-  //   const file = target.files;
-
-  //   if (file) {
-  //     setImg(file[0]);
-  //     setState({ ...state, img: file[0] });
-  //     console.log(target.name);
-  //     console.log(state);
-  //   }
-  // };
 
   const onChange = (e: any) => {
     const target = e.target;
@@ -109,6 +98,18 @@ const TeamBuilding = () => {
       }
     }
     console.log("❌4");
+
+    // const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //   const target = e.target;
+    //   const file = target.files;
+
+    //   if (file) {
+    //     setImg(file[0]);
+    //     setState({ ...state, img: file[0] });
+    //     console.log(target.name);
+    //     console.log(state);
+    //   }
+    // };
 
     // if (img) {
     //   console.log("이미지 파일이 존재합니다:", img);

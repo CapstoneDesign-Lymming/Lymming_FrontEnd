@@ -15,7 +15,7 @@ import ShareDetailLeader from "./components/ShareDetailComponent/ShareDetailLead
 import CollectPage from "./pages/CollectPage/CollectPage";
 import GithubAuth from "./auth/GithubAuth";
 import Mypage from "./pages/Mypage/Mypage";
-import LoginLoading from "./components/Loading/LoginLoading/LoginLoading";
+import Loading from "./components/Loading/Loading";
 
 function App() {
   return (
@@ -45,7 +45,7 @@ function App() {
         ></Route>
         <Route path="/collect" element={<CollectPage />}></Route>
         <Route path="/mypage" element={<Mypage />}></Route>
-        <Route path="/loading" element={<LoginLoading />}></Route>
+        <Route path="/loading" element={<Loading />}></Route>
       </Routes>
     </div>
   );

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import RootModal from "../../components/Modal/RootModal/RootModal";
 import Header from "../../components/header/Header";
-import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
+import Loading from "../../components/Loading/Loading";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 import useModalStore from "../../store/useModalState";
 import "./MemberPage.scss";
@@ -132,7 +132,7 @@ const MemberPage = () => {
     return (
       <>
         <Header />
-        <LoginLoading />;
+        <Loading />;
       </>
     );
 
@@ -222,7 +222,7 @@ const MemberPage = () => {
           </div>
           <div className="filterWrapper">
             <div className="filter">
-              <label> 포지션</label>
+              <label id="position"> 포지션</label>
               <select
                 onChange={(e) => setPositionFilter(e.target.value)}
                 value={positionFilter || ""}

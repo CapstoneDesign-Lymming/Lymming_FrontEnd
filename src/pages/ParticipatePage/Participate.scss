@@ -1,8 +1,12 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
+}
 .Participate {
   height: 100%;
   display: flex;
   flex-direction: column;
-
+  font-family: "Pretendard";
   /* 블러*/
   .backdrop {
     position: fixed;
