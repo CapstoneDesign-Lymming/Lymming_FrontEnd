@@ -95,8 +95,10 @@ const Participate = () => {
     const getData = async () => {
       try {
         const res = await axios.get("https://lymming-back.link/participate");
-        setData(res.data as ParticipateItem[]);
-        console.log(res);
+        const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
+        setData(reverseData as ParticipateItem[]);
+        console.log("정렬 전 데이터", res);
+        console.log("데이터 최신순 정렬", reverseData);
       } catch (e) {
         console.log(e);
       }
