@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import Header from "../../components/header/Header";
+import Header from "../../components/Header/Header";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./Mypage.scss";
 import no_profile from "../../assets/img/no-profile.webp";

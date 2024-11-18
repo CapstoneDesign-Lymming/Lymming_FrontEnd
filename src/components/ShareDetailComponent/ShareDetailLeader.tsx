@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import useModalStore from "../../store/useModalState";
 import { useEffect, useState } from "react";
-import Header from "../header/Header";
+import Header from "../Header/Header";
 import "./ShareDetailLeader.scss";
 import RootModal from "../Modal/RootModal/RootModal";
 import nouserImage from "../../assets/img/noimage.jpg";

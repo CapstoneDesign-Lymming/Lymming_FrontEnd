@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import Header from "../../components/header/Header";
+import Header from "../../components/Header/Header";
 import "./SharePage.scss";
 import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";

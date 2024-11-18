@@ -1,4 +1,4 @@
-import Header from "../../components/header/Header";
+import Header from "../../components/Header/Header";
 import "./Participate.scss";
 import React, { useEffect, useRef, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
