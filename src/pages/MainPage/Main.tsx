@@ -11,7 +11,7 @@ import logo from "../../assets/img/lymming_logo.png";
 import iphone from "../../assets/img/iphone.png";
 import main_lottie1 from "../../assets/lottie/main-lottie1.json";
 import main_lottie2 from "../../assets/lottie/main-lottie2.json";
-import chat_img from "../../assets/img/chat_img.png";
+// import chat_img from "../../assets/img/chat_img.png";
 // interface InfoItem {
 //   title: string;
 //   data: string;
