@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./MemberPage.scss";
+import RootModal from "../../components/Modal/RootModal/RootModal";
 import Header from "../../components/header/Header";
+import Loading from "../../components/Loading/Loading";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
-import LoginLoading from "../../components/Loading/LoginLoading/LoginLoading";
+import useModalStore from "../../store/useModalState";
+import "./MemberPage.scss";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
-import useModalStore from "../../store/useModalState";
-import RootModal from "../../components/Modal/RootModal/RootModal";
+import RootToast from "../../components/Toast/RootToast/RootToast";
+import { useToastStore } from "../../store/useToastState";
+
 interface itemType {
   name: string;
   userImg: string;
@@ -41,6 +44,7 @@ const MemberPage = () => {
   const { data: userData } = useInfoStore();
   const { login } = useLoginStore();
   const { isModalOpen, openModal } = useModalStore();
+  const { isToastOpen, openToast, setErrorText } = useToastStore();
   const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
     null
   ); // 현재 뒤집힌 카드의 인덱스를 관리
@@ -50,6 +54,7 @@ const MemberPage = () => {
 
   const nickname = userData.nickname;
   const [modalName, setModalName] = useState("");
+  const [toastName, setToastName] = useState("");
   const fetchLocalData = async () => {
     const response = await fetch("/json/recommendData.json");
     if (!response.ok) {
@@ -57,7 +62,6 @@ const MemberPage = () => {
     }
     return response.json();
   };
-
   const fetchMember = async () => {
     const response = await axios.get("https://lymming-back.link/member/list");
     console.log("member/list의 데이터", response.data);
@@ -75,16 +79,20 @@ const MemberPage = () => {
     console.log("채팅하기 클릭됨");
     navigate("/chat", { state: { id: nickname } });
   };
-
   const handleProjectClick = (e: React.MouseEvent) => {
-    if (!login) return; //login이 안되어있다면 return
+    if (!login) {
+      openToast();
+      setToastName("errorToast");
+      setErrorText("로그인 후 이용해 주세요");
+      return;
+    }
     e.stopPropagation();
     console.log("프로젝트 자세히보기  클릭됨");
     setModalName("memberPageModal");
     openModal();
-    // navigate("/chat", { state: { id: nickname } });
   };
-
+  const [positionFilter, setPositionFilter] = useState<string | null>(null);
+  const [stackFilter, setStackFilter] = useState<string | null>(null);
   const {
     data: recommendQuery,
     error: recommendError,
@@ -97,11 +105,34 @@ const MemberPage = () => {
     isLoading: memberLoading,
   } = useQuery("memberData", fetchMember);
 
+  const filteredMembers = memberQuery?.filter((member: memberType) => {
+    // positionFilter가 있다면, position이 일치하는지 확인
+    const matchesPosition = positionFilter
+      ? member.position === positionFilter
+      : true;
+
+    // member.stack이 비어 있지 않고, member.stack[0]이 null이 아닌 경우에만 처리
+    const memberStackArr = member.stack[0]
+      ? member.stack[0]
+          .slice(1, -1) // 대괄호 제거
+          .split(",") // 쉼표로 분리
+          .map((item) => item.trim()) // 각 항목에서 공백 제거
+      : []; // null일 경우 빈 배열을 반환
+
+    // stackFilter가 있으면, member.stack 배열에 포함된 항목이 stackFilter와 일치하는지 확인
+    const matchesStack = stackFilter
+      ? memberStackArr.some((stackItem) => stackItem.includes(stackFilter)) // member.stack 내부에 stackFilter가 포함되는지 확인
+      : true;
+
+    // positionFilter와 stackFilter 모두 일치하는지 확인
+    return matchesPosition && matchesStack;
+  });
+
   if (recommendLoading || memberLoading)
     return (
       <>
         <Header />
-        <LoginLoading />;
+        <Loading />;
       </>
     );
 
@@ -189,12 +220,35 @@ const MemberPage = () => {
               로그인하고 바로보기
             </div>
           </div>
-          <div className="line">
-            <div>직무</div>
-            <div>스킬</div>
+          <div className="filterWrapper">
+            <div className="filter">
+              <label id="position"> 포지션</label>
+              <select
+                onChange={(e) => setPositionFilter(e.target.value)}
+                value={positionFilter || ""}
+              >
+                <option value="">전체</option>
+                <option value="프론트">프론트</option>
+                <option value="백엔드">백엔드</option>
+                <option value="디자이너">디자이너</option>
+              </select>
+            </div>
+
+            <div className="filter">
+              <label>스킬 스택</label>
+              <select
+                onChange={(e) => setStackFilter(e.target.value)}
+                value={stackFilter || ""}
+              >
+                <option value="">전체</option>
+                <option value="javascript">javascript</option>
+                <option value="typescript">typescript</option>
+                <option value="react">react</option>
+              </select>
+            </div>
           </div>
           <div className="Member-body">
-            {memberQuery.map((item: memberType, index: number) => (
+            {filteredMembers.map((item: memberType, index: number) => (
               <div
                 className={`CardWrapper ${
                   flippedMemberdIdx === index ? "memberflipped" : ""
@@ -298,6 +352,9 @@ const MemberPage = () => {
       </div>
       {isModalOpen && modalName === "memberPageModal" && (
         <RootModal modalName="memberPageModal" />
+      )}
+      {isToastOpen && toastName === "errorToast" && (
+        <RootToast toastName="errorToast" />
       )}
     </>
   );

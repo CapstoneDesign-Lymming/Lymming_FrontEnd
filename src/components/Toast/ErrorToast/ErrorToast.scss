@@ -1,0 +1,32 @@
+@import "/src/style/mixin.scss";
+.errorToastWrapper {
+  width: 23vw;
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 40px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+
+  @include flex-center;
+  .errorToast {
+    display: flex;
+    height: 100%;
+    width: 80%;
+    padding-right: 10%;
+    padding-left: 10%;
+    // background-color: #47576a;
+    color: #47576a;
+    font-size: 1rem;
+    font-weight: 700;
+    @include flex-center;
+    justify-content: space-between;
+    #errorToastIcon {
+      width: 12%;
+      height: 80%;
+      fill: #e93939;
+    }
+    .toast_words {
+      width: 88%;
+      @include flex-center;
+    }
+  }
+}

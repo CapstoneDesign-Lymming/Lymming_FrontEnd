@@ -1,11 +1,11 @@
-import Header from "../../components/header/Header";
-import "./Participate.scss";
 import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import "./Participate.scss";
+import Header from "../../components/header/Header";
+import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
-import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
 import { ParticipateItem } from "../../interfaces/participate";
-import axios from "axios";
 
 const Participate = () => {
   const inside = useRef<HTMLDivElement>(null);
@@ -95,8 +95,10 @@ const Participate = () => {
     const getData = async () => {
       try {
         const res = await axios.get("https://lymming-back.link/participate");
-        setData(res.data as ParticipateItem[]);
-        console.log(res);
+        const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
+        setData(reverseData as ParticipateItem[]);
+        console.log("정렬 전 데이터", res);
+        console.log("데이터 최신순 정렬", reverseData);
       } catch (e) {
         console.log(e);
       }

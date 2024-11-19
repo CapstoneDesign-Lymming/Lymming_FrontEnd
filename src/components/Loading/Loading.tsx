@@ -1,10 +1,10 @@
-import lymming_logo from "../../../assets/img/lymming_logo.png";
+import lymming_logo from "../../assets/img/lymming_logo.png";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import login_loading from "../../../assets/lottie/login_loading.json";
+import login_loading from "../../assets/lottie/login_loading.json";
 import { useRef } from "react";
-import "./LoginLoading.scss";
+import "./Loading.scss";
 
-const LoginLoading = () => {
+const Loading = () => {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   return (
     <>
@@ -30,4 +30,4 @@ const LoginLoading = () => {
   );
 };
 
-export default LoginLoading;
+export default Loading;

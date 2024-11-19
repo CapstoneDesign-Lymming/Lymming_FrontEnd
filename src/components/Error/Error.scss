@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
+}
+.ErrorWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Pretendard";
+  .error_lottie {
+    width: 30%;
+    height: 30%;
+    margin-top: 10%;
+  }
+  .bigText {
+    font-size: 30px;
+    margin-bottom: 5%;
+    font-weight: 600;
+  }
+  .smallText {
+    font-size: 24px;
+    margin-bottom: 3%;
+  }
+  .to_home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 170px;
+    height: 50px;
+    background-color: #ff4444;
+    color: white;
+    font-weight: 600;
+    font-size: 17px;
+    border-radius: 10px;
+  }
+}
