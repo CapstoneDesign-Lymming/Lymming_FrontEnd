@@ -28,6 +28,8 @@ const Header = () => {
     setIsOpen();
     setIsExist();
     resetData(); // 상태 초기화
+    localStorage.removeItem("token");
+    console.log("토큰 삭제", localStorage.getItem("token"));
     setMypageOption(!myPageOption);
   };
 
