@@ -1,14 +1,10 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import { motion } from "framer-motion";
 import login_lottie from "../../assets/lottie/login_lottie.json";
+import { GithubLoginButton, createButton } from "react-social-login-buttons";
 import "./LogIn.scss";
-import {
-  // GoogleLoginButton,
-  GithubLoginButton,
-  createButton,
-} from "react-social-login-buttons";
-
-import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import {
   Child1,
   Child2,
@@ -20,11 +16,12 @@ import {
   Child8,
   Child9,
 } from "../../components/Modal/LoginInfoModal/LoginInfoModalChild";
+import LoginInfoModal from "../../components/Modal/LoginInfoModal/LoginInfoModal";
 import { useLoginStore } from "../../store/useLoginStore";
+
 import logo from "../../assets/img/lymming_logo.png";
 import left from "../../assets/img/leftrrow.png";
 import login_mid from "../../assets/img/login_mid.png";
-import { useRef } from "react";
 
 const LogIn = () => {
   const REST_API_KEY: string = import.meta.env.VITE_REST_API_KEY;
@@ -87,7 +84,14 @@ const LogIn = () => {
         return null; // 예외 처리
     }
   };
-
+  const shapeVariants = {
+    hidden: { y: 100, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 1.4, ease: "backOut" },
+    },
+  };
   return (
     <div className="LogIn">
       {isOpen && (
@@ -116,7 +120,13 @@ const LogIn = () => {
           </div>
         </div>
         <div className="mid">
-          <img src={login_mid} alt="" />
+          <motion.img
+            src={login_mid}
+            alt="login_mac"
+            initial="hidden"
+            animate="visible"
+            variants={shapeVariants}
+          />
         </div>
         <div className="rightWrapper">
           <div className="right">
@@ -132,7 +142,6 @@ const LogIn = () => {
               onClick={onKakaoBtnClick}
               style={{ width: "60%" }}
             />
-            {/* <GoogleLoginButton text="구글 로그인" /> */}
             <GithubLoginButton
               className="loginBtn"
               text="깃허브로 시작하기"

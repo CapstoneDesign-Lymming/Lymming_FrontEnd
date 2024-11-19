@@ -38,6 +38,7 @@ const KakaoAuth = () => {
       // 로그인 상태를 true로 만든다
       if (result.data.nickname) {
         setData(result.data);
+        console.log("로그인 이후 넘어오는 data", result.data);
         setLogin();
         navigate("/");
       }
