@@ -125,7 +125,7 @@ const Main = () => {
         </div>
         <div className="Main-info">
           <div className="Main-info-content">
-            <motion.img className="iphone" src={iphone} alt="iphone" />
+            <img className="iphone" src={iphone} alt="iphone" />
             <div className="leftWrapper">
               <div className="in_iphone">
                 <div className="right_Msg">

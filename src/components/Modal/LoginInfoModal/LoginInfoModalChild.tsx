@@ -6,7 +6,7 @@ import loginok from "../../../assets/img/loginok.png";
 import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
-import { useOpenAicCassification } from "../../../hooks/useOpenAicCassification";
+import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -420,7 +420,7 @@ export const Child7 = () => {
 };
 
 export const Child8 = () => {
-  const { userType } = useOpenAicCassification();
+  const { userType } = useOpenAiCassification();
   const { imageUrl, handleFileChange } = useImageUpload();
   const { setData } = useInfoStore();
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
