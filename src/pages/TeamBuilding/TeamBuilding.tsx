@@ -26,7 +26,6 @@ interface State {
 
 const TeamBuilding = () => {
   const navigate = useNavigate();
-  // const [img, setImg] = useState<File | null>(null);
   const imgRef = useRef<HTMLInputElement | null>(null);
   const localProjectImg = useRef<string>("");
   const { data } = useInfoStore();
@@ -44,8 +43,8 @@ const TeamBuilding = () => {
     techStack: "",
   });
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
-  const { isToastOpen, openToast, setErrorText } = useToastStore();
   const [toastName, setToastName] = useState("");
+  const { isToastOpen, openToast, setErrorText } = useToastStore();
 
   const onBtnClick = () => {
     if (imgRef.current) {
@@ -75,11 +74,9 @@ const TeamBuilding = () => {
     console.log(state.projectImg);
   };
 
-  const onsubmit = () => {
+  const onsubmit = async () => {
     console.log("❌1");
-
     console.log("❌2 localprojectimg", localProjectImg.current);
-
     const requiredFields = [
       { field: "studyType", message: "모집 구분을 선택하세요." },
       { field: "recruitmentCount", message: "모집 인원을 입력하세요." },
@@ -94,7 +91,6 @@ const TeamBuilding = () => {
       { field: "techStack", message: "기술을 입력하세요." },
     ];
     console.log("❌3");
-
     for (const { field, message } of requiredFields) {
       if (!state[field as keyof State]) {
         window.alert(message);
@@ -103,31 +99,10 @@ const TeamBuilding = () => {
     }
     console.log("❌4");
 
-    // const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //   const target = e.target;
-    //   const file = target.files;
-
-    //   if (file) {
-    //     setImg(file[0]);
-    //     setState({ ...state, img: file[0] });
-    //     console.log(target.name);
-    //     console.log(state);
-    //   }
-    // };
-
-    // if (img) {
-    //   console.log("이미지 파일이 존재합니다:", img);
-    //   formData.append("projectImg", img);
-    // } else {
-    //   console.log("이미지 없음");
-    // }
-
-    // 서버 전송 로직 짜기
-
     try {
       console.log("❌5");
 
-      const res = axios.post("https://lymming-back.link/teambuild", {
+      const res = await axios.post("https://lymming-back.link/teambuild", {
         userId: data.userId,
         studyType: state.studyType,
         recruitmentCount: state.recruitmentCount,
@@ -142,16 +117,20 @@ const TeamBuilding = () => {
         description: state.description,
         uploadTime: new Date().toISOString().substring(0, 10),
       });
-      console.log(res);
-      openToast();
-      setToastName("successToast");
-      navigate("/participate");
-      console.log("❌6 등록 성공");
+      if (res.status === 200) {
+        console.log(res);
+        setToastName("successToast");
+        openToast();
+        navigate("/participate");
+        console.log("❌6 등록 성공");
+      } else {
+        throw new Error(`서버 오류: ${res.status}`);
+      }
     } catch (e) {
-      openToast();
-      setToastName("errorToast");
-      setErrorText("등록에 실패하였습니다");
       console.error(e);
+      setToastName("errorToast");
+      openToast();
+      setErrorText("등록에 실패하였습니다");
     }
     console.log("❌7");
   };
@@ -174,11 +153,6 @@ const TeamBuilding = () => {
       console.error("Image upload failed; URL is undefined");
     }
   };
-  // const imgPreviewUrl = imgs ? imageUrl : imgs;
-
-  // useEffect(() => {
-  //   setState({ ...state, projectImg: imageUrl! });
-  // }, [imageUrl]);
 
   return (
     <>
