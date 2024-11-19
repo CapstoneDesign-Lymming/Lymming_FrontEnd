@@ -1,19 +1,35 @@
+import { useState } from "react";
 import { useQuery } from "react-query";
-import Header from "../../components/header/Header";
+import { useToastStore } from "../../store/useToastState";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./Mypage.scss";
-import no_profile from "../../assets/img/no-profile.webp";
+import Header from "../../components/header/Header";
 import Error from "../../components/Error/Error";
 import Loading from "../../components/Loading/Loading";
+import RootToast from "../../components/Toast/RootToast/RootToast";
+import no_profile from "../../assets/img/no-profile.webp";
 const Mypage = () => {
   const { data } = useInfoStore();
-  console.log(data.userImg);
-
+  // console.log(data.userImg);
+  // const [isToastOpen, setIsToastOpen] = useState(false);
+  const { isToastOpen, openToast, setErrorText } = useToastStore();
+  const [toastName, setToastName] = useState("");
   const fetchMypageData = () => {
     return data;
   };
 
   const updateMyData = () => {
+    try {
+      //FIXME: axios put login
+      console.log("수정하기 성공");
+      setToastName("successToast");
+      openToast();
+    } catch (error) {
+      console.error(error);
+      setToastName("errorToast");
+      setErrorText("수정에 실패하였습니다");
+      openToast();
+    }
     //TODO: 수정하기 post변경
     /**{
     ”userId” : “long”,
@@ -63,6 +79,12 @@ const Mypage = () => {
           </div>
         </div>
       </div>
+      {isToastOpen && toastName === "successToast" && (
+        <RootToast toastName="successToast" />
+      )}
+      {isToastOpen && toastName === "errorToast" && (
+        <RootToast toastName="errorToast" />
+      )}
     </>
   );
 };

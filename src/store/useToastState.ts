@@ -10,7 +10,7 @@ interface ToastStore {
   setErrorText: (str: string) => void;
   setSuccessText: (str: string) => void;
 }
-
+/**isToastOpen, toastName, successText, errorText, openToast, closeToastsetSuccessText, setErrorText */
 export const useToastStore = create<ToastStore>((set) => ({
   isToastOpen: false,
   toastName: "",
