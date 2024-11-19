@@ -122,7 +122,7 @@ const TeamBuilding = () => {
         openToast();
         setToastName("successToast");
         navigate("/participate");
-        console.log("❌6 등록 성공");
+        console.log("❌6 등록 완료");
         return;
       } else {
         throw new Error(`서버 오류: ${res.status}`);
