@@ -9,6 +9,7 @@ interface LoginState {
 
   setCount: () => void;
   setCountDown: () => void;
+  setCountReset: () => void;
   setIsOpen: () => void;
   setLogin: () => void;
   setIsExist: () => void;
@@ -17,6 +18,7 @@ interface LoginState {
 interface InfoState {
   data: UserInfo;
   setData: (newData: Partial<UserInfo>) => void;
+  resetData: () => void; // resetData 메서드를 추가합니다.
 }
 
 // 로그인 data
@@ -30,6 +32,7 @@ export const useLoginStore = create<LoginState>()(
       isExist: false,
       setCount: () => set((state: any) => ({ count: state.count + 1 })),
       setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
+      setCountReset: () => set(() => ({ count: 0 })),
       setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
       setLogin: () => set((state: any) => ({ login: !state.login })),
       setIsExist: () => set((state: any) => ({ isExist: !state.isExist })),
@@ -40,6 +43,7 @@ export const useLoginStore = create<LoginState>()(
   )
 );
 
+// 회원 정보 입력 data
 // 회원 정보 입력 data
 export const useInfoStore = create<InfoState>()(
   persist(
@@ -70,6 +74,32 @@ export const useInfoStore = create<InfoState>()(
         set((state) => {
           console.log("Updating data with:", newData);
           return { data: { ...state.data, ...newData } };
+        }),
+
+      // 모든 데이터를 초기값으로 되돌리는 메서드
+      resetData: () =>
+        set({
+          data: {
+            userId: 0,
+            bio: "",
+            favorites: 0,
+            gender: "",
+            serverNickname: "",
+            job: "",
+            loginType: "",
+            nickname: "",
+            position: "",
+            stack: "",
+            temperature: 0,
+            userImg: "",
+            keyCode: "",
+            uid: 0,
+            work_time: "",
+            working_team: "",
+            devStyle: "",
+            with_people: "",
+            developerType: 0,
+          },
         }),
     }),
     {
