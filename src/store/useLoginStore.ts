@@ -11,8 +11,10 @@ interface LoginState {
   setCountDown: () => void;
   setCountReset: () => void;
   setIsOpen: () => void;
+  setIsOpenReset: () => void;
   setLogin: () => void;
   setIsExist: () => void;
+  setIsExistReset: () => void;
 }
 
 interface InfoState {
@@ -32,10 +34,12 @@ export const useLoginStore = create<LoginState>()(
       isExist: false,
       setCount: () => set((state: any) => ({ count: state.count + 1 })),
       setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
-      setCountReset: () => set(() => ({ count: 1 })),
       setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
       setLogin: () => set((state: any) => ({ login: !state.login })),
       setIsExist: () => set((state: any) => ({ isExist: !state.isExist })),
+      setCountReset: () => set(() => ({ count: 1 })),
+      setIsOpenReset: () => set(() => ({ isOpen: false })),
+      setIsExistReset: () => set(() => ({ isExist: false })),
     }),
     {
       name: "loginState", // 로컬 스토리지에 저장될 키 이름
