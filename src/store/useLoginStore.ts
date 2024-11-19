@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import UserInfo from "../interfaces/user";
-
+import { persist } from "zustand/middleware";
 interface LoginState {
   login: boolean;
   count: number;
@@ -20,52 +20,60 @@ interface InfoState {
 }
 
 // 로그인 data
-export const useLoginStore = create<LoginState>((set) => ({
-  login: false,
-  count: 1,
-  isOpen: false,
-  //닉네임 중복체크
-  isExist: false,
-  setCount: () => set((state: any) => ({ count: state.count + 1 })),
-  setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
-  setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
-  setLogin: () => set((state: any) => ({ login: !state.login })),
-  setIsExist: () => set((state: any) => ({ isExist: !state.isExist })),
-}));
+export const useLoginStore = create<LoginState>()(
+  persist(
+    (set) => ({
+      login: false,
+      count: 1,
+      isOpen: false,
+      //닉네임 중복체크
+      isExist: false,
+      setCount: () => set((state: any) => ({ count: state.count + 1 })),
+      setCountDown: () => set((state: any) => ({ count: state.count - 1 })),
+      setIsOpen: () => set((state: any) => ({ isOpen: !state.isOpen })),
+      setLogin: () => set((state: any) => ({ login: !state.login })),
+      setIsExist: () => set((state: any) => ({ isExist: !state.isExist })),
+    }),
+    {
+      name: "loginState", // 로컬 스토리지에 저장될 키 이름
+    }
+  )
+);
 
 // 회원 정보 입력 data
-export const useInfoStore = create<InfoState>((set) => ({
-  data: {
-    userId: 0,
-    //한 줄 소개
-    bio: "",
-    favorites: 0,
-    gender: "",
-    serverNickname: "",
-    job: "",
-    loginType: "",
-    nickname: "",
-    position: "",
-    stack: "",
-    temperature: 0,
-    userImg: "",
-    keyCode: "",
-    uid: 0,
-    // 작업 잘되는 시간
-    work_time: "",
-    // 팀원과 작업할때
-    working_team: "",
-    // 작업할때 선호하는 방식
-    devStyle: "",
-    // 사람들과 함께 있을때
-    with_people: "",
-    // 개발자 타입 분류
-    developerType: 0,
-  },
+export const useInfoStore = create<InfoState>()(
+  persist(
+    (set) => ({
+      data: {
+        userId: 0,
+        bio: "",
+        favorites: 0,
+        gender: "",
+        serverNickname: "",
+        job: "",
+        loginType: "",
+        nickname: "",
+        position: "",
+        stack: "",
+        temperature: 0,
+        userImg: "",
+        keyCode: "",
+        uid: 0,
+        work_time: "",
+        working_team: "",
+        devStyle: "",
+        with_people: "",
+        developerType: 0,
+      },
 
-  setData: (newData: Partial<UserInfo>) =>
-    set((state) => {
-      console.log("Updating data with:", newData);
-      return { data: { ...state.data, ...newData } };
+      setData: (newData: Partial<UserInfo>) =>
+        set((state) => {
+          console.log("Updating data with:", newData);
+          return { data: { ...state.data, ...newData } };
+        }),
     }),
-}));
+    {
+      name: "userData", // 로컬 스토리지에 저장될 키 이름
+    }
+  )
+);
