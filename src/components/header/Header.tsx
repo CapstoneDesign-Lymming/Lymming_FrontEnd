@@ -23,6 +23,8 @@ const Header = () => {
   /**로그아웃  */
   const handleLogout = () => {
     setLogin();
+    localStorage.removeItem("token");
+    console.log("토큰 삭제", localStorage.getItem("token"));
     setMypageOption(!myPageOption);
   };
 
