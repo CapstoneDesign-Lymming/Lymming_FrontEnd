@@ -119,10 +119,11 @@ const TeamBuilding = () => {
       });
       if (res.status === 200) {
         console.log(res);
-        setToastName("successToast");
         openToast();
+        setToastName("successToast");
         navigate("/participate");
         console.log("❌6 등록 성공");
+        return;
       } else {
         throw new Error(`서버 오류: ${res.status}`);
       }
