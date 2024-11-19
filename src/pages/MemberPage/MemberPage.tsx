@@ -82,7 +82,7 @@ const MemberPage = () => {
   const handleProjectClick = (e: React.MouseEvent) => {
     if (!login) {
       openToast();
-      setToastName("errorToast");
+      setToastName("successToast");
       setErrorText("로그인 후 이용해 주세요");
       return;
     }
@@ -355,6 +355,9 @@ const MemberPage = () => {
       )}
       {isToastOpen && toastName === "errorToast" && (
         <RootToast toastName="errorToast" />
+      )}
+      {isToastOpen && toastName === "successToast" && (
+        <RootToast toastName="successToast" />
       )}
     </>
   );

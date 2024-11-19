@@ -143,14 +143,14 @@ const TeamBuilding = () => {
         uploadTime: new Date().toISOString().substring(0, 10),
       });
       console.log(res);
-      setToastName("successToast");
       openToast();
+      setToastName("successToast");
       navigate("/participate");
-      console.log("❌6");
+      console.log("❌6 등록 성공");
     } catch (e) {
+      openToast();
       setToastName("errorToast");
       setErrorText("등록에 실패하였습니다");
-      openToast();
       console.error(e);
     }
     console.log("❌7");
