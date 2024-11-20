@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ToastPortal } from "../../../helper/Potal";
-import SuccessToast from "../BasicToast/SuccessToast";
+import SuccessToast from "../SuccessToast/SuccessToast";
 import "./RootToast.scss";
 import { useToastStore } from "../../../store/useToastState";
 import ErrorToast from "../ErrorToast/ErrorToast";
