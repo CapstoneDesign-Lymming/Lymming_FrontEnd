@@ -29,7 +29,7 @@ interface ShareDetailLeaderProps {
 
 const ShareDetailLeader = () => {
   const location = useLocation();
-  const initialData: ShareDetailLeaderProps = location.state;
+  // const initialData: ShareDetailLeaderProps = location.state;
   const { isModalOpen, openModal } = useModalStore();
   const [modalName, setModalName] = useState("");
   const { isToastOpen, openToast } = useToastStore();
@@ -53,8 +53,8 @@ const ShareDetailLeader = () => {
   // const [projectLink, setProjectLink] = useState("");
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
 
-  console.log("initialData", initialData);
-  console.log("formData", formData);
+  // console.log("initialData", initialData);
+  // console.log("formData", formData);
 
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
@@ -74,19 +74,21 @@ const ShareDetailLeader = () => {
   // };
 
   const invalidateInstance = () => {
-    setModalName("shareInviteModal ");
+    setModalName("shareInviteModal");
     openModal();
     console.log(isModalOpen);
   };
 
-  const postS3ImageUrl = () => {
-    const s3ImageUrl = handleUpload();
-    console.log(s3ImageUrl);
+  const postS3ImageUrl = async () => {
+    const s3ImageUrl = await handleUpload();
+    console.log("postS3ImageUrl = ", s3ImageUrl);
+    // setPutS3Img (s3ImageUrl);
     return s3ImageUrl;
   };
 
   const putShareDetail = async (s3ImgUrl: string) => {
     const postTeam = formData.team_member.join(",");
+    console.log("put에서 ", s3ImgUrl);
     const res = await axios.put(
       `https://lymming-back.link/share/details/${formData.sharePageId}/leader`,
       {
@@ -106,7 +108,7 @@ const ShareDetailLeader = () => {
   const saveShareDetail = async () => {
     const s3ImageUrl = await postS3ImageUrl();
     if (s3ImageUrl) {
-      console.log("s3ImageUrl 존재,  putShareDetail실행");
+      console.log("s3ImageUrl 존재, putShareDetail실행");
       putShareDetail(s3ImageUrl);
     }
     setToastName("successToast");
@@ -130,7 +132,7 @@ const ShareDetailLeader = () => {
       team_member_url: [location.state.teamMemberUrl || ""], // 팀 멤버 URL 배열로 설정
       team_member_position: [location.state.teamMemberPosition || ""], // 팀 멤버 직위 배열로 설정
       team_leader: location.state.leader || "",
-      team_name: "",
+      team_name: location.state.teamName || "",
       is_completed: location.state.isCompleted || false, // 기본값 설정
       project_link: location.state.projectLink || "",
     };
@@ -150,7 +152,7 @@ const ShareDetailLeader = () => {
                 <input
                   className="nameInput"
                   name="team_name"
-                  // value={formData}
+                  value={formData.team_name}
                   onChange={handleInputChange}
                 />
               </div>

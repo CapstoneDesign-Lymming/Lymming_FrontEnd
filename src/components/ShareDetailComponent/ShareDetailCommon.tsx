@@ -4,8 +4,10 @@ import "./ShareDetailCommon.scss";
 import useModalStore from "../../store/useModalState";
 import { useState } from "react";
 import RootModal from "../Modal/RootModal/RootModal";
+import axios from "axios";
 interface ShareDetailLeaderProps {
   data: {
+    sharePageId: number;
     userId: number;
     projectId: number;
     sharePageName: string;
@@ -15,6 +17,7 @@ interface ShareDetailLeaderProps {
     team_member_name: string[]; //
     team_member_url: string[]; //
     team_member_position: string[]; //
+    team_name: string;
     leader: string;
     end: boolean;
   };
@@ -26,8 +29,17 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { isModalOpen, openModal } = useModalStore();
   const [modalName, setModalName] = useState("");
 
-  const clickEndShareProject = () => {
+  const clickEndShareProject = async (projectId: number) => {
+    try {
+      const response = await axios.put(
+        `https://lymming-back.link/share/details/${projectId}/end`
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
     //TODO:종료하기 로직은 endmodal 내부에서 진행
+
     setModalName("shareEndModal");
     openModal();
   };
@@ -92,7 +104,10 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               >
                 수정하기
               </div>
-              <div className="leader_btn_end" onClick={clickEndShareProject}>
+              <div
+                className="leader_btn_end"
+                onClick={() => clickEndShareProject(propData.sharePageId)}
+              >
                 종료하기
               </div>
             </div>
