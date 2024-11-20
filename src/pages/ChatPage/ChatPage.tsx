@@ -17,6 +17,7 @@ interface ChatMessage {
   roomId: string;
   //보낸사람
   userId: string;
+  type: string;
 }
 
 interface chatRoom {
@@ -44,6 +45,7 @@ const ChatPage = () => {
   // 구독상태
   const [isSubscribed, setIsSubscribed] = useState(false);
   const parterId = location.state.id;
+  const invite = location.state.invite;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
@@ -175,6 +177,10 @@ const ChatPage = () => {
         );
         console.log("구독 성공");
         setIsSubscribed(true);
+
+        if (invite === true) {
+          inviteMessage();
+        }
       },
       (error: any) => {
         console.error("STOMP 연결 오류:", error); // 연결 실패 시 오류 로그
@@ -192,6 +198,27 @@ const ChatPage = () => {
     }, 5000); // 5초 후 재연결
   };
 
+  const inviteMessage = () => {
+    if (client.current) {
+      const msgData = {
+        type: "INVITE",
+        roomId: chatRoom!.roomId,
+        userId: currentUser,
+        content: `${currentUser}님이 ${partner}님을 프로젝트에 초대하였습니다`,
+        timestamp: getMsgTime(),
+        userName: currentUser,
+      };
+
+      client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
+
+      console.log("초대 메세지 전송");
+
+      navigate(window.location.pathname, {
+        state: { id: partner, invite: false },
+      });
+    }
+  };
+
   const sendChatMessage = () => {
     if (client.current && isSubscribed) {
       const msgData = {
@@ -204,7 +231,7 @@ const ChatPage = () => {
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
-      //  setChatHistory((prev) => [...prev, msgData]);
+
       setInputMessage("");
       console.log("전송한메세지", inputMessage);
     } else {
@@ -383,12 +410,27 @@ const ChatPage = () => {
                       }`}
                     >
                       <img />
-                      <div className="container">
-                        <div key={index} className={`message`}>
-                          {msg.content}
+
+                      {msg.type === "TALK" ? (
+                        <div className="container">
+                          <div key={index} className={`message`}>
+                            {msg.content}
+                          </div>
+                          <span className="time">{msg.timestamp}</span>
                         </div>
-                        <span className="time">{msg.timestamp}</span>
-                      </div>
+                      ) : (
+                        <div className="invite">
+                          <div className="invite-message">{msg.content}</div>
+                          <div className="invite-buttons">
+                            <button className="invite-buttons-accept">
+                              수락
+                            </button>
+                            <button className="invite-buttons-denined">
+                              거절
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </React.Fragment>
                 ))}
