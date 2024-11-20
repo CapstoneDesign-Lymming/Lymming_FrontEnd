@@ -79,7 +79,12 @@ const MemberPage = () => {
     console.log("채팅하기 클릭됨");
     navigate("/chat", { state: { id: nickname } });
   };
-  const handleProjectClick = (e: React.MouseEvent) => {
+  const handleProjectClick = (
+    e: React.MouseEvent,
+    nickname: string,
+    projectName: string,
+    deadline: string[]
+  ) => {
     if (!login) {
       openToast();
       setToastName("errorToast");
@@ -88,6 +93,11 @@ const MemberPage = () => {
     }
     e.stopPropagation();
     console.log("프로젝트 자세히보기  클릭됨");
+    //TODO: 모달에 넘길 닉네임, 프로젝트이름, 데드라인
+
+    console.log(nickname, projectName, deadline);
+
+    //-------
     setModalName("memberPageModal");
     openModal();
   };
@@ -336,7 +346,17 @@ const MemberPage = () => {
                     </div>
                     <div className="bodyCard_back-footWrapper">
                       <div className="foot">
-                        <div className="project" onClick={handleProjectClick}>
+                        <div
+                          className="project"
+                          onClick={(e) =>
+                            handleProjectClick(
+                              e,
+                              item.nickname,
+                              item.projectName,
+                              item.deadline
+                            )
+                          }
+                        >
                           프로젝트 보기
                         </div>
                         <img className="foot-img" src={lymming} />
