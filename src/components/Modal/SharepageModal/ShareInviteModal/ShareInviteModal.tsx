@@ -18,7 +18,7 @@ const ShareInviteModal = () => {
       console.log("초대", response.data);
       return response.data;
     } catch (error) {
-      alert("사용자가 없습니다");
+      alert("사용자가 없습니다!");
       console.error(error);
     }
   };
