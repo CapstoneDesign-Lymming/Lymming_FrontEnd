@@ -18,6 +18,10 @@ interface ChatMessage {
   //보낸사람
   userId: string;
   type: string;
+
+  //공유페이지 추가
+  inviteNickname: string;
+  sharePageId: number;
 }
 
 interface chatRoom {
@@ -46,6 +50,7 @@ const ChatPage = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const parterId = location.state.id;
   const invite = location.state.invite;
+  const sharePageId = location.state.sharepage;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
@@ -207,6 +212,8 @@ const ChatPage = () => {
         content: `${currentUser}님이 ${partner}님을 프로젝트에 초대하였습니다`,
         timestamp: getMsgTime(),
         userName: currentUser,
+        sharePageId: sharePageId,
+        inviteNickname: parterId,
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
@@ -282,6 +289,22 @@ const ChatPage = () => {
         console.log("enter perss!!");
         sendChatMessage();
       }
+    }
+  };
+
+  // 공유페이지 초대 post
+  const postInvite = async (id: number, nickname: string) => {
+    try {
+      const res = await axios.post(
+        "https://lymming-back.link/share/add/team/member",
+        {
+          sharePageId: id,
+          nickname: nickname,
+        }
+      );
+      console.log("초대하기 성공", res.data);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -422,7 +445,12 @@ const ChatPage = () => {
                         <div className="invite">
                           <div className="invite-message">{msg.content}</div>
                           <div className="invite-buttons">
-                            <button className="invite-buttons-accept">
+                            <button
+                              className="invite-buttons-accept"
+                              onClick={() =>
+                                postInvite(msg.sharePageId, msg.inviteNickname)
+                              }
+                            >
                               수락
                             </button>
                             <button className="invite-buttons-denined">
