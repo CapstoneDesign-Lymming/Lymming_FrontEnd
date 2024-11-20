@@ -51,11 +51,8 @@ const ShareDetailLeader = () => {
     is_completed: false,
     project_link: "",
   });
-  // const [projectLink, setProjectLink] = useState("");
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
-
-  // console.log("initialData", initialData);
-  // console.log("formData", formData);
+  const memberLength = formData.team_member.length;
 
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
@@ -67,12 +64,6 @@ const ShareDetailLeader = () => {
       [name]: value,
     }));
   };
-
-  // const handleProjectLink = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  // ) => {
-  //   setProjectLink(e.target.value);
-  // };
 
   const invalidateInstance = (sharePageId: number) => {
     setPosetSharePageId(sharePageId);
@@ -223,12 +214,14 @@ const ShareDetailLeader = () => {
                   </div>
                 </div>
               ))}
-              <div
-                className="AddMember"
-                onClick={() => invalidateInstance(formData.sharePageId)}
-              >
-                멤버 초대하기
-              </div>
+              {memberLength < 5 && (
+                <div
+                  className="AddMember"
+                  onClick={() => invalidateInstance(formData.sharePageId)}
+                >
+                  멤버 초대하기
+                </div>
+              )}
             </div>
           </div>
           <div className="ShareDetailLeader-Footer_BtnWrapper">
