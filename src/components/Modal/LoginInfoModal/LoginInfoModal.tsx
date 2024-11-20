@@ -107,9 +107,9 @@ const LoginInfoModal = ({ children }: Props) => {
     // }
   };
 
-  const updateUserImg = () => {
-    setData({ userImg: localProfileImg });
-  };
+  // const updateUserImg = () => {
+  //   setData({ userImg: localProfileImg });
+  // };
   const postData = async () => {
     try {
       const res = await axios.put(
@@ -128,8 +128,7 @@ const LoginInfoModal = ({ children }: Props) => {
           favorites: data.favorites,
           temperature: data.temperature,
           refreshToken: token,
-          //여기는 백엔드 api 수정되면 열기
-          //         developer_type: data.developer_type,
+          developer_type: data.developerType,
         }
       );
       setData(res.data);
@@ -145,8 +144,8 @@ const LoginInfoModal = ({ children }: Props) => {
   };
 
   const handleUploadAndPost = async () => {
-    await uploadImage();
-    updateUserImg();
+    //await uploadImage();
+    //updateUserImg();
     await postData();
   };
   return (
