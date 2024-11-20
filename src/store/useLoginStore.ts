@@ -60,6 +60,7 @@ export const useInfoStore = create<InfoState>()(
         serverNickname: "",
         job: "",
         loginType: "",
+
         nickname: "",
         position: "",
         stack: "",
