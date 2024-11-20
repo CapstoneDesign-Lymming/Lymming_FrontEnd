@@ -46,6 +46,7 @@ const ChatPage = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const parterId = location.state.id;
   const invite = location.state.invite;
+  const sharePageId = location.state.sharepage;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
@@ -285,6 +286,22 @@ const ChatPage = () => {
     }
   };
 
+  // 공유페이지 초대 post
+  const postInvite = async () => {
+    try {
+      const res = await axios.post(
+        "https://lymming-back.link/share/add/team/member",
+        {
+          sharePageId: sharePageId,
+          nickname: parterId,
+        }
+      );
+      console.log("초대하기 성공", res.data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   useEffect(() => {
     const initializeChatRoom = async () => {
       console.log("상대방은", partner);
@@ -422,7 +439,10 @@ const ChatPage = () => {
                         <div className="invite">
                           <div className="invite-message">{msg.content}</div>
                           <div className="invite-buttons">
-                            <button className="invite-buttons-accept">
+                            <button
+                              className="invite-buttons-accept"
+                              onClick={postInvite}
+                            >
                               수락
                             </button>
                             <button className="invite-buttons-denined">
