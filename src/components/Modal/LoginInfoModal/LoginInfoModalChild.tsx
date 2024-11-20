@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModalChild.scss";
 import infoData from "../../../data/loginInfoData.json";
@@ -7,7 +7,6 @@ import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
 import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
-import { damp } from "three/src/math/MathUtils.js";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -423,7 +422,8 @@ export const Child7 = () => {
 export const Child8 = () => {
   const { userType } = useOpenAiCassification();
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
-  const { data, setData } = useInfoStore();
+  const { setData } = useInfoStore();
+  const localProjectImg = useRef<string | undefined>("");
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
@@ -431,23 +431,36 @@ export const Child8 = () => {
     setData({ [name]: value });
   };
 
+  // 이미지 업로드 처리
   const imageUpload = async () => {
-    console.log("변환되는 blob주소", imageUrl);
-    const s3ImageUrl = await handleUpload();
+    try {
+      console.log("변환되는 blob주소", imageUrl);
 
-    if (s3ImageUrl) {
-      console.log("s3이미지 주소", s3ImageUrl);
-      setData({ userImg: s3ImageUrl });
-    } else {
-      console.log("s3 변환 실패");
+      if (!imageUrl) {
+        console.log("이미지 URL이 없습니다.");
+        return;
+      }
+
+      // handleUpload 함수가 이미지 URL을 반환한다고 가정
+      const s3url = await handleUpload(); // S3 업로드 함수 호출
+      localProjectImg.current = s3url; // 업로드된 이미지 URL을 ref에 저장
+      console.log("업로드된 S3 이미지 주소", s3url);
+
+      // S3 URL을 상태에 저장
+      if (s3url) {
+        setData({ userImg: s3url });
+      } else {
+        console.log("S3 업로드 실패");
+      }
+    } catch (error) {
+      console.error("이미지 업로드 중 오류 발생", error);
     }
   };
 
   useEffect(() => {
-    console.log("이미지 주소", imageUrl);
-    imageUpload();
-
-    console.log("유저 이미지 경로", imageUrl);
+    if (imageUrl) {
+      imageUpload(); // imageUrl이 변경될 때마다 업로드
+    }
   }, [imageUrl]);
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./ParticipateBoard.scss";
@@ -20,7 +19,6 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 }) => {
   const navigate = useNavigate();
   const { data } = useInfoStore();
-  const [isheartClic, setIsheartClic] = useState(false);
 
   const checkNewData = (upload: string) => {
     const nowTime = new Date();
@@ -52,12 +50,11 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   };
 
   const onHeartClick = (user_id: number, project_id: number) => {
-    if (isheartClic === true) {
+    if (item.likes === true) {
       deleteHeart(user_id, project_id);
     } else {
       postHeart(user_id, project_id);
     }
-    setIsheartClic(!isheartClic);
   };
 
   // 찜 누르기
@@ -194,7 +191,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             onClick={() => onHeartClick(data.userId, item.projectId)}
           >
             <svg
-              className={`heart_icon ${isheartClic ? "fill" : ""} `}
+              className={`heart_icon ${item.likes ? "fill" : ""} `}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >

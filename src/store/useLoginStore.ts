@@ -29,7 +29,7 @@ export const useLoginStore = create<LoginState>()(
     (set) => ({
       login: false,
       count: 1,
-      isOpen: true,
+      isOpen: false,
       //닉네임 중복체크
       isExist: false,
       setCount: () => set((state: any) => ({ count: state.count + 1 })),
@@ -60,6 +60,7 @@ export const useInfoStore = create<InfoState>()(
         serverNickname: "",
         job: "",
         loginType: "",
+
         nickname: "",
         position: "",
         stack: "",
