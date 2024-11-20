@@ -31,6 +31,7 @@ const ShareDetailLeader = () => {
   const location = useLocation();
   // const initialData: ShareDetailLeaderProps = location.state;
   const { isModalOpen, openModal } = useModalStore();
+  const { setPosetSharePageId } = useModalStore();
   const [modalName, setModalName] = useState("");
   const { isToastOpen, openToast } = useToastStore();
   const [toastName, setToastName] = useState("");
@@ -73,7 +74,8 @@ const ShareDetailLeader = () => {
   //   setProjectLink(e.target.value);
   // };
 
-  const invalidateInstance = () => {
+  const invalidateInstance = (sharePageId: number) => {
+    setPosetSharePageId(sharePageId);
     setModalName("shareInviteModal");
     openModal();
     console.log(isModalOpen);
@@ -221,7 +223,10 @@ const ShareDetailLeader = () => {
                   </div>
                 </div>
               ))}
-              <div className="AddMember" onClick={invalidateInstance}>
+              <div
+                className="AddMember"
+                onClick={() => invalidateInstance(formData.sharePageId)}
+              >
                 멤버 초대하기
               </div>
             </div>

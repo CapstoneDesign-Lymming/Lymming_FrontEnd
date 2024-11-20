@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./ShareDetailCommon.scss";
-import useModalStore from "../../store/useModalState";
+// import useModalStore from "../../store/useModalState";
 import { useState } from "react";
-import RootModal from "../Modal/RootModal/RootModal";
+// import RootModal from "../Modal/RootModal/RootModal";
 import axios from "axios";
+import { useToastStore } from "../../store/useToastState";
+import RootToast from "../Toast/RootToast/RootToast";
 interface ShareDetailLeaderProps {
   data: {
     sharePageId: number;
@@ -26,22 +28,27 @@ interface ShareDetailLeaderProps {
 const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { data } = useInfoStore();
   const navigate = useNavigate();
-  const { isModalOpen, openModal } = useModalStore();
-  const [modalName, setModalName] = useState("");
+  //TODO:
+  const { isToastOpen, openToast, setSuccessText, setErrorText } =
+    useToastStore();
+  const [toastName, setToastName] = useState("");
 
   const clickEndShareProject = async (projectId: number) => {
     try {
       const response = await axios.put(
-        `https://lymming-back.link/share/details/${projectId}/end`
+        `https://lymming-back.link/share/details/${projectId}/end111`
       );
+      setToastName("successToast");
+      setSuccessText("프로젝트가 종료되었습니다");
+      openToast();
       return response.data;
     } catch (error) {
+      setToastName("errorToast");
+      setErrorText("프로젝트가 종료되지 않았습니다.");
+      openToast();
       console.error(error);
     }
     //TODO:종료하기 로직은 endmodal 내부에서 진행
-
-    setModalName("shareEndModal");
-    openModal();
   };
   // const teamMember = propData.teamMember.split;
 
@@ -114,8 +121,8 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
           )}
         </div>
       </div>
-      {isModalOpen && modalName === "shareEndModal" && (
-        <RootModal modalName="shareEndModal" />
+      {isToastOpen && toastName === "successToast" && (
+        <RootToast toastName="successToast" />
       )}
     </>
   );
