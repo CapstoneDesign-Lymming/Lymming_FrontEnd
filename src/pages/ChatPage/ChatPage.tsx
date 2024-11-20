@@ -18,6 +18,10 @@ interface ChatMessage {
   //보낸사람
   userId: string;
   type: string;
+
+  //공유페이지 추가
+  inviteNickname: string;
+  sharePageId: number;
 }
 
 interface chatRoom {
@@ -287,13 +291,13 @@ const ChatPage = () => {
   };
 
   // 공유페이지 초대 post
-  const postInvite = async () => {
+  const postInvite = async (id: number, nickname: string) => {
     try {
       const res = await axios.post(
         "https://lymming-back.link/share/add/team/member",
         {
-          sharePageId: sharePageId,
-          nickname: parterId,
+          sharePageId: id,
+          nickname: nickname,
         }
       );
       console.log("초대하기 성공", res.data);
@@ -441,7 +445,9 @@ const ChatPage = () => {
                           <div className="invite-buttons">
                             <button
                               className="invite-buttons-accept"
-                              onClick={postInvite}
+                              onClick={() =>
+                                postInvite(msg.sharePageId, msg.inviteNickname)
+                              }
                             >
                               수락
                             </button>
