@@ -212,6 +212,8 @@ const ChatPage = () => {
         content: `${currentUser}님이 ${partner}님을 프로젝트에 초대하였습니다`,
         timestamp: getMsgTime(),
         userName: currentUser,
+        sharePageId: sharePageId,
+        inviteNickname: parterId,
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
