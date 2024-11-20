@@ -10,6 +10,7 @@ const ShareInviteModal = () => {
   const { postSharePageId } = useModalStore();
   const navigate = useNavigate();
 
+
   const handleNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInviteNickName(e.target.value);
   };
