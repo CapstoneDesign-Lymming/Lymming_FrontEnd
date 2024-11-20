@@ -55,36 +55,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   console.log(teamMemberLen);
   const urlBundle = propData.urlBundle?.split(",");
   const positionBundle = propData.positionBundle?.split(",");
-  // const positionBundle = propData.positionBundle;
-  // const urlBundle = propData.urlBundle;
 
-  /**extract 키워드 붙은 값들이 서버에서 추출한 데이터 */
-  // const extractUrl: string[] = [];
-  // const extractPosition: string[] = [];
-
-  /**서버 데이터에서 값들 추출하는 함수 */
-  // const extractItems = () => {
-  //   const nameArr = teamMember.slice(1, -1).split(",");
-  //   nameArr.map((i) => extractName.push(i));
-
-  //   const urlArr = urlBundle.slice(1, -1).split(",");
-  //   urlArr.map((i) => extractUrl.push(i));
-
-  //   const positionArr = positionBundle.slice(1, -1).split(",");
-  //   positionArr.map((i) => extractPosition.push(i));
-  // };
-
-  // if (!teamMember) {
-  //   const leader = propData.leader;
-  //   console.log("propData.teamMember", teamMember);
-  //   extractName.push(leader);
-  // }
-  // else if (!teamMember.includes(",")) {
-  //   //leader한명만 들어올 경우
-  //   extractName.push(teamMember);
-  // } else {
-  //   extractItems();
-  // }
   return (
     <>
       <div className="ShareDetailCommonWrapper">

@@ -48,7 +48,6 @@ export const useLoginStore = create<LoginState>()(
 );
 
 // 회원 정보 입력 data
-// 회원 정보 입력 data
 export const useInfoStore = create<InfoState>()(
   persist(
     (set) => ({

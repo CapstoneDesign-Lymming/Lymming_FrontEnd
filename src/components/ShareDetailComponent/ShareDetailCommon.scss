@@ -27,6 +27,8 @@
       height: 10%;
       font-size: 37px;
       font-weight: 700;
+      margin-top: 3%;
+      margin-bottom: 2%;
     }
     &-Body {
       width: 100%;
@@ -38,12 +40,12 @@
       }
       .Body_description {
         background-color: rgb(244, 246, 247);
-        width: 60%;
+        width: 58%;
         margin-top: 3%;
         font-size: 19px;
         line-height: 1.5; /* 줄 간격 설정 */
         border-radius: 8px;
-        padding: 1% 0%;
+        padding: 1% 1%;
       }
     }
     &-Footer {

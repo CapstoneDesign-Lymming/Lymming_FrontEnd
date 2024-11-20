@@ -64,7 +64,9 @@ const SharePage = () => {
                       }}
                     >
                       <div className="CardInsideWrapper">
-                        <div className="CardHeader">
+                        <div
+                          className={`CardHeader ${item.end ? "isEnd" : ""}`}
+                        >
                           <div
                             className={`${
                               item.sharePageName

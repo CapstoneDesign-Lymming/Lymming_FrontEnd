@@ -1,12 +1,10 @@
 @import "../../style/mixin.scss";
 @font-face {
-  font-family: "NanumSquareNeo";
-  font-weight: normal;
-  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
 }
-
 .SharePageWrapper {
-  font-family: "NanumSquareNeo";
+  font-family: "Pretendard";
   margin-top: 7vh;
   .SharePage {
     width: 100%;
@@ -50,15 +48,15 @@
             align-items: center;
             .CardHeader {
               margin-top: 1%;
-              width: 96%;
+              // width: 96%;
               height: 10%;
               padding-left: 2%;
               padding-right: 2%;
-
-              // background-color: #b6e9ff;
+              align-self: flex-start;
               border: 2px solid #b6e9ff;
               border-radius: 10px;
               color: #47576a;
+              font-size: 22px;
               font-weight: 700;
               display: flex;
               align-items: center;
@@ -68,6 +66,9 @@
               }
               // &-emptyText {
               // }
+            }
+            .isEnd {
+              border: 2px solid #6b6b6b;
             }
             .CardBody {
               width: 100%;
@@ -83,6 +84,7 @@
               margin-top: 4%;
               width: 100%;
               height: 30%;
+              font-size: 19px;
               &-Description {
                 width: 100%;
                 height: 64%;
