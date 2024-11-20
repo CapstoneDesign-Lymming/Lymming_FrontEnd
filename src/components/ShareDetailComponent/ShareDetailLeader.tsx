@@ -74,7 +74,7 @@ const ShareDetailLeader = () => {
   // };
 
   const invalidateInstance = () => {
-    setModalName("shareInviteModal ");
+    setModalName("shareInviteModal");
     openModal();
     console.log(isModalOpen);
   };
