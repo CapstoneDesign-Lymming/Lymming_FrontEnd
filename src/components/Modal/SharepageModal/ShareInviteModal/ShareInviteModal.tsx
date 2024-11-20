@@ -12,8 +12,9 @@ const ShareInviteModal = () => {
   const inviteMember = async () => {
     try {
       console.log("inviteNickName", inviteNickName);
+      const encodedName = encodeURIComponent(inviteNickName);
       const response = await axios.get(
-        `https://lymming-back.link/share/find/${inviteNickName}`
+        `https://lymming-back.link/share/find/${encodedName}`
       );
       console.log("초대", response.data);
       return response.data;

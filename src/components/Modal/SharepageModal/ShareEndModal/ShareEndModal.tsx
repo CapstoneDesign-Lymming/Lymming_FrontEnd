@@ -6,6 +6,7 @@ const ShareEndModal = () => {
   const { closeModal } = useModalStore();
   const clickEndProject = () => {
     //TODO: 서버측으로 공유페이지 종료를 전달하는 로직 작성
+    // const
     closeModal();
   };
   return (
