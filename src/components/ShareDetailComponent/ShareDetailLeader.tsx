@@ -132,7 +132,7 @@ const ShareDetailLeader = () => {
       team_member_url: [location.state.teamMemberUrl || ""], // 팀 멤버 URL 배열로 설정
       team_member_position: [location.state.teamMemberPosition || ""], // 팀 멤버 직위 배열로 설정
       team_leader: location.state.leader || "",
-      team_name: "",
+      team_name: location.state.teamName || "",
       is_completed: location.state.isCompleted || false, // 기본값 설정
       project_link: location.state.projectLink || "",
     };

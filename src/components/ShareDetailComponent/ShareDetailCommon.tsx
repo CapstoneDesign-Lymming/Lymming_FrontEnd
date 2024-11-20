@@ -15,6 +15,7 @@ interface ShareDetailLeaderProps {
     team_member_name: string[]; //
     team_member_url: string[]; //
     team_member_position: string[]; //
+    team_name: string;
     leader: string;
     end: boolean;
   };
