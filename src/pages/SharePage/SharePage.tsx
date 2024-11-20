@@ -23,9 +23,6 @@ interface ItemType {
 
 const fetchShareData = async () => {
   const response = await axios.get("https://lymming-back.link/share/list");
-  // const response = await axios.get(
-  //   "https://lymming-back.link/share/list1111111111"
-  // ); //에러페이지 동작시키기 위한 axios
 
   console.log("sharepage 프로젝트 data", response.data);
   return response.data;
@@ -53,7 +50,7 @@ const SharePage = () => {
                   : false;
 
                 const isLeader = item.leader === nickname;
-
+                const teamMemberArr = item.teamMember?.split(",");
                 if (isLeader || isTeamMember) {
                   return (
                     <div
@@ -75,8 +72,7 @@ const SharePage = () => {
                                 : "CardHeader-emptyText"
                             }`}
                           >
-                            {item.sharePageName ||
-                              "아직 프로젝트 이름이 설정되지 않았습니다"}
+                            {item.sharePageName || "프로젝트 이름 미정"}
                           </div>
                         </div>
                         <div className="CardBody">
@@ -88,12 +84,17 @@ const SharePage = () => {
                         <div className="CardFooter">
                           <div className="CardFooter-Description">
                             <div className="word">
-                              {item.sharePageDescription ||
-                                "아직 프로젝트 설명이 설정되지 않았습니다"}
+                              {item.sharePageDescription || "설명 미기입"}
                             </div>
                           </div>
+
                           <div className="CardFooter-MembersWrapper">
-                            <div className="memberItem">{item.leader}</div>
+                            {" "}
+                            {teamMemberArr?.map((name, index) => (
+                              <div className="memberItem" key={index}>
+                                {name}
+                              </div>
+                            ))}
                           </div>
                         </div>
                       </div>
