@@ -7,6 +7,7 @@ import RootModal from "../Modal/RootModal/RootModal";
 import axios from "axios";
 interface ShareDetailLeaderProps {
   data: {
+    sharePageId: number;
     userId: number;
     projectId: number;
     sharePageName: string;
@@ -105,7 +106,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               </div>
               <div
                 className="leader_btn_end"
-                onClick={() => clickEndShareProject(propData.projectId)}
+                onClick={() => clickEndShareProject(propData.sharePageId)}
               >
                 종료하기
               </div>
