@@ -152,7 +152,7 @@ const ShareDetailLeader = () => {
                 <input
                   className="nameInput"
                   name="team_name"
-                  // value={formData}
+                  value={formData.team_member_name}
                   onChange={handleInputChange}
                 />
               </div>
