@@ -79,7 +79,7 @@ const ShareDetailLeader = () => {
     return s3ImageUrl;
   };
 
-  const putShareDetail = async (s3ImgUrl: string) => {
+  const putShareDetail = async (s3ImgUrl: string = formData.sharepage_url) => {
     const postTeam = formData.team_member.join(",");
     console.log("put에서 ", s3ImgUrl);
     const res = await axios.put(
@@ -103,6 +103,8 @@ const ShareDetailLeader = () => {
     if (s3ImageUrl) {
       console.log("s3ImageUrl 존재, putShareDetail실행");
       putShareDetail(s3ImageUrl);
+    } else {
+      putShareDetail();
     }
     setToastName("successToast");
     openToast();
