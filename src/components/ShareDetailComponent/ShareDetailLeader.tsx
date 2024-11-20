@@ -96,7 +96,7 @@ const ShareDetailLeader = () => {
       {
         userId: formData.userId,
         projectId: formData.project_id,
-        sharePageUrl: s3ImgUrl, //s3경로는 직접 기입
+        sharePageUrl: s3ImgUrl || formData.sharepage_url, //s3경로는 직접 기입
         sharePageName: formData.project_name,
         sharePageDescription: formData.project_description,
         teamMember: postTeam,
@@ -106,7 +106,7 @@ const ShareDetailLeader = () => {
     );
     setFormData(res.data);
   };
-
+  //FIXME:
   const saveShareDetail = async () => {
     const s3ImageUrl = await postS3ImageUrl();
     if (s3ImageUrl) {
