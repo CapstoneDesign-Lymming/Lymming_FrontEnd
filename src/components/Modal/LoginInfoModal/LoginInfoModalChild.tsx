@@ -7,7 +7,6 @@ import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
 import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
-import { damp } from "three/src/math/MathUtils.js";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -423,7 +422,7 @@ export const Child7 = () => {
 export const Child8 = () => {
   const { userType } = useOpenAiCassification();
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
-  const { data, setData } = useInfoStore();
+  const { setData } = useInfoStore();
   const localProjectImg = useRef<string | undefined>("");
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
