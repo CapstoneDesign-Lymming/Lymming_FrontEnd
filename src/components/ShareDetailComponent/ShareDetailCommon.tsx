@@ -16,9 +16,8 @@ interface ShareDetailLeaderProps {
     sharePageUrl: string;
     sharePageDescription: string;
     teamMember: string;
-    team_member_name: string[]; //
-    team_member_url: string[]; //
-    team_member_position: string[]; //
+    urlBundle: string; // 멤버의 이미지 번들
+    positionBundle: string; //멤버의 포지션 번들
     team_name: string;
     leader: string;
     end: boolean;
@@ -50,19 +49,44 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
     }
     //TODO:종료하기 로직은 endmodal 내부에서 진행
   };
-  // const teamMember = propData.teamMember.split;
+  const teamMemberArr = propData.teamMember.split(",");
+  console.log(typeof teamMemberArr, teamMemberArr);
+  const teamMemberLen = teamMemberArr.length; //멤버 수
+  console.log(teamMemberLen);
+  const urlBundle = propData.urlBundle?.split(",");
+  const positionBundle = propData.positionBundle?.split(",");
+  // const positionBundle = propData.positionBundle;
+  // const urlBundle = propData.urlBundle;
 
-  const teamMemberArr: string[] = [];
-  if (!propData.teamMember) {
-    propData.teamMember = propData.leader;
-    console.log("propData.teamMember", propData.teamMember);
-    teamMemberArr.push(propData.teamMember);
-  }
-  console.log("propData", propData);
+  /**extract 키워드 붙은 값들이 서버에서 추출한 데이터 */
+  // const extractUrl: string[] = [];
+  // const extractPosition: string[] = [];
+
+  /**서버 데이터에서 값들 추출하는 함수 */
+  // const extractItems = () => {
+  //   const nameArr = teamMember.slice(1, -1).split(",");
+  //   nameArr.map((i) => extractName.push(i));
+
+  //   const urlArr = urlBundle.slice(1, -1).split(",");
+  //   urlArr.map((i) => extractUrl.push(i));
+
+  //   const positionArr = positionBundle.slice(1, -1).split(",");
+  //   positionArr.map((i) => extractPosition.push(i));
+  // };
+
+  // if (!teamMember) {
+  //   const leader = propData.leader;
+  //   console.log("propData.teamMember", teamMember);
+  //   extractName.push(leader);
+  // }
+  // else if (!teamMember.includes(",")) {
+  //   //leader한명만 들어올 경우
+  //   extractName.push(teamMember);
+  // } else {
+  //   extractItems();
+  // }
   return (
     <>
-      {/* <div>공통 페이지</div>
-        <div>{leaderData.project_description}</div> */}
       <div className="ShareDetailCommonWrapper">
         <div className="ShareDetailCommon">
           <div className="ShareDetailCommon-Header">
@@ -78,23 +102,25 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
           </div>
           <div className="ShareDetailCommon-Footer">
             {teamMemberArr.map((userId, idx) => (
-              <div className="MemberCardWrapper">
+              <div className="MemberCardWrapper" key={idx}>
                 {
-                  <div className="MemberCard" key={userId}>
+                  <div className="MemberCard">
                     <div className="MemberCard-head">
-                      <img
-                        className="MemberCard-head-profile"
-                        src={`${propData.team_member_url[idx]}`}
-                        alt=""
-                      ></img>
+                      {propData.urlBundle && (
+                        <img
+                          className="MemberCard-head-profile"
+                          src={`${urlBundle[idx]}`}
+                          alt=""
+                        ></img>
+                      )}
                     </div>
                     <div className="MemberCard-body">
-                      <div className="MemberCard-body-name">
-                        {propData.team_member_name[idx]}
-                      </div>
-                      <div className="MemberCard-body-position">
-                        {propData.team_member_position[idx]}
-                      </div>
+                      <div className="MemberCard-body-name">{userId}</div>
+                      {propData.positionBundle && (
+                        <div className="MemberCard-body-position">
+                          {positionBundle[idx]}
+                        </div>
+                      )}
                     </div>
                   </div>
                 }
