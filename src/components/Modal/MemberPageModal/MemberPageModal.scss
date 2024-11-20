@@ -1,5 +1,5 @@
 @import "../../../style/mixin.scss";
-.MemberPageModalWrapper {
+.MemberPage {
   width: 39%;
   height: 77%;
   display: flex;
@@ -8,4 +8,6 @@
   background-color: rgb(255, 255, 255);
   border-radius: 27px;
   padding-top: 1%;
+  &-title {
+  }
 }

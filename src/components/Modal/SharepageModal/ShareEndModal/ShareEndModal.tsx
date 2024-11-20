@@ -22,6 +22,7 @@ const ShareEndModal = () => {
       <div className="ShareEndModal-body">
         <div className="info1">프로젝트를 종료하시겠습니까?</div>
         <div className="info2">종료한 이후에는 수정할 수 없습니다.</div>
+        {/* 이후, 팀원 평가하기 모달 */}
       </div>
       <div className="ShareEndModal-foot">
         <div className="shareEndBtn btn1" onClick={closeModal}>
