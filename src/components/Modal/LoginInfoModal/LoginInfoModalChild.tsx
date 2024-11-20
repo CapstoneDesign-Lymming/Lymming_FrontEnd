@@ -7,6 +7,7 @@ import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
 import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
+import { damp } from "three/src/math/MathUtils.js";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -421,14 +422,34 @@ export const Child7 = () => {
 
 export const Child8 = () => {
   const { userType } = useOpenAiCassification();
-  const { imageUrl, handleFileChange } = useImageUpload();
-  const { setData } = useInfoStore();
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
+  const { data, setData } = useInfoStore();
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
     setData({ [name]: value });
   };
+
+  const imageUpload = async () => {
+    console.log("변환되는 blob주소", imageUrl);
+    const s3ImageUrl = await handleUpload();
+
+    if (s3ImageUrl) {
+      console.log("s3이미지 주소", s3ImageUrl);
+      setData({ userImg: s3ImageUrl });
+    } else {
+      console.log("s3 변환 실패");
+    }
+  };
+
+  useEffect(() => {
+    console.log("이미지 주소", imageUrl);
+    imageUpload();
+
+    console.log("유저 이미지 경로", imageUrl);
+  }, [imageUrl]);
+
   useEffect(() => {
     if (userType) {
       setData({ developerType: userType });
@@ -447,7 +468,7 @@ export const Child8 = () => {
           onChange={handleFileChange}
           style={{ display: "none" }}
           id="image-upload"
-          name="profileImage"
+          name="userImg"
         />
         <button
           className="img-add"
