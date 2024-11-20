@@ -2,9 +2,12 @@ import axios from "axios";
 import useModalClose from "../../../../hooks/useModalClose";
 import "./ShareInviteModal.scss";
 import { useState } from "react";
+import useModalStore from "../../../../store/useModalState";
 const ShareInviteModal = () => {
-  const { modalRef } = useModalClose();
   const [inviteNickName, setInviteNickName] = useState("");
+  const { modalRef } = useModalClose();
+  const { postSharePageId } = useModalStore();
+
   const handleNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInviteNickName(e.target.value);
   };
@@ -14,7 +17,7 @@ const ShareInviteModal = () => {
       console.log("inviteNickName", inviteNickName);
       const encodedName = encodeURIComponent(inviteNickName);
       const response = await axios.get(
-        `https://lymming-back.link/share/find/${encodedName}`
+        `https://lymming-back.link/share/find/${encodedName}/${postSharePageId}`
       );
       console.log("초대", response.data);
       return response.data;
@@ -23,6 +26,7 @@ const ShareInviteModal = () => {
       console.error(error);
     }
   };
+
   return (
     <div ref={modalRef} className="ShareInviteModal">
       {/* <div className="ShareInviteModal-header"></div> */}
