@@ -12,6 +12,7 @@ interface ShareDetailLeaderProps {
     sharePageId: number;
     userId: number;
     projectId: number;
+    projectLink: string;
     sharePageName: string;
     sharePageUrl: string;
     sharePageDescription: string;
