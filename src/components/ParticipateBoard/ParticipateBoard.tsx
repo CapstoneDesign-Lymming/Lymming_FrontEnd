@@ -162,7 +162,8 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             setUserModalOpen(true);
           }}
         >
-          <img />
+          {data.userImg ? <img src={data.userImg} /> : <img />}
+
           <span>{item.nickname}</span>
         </div>
         <div className="item-bottom-right">
