@@ -8,7 +8,9 @@ import skills from "../../data/skills.json";
 interface ParticipateBoardProps {
   item: ParticipateItem;
   index: number;
-  setUserModalData: React.Dispatch<React.SetStateAction<string>>;
+  setUserModalData: React.Dispatch<
+    React.SetStateAction<{ userId: number; nickname: string }>
+  >;
   setUserModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -152,7 +154,10 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         <div
           className="item-bottom-left"
           onClick={() => {
-            setUserModalData(item.nickname);
+            setUserModalData({
+              userId: item.userId,
+              nickname: item.nickname,
+            });
 
             setUserModalOpen(true);
           }}

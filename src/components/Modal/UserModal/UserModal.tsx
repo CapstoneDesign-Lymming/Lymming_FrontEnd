@@ -8,10 +8,11 @@ import skills from "../../../data/skills.json";
 
 interface UsermodalProps {
   close: (value: boolean) => void;
-  nickname: String;
+  userId: number;
+  nickname: string;
 }
 
-const Usermodal: React.FC<UsermodalProps> = ({ close, nickname }) => {
+const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserInfo>();
 
@@ -21,9 +22,9 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, nickname }) => {
 
   // 유저 아이디로 유저 디테일 서버에서 불러오는 코드 추가하기
   const getUserData = async () => {
-    const res = await axios.get("https://lymming-back.link/user", {
-      params: { nickname },
-    });
+    const res = await axios.get(
+      `https://lymming-back.link/member/list/${userId}`
+    );
     setUserData(res.data);
     console.log(res.data);
   };
