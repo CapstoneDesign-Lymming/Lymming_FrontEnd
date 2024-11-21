@@ -17,7 +17,7 @@ interface ShareDetailLeaderProps {
     sharePageUrl: string;
     sharePageDescription: string;
     teamMember: string;
-    urlBundle: string; // 멤버의 이미지 번들
+    memberUrlBundle: string; // 멤버의 이미지 번들
     positionBundle: string; //멤버의 포지션 번들
     team_name: string;
     leader: string;
@@ -54,7 +54,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   console.log(typeof teamMemberArr, teamMemberArr);
   const teamMemberLen = teamMemberArr.length; //멤버 수/
   console.log(teamMemberLen);
-  const urlBundle = propData.urlBundle?.split(",");
+  const urlBundle = propData.memberUrlBundle?.split(",");
+  console.log("prop url", propData.memberUrlBundle);
+  console.log("urlBundle", urlBundle);
   const positionBundle = propData.positionBundle?.split(",");
 
   return (
@@ -104,7 +106,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
                 {
                   <div className="MemberCard">
                     <div className="MemberCard-head">
-                      {propData.urlBundle && (
+                      {propData.memberUrlBundle && (
                         <img
                           className="MemberCard-head-profile"
                           src={`${urlBundle[idx]}`}

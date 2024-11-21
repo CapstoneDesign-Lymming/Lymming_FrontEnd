@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useModalStore from "../../store/useModalState";
 import { useEffect, useState } from "react";
 import Header from "../header/Header";
@@ -28,6 +28,7 @@ interface ShareDetailLeaderProps {
 
 const ShareDetailLeader = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   // const initialData: ShareDetailLeaderProps = location.state;
   const { isModalOpen, openModal } = useModalStore();
   const { setPosetSharePageId } = useModalStore();
@@ -56,7 +57,6 @@ const ShareDetailLeader = () => {
   console.log(teamMemberLen);
   const urlBundle = formData.urlBundle?.split(",");
   const positionBundle = formData.positionBundle?.split(",");
-  console.log(urlBundle, positionBundle);
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -110,6 +110,8 @@ const ShareDetailLeader = () => {
     }
     setToastName("successToast");
     openToast();
+    // TODO: 완료하고 창 이전 페이지로 이동
+    navigate(-1);
     //이후 수정하기 post하기
     // postUplodFileUrl(s3ImageUrl);
   };
@@ -217,7 +219,7 @@ const ShareDetailLeader = () => {
                   </div>
                 </div>
               ))}
-              {teamMemberArr.length < 5 && (
+              {teamMemberLen < 5 && (
                 <div
                   className="AddMember"
                   onClick={() => invalidateInstance(formData.sharePageId)}
