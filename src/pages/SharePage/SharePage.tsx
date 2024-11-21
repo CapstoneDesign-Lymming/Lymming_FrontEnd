@@ -19,6 +19,8 @@ interface ItemType {
   teamName: string | null;
   end: boolean | null;
   leader: string;
+  memberUrlBundle: string; // 멤버의 이미지 번들
+  positionBundle: string;
 }
 
 const fetchShareData = async () => {
