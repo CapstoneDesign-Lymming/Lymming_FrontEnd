@@ -10,7 +10,10 @@ import { useInfoStore } from "../../store/useLoginStore";
 const CollectPage = () => {
   const [list, setList] = useState<ParticipateItem[]>([]);
   const [userModalOpen, setUserModalOpen] = useState(false);
-  const [userModalData, setUserModalData] = useState("");
+  const [userModalData, setUserModalData] = useState({
+    userId: 0,
+    nickname: "",
+  });
   const [selectTab, setSelectTab] = useState("내가쓴글");
   const { data } = useInfoStore();
   useEffect(() => {
@@ -74,7 +77,11 @@ const CollectPage = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} nickname={userModalData} />
+          <Usermodal
+            close={setUserModalOpen}
+            userId={userModalData.userId}
+            nickname={userModalData.nickname}
+          />
         </>
       )}
       <div className="content">
