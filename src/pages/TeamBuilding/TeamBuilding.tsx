@@ -185,7 +185,7 @@ const TeamBuilding = () => {
                     id="project"
                     name="studyType"
                     onChange={onChange}
-                    value="project"
+                    value="프로젝트"
                   />
                   <label htmlFor="project">프로젝트</label>
                 </div>
@@ -195,7 +195,7 @@ const TeamBuilding = () => {
                     name="studyType"
                     id="study"
                     onChange={onChange}
-                    value="study"
+                    value="스터디"
                   />
                   <label htmlFor="study">스터디</label>
                 </div>
@@ -228,9 +228,9 @@ const TeamBuilding = () => {
                     선택하세요
                   </option>
                   <option value="">선택</option>
-                  <option value="online">온라인</option>
-                  <option value="offline">오프라인</option>
-                  <option value="mix">혼합</option>
+                  <option value="온라인">온라인</option>
+                  <option value="오프라인">오프라인</option>
+                  <option value="혼합">혼합</option>
                 </select>
               </div>
             </div>
@@ -241,11 +241,11 @@ const TeamBuilding = () => {
               <span>프로젝트 기간</span>
               <select onChange={onChange} name="projectDuration">
                 <option value="">선택</option>
-                <option value="less_than_1_month">1달 이하</option>
-                <option value="1_month">1달</option>
-                <option value="3_months">3개월</option>
-                <option value="6_months">6개월</option>
-                <option value="more_than_1_year">1년 이상</option>
+                <option value="1달 이하">1달 이하</option>
+                <option value="1달">1달</option>
+                <option value="3개월">3개월</option>
+                <option value="6개월">6개월</option>
+                <option value="1년 이상">1년 이상</option>
               </select>
             </div>
             <div className="content-center-right">
@@ -258,13 +258,13 @@ const TeamBuilding = () => {
               <span>모집 포지션</span>
               <select onChange={onChange} name="recruitmentField">
                 <option value="">선택</option>
-                <option value="front">프론트</option>
-                <option value="back">벡</option>
+                <option value="프론트">프론트</option>
+                <option value="백엔드">백엔드</option>
                 <option value="ai">ai</option>
                 <option value="game">게임</option>
-                <option value="design">디자이너</option>
-                <option value="plan">기획</option>
-                <option value="etc">기타</option>
+                <option value="디자이너">디자이너</option>
+                <option value="기획">기획</option>
+                <option value="기타">기타</option>
               </select>
             </div>
 
@@ -272,9 +272,9 @@ const TeamBuilding = () => {
               <span>원하는 개발 스타일</span>
               <select onChange={onChange} name="workType">
                 <option value="">선택</option>
-                <option value="enthusiastic">열정적</option>
-                <option value="independent">독립적</option>
-                <option value="diligent">성실</option>
+                <option value="열정적">열정적</option>
+                <option value="독립적">독립적</option>
+                <option value="성실">성실</option>
               </select>
             </div>
           </div>
