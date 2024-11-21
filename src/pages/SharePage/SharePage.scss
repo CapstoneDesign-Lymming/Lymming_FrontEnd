@@ -46,6 +46,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
             .CardHeader {
               margin-top: 1%;
               // width: 96%;
@@ -55,7 +56,7 @@
               align-self: flex-start;
               border: 2px solid #b6e9ff;
               border-radius: 10px;
-              color: #47576a;
+              color: #000000;
               font-size: 22px;
               font-weight: 700;
               display: flex;
@@ -68,7 +69,7 @@
               // }
             }
             .isEnd {
-              border: 2px solid #6b6b6b;
+              border: 2px solid #6b6b6b48;
             }
             .CardBody {
               width: 100%;
@@ -115,6 +116,27 @@
                   flex-wrap: wrap;
                   border-radius: 8px;
                 }
+              }
+            }
+            .endproject {
+              width: 80px;
+              height: 30px;
+              position: absolute;
+              right: 0;
+              top: 1%;
+              background-color: #adb5bd;
+              color: white;
+              z-index: 2;
+              border-radius: 20px;
+              padding-left: 1px;
+              padding-right: 4px;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+              .end_icon {
+                width: 20px;
+                height: 20px;
+                fill: white;
               }
             }
           }
