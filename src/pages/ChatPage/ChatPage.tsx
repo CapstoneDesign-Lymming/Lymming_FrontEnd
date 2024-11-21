@@ -444,7 +444,15 @@ const ChatPage = () => {
                       ) : (
                         <div className="invite">
                           <div className="invite-message">{msg.content}</div>
-                          <div className="invite-buttons">
+                          <div
+                            className="invite-buttons"
+                            style={{
+                              display:
+                                msg.userName === msg.inviteNickname
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
                             <button
                               className="invite-buttons-accept"
                               onClick={() =>
