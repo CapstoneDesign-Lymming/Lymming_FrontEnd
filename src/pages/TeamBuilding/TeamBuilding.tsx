@@ -65,15 +65,15 @@ const TeamBuilding = () => {
     }
   };
 
-  const onSkillsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(
-      e.target.selectedOptions,
-      (option) => option.value
-    );
+  // const onSkillsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   const selectedOptions = Array.from(
+  //     e.target.selectedOptions,
+  //     (option) => option.value
+  //   );
 
-    setState({ ...state, techStack: selectedOptions.join(", ") });
-    console.log(state.projectImg);
-  };
+  //   setState({ ...state, techStack: selectedOptions.join(", ") });
+  //   console.log(state.projectImg);
+  // };
 
   const onSkillClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -85,6 +85,8 @@ const TeamBuilding = () => {
       // 체크 해제된 경우 배열에서 제거
       setSelectedSkills((prev) => prev.filter((skill) => skill !== value));
     }
+
+    setState({ ...state, techStack: selectedSkills.join(", ") });
   };
   const onsubmit = async () => {
     console.log("❌1");
