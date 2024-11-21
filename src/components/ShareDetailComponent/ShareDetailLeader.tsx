@@ -114,7 +114,7 @@ const ShareDetailLeader = () => {
     setToastName("successToast");
     openToast();
     // TODO: 완료하고 창 이전 페이지로 이동
-    navigate(-1);
+    navigate("/share");
     //이후 수정하기 post하기
     // postUplodFileUrl(s3ImageUrl);
   };
