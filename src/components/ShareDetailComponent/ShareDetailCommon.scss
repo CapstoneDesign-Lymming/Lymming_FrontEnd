@@ -38,6 +38,34 @@
         height: 50vh;
         border-radius: 20px;
       }
+      .project_link {
+        margin-top: 2%;
+        width: 60%;
+        height: 30px;
+        display: flex;
+        text-decoration: none;
+
+        .text {
+          display: flex;
+          align-items: center;
+          margin-right: 2%;
+        }
+        .link_icon {
+          width: 20px;
+          height: 20px;
+          margin-right: 2%;
+          fill: #000000;
+        }
+        .link {
+          display: flex;
+          align-items: center;
+          padding-right: 2%;
+          padding-left: 2%;
+          background-color: #ffe3cf;
+          color: #fc8129;
+          border-radius: 5px;
+        }
+      }
       .Body_description {
         background-color: rgb(244, 246, 247);
         width: 58%;
