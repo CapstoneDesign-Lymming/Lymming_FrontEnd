@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./TeamBuilding.scss";
@@ -47,6 +47,20 @@ const TeamBuilding = () => {
   const { isToastOpen, openToast, setErrorText } = useToastStore();
   // 기술 선택 배열
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
+
+  const requiredFields = [
+    { field: "studyType", message: "모집 구분을 선택하세요." },
+    { field: "recruitmentCount", message: "모집 인원을 입력하세요." },
+    { field: "studyMethod", message: "진행 방식을 선택하세요." },
+    { field: "projectDuration", message: "기간을 선택하세요." },
+    { field: "deadline", message: "마감 날짜를 선택하세요." },
+    { field: "recruitmentField", message: "포지션을 입력하세요." },
+    { field: "workType", message: "스타일을 선택하세요." },
+    { field: "projectName", message: "제목을 입력하세요." },
+    // { field: "projectImg", message: "이미지를 첨부하세요." },
+    { field: "description", message: "내용을 입력하세요." },
+    { field: "techStack", message: "기술을 입력하세요." },
+  ];
   const onBtnClick = () => {
     if (imgRef.current) {
       imgRef.current.click();
@@ -85,34 +99,13 @@ const TeamBuilding = () => {
       // 체크 해제된 경우 배열에서 제거
       setSelectedSkills((prev) => prev.filter((skill) => skill !== value));
     }
-
-    setState({ ...state, techStack: selectedSkills.join(", ") });
   };
-  const onsubmit = async () => {
-    console.log("❌1");
-    console.log("❌2 localprojectimg", localProjectImg.current);
-    const requiredFields = [
-      { field: "studyType", message: "모집 구분을 선택하세요." },
-      { field: "recruitmentCount", message: "모집 인원을 입력하세요." },
-      { field: "studyMethod", message: "진행 방식을 선택하세요." },
-      { field: "projectDuration", message: "기간을 선택하세요." },
-      { field: "deadline", message: "마감 날짜를 선택하세요." },
-      { field: "recruitmentField", message: "포지션을 입력하세요." },
-      { field: "workType", message: "스타일을 선택하세요." },
-      { field: "projectName", message: "제목을 입력하세요." },
-      // { field: "projectImg", message: "이미지를 첨부하세요." },
-      { field: "description", message: "내용을 입력하세요." },
-      { field: "techStack", message: "기술을 입력하세요." },
-    ];
-    console.log("❌3");
-    for (const { field, message } of requiredFields) {
-      if (!state[field as keyof State]) {
-        window.alert(message);
-        break;
-      }
-    }
-    console.log("❌4");
 
+  useEffect(() => {
+    setState({ ...state, techStack: selectedSkills.join(", ") });
+  }, [selectedSkills]);
+
+  const postProject = async () => {
     try {
       console.log("❌5");
 
@@ -147,6 +140,23 @@ const TeamBuilding = () => {
       openToast();
       setErrorText("등록에 실패하였습니다");
     }
+  };
+
+  const onsubmit = async () => {
+    console.log("❌1");
+    console.log("❌2 localprojectimg", localProjectImg.current);
+
+    console.log("❌3");
+    for (const { field, message } of requiredFields) {
+      if (!state[field as keyof State]) {
+        window.alert(message);
+        break;
+      } else {
+        postProject();
+      }
+    }
+    console.log("❌4");
+
     console.log("❌7");
   };
 
