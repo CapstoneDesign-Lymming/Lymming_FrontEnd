@@ -19,7 +19,10 @@ const Participate = () => {
     position: "",
     method: "",
   });
-  const [userModalData, setUserModalData] = useState("");
+  const [userModalData, setUserModalData] = useState({
+    userId: 0,
+    nickname: "",
+  });
 
   const onSkillClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
@@ -118,7 +121,11 @@ const Participate = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} nickname={userModalData} />
+          <Usermodal
+            close={setUserModalOpen}
+            userId={userModalData.userId}
+            nickname={userModalData.nickname}
+          />
         </>
       )}
       {visible && (
