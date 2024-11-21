@@ -448,7 +448,7 @@ const ChatPage = () => {
                             className="invite-buttons"
                             style={{
                               display:
-                                msg.userName === msg.inviteNickname
+                                currentUser === msg.inviteNickname
                                   ? "block"
                                   : "none",
                             }}
