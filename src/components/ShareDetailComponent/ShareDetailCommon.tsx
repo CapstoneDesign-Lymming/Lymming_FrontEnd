@@ -35,7 +35,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const clickEndShareProject = async (projectId: number) => {
     try {
       const response = await axios.put(
-        `https://lymming-back.link/share/details/${projectId}/end111`
+        `https://lymming-back.link/share/details/${projectId}/end`
       );
       setToastName("successToast");
       setSuccessText("프로젝트가 종료되었습니다");

@@ -17,7 +17,7 @@
     box-sizing: border-box;
     display: flex;
     gap: 1%;
-
+    align-items: center;
     &-left {
       border-radius: 10px;
       height: 100%;
@@ -118,8 +118,11 @@
     }
 
     .no_user {
+      position: absolute;
       color: #818181;
       margin-left: 2%;
+      font-size: 25px;
+      left: 50%;
     }
     &-right {
       border-radius: 10px;

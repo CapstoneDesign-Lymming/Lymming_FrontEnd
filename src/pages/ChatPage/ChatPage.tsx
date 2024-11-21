@@ -488,7 +488,7 @@ const ChatPage = () => {
             </div>
           </div>
         ) : (
-          <div className="no_user">채팅방을 선택하세요</div>
+          <div className="no_user">채팅방을 선택해주세요</div>
         )}
       </div>
     </div>
