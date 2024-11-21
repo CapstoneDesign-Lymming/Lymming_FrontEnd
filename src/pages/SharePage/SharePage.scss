@@ -1,12 +1,10 @@
 @import "../../style/mixin.scss";
 @font-face {
-  font-family: "NanumSquareNeo";
-  font-weight: normal;
-  src: url("../../assets/fonts/NanumSquareNeo/NanumSquareNeo/TTF/NanumSquareNeo-cBd.ttf");
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
 }
-
 .SharePageWrapper {
-  font-family: "NanumSquareNeo";
+  font-family: "Pretendard";
   margin-top: 7vh;
   .SharePage {
     width: 100%;
@@ -48,17 +46,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
             .CardHeader {
               margin-top: 1%;
-              width: 96%;
+              // width: 96%;
               height: 10%;
               padding-left: 2%;
               padding-right: 2%;
-
-              // background-color: #b6e9ff;
+              align-self: flex-start;
               border: 2px solid #b6e9ff;
               border-radius: 10px;
-              color: #47576a;
+              color: #000000;
+              font-size: 22px;
               font-weight: 700;
               display: flex;
               align-items: center;
@@ -68,6 +67,9 @@
               }
               // &-emptyText {
               // }
+            }
+            .isEnd {
+              border: 2px solid #6b6b6b48;
             }
             .CardBody {
               width: 100%;
@@ -83,6 +85,7 @@
               margin-top: 4%;
               width: 100%;
               height: 30%;
+              font-size: 19px;
               &-Description {
                 width: 100%;
                 height: 64%;
@@ -99,6 +102,7 @@
 
               &-MembersWrapper {
                 width: 100%;
+                margin: 1px;
                 height: 40%;
                 display: flex;
                 justify-content: flex-start;
@@ -112,6 +116,27 @@
                   flex-wrap: wrap;
                   border-radius: 8px;
                 }
+              }
+            }
+            .endproject {
+              width: 80px;
+              height: 30px;
+              position: absolute;
+              right: 0;
+              top: 1%;
+              background-color: #adb5bd;
+              color: white;
+              z-index: 2;
+              border-radius: 20px;
+              padding-left: 1px;
+              padding-right: 4px;
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+              .end_icon {
+                width: 20px;
+                height: 20px;
+                fill: white;
               }
             }
           }

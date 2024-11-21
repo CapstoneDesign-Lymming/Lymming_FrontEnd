@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModalChild.scss";
 import infoData from "../../../data/loginInfoData.json";
@@ -6,7 +6,7 @@ import loginok from "../../../assets/img/loginok.png";
 import nouserImage from "../../../assets/img/no-profile.webp";
 import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
-import { useOpenAicCassification } from "../../../hooks/useOpenAicCassification";
+import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
@@ -420,15 +420,49 @@ export const Child7 = () => {
 };
 
 export const Child8 = () => {
-  const { userType } = useOpenAicCassification();
-  const { imageUrl, handleFileChange } = useImageUpload();
+  const { userType } = useOpenAiCassification();
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
   const { setData } = useInfoStore();
+  const localProjectImg = useRef<string | undefined>("");
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // Store에서 setData 가져오기
     const name = e.target.name;
     const value = e.target.value; // 입력된 값 가져오기
     setData({ [name]: value });
   };
+
+  // 이미지 업로드 처리
+  const imageUpload = async () => {
+    try {
+      console.log("변환되는 blob주소", imageUrl);
+
+      if (!imageUrl) {
+        console.log("이미지 URL이 없습니다.");
+        return;
+      }
+
+      // handleUpload 함수가 이미지 URL을 반환한다고 가정
+      const s3url = await handleUpload(); // S3 업로드 함수 호출
+      localProjectImg.current = s3url; // 업로드된 이미지 URL을 ref에 저장
+      console.log("업로드된 S3 이미지 주소", s3url);
+
+      // S3 URL을 상태에 저장
+      if (s3url) {
+        setData({ userImg: s3url });
+      } else {
+        console.log("S3 업로드 실패");
+      }
+    } catch (error) {
+      console.error("이미지 업로드 중 오류 발생", error);
+    }
+  };
+
+  useEffect(() => {
+    if (imageUrl) {
+      imageUpload(); // imageUrl이 변경될 때마다 업로드
+    }
+  }, [imageUrl]);
+
   useEffect(() => {
     if (userType) {
       setData({ developerType: userType });
@@ -447,7 +481,7 @@ export const Child8 = () => {
           onChange={handleFileChange}
           style={{ display: "none" }}
           id="image-upload"
-          name="profileImage"
+          name="userImg"
         />
         <button
           className="img-add"
@@ -456,6 +490,10 @@ export const Child8 = () => {
           +
         </button>
       </div>
+      {/* <div className="">
+        <input type="checkbox" />
+        <div className="checkBasicImg">기본프로필로 설정하기</div>
+      </div> */}
 
       <div className="intro">
         <span>자신을 소개해주세요</span>

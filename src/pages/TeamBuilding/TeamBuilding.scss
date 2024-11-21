@@ -13,7 +13,7 @@
   .content {
     width: 30%;
     height: 100%;
-    row-gap: 5%;
+    row-gap: 3%;
     display: flex;
     flex-direction: column;
     border-left: 1px solid #cecece;
@@ -29,21 +29,19 @@
     &-top {
       display: flex;
       justify-content: space-between;
-      height: 15%;
-
+      height: 5%;
       &-left {
         display: flex;
         flex-direction: column;
         width: 40%;
-
-        justify-content: space-between;
+        gap: 5%;
 
         &-body {
           font-size: 1.1vw;
-          font-weight: bold;
+
           color: #707070;
           display: flex;
-          justify-content: space-between;
+          gap: 10%;
 
           &-box {
             width: 40%;
@@ -53,13 +51,16 @@
             }
 
             label {
-              display: block;
+              display: flex;
+              flex-direction: column;
               border: 1px solid gray;
               font-size: 1vw;
               width: 100%;
+              height: 100%;
               border-radius: 5px;
               padding: 1%;
-              text-align: center;
+              align-items: center;
+              justify-content: center;
             }
 
             input[type="radio"]:checked + label {
@@ -95,13 +96,22 @@
           display: flex;
           flex-direction: column;
           width: 100%;
-          justify-content: space-between;
+
+          gap: 5%;
+          .recruitmentCount {
+            display: block;
+            height: 100%;
+          }
         }
         &-2 {
           display: flex;
           flex-direction: column;
           width: 100%;
-          justify-content: space-between;
+          gap: 5%;
+          .recruitmentCount {
+            display: block;
+            height: 100%;
+          }
         }
       }
     }
@@ -116,20 +126,14 @@
         font-size: 1vw;
         font-weight: bold;
       }
-
-      &-middle {
-        display: flex;
-        flex-direction: column;
-        justify-content: end;
-      }
+      height: 10%;
 
       &-left {
         display: flex;
         flex-direction: column;
         width: 40%;
         height: 10vh;
-        justify-content: space-between;
-
+        gap: 5%;
         select {
           width: 90%;
           height: 40%;
@@ -148,13 +152,12 @@
         flex-direction: column;
         width: 40%;
         height: 10vh;
-        justify-content: space-between;
-
+        gap: 5%;
         input[type="date"] {
           box-sizing: border-box;
           border: 1px solid gray;
           font-size: 1vw;
-          width: 100%;
+          width: 90%;
           height: 40%;
           border-radius: 5px;
           padding: 1%;
@@ -172,6 +175,59 @@
           border-radius: 5px;
           padding: 1%;
           text-align: center;
+        }
+      }
+    }
+
+    &-skills {
+      position: relative;
+      height: 17%;
+      top: -2%;
+
+      &-item {
+        margin-top: 1%;
+        background-color: #dee2e6;
+        border-radius: 10px;
+        padding: 2%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10%;
+
+        button {
+          width: 10%;
+          position: relative;
+          left: 90%;
+          top: -5%;
+
+          background: #adb5bd;
+          border: none;
+        }
+
+        input {
+          display: none;
+        }
+        input:checked + .wrapper {
+          background-color: gray;
+          color: white;
+        }
+        .wrapper {
+          display: flex;
+          width: 15%;
+
+          padding: 1%;
+          align-items: center;
+          justify-content: center;
+          gap: 5%;
+          border-radius: 5px;
+          box-sizing: border-box;
+          .skill_icon {
+            width: 15px;
+            /* 비율을 유지하기 위해 높이는 자동으로 설정 */
+          }
+          label {
+            font-size: 10px;
+            flex-grow: 1;
+          }
         }
       }
     }

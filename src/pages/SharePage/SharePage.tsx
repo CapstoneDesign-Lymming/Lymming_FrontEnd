@@ -19,16 +19,15 @@ interface ItemType {
   teamName: string | null;
   end: boolean | null;
   leader: string;
+  memberUrlBundle: string; // 멤버의 이미지 번들
+  positionBundle: string;
 }
 
 const fetchShareData = async () => {
   const response = await axios.get("https://lymming-back.link/share/list");
-  // const response = await axios.get(
-  //   "https://lymming-back.link/share/list1111111111"
-  // ); //에러페이지 동작시키기 위한 axios
-
+  const reverseData = response.data.reverse();
   console.log("sharepage 프로젝트 data", response.data);
-  return response.data;
+  return reverseData;
 };
 
 const SharePage = () => {
@@ -53,7 +52,7 @@ const SharePage = () => {
                   : false;
 
                 const isLeader = item.leader === nickname;
-
+                const teamMemberArr = item.teamMember?.split(",");
                 if (isLeader || isTeamMember) {
                   return (
                     <div
@@ -67,7 +66,9 @@ const SharePage = () => {
                       }}
                     >
                       <div className="CardInsideWrapper">
-                        <div className="CardHeader">
+                        <div
+                          className={`CardHeader ${item.end ? "isEnd" : ""}`}
+                        >
                           <div
                             className={`${
                               item.sharePageName
@@ -75,8 +76,7 @@ const SharePage = () => {
                                 : "CardHeader-emptyText"
                             }`}
                           >
-                            {item.sharePageName ||
-                              "아직 프로젝트 이름이 설정되지 않았습니다"}
+                            {item.sharePageName || "프로젝트 이름 미정"}
                           </div>
                         </div>
                         <div className="CardBody">
@@ -88,14 +88,31 @@ const SharePage = () => {
                         <div className="CardFooter">
                           <div className="CardFooter-Description">
                             <div className="word">
-                              {item.sharePageDescription ||
-                                "아직 프로젝트 설명이 설정되지 않았습니다"}
+                              {item.sharePageDescription || "설명 미기입"}
                             </div>
                           </div>
+
                           <div className="CardFooter-MembersWrapper">
-                            <div className="memberItem">{item.leader}</div>
+                            {" "}
+                            {teamMemberArr?.map((name, index) => (
+                              <div className="memberItem" key={index}>
+                                {name}
+                              </div>
+                            ))}
                           </div>
                         </div>
+                        {item.end && (
+                          <div className="endproject">
+                            <svg
+                              className="end_icon"
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 512 512"
+                            >
+                              <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z" />
+                            </svg>
+                            <div>종료됨</div>
+                          </div>
+                        )}
                       </div>
                     </div>
                   );

@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
-import useImageUpload from "../../../hooks/useImageUpload";
 
 interface Props {
   children: ReactNode;
@@ -17,9 +16,9 @@ const LoginInfoModal = ({ children }: Props) => {
   const { data, setData } = useInfoStore();
   const token = localStorage.getItem("token");
 
-  const { handleUpload } = useImageUpload();
+  //const { handleUpload } = useImageUpload();
   const navigate = useNavigate();
-  const [localProfileImg, setLocalProfileImg] = useState<string | null>(null);
+  //const [localProfileImg, setLocalProfileImg] = useState<string | null>(null);
 
   const onBtnClick = () => {
     switch (count) {
@@ -90,26 +89,28 @@ const LoginInfoModal = ({ children }: Props) => {
         break;
     }
   };
-  const uploadImage = async () => {
-    console.log("💧uploadImage실행");
-    const s3ImageUrl = await handleUpload();
+  // 이미지 전송로직 변경으로 인한 주석처리
+  // const uploadImage = async () => {
+  //   console.log("💧uploadImage실행");
+  //   const s3ImageUrl = await handleUpload();
 
-    if (s3ImageUrl) {
-      setLocalProfileImg(s3ImageUrl);
-      console.log("👍ref로 선언한 loacalProfileImg", localProfileImg); //이미지 경로 들어감
-    }
-    // if (s3ImageUrl) {
-    //   console.log("s3ImageUrl", s3ImageUrl); //ok
-    //   setData({ userImg: loacalProfileImg.current });
-    //   console.log("s3에 업로드 후 data.userImg", data.userImg); //❌
-    // } else {
-    //   console.error("Image upload failed; URL is undefined");
-    // }
-  };
+  //   if (s3ImageUrl) {
+  //     setLocalProfileImg(s3ImageUrl);
+  //     console.log("👍ref로 선언한 loacalProfileImg", localProfileImg); //이미지 경로 들어감
+  //   }
 
-  const updateUserImg = () => {
-    setData({ userImg: localProfileImg });
-  };
+  // if (s3ImageUrl) {
+  //   console.log("s3ImageUrl", s3ImageUrl); //ok
+  //   setData({ userImg: loacalProfileImg.current });
+  //   console.log("s3에 업로드 후 data.userImg", data.userImg); //❌
+  // } else {
+  //   console.error("Image upload failed; URL is undefined");
+  // }
+  //};
+
+  // const updateUserImg = () => {
+  //   setData({ userImg: localProfileImg });
+  // };
   const postData = async () => {
     try {
       const res = await axios.put(
@@ -128,8 +129,7 @@ const LoginInfoModal = ({ children }: Props) => {
           favorites: data.favorites,
           temperature: data.temperature,
           refreshToken: token,
-          //여기는 백엔드 api 수정되면 열기
-          //         developer_type: data.developer_type,
+          developer_type: data.developerType,
         }
       );
       setData(res.data);
@@ -145,8 +145,8 @@ const LoginInfoModal = ({ children }: Props) => {
   };
 
   const handleUploadAndPost = async () => {
-    await uploadImage();
-    updateUserImg();
+    //await uploadImage();
+    //updateUserImg();
     await postData();
   };
   return (

@@ -1,10 +1,14 @@
 @import "../../style/mixin.scss";
-
+@font-face {
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
+}
 .MypageWrapper {
   margin-top: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "Pretendard";
   .Mypage {
     width: 60%;
     height: 80vh;
@@ -22,15 +26,25 @@
       top: 0;
       left: 1%;
       margin-top: 2%;
-      font-size: 22px;
+      font-size: 24px;
+      font-weight: 700;
     }
     &-profileWrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 5%;
+      margin-bottom: 4%;
       .temperature {
-        font-size: 30px;
+        height: 25px;
+        width: 50%;
+        @include flex-center;
+        font-size: 22px;
+        font-weight: 700;
+        background-color: #ffdfdf;
+        color: #ff4444;
+        border-radius: 8px;
+        margin-bottom: 5%;
       }
       .profile {
         width: 160px;

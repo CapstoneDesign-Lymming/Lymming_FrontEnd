@@ -7,11 +7,12 @@ import headerImg from "../../assets/img/lymming_logo.png";
 const Header = () => {
   const navigate = useNavigate();
   const pageLocation = useLocation();
-  const { login, setLogin } = useLoginStore();
+  const { login, setLogin, setCountReset, setIsOpenReset, setIsExistReset } =
+    useLoginStore();
   const [isMain, setIsMain] = useState(false);
   const [isHiddenBtnOn, setIsHiddenBtnOn] = useState(false);
   const [myPageOption, setMypageOption] = useState(false);
-  const { data } = useInfoStore();
+  const { data, resetData } = useInfoStore();
 
   // console.log(data.userImg);
 
@@ -22,7 +23,13 @@ const Header = () => {
 
   /**로그아웃  */
   const handleLogout = () => {
-    setLogin();
+    setLogin(); //login상태 !login
+    setCountReset();
+    setIsOpenReset();
+    setIsExistReset();
+    resetData(); // 상태 초기화
+    localStorage.removeItem("token");
+    console.log("토큰 삭제", localStorage.getItem("token"));
     setMypageOption(!myPageOption);
   };
 

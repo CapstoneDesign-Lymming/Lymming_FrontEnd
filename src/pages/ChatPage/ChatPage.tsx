@@ -1,14 +1,14 @@
-import Header from "../../components/header/Header";
-import "./ChatPage.scss";
-import chatsend from "../../assets/img/chat_send.png";
-import chatsendDisable from "../../assets/img/chat_send_disabled.png";
-import video from "../../assets/img/videocam.png";
 import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SockJS from "sockjs-client";
 import { CompatClient, Stomp } from "@stomp/stompjs";
-import { useLocation, useNavigate } from "react-router-dom";
+import Header from "../../components/header/Header";
+import "./ChatPage.scss";
 import { useInfoStore } from "../../store/useLoginStore";
+import chatsend from "../../assets/img/chat_send.png";
+import chatsendDisable from "../../assets/img/chat_send_disabled.png";
+// import video from "../../assets/img/videocam.png";
 
 interface ChatMessage {
   content: string;
@@ -17,6 +17,11 @@ interface ChatMessage {
   roomId: string;
   //보낸사람
   userId: string;
+  type: string;
+
+  //공유페이지 추가
+  inviteNickname: string;
+  sharePageId: number;
 }
 
 interface chatRoom {
@@ -44,6 +49,8 @@ const ChatPage = () => {
   // 구독상태
   const [isSubscribed, setIsSubscribed] = useState(false);
   const parterId = location.state.id;
+  const invite = location.state.invite;
+  const sharePageId = location.state.sharepage;
   const [partner, setPartner] = useState(parterId);
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
@@ -175,6 +182,10 @@ const ChatPage = () => {
         );
         console.log("구독 성공");
         setIsSubscribed(true);
+
+        if (invite === true) {
+          inviteMessage();
+        }
       },
       (error: any) => {
         console.error("STOMP 연결 오류:", error); // 연결 실패 시 오류 로그
@@ -192,6 +203,29 @@ const ChatPage = () => {
     }, 5000); // 5초 후 재연결
   };
 
+  const inviteMessage = () => {
+    if (client.current) {
+      const msgData = {
+        type: "INVITE",
+        roomId: chatRoom!.roomId,
+        userId: currentUser,
+        content: `${currentUser}님이 ${partner}님을 프로젝트에 초대하였습니다`,
+        timestamp: getMsgTime(),
+        userName: currentUser,
+        sharePageId: sharePageId,
+        inviteNickname: parterId,
+      };
+
+      client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
+
+      console.log("초대 메세지 전송");
+
+      navigate(window.location.pathname, {
+        state: { id: partner, invite: false },
+      });
+    }
+  };
+
   const sendChatMessage = () => {
     if (client.current && isSubscribed) {
       const msgData = {
@@ -204,7 +238,7 @@ const ChatPage = () => {
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
-      //  setChatHistory((prev) => [...prev, msgData]);
+
       setInputMessage("");
       console.log("전송한메세지", inputMessage);
     } else {
@@ -255,6 +289,22 @@ const ChatPage = () => {
         console.log("enter perss!!");
         sendChatMessage();
       }
+    }
+  };
+
+  // 공유페이지 초대 post
+  const postInvite = async (id: number, nickname: string) => {
+    try {
+      const res = await axios.post(
+        "https://lymming-back.link/share/add/team/member",
+        {
+          sharePageId: id,
+          nickname: nickname,
+        }
+      );
+      console.log("초대하기 성공", res.data);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -358,15 +408,17 @@ const ChatPage = () => {
                 <img />
                 <span>{partner}</span>
               </div>
-              <button
+              <svg
+                className="content-right-info-video"
                 onClick={() => {
                   console.log("🌳roomId", videoChatRoomId.current);
                   navigate(`/videochat/${videoChatRoomId.current}`);
                 }}
-                className="content-right-info-video"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"
               >
-                <img className="video" src={video} />
-              </button>
+                <path d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z" />
+              </svg>
             </div>
             <hr />
             <div className="content-right-body">
@@ -381,12 +433,40 @@ const ChatPage = () => {
                       }`}
                     >
                       <img />
-                      <div className="container">
-                        <div key={index} className={`message`}>
-                          {msg.content}
+
+                      {msg.type === "TALK" ? (
+                        <div className="container">
+                          <div key={index} className={`message`}>
+                            {msg.content}
+                          </div>
+                          <span className="time">{msg.timestamp}</span>
                         </div>
-                        <span className="time">{msg.timestamp}</span>
-                      </div>
+                      ) : (
+                        <div className="invite">
+                          <div className="invite-message">{msg.content}</div>
+                          <div
+                            className="invite-buttons"
+                            style={{
+                              display:
+                                currentUser === msg.inviteNickname
+                                  ? "block"
+                                  : "none",
+                            }}
+                          >
+                            <button
+                              className="invite-buttons-accept"
+                              onClick={() =>
+                                postInvite(msg.sharePageId, msg.inviteNickname)
+                              }
+                            >
+                              수락
+                            </button>
+                            <button className="invite-buttons-denined">
+                              거절
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </React.Fragment>
                 ))}
@@ -408,7 +488,7 @@ const ChatPage = () => {
             </div>
           </div>
         ) : (
-          <div className="no_user">채팅방을 선택하세요</div>
+          <div className="no_user">채팅방을 선택해주세요</div>
         )}
       </div>
     </div>

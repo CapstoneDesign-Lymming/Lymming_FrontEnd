@@ -59,7 +59,11 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, nickname }) => {
       </div>
 
       <div className="bottom">
-        <button onClick={() => navigate("/chat", { state: { id: nickname } })}>
+        <button
+          onClick={() =>
+            navigate("/chat", { state: { id: nickname, invite: false } })
+          }
+        >
           채팅하기
         </button>
       </div>

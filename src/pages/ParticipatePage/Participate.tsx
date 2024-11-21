@@ -12,6 +12,7 @@ const Participate = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [selectTab, setSelectTab] = useState("전체");
   const [data, setData] = useState<ParticipateItem[]>([]);
+  const [filterData, setFilterData] = useState<ParticipateItem[]>([]);
   const [visible, setVisible] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectSecondTab, setSelectSecondTab] = useState({
@@ -36,6 +37,7 @@ const Participate = () => {
     const target = e.target;
     const selectedValue = target.value;
 
+    console.log(selectedValue);
     setSelectSecondTab((prev) => ({
       ...prev, // 이전 상태를 복사
       [target.name]: selectedValue, // 선택된 키의 값을 업데이트
@@ -43,18 +45,19 @@ const Participate = () => {
   };
 
   useEffect(() => {
-    let filteredData =
-      selectTab === "전체"
-        ? data
-        : data.filter((it) => it.studyType === selectTab);
+    let filteredData: ParticipateItem[] = [...data];
+
+    if (selectTab !== "전체") {
+      filteredData = filteredData.filter((it) => it.studyType === selectTab);
+    }
 
     if (selectedSkills.length > 0) {
       filteredData = filteredData.filter((it) => {
         // techStack이 배열인지 확인하고, 배열일 때만 .some 메서드를 사용
-        return (
-          Array.isArray(it.techStack) &&
-          it.techStack.some((skill) => selectedSkills.includes(skill))
-        );
+        console.log(it.techStack.split(","));
+        return it.techStack
+          .split(",")
+          .some((skill) => selectedSkills.includes(skill));
       });
     }
 
@@ -71,12 +74,11 @@ const Participate = () => {
         return it.studyMethod.includes(selectSecondTab.method);
       });
     }
-
-    setData(filteredData as ParticipateItem[]);
+    setFilterData(filteredData as ParticipateItem[]);
+    //setData(filteredData as ParticipateItem[]);
   }, [selectTab, selectedSkills, selectSecondTab]);
 
   const handleClickOutside = (e: MouseEvent) => {
-    console.log("click");
     if (inside.current && !inside.current.contains(e.target as Node)) {
       setVisible(false);
     }
@@ -97,6 +99,7 @@ const Participate = () => {
         const res = await axios.get("https://lymming-back.link/participate");
         const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
         setData(reverseData as ParticipateItem[]);
+        setFilterData(reverseData as ParticipateItem[]);
         console.log("정렬 전 데이터", res);
         console.log("데이터 최신순 정렬", reverseData);
       } catch (e) {
@@ -181,6 +184,7 @@ const Participate = () => {
               <option value="" disabled hidden>
                 포지션
               </option>
+              <option value="">전체</option>
               <option value="프론트">프론트</option>
               <option value="백엔드">백엔드</option>
               <option value="디자이너">디자이너</option>
@@ -195,9 +199,10 @@ const Participate = () => {
               onChange={onSelectChange}
               defaultValue=""
             >
-              <option value="method" disabled hidden>
+              <option value="" disabled hidden>
                 진행방식
               </option>
+              <option value="">전체</option>
               <option value="온라인">온라인</option>
               <option value="오프라인">오프라인</option>
             </select>
@@ -206,7 +211,7 @@ const Participate = () => {
       </div>
 
       <div className="content">
-        {data.map((it, index) => {
+        {filterData.map((it, index) => {
           // 인덱스 프롭 임시 설정 나중에는 게시물 아이디로 할거임
           return (
             <ParticipateBoard
