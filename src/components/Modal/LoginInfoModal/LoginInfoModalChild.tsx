@@ -69,7 +69,7 @@ export const Child1 = () => {
             type="radio"
             id="male"
             name="gender"
-            value="MALE"
+            value="남성"
             onChange={onChange}
           />
           <label className="q2-box-item" htmlFor="male">
@@ -80,7 +80,7 @@ export const Child1 = () => {
             type="radio"
             id="female"
             name="gender"
-            value="FEMALE"
+            value="여성"
             onChange={onChange}
           />
           <label className="q2-box-item" htmlFor="female">
@@ -232,7 +232,7 @@ export const Child4 = () => {
             type="radio"
             id="새벽"
             name="work_time"
-            value="day"
+            value="새벽"
             onChange={onChange}
           />
           <label className="time-top-item" htmlFor="새벽">
@@ -242,7 +242,7 @@ export const Child4 = () => {
             type="radio"
             id="오전"
             name="work_time"
-            value="night"
+            value="오전"
             onChange={onChange}
           />
           <label className="time-top-item" htmlFor="오전">
@@ -254,7 +254,7 @@ export const Child4 = () => {
             type="radio"
             id="오후"
             name="work_time"
-            value="day"
+            value="오후"
             onChange={onChange}
           />
           <label className="time-bottom-item" htmlFor="오후">
@@ -264,7 +264,7 @@ export const Child4 = () => {
             type="radio"
             id="밤"
             name="work_time"
-            value="night"
+            value=" 밤"
             onChange={onChange}
           />
           <label className="time-bottom-item" htmlFor="밤">
@@ -292,13 +292,13 @@ export const Child5 = () => {
       <div className="content">
         <input
           type="radio"
-          id="독립적으로"
+          id="오프라인 선호"
           name="working_team"
-          value="독립적으로"
+          value="오프라인 선호"
           onChange={onChange}
         />
-        <label className="content-item" htmlFor="독립적으로">
-          독립적으로
+        <label className="content-item" htmlFor="오프라인 선호">
+          오프라인 선호
         </label>
         <input
           type="radio"
