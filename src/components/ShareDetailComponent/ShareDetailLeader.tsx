@@ -94,7 +94,7 @@ const ShareDetailLeader = () => {
         sharePageDescription: formData.sharePageDescription,
         teamMember: formData.teamMember,
         teamName: formData.teamName,
-        projectLink: formData.sharePageUrl,
+        projectLink: formData.projectLink,
       }
     );
     setFormData(res.data);
