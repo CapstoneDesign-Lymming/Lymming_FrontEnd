@@ -50,9 +50,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
     }
     //TODO:종료하기 로직은 endmodal 내부에서 진행
   };
-  const teamMemberArr = propData.teamMember.split(",");
+  const teamMemberArr = propData.teamMember?.split(",");
   console.log(typeof teamMemberArr, teamMemberArr);
-  const teamMemberLen = teamMemberArr.length; //멤버 수
+  const teamMemberLen = teamMemberArr.length; //멤버 수/
   console.log(teamMemberLen);
   const urlBundle = propData.urlBundle?.split(",");
   const positionBundle = propData.positionBundle?.split(",");

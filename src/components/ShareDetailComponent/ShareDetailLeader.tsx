@@ -205,7 +205,10 @@ const ShareDetailLeader = () => {
                 <div className="memberCard_Wrapper" key={idx}>
                   <div className="memberCard_Wrapper-imgWrapper">
                     {urlBundle && (
-                      <img src={urlBundle[idx]} alt="team member" />
+                      <img
+                        src={urlBundle[idx] || nouserImage}
+                        alt="team member"
+                      />
                     )}{" "}
                   </div>
                   <div className="memberCard_Wrapper-memberInfoWrapper">
