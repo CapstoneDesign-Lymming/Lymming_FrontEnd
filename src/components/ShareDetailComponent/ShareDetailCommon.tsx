@@ -111,7 +111,11 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
             ))}
           </div>
           {propData && propData.leader === data.nickname && (
-            <div className="leader_btn_bundle">
+            <div
+              className={`leader_btn_bundle ${
+                propData.end ? "endProject" : ""
+              }`}
+            >
               <div
                 className="leader_btn_put"
                 onClick={() => {
@@ -120,12 +124,14 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               >
                 수정하기
               </div>
-              <div
-                className="leader_btn_end"
-                onClick={() => clickEndShareProject(propData.sharePageId)}
-              >
-                종료하기
-              </div>
+              {!propData.end && (
+                <div
+                  className="leader_btn_end"
+                  onClick={() => clickEndShareProject(propData.sharePageId)}
+                >
+                  종료하기
+                </div>
+              )}
             </div>
           )}
         </div>
