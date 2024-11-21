@@ -27,7 +27,7 @@ const useImageUpload = () => {
 
   const handleUpload = async () => {
     if (!globalSelectedFile) {
-      alert("파일을 선택해주세요");
+      // alert("파일을 선택해주세요");
       return;
     }
     try {

@@ -97,7 +97,7 @@ const ShareDetailLeader = () => {
     );
     setFormData(res.data);
   };
-  //FIXME:
+  //FIXME: postS3ImageUrl실행하지 않을 경우에 사진이 이전 데이터로 가지만, 파일을 업로드 해주세요라는 메시지 뜸 해결하기
   const saveShareDetail = async () => {
     const s3ImageUrl = await postS3ImageUrl();
     if (s3ImageUrl) {
