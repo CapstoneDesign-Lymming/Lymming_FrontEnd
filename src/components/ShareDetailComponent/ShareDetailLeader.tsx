@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useModalStore from "../../store/useModalState";
 import { useEffect, useState } from "react";
 import Header from "../header/Header";
@@ -19,7 +19,7 @@ interface ShareDetailLeaderProps {
   sharePageUrl: string;
   sharePageDescription: string;
   teamMember: string;
-  urlBundle: string; // 멤버의 이미지 번들
+  memberUrlBundle: string; // 멤버의 이미지 번들
   positionBundle: string; //멤버의 포지션 번들
   teamName: string;
   leader: string;
@@ -28,6 +28,7 @@ interface ShareDetailLeaderProps {
 
 const ShareDetailLeader = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   // const initialData: ShareDetailLeaderProps = location.state;
   const { isModalOpen, openModal } = useModalStore();
   const { setPosetSharePageId } = useModalStore();
@@ -43,7 +44,7 @@ const ShareDetailLeader = () => {
     sharePageUrl: "",
     sharePageDescription: "",
     teamMember: "",
-    urlBundle: "",
+    memberUrlBundle: "",
     positionBundle: "",
     teamName: "",
     leader: "",
@@ -54,9 +55,11 @@ const ShareDetailLeader = () => {
   console.log(typeof teamMemberArr, teamMemberArr);
   const teamMemberLen = teamMemberArr.length; //멤버 수
   console.log(teamMemberLen);
-  const urlBundle = formData.urlBundle?.split(",");
+  const urlBundle = formData.memberUrlBundle?.split(",");
+  console.log("formData.teamUrlBundle", formData.memberUrlBundle);
+
+  console.log("urlBundle", urlBundle);
   const positionBundle = formData.positionBundle?.split(",");
-  console.log(urlBundle, positionBundle);
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -110,6 +113,8 @@ const ShareDetailLeader = () => {
     }
     setToastName("successToast");
     openToast();
+    // TODO: 완료하고 창 이전 페이지로 이동
+    navigate(-1);
     //이후 수정하기 post하기
     // postUplodFileUrl(s3ImageUrl);
   };
@@ -124,7 +129,7 @@ const ShareDetailLeader = () => {
       sharePageUrl: location.state.sharePageUrl || "",
       sharePageDescription: location.state.sharePageDescription || "",
       teamMember: location.state.teamMember || "",
-      urlBundle: location.state.urlBundle || "", // 팀 멤버 URL 배열로 설정
+      memberUrlBundle: location.state.memberUrlBundle || "", // 팀 멤버 URL 배열로 설정
       positionBundle: location.state.positionBundle || "", // 팀 멤버 직위 배열로 설정
       teamName: location.state.teamName || "",
       leader: location.state.leader || "",
@@ -217,7 +222,7 @@ const ShareDetailLeader = () => {
                   </div>
                 </div>
               ))}
-              {teamMemberArr.length < 5 && (
+              {teamMemberLen < 5 && (
                 <div
                   className="AddMember"
                   onClick={() => invalidateInstance(formData.sharePageId)}
