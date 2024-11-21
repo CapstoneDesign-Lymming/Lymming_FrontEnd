@@ -143,21 +143,14 @@ const TeamBuilding = () => {
   };
 
   const onsubmit = async () => {
-    console.log("❌1");
-    console.log("❌2 localprojectimg", localProjectImg.current);
-
-    console.log("❌3");
     for (const { field, message } of requiredFields) {
       if (!state[field as keyof State]) {
         window.alert(message);
-        break;
-      } else {
-        postProject();
+        return;
       }
     }
-    console.log("❌4");
 
-    console.log("❌7");
+    postProject();
   };
 
   const uploadImage = async () => {
