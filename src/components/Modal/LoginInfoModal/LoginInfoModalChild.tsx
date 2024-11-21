@@ -490,6 +490,10 @@ export const Child8 = () => {
           +
         </button>
       </div>
+      {/* <div className="">
+        <input type="checkbox" />
+        <div className="checkBasicImg">기본프로필로 설정하기</div>
+      </div> */}
 
       <div className="intro">
         <span>자신을 소개해주세요</span>

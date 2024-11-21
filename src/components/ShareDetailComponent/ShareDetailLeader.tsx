@@ -19,7 +19,7 @@ interface ShareDetailLeaderProps {
   sharePageUrl: string;
   sharePageDescription: string;
   teamMember: string;
-  urlBundle: string; // 멤버의 이미지 번들
+  memberUrlBundle: string; // 멤버의 이미지 번들
   positionBundle: string; //멤버의 포지션 번들
   teamName: string;
   leader: string;
@@ -44,7 +44,7 @@ const ShareDetailLeader = () => {
     sharePageUrl: "",
     sharePageDescription: "",
     teamMember: "",
-    urlBundle: "",
+    memberUrlBundle: "",
     positionBundle: "",
     teamName: "",
     leader: "",
@@ -55,7 +55,10 @@ const ShareDetailLeader = () => {
   console.log(typeof teamMemberArr, teamMemberArr);
   const teamMemberLen = teamMemberArr.length; //멤버 수
   console.log(teamMemberLen);
-  const urlBundle = formData.urlBundle?.split(",");
+  const urlBundle = formData.memberUrlBundle?.split(",");
+  console.log("formData.teamUrlBundle", formData.memberUrlBundle);
+
+  console.log("urlBundle", urlBundle);
   const positionBundle = formData.positionBundle?.split(",");
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
@@ -126,7 +129,7 @@ const ShareDetailLeader = () => {
       sharePageUrl: location.state.sharePageUrl || "",
       sharePageDescription: location.state.sharePageDescription || "",
       teamMember: location.state.teamMember || "",
-      urlBundle: location.state.urlBundle || "", // 팀 멤버 URL 배열로 설정
+      memberUrlBundle: location.state.memberUrlBundle || "", // 팀 멤버 URL 배열로 설정
       positionBundle: location.state.positionBundle || "", // 팀 멤버 직위 배열로 설정
       teamName: location.state.teamName || "",
       leader: location.state.leader || "",
