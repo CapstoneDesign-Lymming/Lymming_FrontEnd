@@ -33,8 +33,8 @@ const fetchShareData = async () => {
 const SharePage = () => {
   const navigate = useNavigate();
   const nickname = useInfoStore((state) => state.data.nickname); // nickname 가져오기
-  const { data, error, isLoading } = useQuery("localData", fetchShareData);
 
+  const { data, error, isLoading } = useQuery("localData", fetchShareData);
   if (isLoading) return <Loading />;
   if (error) return <Error />;
 
@@ -93,7 +93,6 @@ const SharePage = () => {
                           </div>
 
                           <div className="CardFooter-MembersWrapper">
-                            {" "}
                             {teamMemberArr?.map((name, index) => (
                               <div className="memberItem" key={index}>
                                 {name}
