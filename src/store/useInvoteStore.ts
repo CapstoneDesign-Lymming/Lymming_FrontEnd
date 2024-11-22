@@ -1,10 +1,11 @@
 import { create } from "zustand";
 interface invoteMemberType {
   candidates: string[];
-  setCandidates: (candidate: string[]) => void;
+  setCandidates: (arrProp: string[]) => void;
 }
+/** candidates, setCandidates*/
 export const useInvoteStore = create<invoteMemberType>((set) => ({
-  candidates: [],
-  setCandidates: (candidate) =>
-    set((state) => ({ candidates: [...state.candidate, candidate] })),
+  candidates: [], //모달로 전달할, 투표받을 멤버들
+  setCandidates: (arrProp) =>
+    set((state) => ({ candidates: [...state.candidates, ...arrProp] })),
 }));
