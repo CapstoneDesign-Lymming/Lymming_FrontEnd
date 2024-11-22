@@ -24,7 +24,7 @@ const CollectPage = () => {
   const getLikeBoard = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8080/favorites/list/${data.userId}`
+        `http://lymming-back.link/favorites/list/${data.userId}`
       );
       setList(res.data);
       console.log(res);
