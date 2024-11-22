@@ -45,17 +45,26 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const [toastName, setToastName] = useState("");
   const [modalName, setModalName] = useState("");
 
-  const teamMemberArr = propData.teamMember?.split(",");
+  let teamMemberArr = propData.teamMember?.split(","); //멤버 세팅
   // const teamMemberLen = teamMemberArr.length; //멤버 수/
   console.log("teamMemberArrs", teamMemberArr);
-  const urlBundle = propData.memberUrlBundle?.split(",");
-  const positionBundle = propData.positionBundle?.split(",");
-  const myInx = teamMemberArr.indexOf(data.nickname);
-  console.log(myInx);
-  const invoteMembers = teamMemberArr.splice(myInx - 1, 1);
+  let urlBundle = propData.memberUrlBundle?.split(","); //멤버 url세팅
+  let positionBundle = propData.positionBundle?.split(","); //멤버 포지션 세팅
+  const myInx = teamMemberArr.indexOf(data.nickname); // 나의 idx를 파악
+
+  const copyTeamMemberArr = [...teamMemberArr]; //멤버 카피
+  const copyUrlBundle = [...urlBundle]; //url 카피
+  const copyPositionBundle = [...positionBundle]; //position 카피
+
+  const invoteMembers = teamMemberArr.splice(myInx - 1, 1); //평가모달로 넘기기위한 나를제외 시킨 멤버 배열
+  teamMemberArr = [...copyTeamMemberArr]; //원본 배열 손상으로 인해 카피 배열을 가져옴
   console.log("invoteMembers", invoteMembers);
+
   const invoteUrl = urlBundle.splice(myInx - 1, 1);
+  urlBundle = [...copyUrlBundle];
+
   const invotePosition = positionBundle.splice(myInx - 1, 1);
+  positionBundle = [...copyPositionBundle];
 
   const clickEndShareProject = async (projectId: number) => {
     try {
