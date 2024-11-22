@@ -185,7 +185,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               >
                 수정하기
               </div>
-              {!propData.end && (
+              {propData.end === "FALSE" && (
                 <div
                   className="leader_btn_end"
                   onClick={() => clickEndShareProject(propData.sharePageId)}
