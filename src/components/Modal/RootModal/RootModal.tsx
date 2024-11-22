@@ -2,6 +2,7 @@ import { ModalPortal } from "../../../helper/Potal";
 import MemberPageModal from "../MemberPageModal/MemberPageModal";
 import ShareEndModal from "../SharepageModal/ShareEndModal/ShareEndModal";
 import ShareInviteModal from "../SharepageModal/ShareInviteModal/ShareInviteModal";
+import ShareVoteModal from "../SharepageModal/ShareVoteModal/ShareVoteModal";
 import ComfirmVideoModal from "../VideoChattingModal/ComfirmVideoModal";
 import "./RootModal.scss";
 
@@ -13,6 +14,7 @@ const RootModal = ({ modalName }: { modalName: string }) => {
           {modalName === "confirmVideoModal" && <ComfirmVideoModal />}
           {modalName === "shareInviteModal" && <ShareInviteModal />}
           {modalName === "shareEndModal" && <ShareEndModal />}
+          {modalName === "voteModal" && <ShareVoteModal />}
           {modalName === "memberPageModal" && <MemberPageModal />}
         </div>
       </ModalPortal>
