@@ -1,5 +1,9 @@
 .ShareVoteModal {
-  width: 300px;
+  width: 60vw;
   height: 400px;
   background-color: white;
+  .VoteCard {
+    width: 30%;
+    height: 80%;
+  }
 }

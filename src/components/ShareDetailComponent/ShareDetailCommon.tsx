@@ -35,14 +35,22 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { isToastOpen, openToast, setSuccessText, setErrorText } =
     useToastStore();
   const { isModalOpen, openModal } = useModalStore();
-  const { setCandidates } = useInvoteStore();
+  const { setCandidates, setCandidatesUrl, setCandidatesPosition } =
+    useInvoteStore();
   const [toastName, setToastName] = useState("");
   const [modalName, setModalName] = useState("");
 
   const teamMemberArr = propData.teamMember?.split(",");
   // const teamMemberLen = teamMemberArr.length; //멤버 수/
+  console.log("teamMemberArrs", teamMemberArr);
   const urlBundle = propData.memberUrlBundle?.split(",");
   const positionBundle = propData.positionBundle?.split(",");
+  const myInx = teamMemberArr.indexOf(data.nickname);
+  console.log(myInx);
+  const invoteMembers = teamMemberArr.splice(myInx - 1, 1);
+  console.log("invoteMembers", invoteMembers);
+  const invoteUrl = urlBundle.splice(myInx - 1, 1);
+  const invotePosition = positionBundle.splice(myInx - 1, 1);
 
   const clickEndShareProject = async (projectId: number) => {
     try {
@@ -61,10 +69,10 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
     }
   };
   /**평가 받을 멤버를 담을 배열을 전달하는 함수  */
-  const selectInvoteMember = () => {
-    const newArr = teamMemberArr.filter((item) => item !== data.nickname);
-    return newArr;
-  };
+  // const selectInvoteMember = () => {
+  //   const newArr = teamMemberArr.filter((item) => item !== data.nickname);
+  //   return newArr;
+  // };
 
   const checkVote = async (): Promise<boolean> => {
     try {
@@ -87,8 +95,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       const isVote = await checkVote(); // Promise를 처리
       console.log(isVote);
       if (!isVote) {
-        const invoteMember = selectInvoteMember();
-        setCandidates(invoteMember);
+        setCandidates(invoteMembers);
+        setCandidatesUrl(invoteUrl);
+        setCandidatesPosition(invotePosition);
         setModalName("voteModal");
         openModal();
       }
