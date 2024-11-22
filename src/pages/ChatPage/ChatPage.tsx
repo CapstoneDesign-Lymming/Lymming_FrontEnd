@@ -393,7 +393,7 @@ const ChatPage = () => {
                       </span>
                     </div>
                     <div className="content-left-list-item-count">
-                      <span>1</span>
+                      {/* <span>1</span> */}
                     </div>
                   </div>
                 );
