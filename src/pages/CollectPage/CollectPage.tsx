@@ -23,9 +23,9 @@ const CollectPage = () => {
   // 좋아요 누를 게시물 가져오기
   const getLikeBoard = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/favorites/list", {
-        params: { nickname: data.nickname },
-      });
+      const res = await axios.get(
+        `http://localhost:8080/favorites/list/${data.userId}`
+      );
       setList(res.data);
       console.log(res);
     } catch (e) {
@@ -35,12 +35,9 @@ const CollectPage = () => {
   // 내가 쓴 게시물 가져오기
   const getWirteBoard = async () => {
     try {
-      const res = await axios.get("https://lymming-back.link/favorites/list", {
-        params: { nickname: data.nickname },
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-      });
+      const res = await axios.get(
+        `https://lymming-back.link/list/project/${data.userId}`
+      );
       setList(res.data);
       console.log(res);
     } catch (e) {
