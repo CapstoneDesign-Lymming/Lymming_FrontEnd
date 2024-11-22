@@ -24,7 +24,7 @@ interface ShareDetailLeaderProps {
     positionBundle: string; //멤버의 포지션 번들
     team_name: string;
     leader: string;
-    end: boolean;
+    end: string;
   };
 }
 
@@ -162,7 +162,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
           {propData && propData.leader === data.nickname && (
             <div
               className={`leader_btn_bundle ${
-                propData.end ? "endProject" : ""
+                propData.end === "TRUE" ? "endProject" : ""
               }`}
             >
               <div
