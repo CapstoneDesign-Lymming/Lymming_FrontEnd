@@ -1,5 +1,6 @@
 export interface ParticipateItem {
   userId: number;
+  userImg: string;
   projectId: number;
   studyType: string;
   projectName: string;
