@@ -42,7 +42,12 @@ export const Child1 = () => {
   // 서버에서 닉네임으로 이미 사용자가 존재하는지 체크
   const getUserName = async () => {
     try {
-      const res = await axios.get("", { params: { nickname: name } });
+      const res = await axios.get(
+        "https://lymming-back.link/member/check-nickname",
+        {
+          params: { nickname: name },
+        }
+      );
       if (res.data === true) {
         setIsExist();
       }
