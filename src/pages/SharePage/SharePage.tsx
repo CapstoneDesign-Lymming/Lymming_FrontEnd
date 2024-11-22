@@ -17,7 +17,7 @@ interface ItemType {
   projectLink: string | null;
   sharePageUrl: string | null;
   teamName: string | null;
-  end: boolean | null;
+  end: string | null;
   leader: string;
   memberUrlBundle: string; // 멤버의 이미지 번들
   positionBundle: string;
@@ -33,8 +33,8 @@ const fetchShareData = async () => {
 const SharePage = () => {
   const navigate = useNavigate();
   const nickname = useInfoStore((state) => state.data.nickname); // nickname 가져오기
-  const { data, error, isLoading } = useQuery("localData", fetchShareData);
 
+  const { data, error, isLoading } = useQuery("localData", fetchShareData);
   if (isLoading) return <Loading />;
   if (error) return <Error />;
 
@@ -57,7 +57,7 @@ const SharePage = () => {
                   return (
                     <div
                       className={`SharePage-BodyWrapper-CardBundle-CardWrapper 
-                        ${item.end ? "completed" : ""}`}
+                        ${item.end === "TRUE" ? "completed" : ""}`}
                       key={item.projectId}
                       onClick={() => {
                         navigate(`/share/detail/${item.sharePageId}`, {
@@ -67,7 +67,9 @@ const SharePage = () => {
                     >
                       <div className="CardInsideWrapper">
                         <div
-                          className={`CardHeader ${item.end ? "isEnd" : ""}`}
+                          className={`CardHeader ${
+                            item.end === "TRUE" ? "isEnd" : ""
+                          }`}
                         >
                           <div
                             className={`${
@@ -93,7 +95,6 @@ const SharePage = () => {
                           </div>
 
                           <div className="CardFooter-MembersWrapper">
-                            {" "}
                             {teamMemberArr?.map((name, index) => (
                               <div className="memberItem" key={index}>
                                 {name}
@@ -101,7 +102,7 @@ const SharePage = () => {
                             ))}
                           </div>
                         </div>
-                        {item.end && (
+                        {item.end === "TRUE" && (
                           <div className="endproject">
                             <svg
                               className="end_icon"
