@@ -162,7 +162,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             setUserModalOpen(true);
           }}
         >
-          {data.userImg ? <img src={data.userImg} /> : <img />}
+          <img src={item.userImg} />
 
           <span>{item.nickname}</span>
         </div>

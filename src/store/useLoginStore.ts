@@ -29,7 +29,7 @@ export const useLoginStore = create<LoginState>()(
     (set) => ({
       login: false,
       count: 1,
-      isOpen: false,
+      isOpen: true,
       //닉네임 중복체크
       isExist: false,
       setCount: () => set((state) => ({ count: state.count + 1 })),
