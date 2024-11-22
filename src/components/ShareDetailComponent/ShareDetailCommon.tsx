@@ -99,7 +99,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
     const fetchVoteStatus = async () => {
       const isVote = await checkVote(); // Promise를 처리
       console.log(isVote);
-      if (!isVote && propData.end === "FALSE") {
+      if (!isVote && propData.end === "TRUE") {
         //FIXME: end가 TRUE일 경우에만 투표모달 표시
         setCandidates(invoteMembers);
         setCandidatesUrl(invoteUrl);
