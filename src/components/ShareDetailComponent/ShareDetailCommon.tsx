@@ -35,8 +35,13 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { isToastOpen, openToast, setSuccessText, setErrorText } =
     useToastStore();
   const { isModalOpen, openModal } = useModalStore();
-  const { setCandidates, setCandidatesUrl, setCandidatesPosition } =
-    useInvoteStore();
+  const {
+    setCandidates,
+    setCandidatesUrl,
+    setCandidatesPosition,
+    setNickName,
+    setSharePageId,
+  } = useInvoteStore();
   const [toastName, setToastName] = useState("");
   const [modalName, setModalName] = useState("");
 
@@ -94,10 +99,13 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
     const fetchVoteStatus = async () => {
       const isVote = await checkVote(); // Promise를 처리
       console.log(isVote);
-      if (!isVote) {
+      if (!isVote && propData.end === "FALSE") {
+        //FIXME: end가 TRUE일 경우에만 투표모달 표시
         setCandidates(invoteMembers);
         setCandidatesUrl(invoteUrl);
         setCandidatesPosition(invotePosition);
+        setNickName(data.nickname);
+        setSharePageId(propData.sharePageId);
         setModalName("voteModal");
         openModal();
       }
@@ -109,11 +117,6 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
      * 모달로 투표받을 사람들 및 투표주소를 주스텐드 값으로 넘겨준다 (이름 포지션 url)
      * 모달에서 주스탠드로  받은 투표받을 사람들을 나열하고 투표를 받는다
      * 투표를 한다
-     * 모달을
-     * /////
-     * 투표받은 값을 주스탠드로 설정한다
-     * 다시 해당 페이지common으로 와서
-     * 투표한 사람을 보내준다
      */
   }, []);
 
