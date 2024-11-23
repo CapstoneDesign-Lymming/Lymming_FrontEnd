@@ -28,7 +28,7 @@ export const useLoginStore = create<LoginState>()(
   persist(
     (set) => ({
       //임시
-      login: true,
+      login: false,
       count: 1,
       isOpen: false,
       //닉네임 중복체크
@@ -61,7 +61,7 @@ export const useInfoStore = create<InfoState>()(
         job: "",
         loginType: "",
         //임시
-        nickname: "박준서",
+        nickname: "",
         position: "",
         stack: "",
         temperature: 0,

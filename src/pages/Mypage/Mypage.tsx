@@ -7,6 +7,7 @@ import Header from "../../components/header/Header";
 import RootToast from "../../components/Toast/RootToast/RootToast";
 import no_profile from "../../assets/img/no-profile.webp";
 import infoData from "../../data/loginInfoData.json";
+import useImageUpload from "../../hooks/useImageUpload";
 interface putDataTypes {
   temperature: number;
   nickname: string;
@@ -23,6 +24,13 @@ const Mypage = () => {
   const [toastName, setToastName] = useState("");
   const [isOpenSelectBox, setIsOpenSelectBox] = useState(false);
   const [isOpenStackBox, setIsOpenStackBox] = useState(false); // 기술 선택 박스 상태 추가
+  const [isAllowNickname, setIsAllowNickName] = useState<boolean | undefined>(
+    false
+  );
+  const [clickImg, setClickImg] = useState(false);
+  const [haveNickNameCheck, setHaveNickNameCheck] = useState(false);
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
+
   const [putData, setPutDat] = useState<putDataTypes>({
     temperature: 0,
     nickname: "",
@@ -46,14 +54,21 @@ const Mypage = () => {
   const stackArr = putData.stack?.split(",").map((item) => item.trim());
   console.log(stackArr);
   const updateMyData = async () => {
+    const s3url = await handleUpload();
+    if (haveNickNameCheck) {
+      if (!isAllowNickname) {
+        alert("닉네임을 확인해주세요");
+        return;
+      }
+    }
     try {
       //FIXME: axios put login
       const res = await axios.put(
         `https://lymming-back.link/api/mypage/${data.userId}`,
         {
           userId: data.userId,
-          nickname: data.nickname,
-          userImg: data.userImg,
+          nickname: putData.nickname,
+          userImg: s3url || data.userImg,
           stack: putData.stack,
           job: putData.job,
           position: putData.position,
@@ -104,6 +119,29 @@ const Mypage = () => {
     }
     setIsOpenStackBox(false); // 선택 박스 닫기
   };
+
+  const getUserName = async () => {
+    try {
+      const res = await axios.get(
+        "https://lymming-back.link/member/check-nickname",
+        {
+          params: { nickname: putData.nickname },
+        }
+      );
+      if (res.data === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const nameCheck = async () => {
+    const res = await getUserName();
+    setIsAllowNickName(res);
+    setHaveNickNameCheck(true);
+  };
   return (
     <>
       <Header />
@@ -113,7 +151,7 @@ const Mypage = () => {
           <div className="Mypage-profileWrapper">
             <div className="temperature">{data.temperature}°C</div>
             <img
-              className="profile"
+              className={`profile ${clickImg ? "no_display1" : "display1"}`}
               src={
                 data.userImg !== "" && data.userImg !== null
                   ? data?.userImg
@@ -121,6 +159,32 @@ const Mypage = () => {
               }
               alt=""
             />
+            <img
+              className={`profile ${clickImg ? "display2" : "no_display2"}`}
+              src={imageUrl !== "" && imageUrl !== null ? imageUrl : no_profile}
+              alt=""
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+              id="image-upload"
+              name="userImg"
+            />
+            <div className="putImg">
+              <svg
+                className="newImgIcon"
+                xmlns="http://www.w3.org/2000/svg"
+                onClick={() => {
+                  document.getElementById("image-upload")?.click();
+                  setClickImg(true);
+                }}
+                viewBox="0 0 512 512"
+              >
+                <path d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1 0 32c0 8.8 7.2 16 16 16l32 0zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z" />
+              </svg>
+            </div>
           </div>
           <div className="Mypage-body">
             <div className="input_text">닉네임</div>
@@ -130,6 +194,7 @@ const Mypage = () => {
               name="nickname"
               value={putData.nickname}
             ></input>
+            <div onClick={nameCheck}>중복확인하기</div>
             <div className="input_text">포지션</div>
             <div className="tagBundle">
               <div className="tag">{putData.position}</div>
@@ -199,11 +264,13 @@ const Mypage = () => {
                   </div>
                 ))}
               </div>
-              <div className="plus" onClick={() => setIsOpenStackBox(true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                  <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
-                </svg>
-              </div>
+              {stackArr.length < 5 && (
+                <div className="plus" onClick={() => setIsOpenStackBox(true)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
+                  </svg>
+                </div>
+              )}
               <div className={`selectBox ${isOpenStackBox ? "open" : ""}`}>
                 <div className="closeBtnWrapper">
                   <svg

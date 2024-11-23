@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     border-radius: 10px;
     border: 1px solid #cdcdcd;
     &-head {
@@ -51,10 +52,38 @@
         height: 130px;
         border-radius: 50%;
       }
+      .putImg {
+        position: absolute;
+        width: 27px;
+        height: 27px;
+        @include flex-center;
+        top: 32%;
+        right: 44%;
+        border-radius: 50%;
+        .newImgIcon {
+          width: 20px;
+          height: 20px;
+          // background-color: #1059c1;
+        }
+      }
+      .no_display1 {
+        display: none;
+      }
+      .display1 {
+        display: block;
+      }
+      .display2 {
+        display: block;
+      }
+      .no_display2 {
+        display: none;
+      }
     }
     &-body {
       width: 60%;
       height: 70%;
+      display: flex;
+      flex-direction: column;
       .input_text {
         font-size: 17px;
         font-weight: 600;
@@ -62,7 +91,7 @@
       }
 
       .input_box {
-        width: 90%;
+        width: 150px;
         border: 1px solid #cdcdcd;
         border-radius: 3px;
         height: 3.5vh;
