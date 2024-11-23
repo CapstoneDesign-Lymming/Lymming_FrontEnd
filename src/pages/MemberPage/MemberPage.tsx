@@ -14,15 +14,18 @@ import lymming from "../../assets/img/lymming_logo.png";
 import RootToast from "../../components/Toast/RootToast/RootToast";
 import { useToastStore } from "../../store/useToastState";
 
-interface itemType {
-  name: string;
-  userImg: string;
-  githubUrl: string;
-  keywords: string[];
-  skills: string[];
-  position: string;
-  devStyle: string;
+interface RecommendType {
   bio: string;
+  deadlines: string[];
+  devStyle: string[];
+  job: string;
+  nickname: string;
+  position: string;
+  projectNames: string[];
+  stack: string[];
+  temperature: number;
+  userId: number;
+  userImg: string;
 }
 
 interface memberType {
@@ -55,13 +58,17 @@ const MemberPage = () => {
   const nickname = userData.nickname;
   const [modalName, setModalName] = useState("");
   const [toastName, setToastName] = useState("");
-  const fetchLocalData = async () => {
-    const response = await fetch("/json/recommendData.json");
-    if (!response.ok) {
-      throw new Error("Network error");
-    }
-    return response.json();
+  const [positionFilter, setPositionFilter] = useState<string | null>(null);
+  const [stackFilter, setStackFilter] = useState<string | null>(null);
+
+  const fetchRecommendData = async () => {
+    const response = await axios.get(
+      `https://lymming-back.link/member/random/list/${userData.userId}`
+    );
+    console.log("fetchRecommendData", response.data);
+    return response.data;
   };
+
   const fetchMember = async () => {
     const response = await axios.get("https://lymming-back.link/member/list");
     console.log("member/list의 데이터", response.data);
@@ -101,19 +108,24 @@ const MemberPage = () => {
     setModalName("memberPageModal");
     openModal();
   };
-  const [positionFilter, setPositionFilter] = useState<string | null>(null);
-  const [stackFilter, setStackFilter] = useState<string | null>(null);
+
   const {
     data: recommendQuery,
     error: recommendError,
     isLoading: recommendLoading,
-  } = useQuery("recommendData", fetchLocalData);
+  } = useQuery("recommendData", fetchRecommendData, {
+    staleTime: 1000 * 60 * 5, // 5분 동안 캐시 데이터 신선 유지
+  });
+  console.log("recommendQuery", recommendQuery);
 
+  console.log("recommendQuery", recommendQuery?.[0].stack);
   const {
     data: memberQuery,
     error: memberError,
     isLoading: memberLoading,
-  } = useQuery("memberData", fetchMember);
+  } = useQuery("memberData", fetchMember, {
+    staleTime: 1000 * 60 * 5, // 5분 동안 캐시 데이터 신선 유지
+  });
 
   const filteredMembers = memberQuery?.filter((member: memberType) => {
     // positionFilter가 있다면, position이 일치하는지 확인
@@ -161,59 +173,40 @@ const MemberPage = () => {
             </div>
 
             <div className="Member-header-recommend">
-              {recommendQuery.recommendData.map(
-                (item: itemType, index: number) => (
-                  <div
-                    key={item.name}
-                    className={`recommendCard ${
-                      flippedRecommendIdx === index ? "recommendFlipped" : ""
-                    }`}
-                    onClick={() => handleClickRecommend(index)}
-                  >
-                    <div className="front">
-                      <div className="recommend_name">{item.name}</div>
-                      <div className="recommend_position">{item.position}</div>
-                      <img src={`${item.userImg}`} alt="" />
+              {recommendQuery.map((item: RecommendType, index: number) => (
+                <div
+                  key={index}
+                  className={`recommendCard ${
+                    flippedRecommendIdx === index ? "recommendFlipped" : ""
+                  }`}
+                  onClick={() => handleClickRecommend(index)}
+                >
+                  <div className="front">
+                    <div className="recommend_name">{item.nickname}</div>
+                    <div className="recommend_position">{item.position}</div>
+                    <img src={`${item.userImg}`} alt="recommend" />
+                  </div>
+                  <div className="back">
+                    <div className="recommend_name">{item.nickname}</div>
+                    <div className="recommend_position">{item.position}</div>
+                    <div className="back_body">
+                      <div className="back_body-devStyle">#{item.devStyle}</div>
+                      <div className="back_body-skillWrapper">
+                        주요스킬 | {...item.stack}
+                      </div>
                     </div>
-                    <div className="back">
-                      <div className="recommend_name">{item.name}</div>
-                      <div className="recommend_position">{item.position}</div>
-                      <div className="back_body">
-                        <div className="back_body-devStyle">
-                          {item.devStyle}
-                        </div>
-                        <div className="back_body-skillWrapper">
-                          {item.skills.map((skill, index) => {
-                            // 이름이 일치하는 skill 객체를 찾습니다.
-                            const matchedSkill = skills.skills.find(
-                              (s) =>
-                                s.name.toUpperCase() === skill.toUpperCase()
-                            );
-
-                            return (
-                              <div key={index} className="back_body-skill">
-                                {matchedSkill && (
-                                  <img
-                                    src={matchedSkill.url}
-                                    alt={skill}
-                                    className="skill_icon"
-                                  />
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                      <div
-                        className="back_footerWrapper"
-                        onClick={(e) => handleChatClick(e, item.name)}
-                      >
-                        <div className="back_footer">채팅하기</div>
-                      </div>
+                    <div
+                      className="back_footerWrapper"
+                      onClick={(e) => handleChatClick(e, item.nickname)}
+                    >
+                      <div className="back_footer">채팅하기</div>
                     </div>
                   </div>
-                )
-              )}
+                </div>
+              ))}
+              {/* {recommendQuery.map((item, idx) => (
+                <div key={idx}>{item.nickname}</div>
+              ))} */}
             </div>
           </div>
           <div className={`${login ? "hide_notLogin_nav" : "notLogin_nav"}`}>
@@ -240,7 +233,19 @@ const MemberPage = () => {
                 <option value="">전체</option>
                 <option value="프론트엔드">프론트엔드</option>
                 <option value="백엔드">백엔드</option>
-                <option value="디자이너">디자이너</option>
+                <option value="풀스택">풀스택</option>
+                <option value="AI개발">AI개발</option>
+                <option value="모바일 개발">모바일 개발</option>
+                <option value="클라우드">클라우드</option>
+                <option value="보안">보안</option>
+                <option value="블록체인">블록체인</option>
+                <option value="게임 개발">게임 개발</option>
+                <option value="AR/VR">AR/VR</option>
+                <option value="UI/UX 디자인">UI/UX 디자인</option>
+                <option value="IoT">IoT</option>
+                <option value="네트워크">네트워크</option>
+                <option value="데이터베이스">데이터베이스</option>
+                <option value="빅데이터">빅데이터</option>
               </select>
             </div>
 
@@ -251,9 +256,18 @@ const MemberPage = () => {
                 value={stackFilter || ""}
               >
                 <option value="">전체</option>
+                <option value="java">java</option>
+                <option value="python">python</option>
                 <option value="javascript">javascript</option>
+                <option value="c#">c#</option>
+                <option value="ruby">ruby</option>
                 <option value="typescript">typescript</option>
+                <option value="html">html</option>
+                <option value="css">css</option>
                 <option value="react">react</option>
+                <option value="node.js">node.js</option>
+                <option value="go">go</option>
+                <option value="rust">rust</option>
               </select>
             </div>
           </div>
