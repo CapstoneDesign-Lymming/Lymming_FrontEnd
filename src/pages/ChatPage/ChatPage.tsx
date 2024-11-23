@@ -340,6 +340,7 @@ const ChatPage = () => {
         }
       );
       console.log("초대하기 성공", res.data);
+      window.alert("채팅방초대에 수락하셨습니다");
       systemMessage();
     } catch (e) {
       window.alert("실패:이미 초대 된 방입니다");

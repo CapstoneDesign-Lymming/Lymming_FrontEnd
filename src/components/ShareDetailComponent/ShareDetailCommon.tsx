@@ -10,6 +10,7 @@ import RootToast from "../Toast/RootToast/RootToast";
 import useModalStore from "../../store/useModalState";
 import RootModal from "../Modal/RootModal/RootModal";
 import { useInvoteStore } from "../../store/useInvoteStore";
+import defalutImg from "../../assets/img/noimage.jpg";
 interface ShareDetailLeaderProps {
   data: {
     sharePageId: number;
