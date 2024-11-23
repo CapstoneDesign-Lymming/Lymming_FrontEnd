@@ -9,7 +9,7 @@ import { useInfoStore } from "../../store/useLoginStore";
 import chatsend from "../../assets/img/chat_send.png";
 import chatsendDisable from "../../assets/img/chat_send_disabled.png";
 // import video from "../../assets/img/videocam.png";
-
+import noUserImg from "../../assets/img/no-profile.webp";
 interface ChatMessage {
   content: string;
   userName: string;
@@ -442,7 +442,9 @@ const ChatPage = () => {
                     <div className="content-left-list-item-profile">
                       <img
                         src={
-                          it.userId1 === currentUser ? it.user1Img : it.user2Img
+                          it.userId1 === currentUser
+                            ? it.user1Img || noUserImg
+                            : it.user2Img || noUserImg
                         }
                       />
                       <span>{it.userId2}</span>
@@ -468,7 +470,7 @@ const ChatPage = () => {
           <div className="content-right">
             <div className="content-right-info">
               <div className="content-right-info-profile">
-                <img src={userImg.user2Img} />
+                <img src={userImg.user2Img ? userImg.user2Img : noUserImg} />
                 <span>{partner}</span>
               </div>
               <svg
@@ -499,8 +501,8 @@ const ChatPage = () => {
                         <img
                           src={
                             msg.userId === currentUser
-                              ? userImg.user1Img
-                              : userImg.user2Img
+                              ? userImg.user1Img || noUserImg
+                              : userImg.user2Img || noUserImg
                           }
                         />
 

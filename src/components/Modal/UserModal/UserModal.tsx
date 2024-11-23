@@ -3,7 +3,7 @@ import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import noUserImg from "../../assets/img/no-profile.webp";
 import skills from "../../../data/skills.json";
 
 interface UsermodalProps {
@@ -59,7 +59,7 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
         </button>
       </div>
       <div className="top">
-        <img src={userData?.userImg} />
+        <img src={userData?.userImg ? userData.userImg : noUserImg} />
         <span className="top-name">{userData?.nickname}</span>
         <span className="top-introduce">{userData?.bio}</span>
       </div>

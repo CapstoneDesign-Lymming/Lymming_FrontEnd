@@ -186,7 +186,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
                       {propData.memberUrlBundle && (
                         <img
                           className="MemberCard-head-profile"
-                          src={`${urlBundle[idx]}`}
+                          src={urlBundle[idx] || defalutImg}
                           alt=""
                         ></img>
                       )}
