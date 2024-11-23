@@ -80,6 +80,13 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       );
       setToastName("successToast");
       setSuccessText("프로젝트가 종료되었습니다");
+      setCandidates(invoteMembers);
+      setCandidatesUrl(invoteUrl);
+      setCandidatesPosition(invotePosition);
+      setNickName(data.nickname);
+      setSharePageId(propData.sharePageId);
+      setModalName("voteModal");
+      openModal();
       openToast();
       return response.data;
     } catch (error) {
