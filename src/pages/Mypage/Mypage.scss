@@ -20,7 +20,7 @@
     border-radius: 10px;
     border: 1px solid #cdcdcd;
     &-head {
-      height: 7%;
+      height: 5%;
       width: 80%;
       position: absolute;
       top: 0;
@@ -34,7 +34,7 @@
       flex-direction: column;
       align-items: center;
       margin-top: 5%;
-      margin-bottom: 4%;
+      margin-bottom: 2%;
       .temperature {
         height: 25px;
         width: 50%;
@@ -47,36 +47,108 @@
         margin-bottom: 5%;
       }
       .profile {
-        width: 160px;
-        height: 160px;
+        width: 130px;
+        height: 130px;
         border-radius: 50%;
       }
     }
     &-body {
-      width: 30%;
-      height: 50%;
+      width: 60%;
+      height: 70%;
       .input_text {
-        font-size: 15px;
+        font-size: 17px;
         font-weight: 600;
-        margin-bottom: 4%;
+        margin-bottom: 2%;
       }
-      .stackWrapper {
-        display: flex;
-        width: 100%;
-        background-color: #687c97;
-      }
+
       .input_box {
         width: 90%;
         border: 1px solid #cdcdcd;
         border-radius: 3px;
         height: 3.5vh;
+        margin-bottom: 4%;
         .stackBox {
           width: 100px;
           height: 30px;
           background-color: red;
         }
       }
+      .tagBundle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 2%;
+        position: relative;
+        .tag {
+          width: 100px;
+          height: 30px;
+          @include flex-center;
+          border-radius: 7px;
+          line-height: 30px;
+          background-color: #e0e0e0;
+        }
+        .delete {
+          position: absolute;
+          top: -7px;
+          left: 90px;
+          width: 16px;
+          border-radius: 50%;
+          height: 16px;
+          border-radius: 50%;
+          @include flex-center;
+          background-color: #181818;
+          color: white;
+        }
+        .plus {
+          width: 30px;
+          height: 30px;
+          @include flex-center;
+          margin-left: 2%;
+          background-color: #e4e4e4;
+          border-radius: 8px;
+          svg {
+            width: 12px;
+            height: 12px;
+            fill: rgb(109, 108, 108);
+          }
+        }
+        .selectBox {
+          width: 500px;
+          height: 300px;
+          display: flex;
+          z-index: 2;
+          position: absolute;
+          background-color: rgba(255, 255, 255, 0.932);
+          backdrop-filter: 15px;
+          border: 0.4px solid rgb(221, 221, 221);
+          border-radius: 15px;
+          display: none;
+          .closeBtn {
+            width: 40px;
+            height: 20px;
+            background-color: #1059c1;
+          }
+        }
+        .open {
+          display: block;
+        }
+        .stackWrapper {
+          display: flex;
+          width: 100%;
+          .stackBox {
+            width: 80px;
+            height: 30px;
+            @include flex-center;
+            padding-right: 3%;
+            padding-left: 3%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 1%;
+          }
+        }
+      }
     }
+
     &-foot {
       .foot_btn {
         width: 10vw;

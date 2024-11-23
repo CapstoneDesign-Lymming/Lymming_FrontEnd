@@ -107,7 +107,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       const res = await axios.get(
         `https://lymming-back.link/vote/has/user?sharePageId=${propData.sharePageId}&nickname=${data.nickname}`
       );
-      if (res.data === true) {
+      if (res.data === "TRUE") {
         return true;
       } else {
         return false;
