@@ -10,6 +10,7 @@ interface invoteMemberType {
   setCandidatesPosition: (arrProp: string[]) => void;
   setNickName: (nickname: string) => void;
   setSharePageId: (sharePageId: number) => void;
+  resetInvoteState: () => void;
 }
 /** candidates, candidatesUrl, candidatesPosition, setCandidates, setCandidatesUrl, setCandidatesPosition*/
 export const useInvoteStore = create<invoteMemberType>((set) => ({
@@ -30,4 +31,12 @@ export const useInvoteStore = create<invoteMemberType>((set) => ({
     })),
   setNickName: (nickname: string) => set({ nickname: nickname }),
   setSharePageId: (sharePageId: number) => set({ sharePageId: sharePageId }),
+  resetInvoteState: () =>
+    set({
+      candidates: [],
+      candidatesUrl: [],
+      candidatesPosition: [],
+      nickname: "",
+      sharePageId: 999,
+    }),
 }));
