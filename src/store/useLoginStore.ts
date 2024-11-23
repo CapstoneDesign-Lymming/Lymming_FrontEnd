@@ -27,11 +27,9 @@ interface InfoState {
 export const useLoginStore = create<LoginState>()(
   persist(
     (set) => ({
-      //임시
       login: false,
       count: 1,
       isOpen: false,
-      //닉네임 중복체크
       isExist: false,
       setCount: () => set((state) => ({ count: state.count + 1 })),
       setCountDown: () => set((state) => ({ count: state.count - 1 })),
@@ -43,7 +41,7 @@ export const useLoginStore = create<LoginState>()(
       setIsExistReset: () => set(() => ({ isExist: false })),
     }),
     {
-      name: "loginState", // 로컬 스토리지에 저장될 키 이름
+      name: "loginState",
     }
   )
 );
@@ -60,7 +58,6 @@ export const useInfoStore = create<InfoState>()(
         serverNickname: "",
         job: "",
         loginType: "",
-        //임시
         nickname: "",
         position: "",
         stack: "",
@@ -108,7 +105,7 @@ export const useInfoStore = create<InfoState>()(
         }),
     }),
     {
-      name: "userData", // 로컬 스토리지에 저장될 키 이름
+      name: "userData",
     }
   )
 );

@@ -162,7 +162,7 @@ const Mypage = () => {
             <img
               className={`profile ${clickImg ? "display2" : "no_display2"}`}
               src={imageUrl !== "" && imageUrl !== null ? imageUrl : no_profile}
-              alt=""
+              alt="마이프로필_이미지"
             />
             <input
               type="file"
@@ -188,13 +188,18 @@ const Mypage = () => {
           </div>
           <div className="Mypage-body">
             <div className="input_text">닉네임</div>
-            <input
-              className="input_box"
-              onChange={handleInputChange}
-              name="nickname"
-              value={putData.nickname}
-            ></input>
-            <div onClick={nameCheck}>중복확인하기</div>
+            <div className="inputBundle">
+              <input
+                className="input_box"
+                onChange={handleInputChange}
+                name="nickname"
+                value={putData.nickname}
+              ></input>
+              <div className="checkNickName" onClick={nameCheck}>
+                중복 확인
+              </div>
+            </div>
+
             <div className="input_text">포지션</div>
             <div className="tagBundle">
               <div className="tag">{putData.position}</div>
