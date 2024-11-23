@@ -27,7 +27,7 @@ interface InfoState {
 export const useLoginStore = create<LoginState>()(
   persist(
     (set) => ({
-      login: true,
+      login: false,
       count: 1,
       isOpen: false,
       isExist: false,
@@ -58,7 +58,7 @@ export const useInfoStore = create<InfoState>()(
         serverNickname: "",
         job: "",
         loginType: "",
-        nickname: "dd",
+        nickname: "",
         position: "",
         stack: "",
         temperature: 0,
