@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
 import skills from "../../data/skills.json";
-
+import noUserImg from "../../assets/img/no-profile.webp";
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [data, setData] = useState<ParticipateItem>();
@@ -46,7 +46,7 @@ const ParticipateDetail = () => {
 
       <div className="content">
         <div className="content-name">
-          <img src={data?.userImg} />
+          <img src={data?.userImg ? data?.userImg : noUserImg} />
           <span className="bold_name" onClick={() => setUserModalOpen(true)}>
             {data?.nickname}
           </span>

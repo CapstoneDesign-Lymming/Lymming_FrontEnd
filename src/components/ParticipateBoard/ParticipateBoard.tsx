@@ -4,6 +4,7 @@ import "./ParticipateBoard.scss";
 import { useInfoStore } from "../../store/useLoginStore";
 import { ParticipateItem } from "../../interfaces/participate";
 import skills from "../../data/skills.json";
+import noUserImg from "../../assets/img/no-profile.webp";
 
 interface ParticipateBoardProps {
   item: ParticipateItem;
@@ -164,7 +165,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             setUserModalOpen(true);
           }}
         >
-          <img src={item.userImg} />
+          <img src={item.userImg ? item.userImg : noUserImg} />
 
           <span>{item.nickname}</span>
         </div>
