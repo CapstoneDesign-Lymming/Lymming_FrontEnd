@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./ShareDetailCommon.scss";
 // import useModalStore from "../../store/useModalState";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import RootModal from "../Modal/RootModal/RootModal";
 import axios from "axios";
 import { useToastStore } from "../../store/useToastState";
@@ -30,6 +30,7 @@ interface ShareDetailLeaderProps {
 
 const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { data } = useInfoStore();
+  console.log(data.nickname);
   const navigate = useNavigate();
   //TODO:
   const { isToastOpen, openToast, setSuccessText, setErrorText } =
@@ -41,29 +42,35 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
     setCandidatesPosition,
     setNickName,
     setSharePageId,
+    resetInvoteState,
   } = useInvoteStore();
   const [toastName, setToastName] = useState("");
   const [modalName, setModalName] = useState("");
 
   let teamMemberArr = propData.teamMember?.split(","); //멤버 세팅
-  // const teamMemberLen = teamMemberArr.length; //멤버 수/
+  console.log("propData.teamMember", propData.teamMember);
+  const teamMemberLen = useRef(0);
+  teamMemberLen.current = teamMemberArr.length; //멤버 수/
   console.log("teamMemberArrs", teamMemberArr);
+
   let urlBundle = propData.memberUrlBundle?.split(","); //멤버 url세팅
   let positionBundle = propData.positionBundle?.split(","); //멤버 포지션 세팅
   const myInx = teamMemberArr.indexOf(data.nickname); // 나의 idx를 파악
-
+  console.log("내 인덱스", myInx);
   const copyTeamMemberArr = [...teamMemberArr]; //멤버 카피
   const copyUrlBundle = [...urlBundle]; //url 카피
   const copyPositionBundle = [...positionBundle]; //position 카피
-
-  const invoteMembers = teamMemberArr.splice(myInx - 1, 1); //평가모달로 넘기기위한 나를제외 시킨 멤버 배열
+  teamMemberArr.splice(myInx, 1); //평가모달로 넘기기위한 나를제외 시킨 멤버 배열
+  const invoteMembers = [...teamMemberArr];
+  console.log("splice이후 teamMemberArr", teamMemberArr);
   teamMemberArr = [...copyTeamMemberArr]; //원본 배열 손상으로 인해 카피 배열을 가져옴
-  console.log("invoteMembers", invoteMembers);
 
-  const invoteUrl = urlBundle.splice(myInx - 1, 1);
+  urlBundle.splice(myInx, 1);
+  const invoteUrl = [...urlBundle];
   urlBundle = [...copyUrlBundle];
 
-  const invotePosition = positionBundle.splice(myInx - 1, 1);
+  positionBundle.splice(myInx, 1);
+  const invotePosition = [...positionBundle];
   positionBundle = [...copyPositionBundle];
 
   const clickEndShareProject = async (projectId: number) => {
@@ -128,7 +135,13 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
      * 투표를 한다
      */
   }, []);
-
+  useEffect(() => {
+    console.log("페이지 접근");
+    return () => {
+      console.log("페이지 종룐");
+      resetInvoteState();
+    };
+  }, []);
   return (
     <>
       <div className="ShareDetailCommonWrapper">
