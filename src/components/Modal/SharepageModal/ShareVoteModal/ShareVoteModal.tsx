@@ -21,6 +21,7 @@ const ShareVoteModal = () => {
     memberCnt.push(i);
   }
   console.log("candidates", candidates);
+  console.log("들어온 닉네임", nickname);
   const votePost = async (member: string) => {
     const res = await axios.post("https://lymming-back.link/vote/best/member", {
       nickname: nickname,

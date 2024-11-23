@@ -30,6 +30,7 @@ interface ShareDetailLeaderProps {
 
 const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { data } = useInfoStore();
+  console.log(data.nickname);
   const navigate = useNavigate();
   //TODO:
   const { isToastOpen, openToast, setSuccessText, setErrorText } =
@@ -55,19 +56,21 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   let urlBundle = propData.memberUrlBundle?.split(","); //멤버 url세팅
   let positionBundle = propData.positionBundle?.split(","); //멤버 포지션 세팅
   const myInx = teamMemberArr.indexOf(data.nickname); // 나의 idx를 파악
-
+  console.log("내 인덱스", myInx);
   const copyTeamMemberArr = [...teamMemberArr]; //멤버 카피
   const copyUrlBundle = [...urlBundle]; //url 카피
   const copyPositionBundle = [...positionBundle]; //position 카피
-
-  const invoteMembers = teamMemberArr.splice(myInx - 1, 1); //평가모달로 넘기기위한 나를제외 시킨 멤버 배열
+  teamMemberArr.splice(myInx, 1); //평가모달로 넘기기위한 나를제외 시킨 멤버 배열
+  const invoteMembers = [...teamMemberArr];
+  console.log("splice이후 teamMemberArr", teamMemberArr);
   teamMemberArr = [...copyTeamMemberArr]; //원본 배열 손상으로 인해 카피 배열을 가져옴
-  console.log("invoteMembers", invoteMembers);
 
-  const invoteUrl = urlBundle.splice(myInx - 1, 1);
+  urlBundle.splice(myInx, 1);
+  const invoteUrl = [...urlBundle];
   urlBundle = [...copyUrlBundle];
 
-  const invotePosition = positionBundle.splice(myInx - 1, 1);
+  positionBundle.splice(myInx, 1);
+  const invotePosition = [...positionBundle];
   positionBundle = [...copyPositionBundle];
 
   const clickEndShareProject = async (projectId: number) => {
