@@ -10,6 +10,7 @@ import RootToast from "../Toast/RootToast/RootToast";
 import useModalStore from "../../store/useModalState";
 import RootModal from "../Modal/RootModal/RootModal";
 import { useInvoteStore } from "../../store/useInvoteStore";
+import defalutImg from "../../assets/img/noimage.jpg";
 interface ShareDetailLeaderProps {
   data: {
     sharePageId: number;
@@ -158,7 +159,10 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               "아직 프로젝트 이름이 설정되지 않았습니다"}
           </div>
           <div className="ShareDetailCommon-Body">
-            <img src={`${propData.sharePageUrl}`} alt="" />
+            <img
+              src={propData.sharePageUrl ? propData.sharePageUrl : defalutImg}
+              alt=""
+            />
             {propData.projectLink && (
               <a
                 className="project_link"
@@ -182,7 +186,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
                       {propData.memberUrlBundle && (
                         <img
                           className="MemberCard-head-profile"
-                          src={`${urlBundle[idx]}`}
+                          src={urlBundle[idx] || defalutImg}
                           alt=""
                         ></img>
                       )}
