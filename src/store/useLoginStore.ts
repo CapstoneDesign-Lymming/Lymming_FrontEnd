@@ -27,7 +27,7 @@ interface InfoState {
 export const useLoginStore = create<LoginState>()(
   persist(
     (set) => ({
-      login: true,
+      login: false,
       count: 1,
       isOpen: false,
       //닉네임 중복체크
@@ -57,12 +57,12 @@ export const useInfoStore = create<InfoState>()(
         favorites: 0,
         gender: "",
         serverNickname: "",
-        job: "학생",
+        job: "",
         loginType: "",
-        nickname: "호이기훈",
-        position: "프론트엔드",
-        stack: "typescript,react, node.js, css",
-        temperature: 33,
+        nickname: "",
+        position: "",
+        stack: "",
+        temperature: 0,
         userImg: "",
         keyCode: "",
         uid: 0,
