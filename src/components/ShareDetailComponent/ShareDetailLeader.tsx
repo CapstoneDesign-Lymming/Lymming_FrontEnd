@@ -9,6 +9,7 @@ import useImageUpload from "../../hooks/useImageUpload";
 import { useToastStore } from "../../store/useToastState";
 import RootToast from "../Toast/RootToast/RootToast";
 import axios from "axios";
+import defalutImg from "../../assets/img/noimage.jpg";
 
 interface ShareDetailLeaderProps {
   sharePageId: number;
