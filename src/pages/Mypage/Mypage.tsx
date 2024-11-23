@@ -6,7 +6,7 @@ import "./Mypage.scss";
 import Header from "../../components/header/Header";
 import RootToast from "../../components/Toast/RootToast/RootToast";
 import no_profile from "../../assets/img/no-profile.webp";
-import infoData from "../../data/loginInfoData.json";
+// import infoData from "../../data/loginInfoData.json";
 interface putDataTypes {
   temperature: number;
   nickname: string;
