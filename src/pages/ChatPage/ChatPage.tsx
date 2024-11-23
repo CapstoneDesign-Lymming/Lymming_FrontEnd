@@ -57,6 +57,11 @@ const ChatPage = () => {
   const [chatRooms, setChatRooms] = useState<chatRoom[]>([]);
   // const [roomId, setRoomId] = useState<string>(""); roomId는 videoChatting para로 넘겨줄 때 1번 사용, setRoomId역시 roomId생서할 떄 한 번 사용-> ref로 변경
   const videoChatRoomId = useRef("");
+
+  const [userImg, setUserImg] = useState({
+    user1Img: "",
+    user2Img: "",
+  });
   // msg time 전달하기
   const getMsgTime = () => {
     const currentTime = new Date();
@@ -100,7 +105,11 @@ const ChatPage = () => {
 
         // 채팅방이 존재하는 경우
         console.log("채팅방 있음");
+
         setChatRoom(res.data);
+
+        // 한 번만 상태 업데이트 후 Partner Image 설정
+
         return true;
       } catch (e) {
         console.error(e);
@@ -283,6 +292,7 @@ const ChatPage = () => {
         params: { userId: currentUser }, // userId를 파라미터로 전달
       });
       console.log("채팅방 목록을 불러옵니다", res.data);
+
       setChatRooms(
         res.data.map((room: any) => {
           const [user1, user2] = room.roomId.split("_");
@@ -290,11 +300,17 @@ const ChatPage = () => {
           const adjustedUserId1 = user1 === currentUser ? user1 : user2;
           const adjustedUserId2 = user1 === currentUser ? user2 : user1;
 
+          const adjustedUser1Img =
+            user1 === currentUser ? room.user2Img : room.user1Img;
+          const adjustedUser2Img: string =
+            user1 === currentUser ? room.user1Img : room.user2Img;
           return {
             roomId: room.roomId,
             userId1: adjustedUserId1, // 로그인된 사용자를 user1로 설정
             userId2: adjustedUserId2, // 반대 사용자를 user2로 설정
             lastMessage: room.lastMessage || { content: "", timestamp: "" }, // lastMessage가 없을 경우 처리
+            user1Img: adjustedUser1Img,
+            user2Img: adjustedUser2Img,
           };
         })
       );
@@ -350,6 +366,22 @@ const ChatPage = () => {
     if (chatRoom?.roomId) {
       console.log("채팅방 연결 준비: ", chatRoom.roomId);
 
+      const adjustedUser1Img =
+        chatRoom.userId1 === currentUser
+          ? chatRoom.user1Img
+          : chatRoom.user2Img;
+
+      const adjustedUser2Img =
+        chatRoom.userId1 === currentUser
+          ? chatRoom.user2Img
+          : chatRoom.user1Img;
+
+      console.log("사용자 이미지", adjustedUser1Img, adjustedUser2Img);
+      setUserImg({
+        user1Img: adjustedUser1Img,
+        user2Img: adjustedUser2Img,
+      });
+
       // 기존 소켓 연결 해제 (필요할 경우)
       if (client.current) {
         client.current.disconnect(() => {
@@ -370,6 +402,8 @@ const ChatPage = () => {
 
     // 정리(clean-up) 함수: 이전 소켓 연결 해제
     return () => {
+      console.log("이미지", userImg);
+
       if (client.current) {
         client.current.disconnect(() => {
           console.log("소켓 연결 해제 (chatRoom 변경 시)");
@@ -397,6 +431,7 @@ const ChatPage = () => {
           <div className="content-left-list">
             {chatRooms &&
               chatRooms.map((it, index) => {
+                console.log(it.userId1, currentUser, it.user1Img, it.user2Img);
                 return (
                   <div
                     key={index}
@@ -432,7 +467,7 @@ const ChatPage = () => {
           <div className="content-right">
             <div className="content-right-info">
               <div className="content-right-info-profile">
-                <img />
+                <img src={userImg.user2Img} />
                 <span>{partner}</span>
               </div>
               <svg
@@ -460,7 +495,13 @@ const ChatPage = () => {
                             : "other-message"
                         }`}
                       >
-                        <img />
+                        <img
+                          src={
+                            msg.userId === currentUser
+                              ? userImg.user1Img
+                              : userImg.user2Img
+                          }
+                        />
 
                         <div className="container">
                           <div key={index} className={`message`}>
