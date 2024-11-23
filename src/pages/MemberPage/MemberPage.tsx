@@ -33,7 +33,7 @@ interface memberType {
   userImg: string;
   stack: string[];
   devStyle: string[];
-  teamperature: number;
+  temperature: number;
   projectId: string;
   projectName: string;
   deadline: string[];
@@ -298,7 +298,7 @@ const MemberPage = () => {
                         {item.nickname || "리밍이"}
                       </div>
                       <div className="teamperature">
-                        {item.teamperature || 36.5}°C
+                        {item.temperature || 36.5}°C
                       </div>
                     </div>
                     <div className="bodyCard_back-bodyWrapper">
