@@ -43,8 +43,8 @@ const Mypage = () => {
     };
     setPutDat(localData);
   }, []);
-  const stackArr = putData.stack?.split(",");
-  console.log(data.stack);
+  const stackArr = putData.stack?.split(",").map((item) => item.trim());
+  console.log(stackArr);
   const updateMyData = async () => {
     try {
       //FIXME: axios put login
