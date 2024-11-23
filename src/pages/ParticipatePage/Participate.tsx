@@ -6,9 +6,12 @@ import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
 import { ParticipateItem } from "../../interfaces/participate";
+import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 
 const Participate = () => {
   const inside = useRef<HTMLDivElement>(null);
+  const { login } = useLoginStore();
+  const { data: userData } = useInfoStore();
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [selectTab, setSelectTab] = useState("전체");
   const [data, setData] = useState<ParticipateItem[]>([]);
@@ -99,12 +102,23 @@ const Participate = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get("https://lymming-back.link/participate");
-        const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
-        setData(reverseData as ParticipateItem[]);
-        setFilterData(reverseData as ParticipateItem[]);
-        console.log("정렬 전 데이터", res);
-        console.log("데이터 최신순 정렬", reverseData);
+        if (login) {
+          const res = await axios.get(
+            `https://lymming-back.link/participate/${userData.userId}`
+          );
+          const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
+          setData(reverseData as ParticipateItem[]);
+          setFilterData(reverseData as ParticipateItem[]);
+          console.log("정렬 전 데이터", res);
+          console.log("데이터 최신순 정렬", reverseData);
+        } else {
+          const res = await axios.get("https://lymming-back.link/participate");
+          const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
+          setData(reverseData as ParticipateItem[]);
+          setFilterData(reverseData as ParticipateItem[]);
+          console.log("정렬 전 데이터", res);
+          console.log("데이터 최신순 정렬", reverseData);
+        }
       } catch (e) {
         console.log(e);
       }
