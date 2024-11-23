@@ -203,6 +203,25 @@ const ChatPage = () => {
     }, 5000); // 5초 후 재연결
   };
 
+  const systemMessage = () => {
+    if (client.current) {
+      const msgData = {
+        type: "INVITE",
+        roomId: chatRoom!.roomId,
+        userId: currentUser,
+        content: `${partner}님이 프로젝트 초대를 수락하셨습니다`,
+        timestamp: getMsgTime(),
+        userName: currentUser,
+        sharePageId: sharePageId,
+        inviteNickname: parterId,
+      };
+
+      client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
+
+      console.log("시스템 메세지 전송");
+    }
+  };
+
   const inviteMessage = () => {
     if (client.current) {
       const msgData = {
@@ -303,6 +322,7 @@ const ChatPage = () => {
         }
       );
       console.log("초대하기 성공", res.data);
+      systemMessage();
     } catch (e) {
       console.error(e);
     }
@@ -425,49 +445,49 @@ const ChatPage = () => {
               {chatHistory &&
                 chatHistory.map((msg, index) => (
                   <React.Fragment key={index}>
-                    <div
-                      className={`content-right-body-wrapper ${
-                        msg.userId === currentUser
-                          ? "own-message"
-                          : "other-message"
-                      }`}
-                    >
-                      <img />
+                    {msg.type === "TALK" ? (
+                      <div
+                        className={`content-right-body-wrapper ${
+                          msg.userId === currentUser
+                            ? "own-message"
+                            : "other-message"
+                        }`}
+                      >
+                        <img />
 
-                      {msg.type === "TALK" ? (
                         <div className="container">
                           <div key={index} className={`message`}>
                             {msg.content}
                           </div>
                           <span className="time">{msg.timestamp}</span>
                         </div>
-                      ) : (
-                        <div className="invite">
-                          <div className="invite-message">{msg.content}</div>
-                          <div
-                            className="invite-buttons"
-                            style={{
-                              display:
-                                currentUser === msg.inviteNickname
-                                  ? "block"
-                                  : "none",
-                            }}
+                      </div>
+                    ) : (
+                      <div className="invite">
+                        <div className="invite-message">{msg.content}</div>
+                        <div
+                          className="invite-buttons"
+                          style={{
+                            display:
+                              currentUser === msg.inviteNickname
+                                ? "flex"
+                                : "none",
+                          }}
+                        >
+                          <button
+                            className="invite-buttons-accept"
+                            onClick={() =>
+                              postInvite(msg.sharePageId, msg.inviteNickname)
+                            }
                           >
-                            <button
-                              className="invite-buttons-accept"
-                              onClick={() =>
-                                postInvite(msg.sharePageId, msg.inviteNickname)
-                              }
-                            >
-                              수락
-                            </button>
-                            <button className="invite-buttons-denined">
-                              거절
-                            </button>
-                          </div>
+                            수락
+                          </button>
+                          <button className="invite-buttons-denined">
+                            거절
+                          </button>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </React.Fragment>
                 ))}
 
