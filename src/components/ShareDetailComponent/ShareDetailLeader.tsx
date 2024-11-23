@@ -9,7 +9,7 @@ import useImageUpload from "../../hooks/useImageUpload";
 import { useToastStore } from "../../store/useToastState";
 import RootToast from "../Toast/RootToast/RootToast";
 import axios from "axios";
-//import defalutImg from "../../assets/img/noimage.jpg";
+import defalutImg from "../../assets/img/noimage.jpg";
 
 interface ShareDetailLeaderProps {
   sharePageId: number;
@@ -188,7 +188,7 @@ const ShareDetailLeader = () => {
             <div className="Addimage_title">프로젝트 사진</div>
             <img
               className="Addimage_box"
-              src={imageUrl || formData.sharePageUrl || nouserImage}
+              src={imageUrl || formData.sharePageUrl || defalutImg}
             />
             <input
               type="file"
