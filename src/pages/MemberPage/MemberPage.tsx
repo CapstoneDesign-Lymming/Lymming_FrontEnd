@@ -13,6 +13,7 @@ import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
 import RootToast from "../../components/Toast/RootToast/RootToast";
 import { useToastStore } from "../../store/useToastState";
+import useMemberProjectStore from "../../store/useMemberProjectStore";
 
 interface RecommendType {
   bio: string;
@@ -38,28 +39,29 @@ interface memberType {
   devStyle: string[];
   temperature: number;
   projectId: string;
-  projectName: string;
-  deadline: string[];
+  projectNames: string[];
+  deadlines: string[];
 }
 
 const MemberPage = () => {
   const navigate = useNavigate();
   const { data: userData } = useInfoStore();
+  const nickname = userData.nickname;
   const { login } = useLoginStore();
   const { isModalOpen, openModal } = useModalStore();
   const { isToastOpen, openToast, setErrorText } = useToastStore();
-  const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
-    null
-  ); // 현재 뒤집힌 카드의 인덱스를 관리
-  const [flippedMemberdIdx, setFlippedMemberIdx] = useState<number | null>(
-    null
-  ); // 현재 뒤집힌 카드의 인덱스를 관리
-
-  const nickname = userData.nickname;
+  const { setNickName, setProjectNames, setDeadlines } =
+    useMemberProjectStore();
   const [modalName, setModalName] = useState("");
   const [toastName, setToastName] = useState("");
   const [positionFilter, setPositionFilter] = useState<string | null>(null);
   const [stackFilter, setStackFilter] = useState<string | null>(null);
+  const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
+    null
+  );
+  const [flippedMemberdIdx, setFlippedMemberIdx] = useState<number | null>(
+    null
+  );
 
   const fetchRecommendData = async () => {
     const response = await axios.get(
@@ -89,9 +91,10 @@ const MemberPage = () => {
   const handleProjectClick = (
     e: React.MouseEvent,
     nickname: string,
-    projectName: string,
-    deadline: string[]
+    projectNames: string[],
+    deadlines: string[]
   ) => {
+    console.log(typeof projectNames);
     if (!login) {
       openToast();
       setToastName("errorToast");
@@ -101,8 +104,9 @@ const MemberPage = () => {
     e.stopPropagation();
     console.log("프로젝트 자세히보기  클릭됨");
     //TODO: 모달에 넘길 닉네임, 프로젝트이름, 데드라인
-
-    console.log(nickname, projectName, deadline);
+    setNickName(nickname);
+    setProjectNames(projectNames);
+    setDeadlines(deadlines);
 
     //-------
     setModalName("memberPageModal");
@@ -117,7 +121,6 @@ const MemberPage = () => {
     staleTime: 1000 * 60 * 5, // 5분 동안 캐시 데이터 신선 유지
   });
   console.log("recommendQuery", recommendQuery);
-
   console.log("recommendQuery", recommendQuery?.[0].stack);
   const {
     data: memberQuery,
@@ -366,8 +369,8 @@ const MemberPage = () => {
                             handleProjectClick(
                               e,
                               item.nickname,
-                              item.projectName,
-                              item.deadline
+                              item.projectNames,
+                              item.deadlines
                             )
                           }
                         >
