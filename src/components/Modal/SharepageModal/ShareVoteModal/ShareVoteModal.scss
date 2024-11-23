@@ -1,0 +1,118 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
+}
+.ShareVoteModal {
+  width: 79vw;
+  height: 100%;
+  font-family: "Pretendard";
+  // background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title_1 {
+    // height: 3%;
+    height: 20%;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    // background-color: rgb(110, 112, 111);
+  }
+  .title_2 {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    // background-color: aquamarine;
+
+    font-size: 19px;
+    font-weight: 500;
+  }
+  .VoteCardWrapper {
+    display: flex;
+    height: 40vh;
+    width: 70vw;
+    display: flex;
+    // background-color: #ffffff;
+    // align-items: center;
+    justify-content: center;
+    .VoteCard {
+      width: 20%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: rgb(240, 240, 240);
+      // color: white;
+      border-radius: 12px;
+      margin-right: 1%;
+      margin-left: 1%;
+
+      border: 1px solid rgba(100, 100, 100, 0.568);
+      &-name {
+        width: 100%;
+        height: 15%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        font-weight: 700;
+      }
+      &-img {
+        margin-top: 5%;
+        width: 90%;
+        height: 50%;
+        border-radius: 5px;
+      }
+      &-position {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 20%;
+        font-size: 18px;
+        font-weight: 500;
+      }
+      &-btn {
+        width: 90%;
+        height: 15%;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #bbc0c7;
+        color: #ffffff;
+        margin-bottom: 3%;
+        font-weight: 700;
+      }
+      .selected {
+        background-color: #3182f6;
+      }
+    }
+  }
+  .voteBtnWrapper {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .voteBtn {
+      width: 20%;
+      height: 30%;
+      background-color: #3182f6;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      font-size: 20px;
+    }
+  }
+}

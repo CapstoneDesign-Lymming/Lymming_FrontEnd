@@ -8,7 +8,9 @@ import skills from "../../data/skills.json";
 interface ParticipateBoardProps {
   item: ParticipateItem;
   index: number;
-  setUserModalData: React.Dispatch<React.SetStateAction<string>>;
+  setUserModalData: React.Dispatch<
+    React.SetStateAction<{ userId: number; nickname: string }>
+  >;
   setUserModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -141,7 +143,9 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 
         <div className="item-top-skills">
           {item.techStack.split(",").map((it, index) => {
-            const matchedSkill = skills.skills.find((s) => s.name === it);
+            const matchedSkill = skills.skills.find(
+              (s) => s.name === it.trim()
+            );
             return <img src={matchedSkill?.url} key={index} />;
           })}
         </div>
@@ -152,12 +156,16 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         <div
           className="item-bottom-left"
           onClick={() => {
-            setUserModalData(item.nickname);
+            setUserModalData({
+              userId: item.userId,
+              nickname: item.nickname,
+            });
 
             setUserModalOpen(true);
           }}
         >
-          <img />
+          <img src={item.userImg} />
+
           <span>{item.nickname}</span>
         </div>
         <div className="item-bottom-right">

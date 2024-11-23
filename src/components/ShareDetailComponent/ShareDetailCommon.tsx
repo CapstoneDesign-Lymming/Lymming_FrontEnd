@@ -2,11 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";
 import "./ShareDetailCommon.scss";
 // import useModalStore from "../../store/useModalState";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import RootModal from "../Modal/RootModal/RootModal";
 import axios from "axios";
 import { useToastStore } from "../../store/useToastState";
 import RootToast from "../Toast/RootToast/RootToast";
+import useModalStore from "../../store/useModalState";
+import RootModal from "../Modal/RootModal/RootModal";
+import { useInvoteStore } from "../../store/useInvoteStore";
 interface ShareDetailLeaderProps {
   data: {
     sharePageId: number;
@@ -21,17 +24,54 @@ interface ShareDetailLeaderProps {
     positionBundle: string; //멤버의 포지션 번들
     team_name: string;
     leader: string;
-    end: boolean;
+    end: string;
   };
 }
 
 const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const { data } = useInfoStore();
+  console.log(data.nickname);
   const navigate = useNavigate();
   //TODO:
   const { isToastOpen, openToast, setSuccessText, setErrorText } =
     useToastStore();
+  const { isModalOpen, openModal } = useModalStore();
+  const {
+    setCandidates,
+    setCandidatesUrl,
+    setCandidatesPosition,
+    setNickName,
+    setSharePageId,
+    resetInvoteState,
+  } = useInvoteStore();
   const [toastName, setToastName] = useState("");
+  const [modalName, setModalName] = useState("");
+
+  let teamMemberArr = propData.teamMember?.split(","); //멤버 세팅
+  console.log("propData.teamMember", propData.teamMember);
+  const teamMemberLen = useRef(0);
+  teamMemberLen.current = teamMemberArr.length; //멤버 수/
+  console.log("teamMemberArrs", teamMemberArr);
+
+  let urlBundle = propData.memberUrlBundle?.split(","); //멤버 url세팅
+  let positionBundle = propData.positionBundle?.split(","); //멤버 포지션 세팅
+  const myInx = teamMemberArr.indexOf(data.nickname); // 나의 idx를 파악
+  console.log("내 인덱스", myInx);
+  const copyTeamMemberArr = [...teamMemberArr]; //멤버 카피
+  const copyUrlBundle = [...urlBundle]; //url 카피
+  const copyPositionBundle = [...positionBundle]; //position 카피
+  teamMemberArr.splice(myInx, 1); //평가모달로 넘기기위한 나를제외 시킨 멤버 배열
+  const invoteMembers = [...teamMemberArr];
+  console.log("splice이후 teamMemberArr", teamMemberArr);
+  teamMemberArr = [...copyTeamMemberArr]; //원본 배열 손상으로 인해 카피 배열을 가져옴
+
+  urlBundle.splice(myInx, 1);
+  const invoteUrl = [...urlBundle];
+  urlBundle = [...copyUrlBundle];
+
+  positionBundle.splice(myInx, 1);
+  const invotePosition = [...positionBundle];
+  positionBundle = [...copyPositionBundle];
 
   const clickEndShareProject = async (projectId: number) => {
     try {
@@ -40,6 +80,13 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       );
       setToastName("successToast");
       setSuccessText("프로젝트가 종료되었습니다");
+      setCandidates(invoteMembers);
+      setCandidatesUrl(invoteUrl);
+      setCandidatesPosition(invotePosition);
+      setNickName(data.nickname);
+      setSharePageId(propData.sharePageId);
+      setModalName("voteModal");
+      openModal();
       openToast();
       return response.data;
     } catch (error) {
@@ -48,17 +95,60 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       openToast();
       console.error(error);
     }
-    //TODO:종료하기 로직은 endmodal 내부에서 진행
   };
-  const teamMemberArr = propData.teamMember?.split(",");
-  console.log(typeof teamMemberArr, teamMemberArr);
-  const teamMemberLen = teamMemberArr.length; //멤버 수/
-  console.log(teamMemberLen);
-  const urlBundle = propData.memberUrlBundle?.split(",");
-  console.log("prop url", propData.memberUrlBundle);
-  console.log("urlBundle", urlBundle);
-  const positionBundle = propData.positionBundle?.split(",");
+  /**평가 받을 멤버를 담을 배열을 전달하는 함수  */
+  // const selectInvoteMember = () => {
+  //   const newArr = teamMemberArr.filter((item) => item !== data.nickname);
+  //   return newArr;
+  // };
 
+  const checkVote = async (): Promise<boolean> => {
+    try {
+      const res = await axios.get(
+        `https://lymming-back.link/vote/has/user?sharePageId=${propData.sharePageId}&nickname=${data.nickname}`
+      );
+      if (res.data === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const fetchVoteStatus = async () => {
+      const isVote = await checkVote(); // Promise를 처리
+      console.log(isVote);
+      if (!isVote && propData.end === "TRUE") {
+        //FIXME: end가 TRUE일 경우에만 투표모달 표시
+        setCandidates(invoteMembers);
+        setCandidatesUrl(invoteUrl);
+        setCandidatesPosition(invotePosition);
+        setNickName(data.nickname);
+        setSharePageId(propData.sharePageId);
+        setModalName("voteModal");
+        openModal();
+      }
+    };
+    fetchVoteStatus(); // 비동기 함수 호출
+    /**
+     * 1. 투표를 했는지 get을 통해 가져온다
+     * 2. 투표 안했으면 모달을 연다
+     * 모달로 투표받을 사람들 및 투표주소를 주스텐드 값으로 넘겨준다 (이름 포지션 url)
+     * 모달에서 주스탠드로  받은 투표받을 사람들을 나열하고 투표를 받는다
+     * 투표를 한다
+     */
+  }, []);
+  useEffect(() => {
+    console.log("페이지 접근");
+    return () => {
+      console.log("페이지 종룐");
+      resetInvoteState();
+    };
+  }, []);
   return (
     <>
       <div className="ShareDetailCommonWrapper">
@@ -113,7 +203,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
           {propData && propData.leader === data.nickname && (
             <div
               className={`leader_btn_bundle ${
-                propData.end ? "endProject" : ""
+                propData.end === "TRUE" ? "endProject" : ""
               }`}
             >
               <div
@@ -124,7 +214,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
               >
                 수정하기
               </div>
-              {!propData.end && (
+              {propData.end === "FALSE" && (
                 <div
                   className="leader_btn_end"
                   onClick={() => clickEndShareProject(propData.sharePageId)}
@@ -138,6 +228,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
       </div>
       {isToastOpen && toastName === "successToast" && (
         <RootToast toastName="successToast" />
+      )}
+      {isModalOpen && modalName === "voteModal" && (
+        <RootModal modalName="voteModal" />
       )}
     </>
   );

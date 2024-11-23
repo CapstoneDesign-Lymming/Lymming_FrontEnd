@@ -5,6 +5,7 @@ import Usermodal from "../../components/Modal/UserModal/UserModal";
 import { useNavigate, useParams } from "react-router-dom";
 import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
+import skills from "../../data/skills.json";
 
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
@@ -35,13 +36,17 @@ const ParticipateDetail = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} nickname={data!.nickname} />
+          <Usermodal
+            close={setUserModalOpen}
+            nickname={data!.nickname}
+            userId={data!.userId}
+          />
         </>
       )}
 
       <div className="content">
         <div className="content-name">
-          <img />
+          <img src={data?.userImg} />
           <span className="bold_name" onClick={() => setUserModalOpen(true)}>
             {data?.nickname}
           </span>
@@ -75,9 +80,12 @@ const ParticipateDetail = () => {
           </div>
           <div className="content-info-bottom">
             <span className="bold_span">원하는 기술 스택</span>
-            {data?.techStack.split(",").map((it: string, index: number) => (
-              <img key={index} src={it.trim()} />
-            ))}
+            {data?.techStack.split(",").map((it: string, index: number) => {
+              const matchedSkill = skills.skills.find(
+                (s) => s.name === it.trim()
+              );
+              return <img key={index} src={matchedSkill?.url} />;
+            })}
           </div>
         </div>
         <hr />

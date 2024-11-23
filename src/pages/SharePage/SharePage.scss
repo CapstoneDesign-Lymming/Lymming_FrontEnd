@@ -8,7 +8,9 @@
   margin-top: 7vh;
   .SharePage {
     width: 100%;
-    height: 100%;
+    height: 130%;
+    overflow-y: auto; /* 스크롤 활성화 */
+
     &-Header {
       font-weight: 800;
     }
@@ -147,5 +149,14 @@
         }
       }
     }
+  }
+  .upbtn {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgb(201, 185, 185);
   }
 }

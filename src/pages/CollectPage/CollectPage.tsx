@@ -10,7 +10,10 @@ import { useInfoStore } from "../../store/useLoginStore";
 const CollectPage = () => {
   const [list, setList] = useState<ParticipateItem[]>([]);
   const [userModalOpen, setUserModalOpen] = useState(false);
-  const [userModalData, setUserModalData] = useState("");
+  const [userModalData, setUserModalData] = useState({
+    userId: 0,
+    nickname: "",
+  });
   const [selectTab, setSelectTab] = useState("내가쓴글");
   const { data } = useInfoStore();
   useEffect(() => {
@@ -20,9 +23,9 @@ const CollectPage = () => {
   // 좋아요 누를 게시물 가져오기
   const getLikeBoard = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/favorites/list", {
-        params: { nickname: data.nickname },
-      });
+      const res = await axios.get(
+        `https://lymming-back.link/favorites/list/${data.userId}`
+      );
       setList(res.data);
       console.log(res);
     } catch (e) {
@@ -32,9 +35,9 @@ const CollectPage = () => {
   // 내가 쓴 게시물 가져오기
   const getWirteBoard = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/favorites/list", {
-        params: { nickname: data.nickname },
-      });
+      const res = await axios.get(
+        `https://lymming-back.link/list/project/${data.userId}`
+      );
       setList(res.data);
       console.log(res);
     } catch (e) {
@@ -71,7 +74,11 @@ const CollectPage = () => {
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
-          <Usermodal close={setUserModalOpen} nickname={userModalData} />
+          <Usermodal
+            close={setUserModalOpen}
+            userId={userModalData.userId}
+            nickname={userModalData.nickname}
+          />
         </>
       )}
       <div className="content">
