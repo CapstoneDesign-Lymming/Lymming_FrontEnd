@@ -53,9 +53,12 @@ const Mypage = () => {
         {
           userId: data.userId,
           nickname: data.nickname,
+          userImg: data.userImg,
+          stack: putData.stack,
           job: putData.job,
           position: putData.position,
-          stack: putData.stack,
+          devStyle: data.devStyle,
+          teamperature: data.temperature,
         }
       );
       console.log("수정하기 성공");
