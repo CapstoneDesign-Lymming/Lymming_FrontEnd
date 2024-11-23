@@ -114,23 +114,75 @@
         }
         .selectBox {
           width: 500px;
-          height: 300px;
+          height: 250px;
           display: flex;
           z-index: 2;
           position: absolute;
-          background-color: rgba(255, 255, 255, 0.932);
+          background-color: rgb(255, 255, 255);
           backdrop-filter: 15px;
           border: 0.4px solid rgb(221, 221, 221);
           border-radius: 15px;
           display: none;
-          .closeBtn {
-            width: 40px;
+          .closeBtnWrapper {
+            width: 99%;
             height: 20px;
-            background-color: #1059c1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 2%;
+            .closeBtn {
+              width: 20px;
+              height: 20px;
+              fill: #ff4444;
+            }
+          }
+
+          .positonBundle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            height: 200px;
+            flex-wrap: wrap;
+            .newPosition {
+              width: 100px;
+              height: 30px;
+              margin-left: 10px;
+              margin-right: 10px;
+              border-radius: 5px;
+              @include flex-center;
+              background-color: #cdcdcd;
+            }
+            .selectPosition {
+              background-color: #3182f6;
+              color: white;
+              font-weight: 600;
+            }
+          }
+          .stackBundle {
+            display: flex;
+            flex-wrap: wrap;
+            .newStack {
+              @include flex-center;
+              width: 90px;
+              height: 30px;
+              margin: 1%;
+              background-color: #cdcdcd;
+              border-radius: 8px;
+            }
+            .selected {
+              background-color: #3182f6;
+              color: white;
+              font-weight: 600;
+            }
           }
         }
         .open {
           display: block;
+        }
+        .jobSelect {
+          width: 100px;
+          height: 30px;
+          border-radius: 8px;
         }
         .stackWrapper {
           display: flex;
