@@ -209,7 +209,7 @@ const ChatPage = () => {
         type: "INVITE",
         roomId: chatRoom!.roomId,
         userId: currentUser,
-        content: `${partner}님이 프로젝트 초대를 수락하셨습니다`,
+        content: `${currentUser}님이 프로젝트 초대를 수락하셨습니다`,
         timestamp: getMsgTime(),
         userName: currentUser,
         sharePageId: sharePageId,
