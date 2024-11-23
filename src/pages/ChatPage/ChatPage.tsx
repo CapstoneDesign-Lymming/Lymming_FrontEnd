@@ -31,6 +31,8 @@ interface chatRoom {
   //상대
   userId2: string;
   lastMessage: ChatMessage;
+  user1Img: string;
+  user2Img: string;
 }
 
 const ChatPage = () => {
@@ -203,6 +205,25 @@ const ChatPage = () => {
     }, 5000); // 5초 후 재연결
   };
 
+  const systemMessage = () => {
+    if (client.current) {
+      const msgData = {
+        type: "INVITE",
+        roomId: chatRoom!.roomId,
+        userId: currentUser,
+        content: `${currentUser}님이 프로젝트 초대를 수락하셨습니다`,
+        timestamp: getMsgTime(),
+        userName: currentUser,
+        sharePageId: sharePageId,
+        inviteNickname: parterId,
+      };
+
+      client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
+
+      console.log("시스템 메세지 전송");
+    }
+  };
+
   const inviteMessage = () => {
     if (client.current) {
       const msgData = {
@@ -303,7 +324,9 @@ const ChatPage = () => {
         }
       );
       console.log("초대하기 성공", res.data);
+      systemMessage();
     } catch (e) {
+      window.alert("실패:이미 초대 된 방입니다");
       console.error(e);
     }
   };
@@ -381,7 +404,11 @@ const ChatPage = () => {
                     onClick={() => setPartner(it.userId2)}
                   >
                     <div className="content-left-list-item-profile">
-                      <img />
+                      <img
+                        src={
+                          it.userId1 === currentUser ? it.user1Img : it.user2Img
+                        }
+                      />
                       <span>{it.userId2}</span>
                     </div>
                     <div className="content-left-list-item-body">
@@ -393,7 +420,7 @@ const ChatPage = () => {
                       </span>
                     </div>
                     <div className="content-left-list-item-count">
-                      <span>1</span>
+                      {/* <span>1</span> */}
                     </div>
                   </div>
                 );
@@ -425,49 +452,49 @@ const ChatPage = () => {
               {chatHistory &&
                 chatHistory.map((msg, index) => (
                   <React.Fragment key={index}>
-                    <div
-                      className={`content-right-body-wrapper ${
-                        msg.userId === currentUser
-                          ? "own-message"
-                          : "other-message"
-                      }`}
-                    >
-                      <img />
+                    {msg.type === "TALK" ? (
+                      <div
+                        className={`content-right-body-wrapper ${
+                          msg.userId === currentUser
+                            ? "own-message"
+                            : "other-message"
+                        }`}
+                      >
+                        <img />
 
-                      {msg.type === "TALK" ? (
                         <div className="container">
                           <div key={index} className={`message`}>
                             {msg.content}
                           </div>
                           <span className="time">{msg.timestamp}</span>
                         </div>
-                      ) : (
-                        <div className="invite">
-                          <div className="invite-message">{msg.content}</div>
-                          <div
-                            className="invite-buttons"
-                            style={{
-                              display:
-                                currentUser === msg.inviteNickname
-                                  ? "block"
-                                  : "none",
-                            }}
+                      </div>
+                    ) : (
+                      <div className="invite">
+                        <div className="invite-message">{msg.content}</div>
+                        <div
+                          className="invite-buttons"
+                          style={{
+                            display:
+                              currentUser === msg.inviteNickname
+                                ? "flex"
+                                : "none",
+                          }}
+                        >
+                          <button
+                            className="invite-buttons-accept"
+                            onClick={() =>
+                              postInvite(msg.sharePageId, msg.inviteNickname)
+                            }
                           >
-                            <button
-                              className="invite-buttons-accept"
-                              onClick={() =>
-                                postInvite(msg.sharePageId, msg.inviteNickname)
-                              }
-                            >
-                              수락
-                            </button>
-                            <button className="invite-buttons-denined">
-                              거절
-                            </button>
-                          </div>
+                            수락
+                          </button>
+                          <button className="invite-buttons-denined">
+                            거절
+                          </button>
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </React.Fragment>
                 ))}
 

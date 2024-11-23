@@ -176,6 +176,49 @@
         overflow-y: scroll;
         height: 70vh;
 
+        .invite {
+          all: unset; /* 기존 스타일 초기화 */
+          position: relative;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 30%;
+          height: 10vh;
+          padding: 10px;
+          background-color: #f0f0f0;
+          color: #333;
+          font-weight: bolder;
+          font-size: 16px;
+          text-align: center;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin-bottom: 2%;
+
+          &-buttons {
+            padding-top: 3%;
+            justify-content: center;
+            height: 100%;
+            display: flex;
+            gap: 5%;
+            button {
+              height: 80%;
+              width: 25%;
+              border-radius: 10px;
+              border: none;
+            }
+            &-accept {
+              background-color: #3182f6;
+              color: white;
+            }
+            &-denined {
+              background-color: gray;
+              color: white;
+            }
+          }
+        }
+
         &-wrapper {
           box-sizing: border-box;
           margin-bottom: 10px;
@@ -186,44 +229,6 @@
           align-items: center;
           gap: 3%;
           position: relative;
-
-          .invite {
-            all: unset; /* 기존 스타일 초기화 */
-
-            width: 50%;
-            height: 10vh;
-            padding: 10px;
-            background-color: #f0f0f0;
-            color: #333;
-            font-weight: bolder;
-            font-size: 16px;
-            text-align: center;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            &-buttons {
-              height: 35%;
-              display: flex;
-              justify-content: space-around;
-              button {
-                height: 100%;
-                width: 45%;
-                border-radius: 10px;
-                border: none;
-              }
-              &-accept {
-                background-color: #3182f6;
-                color: white;
-              }
-              &-denined {
-                background-color: gray;
-                color: white;
-              }
-            }
-          }
 
           .time {
             font-size: 0.8vw;

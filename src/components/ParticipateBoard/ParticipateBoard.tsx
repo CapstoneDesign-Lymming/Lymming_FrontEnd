@@ -143,7 +143,9 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 
         <div className="item-top-skills">
           {item.techStack.split(",").map((it, index) => {
-            const matchedSkill = skills.skills.find((s) => s.name === it);
+            const matchedSkill = skills.skills.find(
+              (s) => s.name === it.trim()
+            );
             return <img src={matchedSkill?.url} key={index} />;
           })}
         </div>
