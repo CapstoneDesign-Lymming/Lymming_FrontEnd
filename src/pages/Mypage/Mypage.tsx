@@ -78,8 +78,10 @@ const Mypage = () => {
     }));
   };
   const addOrRemoveStack = (stack: string) => {
-    const stackArr = putData.stack?.split(",").filter((item) => item); // 현재 스택 배열
-    console.log("stackArr", stackArr);
+    const stackArr = putData.stack
+      ?.split(",")
+      .filter((item) => item)
+      .map((item) => item.trim()); // 공백 제거    console.log("stackArr", stackArr);
     if (stackArr.includes(stack)) {
       // 이미 존재하면 제거
       const updatedStack = stackArr.filter((item) => item !== stack).join(",");
