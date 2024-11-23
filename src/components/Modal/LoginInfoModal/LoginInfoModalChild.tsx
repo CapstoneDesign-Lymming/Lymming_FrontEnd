@@ -10,7 +10,7 @@ import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();
-  const { setIsExist } = useLoginStore();
+  const { isExist, setIsExist } = useLoginStore();
   const [name, setName] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,14 +25,15 @@ export const Child1 = () => {
     setData({ [name]: value });
   };
 
-  const onNameCheck = () => {
-    // 아이디 중복체크
-    getUserName();
+  const onNameCheck = async () => {
+    // 닉네임 중복체크
+    const nicknameCheck = await getUserName();
 
-    // 임시 true => isExist
-    if (true === true) {
+    console.log("아이디 사용 가능 여부", isExist);
+
+    if (nicknameCheck === true) {
       window.alert("사용가능한 닉네임입니다");
-      // 임시로 사용 가능 아이디 허용
+      // 아이디 사용 통과
       setIsExist();
     } else {
       window.alert("이미 사용중인 닉네임입니다");
@@ -49,7 +50,9 @@ export const Child1 = () => {
         }
       );
       if (res.data === true) {
-        setIsExist();
+        return true;
+      } else {
+        return false;
       }
     } catch (e) {
       console.error(e);
