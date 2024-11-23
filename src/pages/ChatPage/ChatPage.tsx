@@ -31,6 +31,8 @@ interface chatRoom {
   //상대
   userId2: string;
   lastMessage: ChatMessage;
+  user1Img: string;
+  user2Img: string;
 }
 
 const ChatPage = () => {
@@ -324,6 +326,7 @@ const ChatPage = () => {
       console.log("초대하기 성공", res.data);
       systemMessage();
     } catch (e) {
+      window.alert("실패:이미 초대 된 방입니다");
       console.error(e);
     }
   };
@@ -401,7 +404,11 @@ const ChatPage = () => {
                     onClick={() => setPartner(it.userId2)}
                   >
                     <div className="content-left-list-item-profile">
-                      <img />
+                      <img
+                        src={
+                          it.userId1 === currentUser ? it.user1Img : it.user2Img
+                        }
+                      />
                       <span>{it.userId2}</span>
                     </div>
                     <div className="content-left-list-item-body">
