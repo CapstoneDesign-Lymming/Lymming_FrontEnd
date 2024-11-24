@@ -53,7 +53,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   };
 
   const onHeartClick = (user_id: number, project_id: number) => {
-    if (item.likes === true) {
+    if (item.like === true) {
       deleteHeart(user_id, project_id);
     } else {
       postHeart(user_id, project_id);
@@ -201,7 +201,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             onClick={() => onHeartClick(data.userId, item.projectId)}
           >
             <svg
-              className={`heart_icon ${item.likes ? "fill" : ""} `}
+              className={`heart_icon ${item.like ? "fill" : ""} `}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
