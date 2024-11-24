@@ -55,7 +55,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   };
 
   const onHeartClick = (user_id: number, project_id: number) => {
-    if (item.like === true) {
+    if (like === true) {
       deleteHeart(user_id, project_id);
       setLike(false);
     } else {
