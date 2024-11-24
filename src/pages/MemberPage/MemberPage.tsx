@@ -68,13 +68,11 @@ const MemberPage = () => {
     const response = await axios.get(
       `https://lymming-back.link/member/random/list/${userData.userId}`
     );
-    console.log("fetchRecommendData", response.data);
     return response.data;
   };
 
   const fetchMember = async () => {
     const response = await axios.get("https://lymming-back.link/member/list");
-    console.log("member/list의 데이터", response.data);
     return response.data;
   };
   const handleClickRecommend = (index: number) => {
@@ -95,7 +93,6 @@ const MemberPage = () => {
     projectNames: string[],
     deadlines: string[]
   ) => {
-    console.log(typeof projectNames);
     if (!login) {
       openToast();
       setToastName("errorToast");
@@ -106,7 +103,6 @@ const MemberPage = () => {
     console.log("프로젝트 자세히보기  클릭됨");
     //TODO: 모달에 넘길 닉네임, 프로젝트이름, 데드라인
     setNickName(nickname);
-    console.log("ddd", nickname);
     setProjectNames(projectNames);
     setDeadlines(deadlines);
 
@@ -122,8 +118,6 @@ const MemberPage = () => {
   } = useQuery("recommendData", fetchRecommendData, {
     staleTime: 1000 * 60 * 5,
   });
-  console.log("recommendQuery", recommendQuery);
-  console.log("recommendQuery", recommendQuery?.[0].stack);
   const {
     data: memberQuery,
     error: memberError,
