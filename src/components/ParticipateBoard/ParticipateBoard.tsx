@@ -162,6 +162,9 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
         className="item-bottom"
         onClick={() => {
           if (!localStorage.getItem("token")) {
+
+            window.alert("로그인 한 사용자만 접근 가능합니다!");
+
             navigate("/login");
           }
         }}
