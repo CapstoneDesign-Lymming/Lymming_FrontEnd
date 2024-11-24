@@ -62,7 +62,7 @@ const ParticipateDetail = () => {
           >
             {data?.nickname}
           </span>
-          <span>{data?.uploadTime}</span>
+          <span className="uplodtime">{data?.uploadTime}</span>
         </div>
         <div className="content-title">{data?.projectName}</div>
         <div className="content-info">
@@ -101,13 +101,11 @@ const ParticipateDetail = () => {
           </div>
         </div>
         <hr />
-        <img
-          className="content-img"
-          src={data?.projectImg || defalutImg}
-          alt=""
-        />
-
+        {data?.projectImg && (
+          <img className="content-img" src={data?.projectImg} alt="" />
+        )}
         <div className="content-text">{data?.description}</div>
+        {!data?.projectImg && <div className="no_imgbox"></div>}
       </div>
       <button
         className="bottom_btn"
@@ -115,7 +113,6 @@ const ParticipateDetail = () => {
           if (localStorage.getItem("token")) {
             navigate("/chat", { state: { id: data?.nickname, invite: false } });
           } else {
-
             window.alert("로그인 한 사용자만 접근 가능합니다!");
             navigate("/login");
           }
