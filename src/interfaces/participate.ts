@@ -17,6 +17,7 @@ export interface ParticipateItem {
   viewCount: number;
   teamMember: number;
   description: string;
+  projectImg: string;
   //게시물 좋아요
   like: boolean;
 }
