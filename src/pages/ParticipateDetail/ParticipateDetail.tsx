@@ -93,9 +93,13 @@ const ParticipateDetail = () => {
       </div>
       <button
         className="bottom_btn"
-        onClick={() =>
-          navigate("/chat", { state: { id: data?.nickname, invite: false } })
-        }
+        onClick={() => {
+          if (localStorage.getItem("token")) {
+            navigate("/chat", { state: { id: data?.nickname, invite: false } });
+          } else {
+            navigate("/login");
+          }
+        }}
       >
         채팅하기
       </button>
