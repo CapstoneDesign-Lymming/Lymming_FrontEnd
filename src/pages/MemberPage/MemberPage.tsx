@@ -65,10 +65,17 @@ const MemberPage = () => {
   );
 
   const fetchRecommendData = async () => {
-    const response = await axios.get(
-      `https://lymming-back.link/member/random/list/${userData.userId}`
-    );
-    return response.data;
+    if (login) {
+      const response = await axios.get(
+        `https://lymming-back.link/member/random/list/${userData.userId}`
+      );
+      return response.data;
+    } else {
+      const response = await axios.get(
+        `https://lymming-back.link/member/random/list/2`
+      );
+      return response.data;
+    }
   };
 
   const fetchMember = async () => {
@@ -163,63 +170,69 @@ const MemberPage = () => {
       <Header />
       <div className="MemberWrapper">
         <div className="Member">
-          <div
-            className={`Member-header ${login ? "" : "notLogin_MemberHeader"}`}
-          >
-            <div className="Member-header-text">
-              {nickname}님께 어울리는 사람을 추천해드립니다.
-            </div>
+          {
+            <div
+              className={`Member-header ${
+                login ? "" : "notLogin_MemberHeader"
+              }`}
+            >
+              <div className="Member-header-text">
+                {nickname}님께 어울리는 사람을 추천해드립니다.
+              </div>
 
-            <div className="Member-header-recommend">
-              {recommendQuery.map((item: RecommendType, index: number) => (
-                <div
-                  key={index}
-                  className={`recommendCard ${
-                    flippedRecommendIdx === index ? "recommendFlipped" : ""
-                  }`}
-                  onClick={() => handleClickRecommend(index)}
-                >
-                  <div className="front">
-                    <div className="recommend_name">{item.nickname}</div>
-                    <div className="recommend_position">{item.position}</div>
-                    <img src={`${item.userImg}`} alt="recommend" />
-                  </div>
-                  <div className="back">
-                    <div className="recommend_name">{item.nickname}</div>
-                    <div className="recommend_position">{item.position}</div>
-                    <div className="back_body">
-                      <div className="back_body-devStyle">#{item.devStyle}</div>
-                      <div className="back_body-skillWrapper">
-                        주요스킬 | {...item.stack}
+              <div className="Member-header-recommend">
+                {recommendQuery.map((item: RecommendType, index: number) => (
+                  <div
+                    key={index}
+                    className={`recommendCard ${
+                      flippedRecommendIdx === index ? "recommendFlipped" : ""
+                    }`}
+                    onClick={() => handleClickRecommend(index)}
+                  >
+                    <div className="front">
+                      <div className="recommend_name">{item.nickname}</div>
+                      <div className="recommend_position">{item.position}</div>
+                      <img src={`${item.userImg}`} alt="recommend" />
+                    </div>
+                    <div className="back">
+                      <div className="recommend_name">{item.nickname}</div>
+                      <div className="recommend_position">{item.position}</div>
+                      <div className="back_body">
+                        <div className="back_body-devStyle">
+                          #{item.devStyle}
+                        </div>
+                        <div className="back_body-skillWrapper">
+                          주요스킬 | {...item.stack}
+                        </div>
+                        <div
+                          className="back_body-detail"
+                          onClick={(e) =>
+                            handleProjectClick(
+                              e,
+                              item.nickname,
+                              item.projectNames,
+                              item.deadlines
+                            )
+                          }
+                        >
+                          프로젝트 보기
+                        </div>
                       </div>
                       <div
-                        className="back_body-detail"
-                        onClick={(e) =>
-                          handleProjectClick(
-                            e,
-                            item.nickname,
-                            item.projectNames,
-                            item.deadlines
-                          )
-                        }
+                        className="back_footerWrapper"
+                        onClick={(e) => handleChatClick(e, item.nickname)}
                       >
-                        프로젝트 보기
+                        <div className="back_footer">채팅하기</div>
                       </div>
                     </div>
-                    <div
-                      className="back_footerWrapper"
-                      onClick={(e) => handleChatClick(e, item.nickname)}
-                    >
-                      <div className="back_footer">채팅하기</div>
-                    </div>
                   </div>
-                </div>
-              ))}
-              {/* {recommendQuery.map((item, idx) => (
+                ))}
+                {/* {recommendQuery.map((item, idx) => (
                 <div key={idx}>{item.nickname}</div>
               ))} */}
+              </div>
             </div>
-          </div>
+          }
           <div className={`${login ? "hide_notLogin_nav" : "notLogin_nav"}`}>
             <div className="notLogin_nav-head">
               당신에게 어울리는 팀원을 찾아드립니다

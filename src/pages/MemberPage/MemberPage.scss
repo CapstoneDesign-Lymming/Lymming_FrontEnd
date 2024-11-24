@@ -37,7 +37,6 @@
           transform: perspective(800px) rotateY(0deg); /* 추가 */
           transform-style: preserve-3d; /* 추가 */
           position: relative;
-          cursor: pointer;
           .front {
             width: 12vw;
             height: 32vh;
@@ -116,7 +115,7 @@
                 font-size: 14.3px;
                 position: absolute;
                 top: 76%;
-                color: #bebfbf;
+                background-color: #bebfbf;
               }
               .skill_icon {
                 width: 30px;
@@ -180,6 +179,7 @@
         border-radius: 8px;
         font-weight: 500;
         font-size: 19px;
+        cursor: pointer;
       }
     }
     .notLogin_MemberHeader {
