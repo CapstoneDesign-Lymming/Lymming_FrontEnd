@@ -18,5 +18,5 @@ export interface ParticipateItem {
   teamMember: number;
   description: string;
   //게시물 좋아요
-  likes: boolean;
+  like: boolean;
 }

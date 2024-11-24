@@ -5,6 +5,7 @@ import { useInfoStore } from "../../store/useLoginStore";
 import { ParticipateItem } from "../../interfaces/participate";
 import skills from "../../data/skills.json";
 import noUserImg from "../../assets/img/no-profile.webp";
+import { useState } from "react";
 
 interface ParticipateBoardProps {
   item: ParticipateItem;
@@ -22,6 +23,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 }) => {
   const navigate = useNavigate();
   const { data } = useInfoStore();
+  const [like, setLike] = useState(item.like);
 
   const checkNewData = (upload: string) => {
     const nowTime = new Date();
@@ -53,10 +55,12 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   };
 
   const onHeartClick = (user_id: number, project_id: number) => {
-    if (item.likes === true) {
+    if (like === true) {
       deleteHeart(user_id, project_id);
+      setLike(false);
     } else {
       postHeart(user_id, project_id);
+      setLike(true);
     }
   };
 
@@ -74,6 +78,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 
   // 찜 취소
   const deleteHeart = async (user_id: number, project_id: number) => {
+    console.log("취소");
     try {
       const res = await axios.delete(
         `https://lymming-back.link/${user_id}/likes/${project_id}`
@@ -200,7 +205,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
             onClick={() => onHeartClick(data.userId, item.projectId)}
           >
             <svg
-              className={`heart_icon ${item.likes ? "fill" : ""} `}
+              className={`heart_icon ${like ? "fill" : ""} `}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 512 512"
             >
