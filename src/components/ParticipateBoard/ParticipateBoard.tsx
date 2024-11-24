@@ -158,7 +158,14 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 
         <hr />
       </div>
-      <div className="item-bottom">
+      <div
+        className="item-bottom"
+        onClick={() => {
+          if (!localStorage.getItem("token")) {
+            navigate("/login");
+          }
+        }}
+      >
         <div
           className="item-bottom-left"
           onClick={() => {
