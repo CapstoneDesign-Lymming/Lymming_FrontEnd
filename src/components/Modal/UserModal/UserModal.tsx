@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import noUserImg from "../../../assets/img/no-profile.webp";
 
 import skills from "../../../data/skills.json";
+import { useInfoStore } from "../../../store/useLoginStore";
 
 interface UsermodalProps {
   close: (value: boolean) => void;
@@ -39,6 +40,7 @@ interface UserModal {
 const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState<UserModal>();
+  const { data } = useInfoStore();
 
   useEffect(() => {
     getUserData();
@@ -89,9 +91,11 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
 
       <div className="bottom">
         <button
-          onClick={() =>
-            navigate("/chat", { state: { id: nickname, invite: false } })
-          }
+          onClick={() => {
+            if (data.nickname === userData?.nickname) {
+              navigate("/chat", { state: { id: nickname, invite: false } });
+            }
+          }}
         >
           채팅하기
         </button>
