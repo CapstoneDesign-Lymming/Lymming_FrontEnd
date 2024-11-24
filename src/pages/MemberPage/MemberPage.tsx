@@ -120,7 +120,7 @@ const MemberPage = () => {
     error: recommendError,
     isLoading: recommendLoading,
   } = useQuery("recommendData", fetchRecommendData, {
-    staleTime: 1000 * 60 * 5, // 5분 동안 캐시 데이터 신선 유지
+    staleTime: 1000 * 60 * 5,
   });
   console.log("recommendQuery", recommendQuery);
   console.log("recommendQuery", recommendQuery?.[0].stack);
@@ -129,29 +129,27 @@ const MemberPage = () => {
     error: memberError,
     isLoading: memberLoading,
   } = useQuery("memberData", fetchMember, {
-    staleTime: 1000 * 60 * 5, // 5분 동안 캐시 데이터 신선 유지
+    staleTime: 1000 * 60 * 5,
   });
 
   const filteredMembers = memberQuery?.filter((member: memberType) => {
-    // positionFilter가 있다면, position이 일치하는지 확인
     const matchesPosition = positionFilter
       ? member.position === positionFilter
       : true;
 
-    // member.stack이 비어 있지 않고, member.stack[0]이 null이 아닌 경우에만 처리
     const memberStackArr = member.stack[0]
       ? member.stack[0]
-          .slice(1, -1) // 대괄호 제거
-          .split(",") // 쉼표로 분리
-          .map((item) => item.trim()) // 각 항목에서 공백 제거
-      : []; // null일 경우 빈 배열을 반환
+          .slice(1, -1)
+          .split(",")
+          .map((item) => item.trim())
+      : [];
 
-    // stackFilter가 있으면, member.stack 배열에 포함된 항목이 stackFilter와 일치하는지 확인
     const matchesStack = stackFilter
-      ? memberStackArr.some((stackItem) => stackItem.includes(stackFilter)) // member.stack 내부에 stackFilter가 포함되는지 확인
+      ? memberStackArr.some((stackItem) =>
+          stackItem.toLowerCase().includes(stackFilter.toLowerCase())
+        )
       : true;
 
-    // positionFilter와 stackFilter 모두 일치하는지 확인
     return matchesPosition && matchesStack;
   });
 
@@ -275,18 +273,28 @@ const MemberPage = () => {
                 value={stackFilter || ""}
               >
                 <option value="">전체</option>
-                <option value="java">java</option>
-                <option value="python">python</option>
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
                 <option value="javascript">javascript</option>
-                <option value="c#">c#</option>
-                <option value="ruby">ruby</option>
-                <option value="typescript">typescript</option>
-                <option value="html">html</option>
-                <option value="css">css</option>
-                <option value="react">react</option>
-                <option value="node.js">node.js</option>
-                <option value="go">go</option>
-                <option value="rust">rust</option>
+                <option value="Python">Python</option>
+                <option value="Spring">Spring</option>
+                <option value="Go">Go</option>
+                <option value="Rust">Rust</option>
+                <option value="Kotlin">Kotlin</option>
+                <option value="Swift">Swift</option>
+                <option value="PHP">PHP</option>
+                <option value="TypeScript">TypeScript</option>
+                <option value="SQL">SQL</option>
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="R">R</option>
+                <option value="Nest.js">Nest.js</option>
+                <option value="Next.js">Next.js</option>
+                <option value="Figma">Figma</option>
+                <option value="DJango">DJango</option>
+                <option value="Dart">Dart</option>
+                <option value="Tensorflow">Tensorflow</option>
               </select>
             </div>
           </div>
