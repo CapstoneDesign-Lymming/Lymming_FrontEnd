@@ -74,6 +74,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
 
   // 찜 취소
   const deleteHeart = async (user_id: number, project_id: number) => {
+    console.log("취소");
     try {
       const res = await axios.delete(
         `https://lymming-back.link/${user_id}/likes/${project_id}`
