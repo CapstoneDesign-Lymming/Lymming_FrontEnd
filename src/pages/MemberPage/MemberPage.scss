@@ -37,6 +37,7 @@
           transform: perspective(800px) rotateY(0deg); /* 추가 */
           transform-style: preserve-3d; /* 추가 */
           position: relative;
+          cursor: pointer;
           .front {
             width: 12vw;
             height: 32vh;
