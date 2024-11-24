@@ -10,10 +10,10 @@ interface MemberProjectState {
 }
 
 const useMemberProjectStore = create<MemberProjectState>((set) => ({
-  nickname: "",
+  nickname: "_",
   projectNames: [],
   deadlines: [],
-  setNickName: (nickname: string) => ({ nickname: nickname }),
+  setNickName: (nickname: string) => set({ nickname: nickname }),
   setProjectNames: (arrProp) => set({ projectNames: [...arrProp] }),
   setDeadlines: (arrProp) => set({ deadlines: [...arrProp] }),
 }));

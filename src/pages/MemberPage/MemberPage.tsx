@@ -105,6 +105,7 @@ const MemberPage = () => {
     console.log("프로젝트 자세히보기  클릭됨");
     //TODO: 모달에 넘길 닉네임, 프로젝트이름, 데드라인
     setNickName(nickname);
+    console.log("ddd", nickname);
     setProjectNames(projectNames);
     setDeadlines(deadlines);
 
