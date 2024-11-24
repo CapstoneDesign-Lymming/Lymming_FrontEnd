@@ -92,7 +92,7 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
       <div className="bottom">
         <button
           onClick={() => {
-            if (data.nickname === userData?.nickname) {
+            if (data.nickname !== userData?.nickname) {
               navigate("/chat", { state: { id: nickname, invite: false } });
             }
           }}
