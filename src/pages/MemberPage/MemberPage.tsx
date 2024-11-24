@@ -5,15 +5,16 @@ import axios from "axios";
 import RootModal from "../../components/Modal/RootModal/RootModal";
 import Header from "../../components/header/Header";
 import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
+import RootToast from "../../components/Toast/RootToast/RootToast";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
+import useMemberProjectStore from "../../store/useMemberProjectStore";
 import useModalStore from "../../store/useModalState";
+import { useToastStore } from "../../store/useToastState";
 import "./MemberPage.scss";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
-import RootToast from "../../components/Toast/RootToast/RootToast";
-import { useToastStore } from "../../store/useToastState";
-import useMemberProjectStore from "../../store/useMemberProjectStore";
 
 interface RecommendType {
   bio: string;
@@ -162,7 +163,8 @@ const MemberPage = () => {
       </>
     );
 
-  if (recommendError || memberError) return <div>에러</div>;
+  if (recommendError || memberError) return;
+  <Error />;
 
   return (
     <>
