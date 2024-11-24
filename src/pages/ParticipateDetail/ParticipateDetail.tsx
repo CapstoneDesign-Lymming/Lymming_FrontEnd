@@ -7,7 +7,6 @@ import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
 import skills from "../../data/skills.json";
 import noUserImg from "../../assets/img/no-profile.webp";
-import defalutImg from "../../assets/img/noimage.jpg";
 
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
