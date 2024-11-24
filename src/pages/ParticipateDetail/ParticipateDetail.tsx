@@ -7,6 +7,8 @@ import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
 import skills from "../../data/skills.json";
 import noUserImg from "../../assets/img/no-profile.webp";
+import defalutImg from "../../assets/img/noimage.jpg";
+
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [data, setData] = useState<ParticipateItem>();
@@ -47,7 +49,17 @@ const ParticipateDetail = () => {
       <div className="content">
         <div className="content-name">
           <img src={data?.userImg ? data?.userImg : noUserImg} />
-          <span className="bold_name" onClick={() => setUserModalOpen(true)}>
+          <span
+            className="bold_name"
+            onClick={() => {
+              if (localStorage.getItem("token")) {
+                setUserModalOpen(true);
+              } else {
+                window.alert("로그인 한 사용자만 접근 가능합니다!");
+                navigate("/login");
+              }
+            }}
+          >
             {data?.nickname}
           </span>
           <span>{data?.uploadTime}</span>
@@ -89,6 +101,12 @@ const ParticipateDetail = () => {
           </div>
         </div>
         <hr />
+        <img
+          className="content-img"
+          src={data?.projectImg || defalutImg}
+          alt=""
+        />
+
         <div className="content-text">{data?.description}</div>
       </div>
       <button
@@ -97,6 +115,7 @@ const ParticipateDetail = () => {
           if (localStorage.getItem("token")) {
             navigate("/chat", { state: { id: data?.nickname, invite: false } });
           } else {
+            window.alert("로그인 한 사용자만 접근 가능합니다!");
             navigate("/login");
           }
         }}

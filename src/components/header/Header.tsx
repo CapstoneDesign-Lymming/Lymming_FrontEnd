@@ -55,6 +55,7 @@ const Header = () => {
             if (localStorage.getItem("token")) {
               navigate("/teambuild");
             } else {
+              window.alert("로그인 한 사용자만 접근 가능합니다!");
               navigate("/login");
             }
           }}
