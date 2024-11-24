@@ -115,7 +115,7 @@
                 font-size: 14.3px;
                 position: absolute;
                 top: 76%;
-                color: #bebfbf;
+                background-color: #bebfbf;
               }
               .skill_icon {
                 width: 30px;
@@ -179,6 +179,7 @@
         border-radius: 8px;
         font-weight: 500;
         font-size: 19px;
+        cursor: pointer;
       }
     }
     .notLogin_MemberHeader {

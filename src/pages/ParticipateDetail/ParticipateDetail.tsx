@@ -115,6 +115,7 @@ const ParticipateDetail = () => {
           if (localStorage.getItem("token")) {
             navigate("/chat", { state: { id: data?.nickname, invite: false } });
           } else {
+
             window.alert("로그인 한 사용자만 접근 가능합니다!");
             navigate("/login");
           }
