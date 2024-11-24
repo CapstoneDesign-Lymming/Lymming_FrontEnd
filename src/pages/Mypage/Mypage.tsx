@@ -20,17 +20,10 @@ const Mypage = () => {
   const { data } = useInfoStore();
   // console.log(data.userImg);
   // const [isToastOpen, setIsToastOpen] = useState(false);
-  const { isToastOpen, openToast, setErrorText } = useToastStore();
   const [toastName, setToastName] = useState("");
   const [isOpenSelectBox, setIsOpenSelectBox] = useState(false);
   const [isOpenStackBox, setIsOpenStackBox] = useState(false); // 기술 선택 박스 상태 추가
-  const [isAllowNickname, setIsAllowNickName] = useState<boolean | undefined>(
-    false
-  );
-  const [clickImg, setClickImg] = useState(false);
-  const [haveNickNameCheck, setHaveNickNameCheck] = useState(false);
-  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
-
+  const [isAllowNickname] = useState<boolean | undefined>(false);
   const [putData, setPutDat] = useState<putDataTypes>({
     temperature: 0,
     nickname: "",
@@ -39,6 +32,11 @@ const Mypage = () => {
     stack: "",
     userImg: "",
   });
+  const [clickImg, setClickImg] = useState(false);
+  const [haveNickNameCheck] = useState(false);
+  const { isToastOpen, openToast, setErrorText } = useToastStore();
+  const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
+  const { setData } = useInfoStore();
 
   useEffect(() => {
     const localData = {
@@ -77,6 +75,15 @@ const Mypage = () => {
         }
       );
       console.log("수정하기 성공");
+      //TODO: useInfo update
+      setData({
+        nickname: putData.nickname,
+        userImg: s3url || data.userImg,
+        stack: putData.stack,
+        job: putData.job,
+        position: putData.position,
+        devStyle: data.devStyle,
+      });
       setToastName("successToast");
       openToast();
       return res;
@@ -87,14 +94,14 @@ const Mypage = () => {
       openToast();
     }
   };
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target);
-    const { name, value } = e.target;
-    setPutDat((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log(e.target);
+  //   const { name, value } = e.target;
+  //   setPutDat((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
   const addOrRemoveStack = (stack: string) => {
     const stackArr = putData.stack
       ?.split(",")
@@ -120,28 +127,28 @@ const Mypage = () => {
     setIsOpenStackBox(false); // 선택 박스 닫기
   };
 
-  const getUserName = async () => {
-    try {
-      const res = await axios.get(
-        "https://lymming-back.link/member/check-nickname",
-        {
-          params: { nickname: putData.nickname },
-        }
-      );
-      if (res.data === true) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  const nameCheck = async () => {
-    const res = await getUserName();
-    setIsAllowNickName(res);
-    setHaveNickNameCheck(true);
-  };
+  // const getUserName = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       "https://lymming-back.link/member/check-nickname",
+  //       {
+  //         params: { nickname: putData.nickname },
+  //       }
+  //     );
+  //     if (res.data === true) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // };
+  // const nameCheck = async () => {
+  //   const res = await getUserName();
+  //   setIsAllowNickName(res);
+  //   setHaveNickNameCheck(true);
+  // };
   return (
     <>
       <Header />
@@ -191,13 +198,13 @@ const Mypage = () => {
             <div className="inputBundle">
               <input
                 className="input_box"
-                onChange={handleInputChange}
+                // onChange={handleInputChange}
                 name="nickname"
                 value={putData.nickname}
               ></input>
-              <div className="checkNickName" onClick={nameCheck}>
+              {/* <div className="checkNickName" onClick={nameCheck}>
                 중복 확인
-              </div>
+              </div> */}
             </div>
 
             <div className="input_text">포지션</div>

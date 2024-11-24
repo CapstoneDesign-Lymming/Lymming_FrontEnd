@@ -3,7 +3,9 @@ import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import noUserImg from "../../../assets/img/no-profile.webp";
+
 import skills from "../../../data/skills.json";
 
 interface UsermodalProps {
