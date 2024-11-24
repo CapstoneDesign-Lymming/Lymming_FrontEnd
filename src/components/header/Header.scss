@@ -52,15 +52,15 @@
     li {
       width: 8vw;
       margin: 10px;
+      border-radius: 8px;
+      padding: 5px;
+    }
+    li:hover {
+      background-color: rgb(248, 248, 248);
     }
 
     .chat {
       width: 3%;
-      // .chat_img {
-      //   width: 20px;
-      //   height: 20px;
-      //   filter: grayscale(100%);
-      // }
     }
 
     .login_aft {
@@ -80,6 +80,9 @@
         font-size: 0.6vw;
         font-weight: bolder;
       }
+    }
+    .login_aft:hover {
+      background-color: white;
     }
   }
   &-loginUl {

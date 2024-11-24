@@ -350,6 +350,9 @@ const TeamBuilding = () => {
           </div>
 
           <div className="btn_wrapper">
+            <button className="cancel" onClick={() => navigate("/participate")}>
+              취소
+            </button>
             <button
               className="submit"
               onClick={() => {
@@ -357,9 +360,6 @@ const TeamBuilding = () => {
               }}
             >
               등록
-            </button>
-            <button className="cancel" onClick={() => navigate("/participate")}>
-              취소
             </button>
           </div>
         </div>

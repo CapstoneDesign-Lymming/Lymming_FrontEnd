@@ -16,3 +16,18 @@ body {
   height: 100vh; /* 뷰포트 높이 사용 */
   overflow-y: auto; /* 세로 스크롤 가능 */
 }
+.App::-webkit-scrollbar {
+  width: 15px;
+}
+
+.App::-webkit-scrollbar-thumb {
+  background: rgb(223, 223, 223); /* 스크롤바 색상 */
+  border-radius: 4px; /* 스크롤바 둥근 테두리 */
+}
+.App::-webkit-scrollbar-thumb:hover {
+  background: rgb(177, 177, 177); /* 스크롤바 색상 */
+  border-radius: 4px; /* 스크롤바 둥근 테두리 */
+}
+.App::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255); /*스크롤바 뒷 배경 색상*/
+}
