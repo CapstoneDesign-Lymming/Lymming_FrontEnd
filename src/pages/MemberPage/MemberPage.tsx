@@ -92,7 +92,10 @@ const MemberPage = () => {
     if (!login) return; //login이 안되어있다면 return
     e.stopPropagation();
     console.log("채팅하기 클릭됨");
-    navigate("/chat", { state: { id: nickname } });
+
+    if (nickname !== userData.nickname) {
+      navigate("/chat", { state: { id: nickname } });
+    }
   };
   const handleProjectClick = (
     e: React.MouseEvent,
