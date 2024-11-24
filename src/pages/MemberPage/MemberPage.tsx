@@ -200,6 +200,19 @@ const MemberPage = () => {
                       <div className="back_body-skillWrapper">
                         주요스킬 | {...item.stack}
                       </div>
+                      <div
+                        className="back_body-detail"
+                        onClick={(e) =>
+                          handleProjectClick(
+                            e,
+                            item.nickname,
+                            item.projectNames,
+                            item.deadlines
+                          )
+                        }
+                      >
+                        프로젝트 보기
+                      </div>
                     </div>
                     <div
                       className="back_footerWrapper"

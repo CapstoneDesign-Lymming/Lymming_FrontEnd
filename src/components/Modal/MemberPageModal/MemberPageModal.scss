@@ -1,5 +1,10 @@
 @import "../../../style/mixin.scss";
+@font-face {
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
+}
 .MemberPage {
+  font-family: "Pretendard";
   width: 44%;
   height: 77%;
   display: flex;
