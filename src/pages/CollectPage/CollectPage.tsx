@@ -26,7 +26,6 @@ const CollectPage = () => {
         `https://lymming-back.link/favorites/list/${data.userId}`
       );
       setList(res.data);
-      console.log("내가 찜한글", res);
     } catch (e) {
       console.error(e);
     }
@@ -38,7 +37,6 @@ const CollectPage = () => {
         `https://lymming-back.link/list/project/${data.userId}`
       );
       setList(res.data);
-      console.log("내가 쓴글", res);
     } catch (e) {
       console.error(e);
     }
@@ -48,10 +46,8 @@ const CollectPage = () => {
     const fetchData = async () => {
       setList([]);
       if (selectTab === "내가쓴글") {
-        console.log("내가쓴글 실행");
         await getWirteBoard();
       } else if (selectTab === "내가찜한글") {
-        console.log("내가찜한글 실행");
         await getLikeBoard();
       }
     };
