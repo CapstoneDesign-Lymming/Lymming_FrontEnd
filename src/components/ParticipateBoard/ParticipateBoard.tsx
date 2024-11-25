@@ -25,6 +25,8 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
   const { data } = useInfoStore();
   const [like, setLike] = useState(item.like);
 
+  console.log("item", item);
+
   const checkNewData = (upload: string) => {
     const nowTime = new Date();
     const uploadTime = new Date(upload);
