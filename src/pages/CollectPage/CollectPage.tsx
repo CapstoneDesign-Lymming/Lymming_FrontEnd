@@ -48,7 +48,7 @@ const CollectPage = () => {
   useEffect(() => {
     if (selectTab === "내가쓴글") {
       getWirteBoard();
-    } else {
+    } else if (selectTab === "내가찜한글") {
       getLikeBoard();
     }
   }, [selectTab]);
