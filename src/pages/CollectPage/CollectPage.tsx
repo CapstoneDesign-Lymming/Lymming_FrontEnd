@@ -20,7 +20,6 @@ const CollectPage = () => {
     //setList(dummy.dummy as ParticipateItem[]);
   }, []);
 
-  // 좋아요 누를 게시물 가져오기
   const getLikeBoard = useCallback(async () => {
     try {
       const res = await axios.get(
@@ -31,8 +30,8 @@ const CollectPage = () => {
     } catch (e) {
       console.error(e);
     }
-  }, [data.userId]);
-  // 내가 쓴 게시물 가져오기
+  }, []);
+
   const getWirteBoard = useCallback(async () => {
     try {
       const res = await axios.get(
@@ -43,15 +42,17 @@ const CollectPage = () => {
     } catch (e) {
       console.error(e);
     }
-  }, [data.userId]);
+  }, []);
 
   useEffect(() => {
     if (selectTab === "내가쓴글") {
       getWirteBoard();
+      return;
     } else if (selectTab === "내가찜한글") {
       getLikeBoard();
+      return;
     }
-  }, [selectTab, getLikeBoard, getWirteBoard]);
+  }, [selectTab]);
 
   return (
     <div className="CollectPage">
