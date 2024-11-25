@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModalChild.scss";
 import infoData from "../../../data/loginInfoData.json";
 import loginok from "../../../assets/img/loginok.png";
 import nouserImage from "../../../assets/img/no-profile.webp";
-import axios from "axios";
 import useImageUpload from "../../../hooks/useImageUpload";
-import { useOpenAiCassification } from "../../../hooks/useOpenAiCassification";
 
 export const Child1 = () => {
   const { setData } = useInfoStore();

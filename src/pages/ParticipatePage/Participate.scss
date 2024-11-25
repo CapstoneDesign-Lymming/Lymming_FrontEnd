@@ -40,6 +40,7 @@
 
       background: #adb5bd;
       border: none;
+      border-radius: 8px;
     }
 
     .skill-item {
@@ -81,6 +82,18 @@
         }
       }
     }
+    .skill-item::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .skill-item::-webkit-scrollbar-thumb {
+      background: rgb(59, 59, 59); /* 스크롤바 색상 */
+      border-radius: 10px; /* 스크롤바 둥근 테두리 */
+    }
+
+    .skill-item::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255); /*스크롤바 뒷 배경 색상*/
+    }
   }
 
   .menu {
@@ -88,6 +101,7 @@
     padding: 3%;
     width: 30%;
     margin-top: 7vh;
+    cursor: pointer;
     &-tap {
       font-size: 1.3vw;
       display: flex;

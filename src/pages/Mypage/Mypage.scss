@@ -17,10 +17,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     border-radius: 10px;
     border: 1px solid #cdcdcd;
     &-head {
-      height: 7%;
+      height: 5%;
       width: 80%;
       position: absolute;
       top: 0;
@@ -34,10 +35,10 @@
       flex-direction: column;
       align-items: center;
       margin-top: 5%;
-      margin-bottom: 4%;
+      margin-bottom: 2%;
       .temperature {
         height: 25px;
-        width: 50%;
+        width: 60%;
         @include flex-center;
         font-size: 22px;
         font-weight: 700;
@@ -47,36 +48,204 @@
         margin-bottom: 5%;
       }
       .profile {
-        width: 160px;
-        height: 160px;
+        width: 130px;
+        height: 130px;
         border-radius: 50%;
+      }
+      .putImg {
+        position: absolute;
+        width: 27px;
+        height: 27px;
+        @include flex-center;
+        top: 32%;
+        right: 44%;
+        border-radius: 50%;
+        .newImgIcon {
+          width: 20px;
+          height: 20px;
+          background-color: #dddddd;
+          border-radius: 50%;
+          fill: rgb(0, 0, 0);
+        }
+      }
+      .no_display1 {
+        display: none;
+      }
+      .display1 {
+        display: block;
+      }
+      .display2 {
+        display: block;
+      }
+      .no_display2 {
+        display: none;
       }
     }
     &-body {
-      width: 30%;
-      height: 50%;
+      width: 60%;
+      height: 70%;
+      display: flex;
+      flex-direction: column;
       .input_text {
-        font-size: 15px;
+        font-size: 17px;
         font-weight: 600;
-        margin-bottom: 4%;
+        margin-bottom: 2%;
       }
-      .stackWrapper {
-        display: flex;
+      .inputBundle {
         width: 100%;
-        background-color: #687c97;
+        height: 10%;
+        display: flex;
+        align-items: center;
+        .input_box {
+          width: 150px;
+          border: 1px solid #cdcdcd;
+          border-radius: 3px;
+          height: 3.5vh;
+          .stackBox {
+            width: 100px;
+            height: 30px;
+            background-color: red;
+          }
+        }
+        .checkNickName {
+          height: 3.5vh;
+          width: 100px;
+          margin-left: 3%;
+          @include flex-center;
+          background-color: #daedff;
+          color: #3182f6;
+          border-radius: 8px;
+        }
       }
-      .input_box {
-        width: 90%;
-        border: 1px solid #cdcdcd;
-        border-radius: 3px;
-        height: 3.5vh;
-        .stackBox {
+
+      .tagBundle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 2%;
+        position: relative;
+        .tag {
           width: 100px;
           height: 30px;
-          background-color: red;
+          @include flex-center;
+          border-radius: 7px;
+          line-height: 30px;
+          background-color: #e0e0e0;
+        }
+        .delete {
+          position: absolute;
+          top: -7px;
+          left: 90px;
+          width: 16px;
+          border-radius: 50%;
+          height: 16px;
+          border-radius: 50%;
+          @include flex-center;
+          background-color: #181818;
+          color: white;
+        }
+        .plus {
+          width: 30px;
+          height: 30px;
+          @include flex-center;
+          margin-left: 2%;
+          background-color: #e4e4e4;
+          border-radius: 8px;
+          svg {
+            width: 12px;
+            height: 12px;
+            fill: rgb(109, 108, 108);
+          }
+        }
+        .selectBox {
+          width: 500px;
+          height: 250px;
+          display: flex;
+          z-index: 2;
+          position: absolute;
+          background-color: rgb(255, 255, 255);
+          backdrop-filter: 15px;
+          border: 0.4px solid rgb(221, 221, 221);
+          border-radius: 15px;
+          display: none;
+          .closeBtnWrapper {
+            width: 99%;
+            height: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 2%;
+            .closeBtn {
+              width: 20px;
+              height: 20px;
+              fill: #ff4444;
+            }
+          }
+
+          .positonBundle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            height: 200px;
+            flex-wrap: wrap;
+            .newPosition {
+              width: 100px;
+              height: 30px;
+              margin-left: 10px;
+              margin-right: 10px;
+              border-radius: 5px;
+              @include flex-center;
+              background-color: #cdcdcd;
+            }
+            .selectPosition {
+              background-color: #3182f6;
+              color: white;
+              font-weight: 600;
+            }
+          }
+          .stackBundle {
+            display: flex;
+            flex-wrap: wrap;
+            .newStack {
+              @include flex-center;
+              width: 90px;
+              height: 30px;
+              margin: 1%;
+              background-color: #cdcdcd;
+              border-radius: 8px;
+            }
+            .selected {
+              background-color: #3182f6;
+              color: white;
+              font-weight: 600;
+            }
+          }
+        }
+        .open {
+          display: block;
+        }
+        .jobSelect {
+          width: 100px;
+          height: 30px;
+          border-radius: 8px;
+        }
+        .stackWrapper {
+          display: flex;
+          width: 100%;
+          .stackBox {
+            width: 80px;
+            height: 30px;
+            @include flex-center;
+            padding-right: 3%;
+            padding-left: 3%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 1%;
+          }
         }
       }
     }
+
     &-foot {
       .foot_btn {
         width: 10vw;

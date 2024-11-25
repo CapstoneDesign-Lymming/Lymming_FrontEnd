@@ -50,7 +50,18 @@ const Header = () => {
           ${login ? "Header-loginUl" : ""}`}
       >
         <li onClick={() => navigate("/participate")}>참여하기</li>
-        <li onClick={() => navigate("/teambuild")}>팀 꾸리기</li>
+        <li
+          onClick={() => {
+            if (localStorage.getItem("token")) {
+              navigate("/teambuild");
+            } else {
+              window.alert("로그인 한 사용자만 접근 가능합니다!");
+              navigate("/login");
+            }
+          }}
+        >
+          팀 꾸리기
+        </li>
         <li onClick={() => setIsHiddenBtnOn(!isHiddenBtnOn)}>둘러보기</li>
         {login && <li onClick={() => navigate("/share")}>내 프로젝트</li>}
         <svg

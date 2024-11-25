@@ -1,13 +1,21 @@
 @import "../../../style/mixin.scss";
+@font-face {
+  font-family: "Pretendard";
+  src: url("../../assets/fonts/Pretendard-Regular.otf");
+}
 .MemberPage {
-  width: 24%;
+  font-family: "Pretendard";
+  width: 44%;
   height: 77%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: rgb(255, 255, 255);
-  border-radius: 27px;
+  border-radius: 20px;
   padding-top: 1%;
+  flex-wrap: nowrap;
+  box-sizing: border-box; /* padding 포함 크기 계산 */
+
   &-title {
     height: 10%;
     font-size: 22px;
@@ -17,27 +25,32 @@
   &-body {
     width: 80%;
     height: 90%;
+    padding-right: 7%;
+    padding-left: 7%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
+
     .article {
       width: 100%;
-      height: 10%;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: 600;
       margin-bottom: 1%;
-
-      // }
       .name {
-        width: 50%;
+        width: 65%;
         height: 100%;
         display: flex;
         align-items: center;
-        overflow: hidden;
-        white-space: nowrap;
+        display: block;
+        overflow: hidden; /* 넘치는 텍스트를 숨김 */
         text-overflow: ellipsis;
+        white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+        line-height: 50px;
       }
       .state {
         @include flex-center;
@@ -53,5 +66,20 @@
         color: #868e96;
       }
     }
+  }
+  &-body::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  &-body::-webkit-scrollbar-thumb {
+    background: rgb(223, 223, 223); /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 둥근 테두리 */
+  }
+  &-body::-webkit-scrollbar-thumb:hover {
+    background: rgb(177, 177, 177); /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 둥근 테두리 */
+  }
+  &-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255); /*스크롤바 뒷 배경 색상*/
   }
 }

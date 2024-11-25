@@ -5,24 +5,29 @@ import axios from "axios";
 import RootModal from "../../components/Modal/RootModal/RootModal";
 import Header from "../../components/header/Header";
 import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error/Error";
+import RootToast from "../../components/Toast/RootToast/RootToast";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
+import useMemberProjectStore from "../../store/useMemberProjectStore";
 import useModalStore from "../../store/useModalState";
+import { useToastStore } from "../../store/useToastState";
 import "./MemberPage.scss";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
-import RootToast from "../../components/Toast/RootToast/RootToast";
-import { useToastStore } from "../../store/useToastState";
 
-interface itemType {
-  name: string;
-  userImg: string;
-  githubUrl: string;
-  keywords: string[];
-  skills: string[];
-  position: string;
-  devStyle: string;
+interface RecommendType {
   bio: string;
+  deadlines: string[];
+  devStyle: string[];
+  job: string;
+  nickname: string;
+  position: string;
+  projectNames: string[];
+  stack: string[];
+  temperature: number;
+  userId: number;
+  userImg: string;
 }
 
 interface memberType {
@@ -35,36 +40,46 @@ interface memberType {
   devStyle: string[];
   temperature: number;
   projectId: string;
-  projectName: string;
-  deadline: string[];
+  projectNames: string[];
+  deadlines: string[];
 }
 
 const MemberPage = () => {
   const navigate = useNavigate();
   const { data: userData } = useInfoStore();
+  const nickname = userData.nickname;
   const { login } = useLoginStore();
   const { isModalOpen, openModal } = useModalStore();
   const { isToastOpen, openToast, setErrorText } = useToastStore();
-  const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
-    null
-  ); // 현재 뒤집힌 카드의 인덱스를 관리
-  const [flippedMemberdIdx, setFlippedMemberIdx] = useState<number | null>(
-    null
-  ); // 현재 뒤집힌 카드의 인덱스를 관리
-
-  const nickname = userData.nickname;
+  const { setNickName, setProjectNames, setDeadlines } =
+    useMemberProjectStore();
   const [modalName, setModalName] = useState("");
   const [toastName, setToastName] = useState("");
-  const fetchLocalData = async () => {
-    const response = await fetch("/json/recommendData.json");
-    if (!response.ok) {
-      throw new Error("Network error");
+  const [positionFilter, setPositionFilter] = useState<string | null>(null);
+  const [stackFilter, setStackFilter] = useState<string | null>(null);
+  const [flippedRecommendIdx, setFlippedRecommendIdx] = useState<number | null>(
+    null
+  );
+  const [flippedMemberdIdx, setFlippedMemberIdx] = useState<number | null>(
+    null
+  );
+
+  const fetchRecommendData = async () => {
+    if (login) {
+      const response = await axios.get(
+        `https://lymming-back.link/member/random/list/${userData.userId}`
+      );
+      return response.data;
+    } else {
+      const response = await axios.get(
+        `https://lymming-back.link/member/random/list/2`
+      );
+      return response.data;
     }
-    return response.json();
   };
+
   const fetchMember = async () => {
     const response = await axios.get("https://lymming-back.link/member/list");
-    console.log("member/list의 데이터", response.data);
     return response.data;
   };
   const handleClickRecommend = (index: number) => {
@@ -77,13 +92,16 @@ const MemberPage = () => {
     if (!login) return; //login이 안되어있다면 return
     e.stopPropagation();
     console.log("채팅하기 클릭됨");
-    navigate("/chat", { state: { id: nickname } });
+
+    if (nickname !== userData.nickname) {
+      navigate("/chat", { state: { id: nickname } });
+    }
   };
   const handleProjectClick = (
     e: React.MouseEvent,
     nickname: string,
-    projectName: string,
-    deadline: string[]
+    projectNames: string[],
+    deadlines: string[]
   ) => {
     if (!login) {
       openToast();
@@ -94,47 +112,48 @@ const MemberPage = () => {
     e.stopPropagation();
     console.log("프로젝트 자세히보기  클릭됨");
     //TODO: 모달에 넘길 닉네임, 프로젝트이름, 데드라인
-
-    console.log(nickname, projectName, deadline);
+    setNickName(nickname);
+    setProjectNames(projectNames);
+    setDeadlines(deadlines);
 
     //-------
     setModalName("memberPageModal");
     openModal();
   };
-  const [positionFilter, setPositionFilter] = useState<string | null>(null);
-  const [stackFilter, setStackFilter] = useState<string | null>(null);
+
   const {
     data: recommendQuery,
     error: recommendError,
     isLoading: recommendLoading,
-  } = useQuery("recommendData", fetchLocalData);
-
+  } = useQuery("recommendData", fetchRecommendData, {
+    staleTime: 1000 * 60 * 5,
+  });
   const {
     data: memberQuery,
     error: memberError,
     isLoading: memberLoading,
-  } = useQuery("memberData", fetchMember);
+  } = useQuery("memberData", fetchMember, {
+    staleTime: 1000 * 60 * 5,
+  });
 
   const filteredMembers = memberQuery?.filter((member: memberType) => {
-    // positionFilter가 있다면, position이 일치하는지 확인
     const matchesPosition = positionFilter
       ? member.position === positionFilter
       : true;
 
-    // member.stack이 비어 있지 않고, member.stack[0]이 null이 아닌 경우에만 처리
     const memberStackArr = member.stack[0]
       ? member.stack[0]
-          .slice(1, -1) // 대괄호 제거
-          .split(",") // 쉼표로 분리
-          .map((item) => item.trim()) // 각 항목에서 공백 제거
-      : []; // null일 경우 빈 배열을 반환
+          .slice(1, -1)
+          .split(",")
+          .map((item) => item.trim())
+      : [];
 
-    // stackFilter가 있으면, member.stack 배열에 포함된 항목이 stackFilter와 일치하는지 확인
     const matchesStack = stackFilter
-      ? memberStackArr.some((stackItem) => stackItem.includes(stackFilter)) // member.stack 내부에 stackFilter가 포함되는지 확인
+      ? memberStackArr.some((stackItem) =>
+          stackItem.toLowerCase().includes(stackFilter.toLowerCase())
+        )
       : true;
 
-    // positionFilter와 stackFilter 모두 일치하는지 확인
     return matchesPosition && matchesStack;
   });
 
@@ -146,76 +165,77 @@ const MemberPage = () => {
       </>
     );
 
-  if (recommendError || memberError) return <div>에러</div>;
+  if (recommendError || memberError) return;
+  <Error />;
 
   return (
     <>
       <Header />
       <div className="MemberWrapper">
         <div className="Member">
-          <div
-            className={`Member-header ${login ? "" : "notLogin_MemberHeader"}`}
-          >
-            <div className="Member-header-text">
-              {nickname}님께 어울리는 사람을 추천해드립니다.
-            </div>
+          {
+            <div
+              className={`Member-header ${
+                login ? "" : "notLogin_MemberHeader"
+              }`}
+            >
+              <div className="Member-header-text">
+                {nickname}님께 어울리는 사람을 추천해드립니다.
+              </div>
 
-            <div className="Member-header-recommend">
-              {recommendQuery.recommendData.map(
-                (item: itemType, index: number) => (
+              <div className="Member-header-recommend">
+                {recommendQuery.map((item: RecommendType, index: number) => (
                   <div
-                    key={item.name}
+                    key={index}
                     className={`recommendCard ${
                       flippedRecommendIdx === index ? "recommendFlipped" : ""
                     }`}
                     onClick={() => handleClickRecommend(index)}
                   >
                     <div className="front">
-                      <div className="recommend_name">{item.name}</div>
+                      <div className="recommend_name">{item.nickname}</div>
                       <div className="recommend_position">{item.position}</div>
-                      <img src={`${item.userImg}`} alt="" />
+                      <img src={`${item.userImg}`} alt="recommend" />
                     </div>
                     <div className="back">
-                      <div className="recommend_name">{item.name}</div>
+                      <div className="recommend_name">{item.nickname}</div>
                       <div className="recommend_position">{item.position}</div>
                       <div className="back_body">
                         <div className="back_body-devStyle">
-                          {item.devStyle}
+                          #{item.devStyle}
                         </div>
                         <div className="back_body-skillWrapper">
-                          {item.skills.map((skill, index) => {
-                            // 이름이 일치하는 skill 객체를 찾습니다.
-                            const matchedSkill = skills.skills.find(
-                              (s) =>
-                                s.name.toUpperCase() === skill.toUpperCase()
-                            );
-
-                            return (
-                              <div key={index} className="back_body-skill">
-                                {matchedSkill && (
-                                  <img
-                                    src={matchedSkill.url}
-                                    alt={skill}
-                                    className="skill_icon"
-                                  />
-                                )}
-                              </div>
-                            );
-                          })}
+                          주요스킬 | {...item.stack}
+                        </div>
+                        <div
+                          className="back_body-detail"
+                          onClick={(e) =>
+                            handleProjectClick(
+                              e,
+                              item.nickname,
+                              item.projectNames,
+                              item.deadlines
+                            )
+                          }
+                        >
+                          프로젝트 보기
                         </div>
                       </div>
                       <div
                         className="back_footerWrapper"
-                        onClick={(e) => handleChatClick(e, item.name)}
+                        onClick={(e) => handleChatClick(e, item.nickname)}
                       >
                         <div className="back_footer">채팅하기</div>
                       </div>
                     </div>
                   </div>
-                )
-              )}
+                ))}
+                {/* {recommendQuery.map((item, idx) => (
+                <div key={idx}>{item.nickname}</div>
+              ))} */}
+              </div>
             </div>
-          </div>
+          }
           <div className={`${login ? "hide_notLogin_nav" : "notLogin_nav"}`}>
             <div className="notLogin_nav-head">
               당신에게 어울리는 팀원을 찾아드립니다
@@ -240,7 +260,19 @@ const MemberPage = () => {
                 <option value="">전체</option>
                 <option value="프론트엔드">프론트엔드</option>
                 <option value="백엔드">백엔드</option>
-                <option value="디자이너">디자이너</option>
+                <option value="풀스택">풀스택</option>
+                <option value="AI개발">AI개발</option>
+                <option value="모바일 개발">모바일 개발</option>
+                <option value="클라우드">클라우드</option>
+                <option value="보안">보안</option>
+                <option value="블록체인">블록체인</option>
+                <option value="게임 개발">게임 개발</option>
+                <option value="AR/VR">AR/VR</option>
+                <option value="UI/UX 디자인">UI/UX 디자인</option>
+                <option value="IoT">IoT</option>
+                <option value="네트워크">네트워크</option>
+                <option value="데이터베이스">데이터베이스</option>
+                <option value="빅데이터">빅데이터</option>
               </select>
             </div>
 
@@ -251,9 +283,28 @@ const MemberPage = () => {
                 value={stackFilter || ""}
               >
                 <option value="">전체</option>
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
                 <option value="javascript">javascript</option>
-                <option value="typescript">typescript</option>
-                <option value="react">react</option>
+                <option value="Python">Python</option>
+                <option value="Spring">Spring</option>
+                <option value="Go">Go</option>
+                <option value="Rust">Rust</option>
+                <option value="Kotlin">Kotlin</option>
+                <option value="Swift">Swift</option>
+                <option value="PHP">PHP</option>
+                <option value="TypeScript">TypeScript</option>
+                <option value="SQL">SQL</option>
+                <option value="HTML">HTML</option>
+                <option value="CSS">CSS</option>
+                <option value="R">R</option>
+                <option value="Nest.js">Nest.js</option>
+                <option value="Next.js">Next.js</option>
+                <option value="Figma">Figma</option>
+                <option value="DJango">DJango</option>
+                <option value="Dart">Dart</option>
+                <option value="Tensorflow">Tensorflow</option>
               </select>
             </div>
           </div>
@@ -352,8 +403,8 @@ const MemberPage = () => {
                             handleProjectClick(
                               e,
                               item.nickname,
-                              item.projectName,
-                              item.deadline
+                              item.projectNames,
+                              item.deadlines
                             )
                           }
                         >

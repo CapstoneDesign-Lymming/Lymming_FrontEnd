@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useInfoStore } from "../../store/useLoginStore";
 import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
-
+import defalutImg from "../../assets/img/noimage.jpg";
 interface ItemType {
   sharePageId: number;
   userId: number;
@@ -83,7 +83,9 @@ const SharePage = () => {
                         </div>
                         <div className="CardBody">
                           <img
-                            src={item.sharePageUrl || "placeholder.jpg"}
+                            src={
+                              item.sharePageUrl ? item.sharePageUrl : defalutImg
+                            }
                             alt="프로젝트 이미지"
                           />
                         </div>
