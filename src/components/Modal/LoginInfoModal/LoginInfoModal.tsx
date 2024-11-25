@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 
@@ -149,6 +149,13 @@ const LoginInfoModal = ({ children }: Props) => {
     //updateUserImg();
     await postData();
   };
+
+  useEffect(() => {
+    console.log("회원가입 모달 unmount");
+    return () => {
+      setIsOpen();
+    };
+  }, []);
   return (
     <div className="LoginInfoModal">
       <div className="header">

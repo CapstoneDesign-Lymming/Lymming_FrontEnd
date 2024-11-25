@@ -55,10 +55,6 @@ const KakaoAuth = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <div className="KakaoAuth">
       <Loading />

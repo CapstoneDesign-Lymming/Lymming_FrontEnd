@@ -55,10 +55,6 @@ const GithubAuth = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <div className="GithubAuth">
       <Loading />
