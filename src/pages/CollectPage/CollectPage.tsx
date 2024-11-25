@@ -1,7 +1,7 @@
 import Header from "../../components/header/Header";
 import "./CollectPage.scss";
 import ParticipateBoard from "../../components/ParticipateBoard/ParticipateBoard";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Usermodal from "../../components/Modal/UserModal/UserModal";
 import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
@@ -21,7 +21,7 @@ const CollectPage = () => {
   }, []);
 
   // 좋아요 누를 게시물 가져오기
-  const getLikeBoard = async () => {
+  const getLikeBoard = useCallback(async () => {
     try {
       const res = await axios.get(
         `https://lymming-back.link/favorites/list/${data.userId}`
@@ -31,9 +31,9 @@ const CollectPage = () => {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [data.userId]);
   // 내가 쓴 게시물 가져오기
-  const getWirteBoard = async () => {
+  const getWirteBoard = useCallback(async () => {
     try {
       const res = await axios.get(
         `https://lymming-back.link/list/project/${data.userId}`
@@ -43,7 +43,7 @@ const CollectPage = () => {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [data.userId]);
 
   useEffect(() => {
     if (selectTab === "내가쓴글") {
@@ -51,7 +51,7 @@ const CollectPage = () => {
     } else if (selectTab === "내가찜한글") {
       getLikeBoard();
     }
-  }, [selectTab]);
+  }, [selectTab, getLikeBoard, getWirteBoard]);
 
   return (
     <div className="CollectPage">
