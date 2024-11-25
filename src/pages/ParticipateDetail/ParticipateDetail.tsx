@@ -7,6 +7,7 @@ import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
 import skills from "../../data/skills.json";
 import noUserImg from "../../assets/img/no-profile.webp";
+
 import { useInfoStore } from "../../store/useLoginStore";
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
@@ -101,7 +102,10 @@ const ParticipateDetail = () => {
           </div>
         </div>
         <hr />
-        <img className="content-img" src={item?.projectImg} alt="" />
+
+        {item?.projectImg && (
+          <img className="content-img" src={item?.projectImg} alt="ss" />
+        )}
 
         <div className="content-text">{item?.description}</div>
       </div>
