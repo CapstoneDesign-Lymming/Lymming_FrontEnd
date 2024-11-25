@@ -45,13 +45,15 @@ const CollectPage = () => {
   }, []);
 
   useEffect(() => {
-    if (selectTab === "내가쓴글") {
-      getWirteBoard();
-      return;
-    } else if (selectTab === "내가찜한글") {
-      getLikeBoard();
-      return;
-    }
+    const fetchData = async () => {
+      if (selectTab === "내가쓴글") {
+        await getWirteBoard();
+      } else if (selectTab === "내가찜한글") {
+        await getLikeBoard();
+      }
+    };
+
+    fetchData();
   }, [selectTab]);
 
   return (
