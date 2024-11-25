@@ -101,7 +101,7 @@ const ParticipateDetail = () => {
           </div>
         </div>
         <hr />
-        <img src={item?.projectImg} alt="" />
+        <img className="content-img" src={item?.projectImg} alt="" />
 
         <div className="content-text">{item?.description}</div>
       </div>
