@@ -10,8 +10,17 @@ interface Props {
 }
 
 const LoginInfoModal = ({ children }: Props) => {
-  const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
-    useLoginStore();
+  const {
+    count,
+    setCount,
+    setCountDown,
+    setIsOpen,
+    setLogin,
+    isExist,
+    setCountReset,
+    setIsOpenReset,
+    setIsExistReset,
+  } = useLoginStore();
 
   const { data, setData } = useInfoStore();
   const token = localStorage.getItem("token");
@@ -152,8 +161,9 @@ const LoginInfoModal = ({ children }: Props) => {
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      // 상태 변경 및 사용자 경고 메시지 추가 가능
-      setIsOpen();
+      setIsExistReset();
+      setIsOpenReset();
+      setCountReset();
       event.preventDefault();
     };
 
