@@ -46,6 +46,7 @@ const CollectPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setList([]);
       if (selectTab === "내가쓴글") {
         console.log("내가쓴글 실행");
         await getWirteBoard();
