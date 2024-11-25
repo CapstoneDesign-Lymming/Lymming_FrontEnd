@@ -151,11 +151,19 @@ const LoginInfoModal = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    console.log("회원가입 모달 unmount");
-    return () => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      // 상태 변경 및 사용자 경고 메시지 추가 가능
       setIsOpen();
+      event.preventDefault();
     };
-  }, []);
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [setIsOpen]);
+
   return (
     <div className="LoginInfoModal">
       <div className="header">
