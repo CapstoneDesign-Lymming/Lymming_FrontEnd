@@ -447,14 +447,7 @@ const ChatPage = () => {
                     onClick={() => setPartner(it.userId2)}
                   >
                     <div className="content-left-list-item-profile">
-                      <img
-                        src={
-                          it.userId1 === currentUser
-                            ? it.user2Img || noUserImg
-                            : it.user1Img || noUserImg
-                        }
-                        alt="User Profile"
-                      />
+                      <img src={it.user1Img || noUserImg} />
                       <span>{it.userId2}</span>
                     </div>
                     <div className="content-left-list-item-body">
