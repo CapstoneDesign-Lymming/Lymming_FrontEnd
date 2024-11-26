@@ -198,12 +198,12 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           <div
             className="item-bottom-right-chat"
             onClick={() => {
+              console.log(data.nickname, item.nickname);
               if (data.nickname === item.nickname) {
                 navigate("/chat", { state: { id: item.nickname } });
               }
             }}
           >
-            {/* <img src={chat} /> */}
             <svg
               className="chat_icon"
               xmlns="http://www.w3.org/2000/svg"
