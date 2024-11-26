@@ -320,8 +320,8 @@ const ChatPage = () => {
             userId1: adjustedUserId1, // 로그인된 사용자를 user1로 설정
             userId2: adjustedUserId2, // 반대 사용자를 user2로 설정
             lastMessage: room.lastMessage || { content: "", timestamp: "" }, // lastMessage가 없을 경우 처리
-            user1Img: adjustedUser1Img,
-            user2Img: adjustedUser2Img,
+            user1Img: userImg.user1Img,
+            user2Img: userImg.user2Img,
           };
         })
       );
