@@ -296,14 +296,20 @@ const ChatPage = () => {
       setChatRooms(
         res.data.map((room: any) => {
           const [user1, user2] = room.roomId.split("_");
+          // 현재 사용자가 user1인지 user2인지 확인
+          const isCurrentUserUser1 = user1 === currentUser;
 
-          const adjustedUserId1 = user1 === currentUser ? user1 : user2;
-          const adjustedUserId2 = user1 === currentUser ? user2 : user1;
+          // 현재 사용자와 상대방의 ID 설정
+          const adjustedUserId1 = isCurrentUserUser1 ? user1 : user2;
+          const adjustedUserId2 = isCurrentUserUser1 ? user2 : user1;
 
-          const adjustedUser1Img =
-            adjustedUserId2 === currentUser ? room.user1Img : room.user2Img;
-          const adjustedUser2Img: string =
-            adjustedUserId2 === currentUser ? room.user2Img : room.user1Img;
+          // 상대방의 이미지 설정
+          const adjustedUser1Img = isCurrentUserUser1
+            ? room.user2Img
+            : room.user1Img; // 상대방의 이미지
+          const adjustedUser2Img = isCurrentUserUser1
+            ? room.user1Img
+            : room.user2Img;
 
           return {
             roomId: room.roomId,
@@ -441,7 +447,14 @@ const ChatPage = () => {
                     onClick={() => setPartner(it.userId2)}
                   >
                     <div className="content-left-list-item-profile">
-                      <img src={it.user1Img || noUserImg} />
+                      <img
+                        src={
+                          it.userId1 === currentUser
+                            ? it.user2Img || noUserImg
+                            : it.user1Img || noUserImg
+                        }
+                        alt="User Profile"
+                      />
                       <span>{it.userId2}</span>
                     </div>
                     <div className="content-left-list-item-body">
