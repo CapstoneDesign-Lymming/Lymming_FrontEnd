@@ -17,8 +17,6 @@ const ParticipateDetail = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
 
-  console.log(projectId);
-
   useEffect(() => {
     getData();
   }, []);

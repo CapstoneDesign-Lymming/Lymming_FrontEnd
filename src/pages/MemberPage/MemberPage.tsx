@@ -95,7 +95,6 @@ const MemberPage = () => {
   const handleChatClick = (e: React.MouseEvent, nickname: string) => {
     if (!login) return; //login이 안되어있다면 return
     e.stopPropagation();
-    console.log("채팅하기 클릭됨");
 
     if (nickname !== userData.nickname) {
       navigate("/chat", { state: { id: nickname } });
@@ -114,7 +113,7 @@ const MemberPage = () => {
       return;
     }
     e.stopPropagation();
-    console.log("프로젝트 자세히보기  클릭됨");
+
     //TODO: 모달에 넘길 닉네임, 프로젝트이름, 데드라인
     setNickName(nickname);
     setProjectNames(projectNames);

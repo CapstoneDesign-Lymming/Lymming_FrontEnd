@@ -142,7 +142,6 @@ const LoginInfoModal = ({ children }: Props) => {
         }
       );
       setData(res.data);
-      console.log(res);
     } catch (e) {
       console.error(e);
     }

@@ -28,7 +28,7 @@ const fetchShareData = async () => {
     `${import.meta.env.VITE_BACKEND_ENDPOINT}/share/list`
   );
   const reverseData = response.data.reverse();
-  console.log("sharepage 프로젝트 data", response.data);
+
   return reverseData;
 };
 

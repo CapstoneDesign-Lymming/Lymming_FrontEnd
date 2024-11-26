@@ -75,7 +75,6 @@ const TeamBuilding = () => {
           ? parseInt(target.value, 10)
           : target.value;
       setState({ ...state, [target.name]: value });
-      console.log(state.projectImg);
     }
   };
 
@@ -107,8 +106,6 @@ const TeamBuilding = () => {
 
   const postProject = async () => {
     try {
-      console.log("❌5");
-
       const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_ENDPOINT}/teambuild`,
         {
@@ -128,11 +125,10 @@ const TeamBuilding = () => {
         }
       );
       if (res.status === 200) {
-        console.log(res);
         openToast();
         setToastName("successToast");
         navigate("/participate");
-        console.log("❌6 등록 완료");
+
         return;
       } else {
         throw new Error(`서버 오류: ${res.status}`);
@@ -157,19 +153,13 @@ const TeamBuilding = () => {
   };
 
   const uploadImage = async () => {
-    console.log("💧💧💧");
     const s3ImageUrl = await handleUpload();
     if (s3ImageUrl) {
       localProjectImg.current = s3ImageUrl;
-      console.log("👍ref로 선언한 localProjectImg", localProjectImg.current); //이미지 경로 들어감
     }
     if (s3ImageUrl) {
-      console.log("s3ImageUrl", s3ImageUrl);
-      console.log(state.projectImg, "state에 이미지 추가");
       // postUplodFileUrl(s3ImageUrl);
       setState({ ...state, projectImg: localProjectImg.current });
-
-      console.log("⭐setState이후 이미지 경로", state.projectImg);
     } else {
       console.error("Image upload failed; URL is undefined");
     }
