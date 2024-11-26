@@ -305,11 +305,11 @@ const ChatPage = () => {
 
           // 상대방의 이미지 설정
           const adjustedUser1Img = isCurrentUserUser1
-            ? room.user2Img
-            : room.user1Img; // 상대방의 이미지
-          const adjustedUser2Img = isCurrentUserUser1
             ? room.user1Img
-            : room.user2Img;
+            : room.user2Img; // 상대방의 이미지
+          const adjustedUser2Img = isCurrentUserUser1
+            ? room.user2Img
+            : room.user1Img;
 
           return {
             roomId: room.roomId,
