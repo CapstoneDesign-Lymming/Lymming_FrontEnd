@@ -12,7 +12,10 @@
     "react",
     "node.js",
     "go",
-    "rust"
+    "rust",
+    "Spring",
+    "Next.js",
+    "Nest.js"
   ],
   "position": [
     "프론트엔드",

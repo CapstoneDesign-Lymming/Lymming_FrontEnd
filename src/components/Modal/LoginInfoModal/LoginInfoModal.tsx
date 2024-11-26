@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useInfoStore, useLoginStore } from "../../../store/useLoginStore";
 import "./LoginInfoModal.scss";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import back from "../../../assets/img/leftrrow.png";
 import axios from "axios";
 
@@ -10,8 +10,17 @@ interface Props {
 }
 
 const LoginInfoModal = ({ children }: Props) => {
-  const { count, setCount, setCountDown, setIsOpen, setLogin, isExist } =
-    useLoginStore();
+  const {
+    count,
+    setCount,
+    setCountDown,
+    setIsOpen,
+    setLogin,
+    isExist,
+    setCountReset,
+    setIsOpenReset,
+    setIsExistReset,
+  } = useLoginStore();
 
   const { data, setData } = useInfoStore();
   const token = localStorage.getItem("token");
@@ -149,6 +158,22 @@ const LoginInfoModal = ({ children }: Props) => {
     //updateUserImg();
     await postData();
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      setIsExistReset();
+      setIsOpenReset();
+      setCountReset();
+      event.preventDefault();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [setIsOpen]);
+
   return (
     <div className="LoginInfoModal">
       <div className="header">
