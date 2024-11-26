@@ -10,7 +10,6 @@ const ShareInviteModal = () => {
   const { postSharePageId } = useModalStore();
   const navigate = useNavigate();
 
-
   const handleNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInviteNickName(e.target.value);
   };
@@ -20,7 +19,9 @@ const ShareInviteModal = () => {
       console.log("inviteNickName", inviteNickName);
       const encodedName = encodeURIComponent(inviteNickName);
       const response = await axios.get(
-        `https://lymming-back.link/share/find/${encodedName}/${postSharePageId}`
+        `${
+          import.meta.env.VITE_BACKEND_ENDPOINT
+        }/share/find/${encodedName}/${postSharePageId}`
       );
       console.log("초대", response.data);
 

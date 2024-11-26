@@ -25,7 +25,9 @@ const ParticipateDetail = () => {
   const getData = async () => {
     try {
       const res = await axios.get(
-        `https://lymming-back.link/participate/detail/${projectId}`
+        `${
+          import.meta.env.VITE_BACKEND_ENDPOINT
+        }/participate/detail/${projectId}`
       );
       setItem(res.data);
     } catch (e) {

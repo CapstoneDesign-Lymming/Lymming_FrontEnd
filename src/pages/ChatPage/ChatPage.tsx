@@ -93,7 +93,7 @@ const ChatPage = () => {
       const roomId = await sortChatRoomId(currentUser, partner);
       try {
         const res = await axios.post(
-          "https://lymming-back.link/chat/existroom",
+          `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/existroom`,
           {
             roomId: roomId,
           }
@@ -134,7 +134,7 @@ const ChatPage = () => {
       };
       try {
         const res = await axios.post(
-          "https://lymming-back.link/chat/room/create",
+          `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/room/create`,
           payload
         );
 
@@ -154,7 +154,9 @@ const ChatPage = () => {
       console.log("채팅기록 불러오기");
       try {
         const res = await axios.get(
-          `https://lymming-back.link/chat/${chatRoom.roomId}/history`
+          `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/${
+            chatRoom.roomId
+          }/history`
         );
         setChatHistory(res.data);
 
@@ -174,7 +176,7 @@ const ChatPage = () => {
     if (!chatRoom?.roomId) return;
 
     client.current = Stomp.over(
-      () => new SockJS("https://lymming-back.link/chatting")
+      () => new SockJS(`${import.meta.env.VITE_BACKEND_ENDPOINT}/chatting`)
     );
 
     // STOMP 연결 설정
@@ -287,10 +289,13 @@ const ChatPage = () => {
   // 채팅방 목록 불러오기
   const getChatRooms = async () => {
     try {
-      const res = await axios.get("https://lymming-back.link/chat/chatrooms", {
-        // 올바른 URL 경로 확인
-        params: { userId: currentUser }, // userId를 파라미터로 전달
-      });
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/chatrooms`,
+        {
+          // 올바른 URL 경로 확인
+          params: { userId: currentUser }, // userId를 파라미터로 전달
+        }
+      );
       console.log("채팅방 목록을 불러옵니다", res.data);
 
       setChatRooms(
@@ -340,7 +345,7 @@ const ChatPage = () => {
   const postInvite = async (id: number, nickname: string) => {
     try {
       const res = await axios.post(
-        "https://lymming-back.link/share/add/team/member",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/share/add/team/member`,
         {
           sharePageId: id,
           nickname: nickname,

@@ -109,21 +109,24 @@ const TeamBuilding = () => {
     try {
       console.log("❌5");
 
-      const res = await axios.post("https://lymming-back.link/teambuild", {
-        userId: data.userId,
-        studyType: state.studyType,
-        recruitmentCount: state.recruitmentCount,
-        studyMethod: state.studyMethod,
-        projectDuration: state.projectDuration,
-        projectImg: localProjectImg.current,
-        projectName: state.projectName,
-        recruitmentField: state.recruitmentField,
-        techStack: state.techStack,
-        workType: state.workType,
-        deadline: state.deadline,
-        description: state.description,
-        uploadTime: new Date().toISOString().substring(0, 10),
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/teambuild`,
+        {
+          userId: data.userId,
+          studyType: state.studyType,
+          recruitmentCount: state.recruitmentCount,
+          studyMethod: state.studyMethod,
+          projectDuration: state.projectDuration,
+          projectImg: localProjectImg.current,
+          projectName: state.projectName,
+          recruitmentField: state.recruitmentField,
+          techStack: state.techStack,
+          workType: state.workType,
+          deadline: state.deadline,
+          description: state.description,
+          uploadTime: new Date().toISOString().substring(0, 10),
+        }
+      );
       if (res.status === 200) {
         console.log(res);
         openToast();

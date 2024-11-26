@@ -22,7 +22,7 @@ const GithubAuth = () => {
     console.log("로그인", code);
     try {
       const result = await axios.post(
-        "https://lymming-back.link/api/login/code/github",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/login/code/github`,
         {
           code,
         }

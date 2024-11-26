@@ -22,7 +22,7 @@ const KakaoAuth = () => {
     console.log("로그인", code);
     try {
       const result = await axios.post(
-        "https://lymming-back.link/api/kakao/login",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/kakao/login`,
         {
           code,
         }

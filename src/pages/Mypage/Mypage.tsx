@@ -62,7 +62,7 @@ const Mypage = () => {
     try {
       //FIXME: axios put login
       const res = await axios.put(
-        `https://lymming-back.link/api/mypage/${data.userId}`,
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/mypage/${data.userId}`,
         {
           userId: data.userId,
           nickname: putData.nickname,
@@ -130,7 +130,7 @@ const Mypage = () => {
   // const getUserName = async () => {
   //   try {
   //     const res = await axios.get(
-  //       "https://lymming-back.link/member/check-nickname",
+
   //       {
   //         params: { nickname: putData.nickname },
   //       }

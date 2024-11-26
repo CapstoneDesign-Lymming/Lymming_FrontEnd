@@ -77,7 +77,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const clickEndShareProject = async (projectId: number) => {
     try {
       const response = await axios.put(
-        `https://lymming-back.link/share/details/${projectId}/end`
+        `${
+          import.meta.env.VITE_BACKEND_ENDPOINT
+        }/share/details/${projectId}/end`
       );
       setToastName("successToast");
       setSuccessText("프로젝트가 종료되었습니다");
@@ -106,7 +108,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const checkVote = async (): Promise<boolean> => {
     try {
       const res = await axios.get(
-        `https://lymming-back.link/vote/has/user?sharePageId=${propData.sharePageId}&nickname=${data.nickname}`
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/vote/has/user?sharePageId=${
+          propData.sharePageId
+        }&nickname=${data.nickname}`
       );
       if (res.data === "TRUE") {
         return true;
