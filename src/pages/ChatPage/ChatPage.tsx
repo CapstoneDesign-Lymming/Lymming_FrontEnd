@@ -450,8 +450,8 @@ const ChatPage = () => {
                       <img
                         src={
                           it.userId1 === currentUser
-                            ? it.user2Img || noUserImg
-                            : it.user1Img || noUserImg
+                            ? it.user1Img || noUserImg
+                            : it.user2Img || noUserImg
                         }
                         alt="User Profile"
                       />
