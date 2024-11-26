@@ -301,9 +301,9 @@ const ChatPage = () => {
           const adjustedUserId2 = user1 === currentUser ? user2 : user1;
 
           const adjustedUser1Img =
-            adjustedUserId1 === currentUser ? room.user1Img : room.user2Img;
+            adjustedUserId1 !== currentUser ? room.user1Img : room.user2Img;
           const adjustedUser2Img: string =
-            adjustedUserId1 === currentUser ? room.user2Img : room.user1Img;
+            adjustedUserId1 !== currentUser ? room.user2Img : room.user1Img;
 
           console.log("1번 사용자", adjustedUserId1);
           console.log("1번 사용자", adjustedUser1Img);
