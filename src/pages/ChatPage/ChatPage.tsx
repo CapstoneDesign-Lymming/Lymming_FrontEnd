@@ -301,13 +301,10 @@ const ChatPage = () => {
           const adjustedUserId2 = user1 === currentUser ? user2 : user1;
 
           const adjustedUser1Img =
-            adjustedUserId1 !== currentUser ? room.user1Img : room.user2Img;
+            adjustedUserId2 === currentUser ? room.user1Img : room.user2Img;
           const adjustedUser2Img: string =
-            adjustedUserId1 !== currentUser ? room.user2Img : room.user1Img;
+            adjustedUserId2 === currentUser ? room.user2Img : room.user1Img;
 
-          console.log("1번 사용자", adjustedUserId1);
-          console.log("1번 사용자", adjustedUser1Img);
-          console.log("2번 사용자", adjustedUser2Img);
           return {
             roomId: room.roomId,
             userId1: adjustedUserId1, // 로그인된 사용자를 user1로 설정
