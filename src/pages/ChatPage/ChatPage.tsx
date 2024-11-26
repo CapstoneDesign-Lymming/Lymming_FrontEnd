@@ -304,6 +304,9 @@ const ChatPage = () => {
             user1 === currentUser ? room.user2Img : room.user1Img;
           const adjustedUser2Img: string =
             user1 === currentUser ? room.user1Img : room.user2Img;
+
+          console.log("사용자1", adjustedUser1Img);
+          console.log("사용자2", adjustedUser2Img);
           return {
             roomId: room.roomId,
             userId1: adjustedUserId1, // 로그인된 사용자를 user1로 설정
