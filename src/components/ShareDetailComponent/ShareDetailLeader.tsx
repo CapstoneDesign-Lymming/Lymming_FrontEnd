@@ -53,13 +53,11 @@ const ShareDetailLeader = () => {
   });
   const { imageUrl, handleFileChange, handleUpload } = useImageUpload();
   const teamMemberArr = formData.teamMember.split(",");
-  console.log(typeof teamMemberArr, teamMemberArr);
-  const teamMemberLen = teamMemberArr.length; //멤버 수
-  console.log(teamMemberLen);
-  const urlBundle = formData.memberUrlBundle?.split(",");
-  console.log("formData.teamUrlBundle", formData.memberUrlBundle);
 
-  console.log("urlBundle", urlBundle);
+  const teamMemberLen = teamMemberArr.length; //멤버 수
+
+  const urlBundle = formData.memberUrlBundle?.split(",");
+
   const positionBundle = formData.positionBundle?.split(",");
   /** 입력 값 변경 핸들러 */
   const handleInputChange = (
@@ -76,7 +74,6 @@ const ShareDetailLeader = () => {
     setPosetSharePageId(sharePageId);
     setModalName("shareInviteModal");
     openModal();
-    console.log(isModalOpen);
   };
 
   const postS3ImageUrl = async () => {
@@ -139,7 +136,6 @@ const ShareDetailLeader = () => {
       end: location.state.end || false, // 기본값 설정
     };
     setFormData(transformedData);
-    console.log("useEffect", transformedData); // 변환된 데이터 확인
   }, [location.state]); // location.state가 변경될 때마다 실행
 
   return (

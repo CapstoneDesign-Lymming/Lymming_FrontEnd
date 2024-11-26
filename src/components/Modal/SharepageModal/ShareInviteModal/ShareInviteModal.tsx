@@ -23,7 +23,6 @@ const ShareInviteModal = () => {
           import.meta.env.VITE_BACKEND_ENDPOINT
         }/share/find/${encodedName}/${postSharePageId}`
       );
-      console.log("초대", response.data);
 
       navigate("/chat", {
         state: {
@@ -32,10 +31,6 @@ const ShareInviteModal = () => {
           sharepage: response.data.sharePageId,
         },
       });
-
-      console.log("닉네임", response.data.nickname);
-
-      console.log("공유페이지id", response.data.sharePageId);
 
       return response.data;
     } catch (error) {

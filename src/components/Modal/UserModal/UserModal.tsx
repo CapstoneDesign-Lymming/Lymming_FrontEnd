@@ -52,7 +52,6 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
       `${import.meta.env.VITE_BACKEND_ENDPOINT}/member/list/${userId}`
     );
     setUserData(res.data);
-    console.log(res.data);
   };
 
   return (

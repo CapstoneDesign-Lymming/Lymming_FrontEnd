@@ -87,7 +87,6 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           import.meta.env.VITE_BACKEND_ENDPOINT
         }/${user_id}/likes/${project_id}`
       );
-      console.log("찜누르기 성공", res.data);
     } catch (e) {
       console.error("찜 누르기 실패", e);
     }

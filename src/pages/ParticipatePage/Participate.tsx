@@ -43,7 +43,6 @@ const Participate = () => {
     const target = e.target;
     const selectedValue = target.value;
 
-    console.log(selectedValue);
     setSelectSecondTab((prev) => ({
       ...prev, // 이전 상태를 복사
       [target.name]: selectedValue, // 선택된 키의 값을 업데이트
@@ -60,7 +59,7 @@ const Participate = () => {
     if (selectedSkills.length > 0) {
       filteredData = filteredData.filter((it) => {
         // techStack이 배열인지 확인하고, 배열일 때만 .some 메서드를 사용
-        console.log(it.techStack.split(","));
+
         return it.techStack
           .split(",")
           .some((skill) => selectedSkills.includes(skill));
@@ -111,8 +110,6 @@ const Participate = () => {
           const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
           setData(reverseData as ParticipateItem[]);
           setFilterData(reverseData as ParticipateItem[]);
-          console.log("정렬 전 데이터", res);
-          console.log("데이터 최신순 정렬", reverseData);
         } else {
           const res = await axios.get(
             `${import.meta.env.VITE_BACKEND_ENDPOINT}/participate`
@@ -120,8 +117,6 @@ const Participate = () => {
           const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
           setData(reverseData as ParticipateItem[]);
           setFilterData(reverseData as ParticipateItem[]);
-          console.log("정렬 전 데이터", res);
-          console.log("데이터 최신순 정렬", reverseData);
         }
       } catch (e) {
         console.log(e);
