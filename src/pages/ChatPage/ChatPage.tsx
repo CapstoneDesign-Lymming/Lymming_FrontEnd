@@ -441,7 +441,7 @@ const ChatPage = () => {
                     onClick={() => setPartner(it.userId2)}
                   >
                     <div className="content-left-list-item-profile">
-                      <img src={it.user2Img || noUserImg} />
+                      <img src={it.user1Img || noUserImg} />
                       <span>{it.userId2}</span>
                     </div>
                     <div className="content-left-list-item-body">
