@@ -7,7 +7,7 @@ import Loading from "../components/Loading/Loading";
 const GithubAuth = () => {
   const navigate = useNavigate();
   const { setIsOpen, setLogin } = useLoginStore();
-  const { data, setData } = useInfoStore();
+  const { setData } = useInfoStore();
 
   useEffect(() => {
     postGithubCode(code);
@@ -54,10 +54,6 @@ const GithubAuth = () => {
       console.error(e);
     }
   };
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <div className="GithubAuth">

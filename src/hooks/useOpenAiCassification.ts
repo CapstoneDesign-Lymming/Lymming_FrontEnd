@@ -10,7 +10,7 @@ export const useOpenAiCassification = () => {
 
   const openai = new OpenAi({
     apiKey:
-      "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",
+      "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",
     dangerouslyAllowBrowser: true,
   });
 
