@@ -298,17 +298,19 @@ const ChatPage = () => {
           const [user1, user2] = room.roomId.split("_");
 
           // user1은 항상 현재 사용자를 기준으로 설정
-          const isCurrentUserUser1 = user1 === currentUser;
+          const CurrentUserUser1 = currentUser === user1 ? user1 : user2;
 
-          console.log("1번 사용자", isCurrentUserUser1);
+          console.log("1번 사용자", CurrentUserUser1);
 
           return {
             roomId: room.roomId,
-            userId1: isCurrentUserUser1 ? user1 : user2, // 현재 사용자 ID
-            userId2: isCurrentUserUser1 ? user2 : user1, // 반대 사용자를 user2로 설정
+            userId1: CurrentUserUser1 === currentUser ? user1 : user2, // 현재 사용자 ID
+            userId2: CurrentUserUser1 === currentUser ? user2 : user1, // 반대 사용자를 user2로 설정
             lastMessage: room.lastMessage || { content: "", timestamp: "" }, // lastMessage가 없을 경우 처리
-            user1Img: isCurrentUserUser1 ? room.user1Img : room.user2Img, // 현재 사용자 이미지
-            user2Img: isCurrentUserUser1 ? room.user2Img : room.user1Img,
+            user1Img:
+              CurrentUserUser1 === currentUser ? room.user1Img : room.user2Img, // 현재 사용자 이미지
+            user2Img:
+              CurrentUserUser1 === currentUser ? room.user2Img : room.user1Img,
           };
         })
       );
