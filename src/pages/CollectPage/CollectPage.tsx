@@ -23,7 +23,7 @@ const CollectPage = () => {
   const getLikeBoard = useCallback(async () => {
     try {
       const res = await axios.get(
-        `https://lymming-back.link/favorites/list/${data.userId}`
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/favorites/list/${data.userId}`
       );
       setList(res.data);
     } catch (e) {
@@ -34,7 +34,7 @@ const CollectPage = () => {
   const getWirteBoard = useCallback(async () => {
     try {
       const res = await axios.get(
-        `https://lymming-back.link/list/project/${data.userId}`
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/list/project/${data.userId}`
       );
       setList(res.data);
     } catch (e) {

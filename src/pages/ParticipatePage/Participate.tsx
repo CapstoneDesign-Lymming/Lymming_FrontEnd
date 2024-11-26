@@ -9,8 +9,6 @@ import { ParticipateItem } from "../../interfaces/participate";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
 
 const Participate = () => {
-  console.log(import.meta.env.VITE_BACKEND_ENDPOINT);
-
   const inside = useRef<HTMLDivElement>(null);
   const { login } = useLoginStore();
   const { data: userData } = useInfoStore();
@@ -116,7 +114,9 @@ const Participate = () => {
           console.log("정렬 전 데이터", res);
           console.log("데이터 최신순 정렬", reverseData);
         } else {
-          const res = await axios.get("https://lymming-back.link/participate");
+          const res = await axios.get(
+            `${import.meta.env.VITE_BACKEND_ENDPOINT}/participate`
+          );
           const reverseData = res.data.reverse(); //데이터를 최신순으로 정렬
           setData(reverseData as ParticipateItem[]);
           setFilterData(reverseData as ParticipateItem[]);

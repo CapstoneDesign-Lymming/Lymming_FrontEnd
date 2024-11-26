@@ -89,7 +89,9 @@ const ShareDetailLeader = () => {
   const putShareDetail = async (s3ImgUrl: string = formData.sharePageUrl) => {
     console.log("put에서 ", s3ImgUrl);
     const res = await axios.put(
-      `https://lymming-back.link/share/details/${formData.sharePageId}/leader`,
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/share/details/${
+        formData.sharePageId
+      }/leader`,
       {
         userId: formData.userId,
         projectId: formData.projectId,

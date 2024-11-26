@@ -45,6 +45,7 @@ jobs: # job 설정
           VITE_SECRET_KEY: ${{secrets.SECRET_KEY}}
           VITE_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
           VITE_BACKEND_ENDPOINT: ${{secrets.VITE_BACKEND_ENDPOINT}}
+          VITE_AI_KEY: ${{secrets.VITE_AI_KEY}}
         run: npm run build
         # env:
         #   CI: "false"

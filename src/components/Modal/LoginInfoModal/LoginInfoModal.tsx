@@ -123,7 +123,7 @@ const LoginInfoModal = ({ children }: Props) => {
   const postData = async () => {
     try {
       const res = await axios.put(
-        "https://lymming-back.link/api/auth/sign-up",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/auth/sign-up`,
         {
           position: data.position,
           // 이건 리스트로 넣어야한다

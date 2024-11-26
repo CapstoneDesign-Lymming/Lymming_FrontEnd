@@ -67,19 +67,23 @@ const MemberPage = () => {
   const fetchRecommendData = async () => {
     if (login) {
       const response = await axios.get(
-        `https://lymming-back.link/member/random/list/${userData.userId}`
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/member/random/list/${
+          userData.userId
+        }`
       );
       return response.data;
     } else {
       const response = await axios.get(
-        `https://lymming-back.link/member/random/list/2`
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/member/random/list/2`
       );
       return response.data;
     }
   };
 
   const fetchMember = async () => {
-    const response = await axios.get("https://lymming-back.link/member/list");
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/member/list`
+    );
     return response.data;
   };
   const handleClickRecommend = (index: number) => {
