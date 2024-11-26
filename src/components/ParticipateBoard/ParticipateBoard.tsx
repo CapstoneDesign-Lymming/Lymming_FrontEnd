@@ -198,8 +198,7 @@ const ParticipateBoard: React.FC<ParticipateBoardProps> = ({
           <div
             className="item-bottom-right-chat"
             onClick={() => {
-              console.log(data.nickname, item.nickname);
-              if (data.nickname === item.nickname) {
+              if (data.nickname !== item.nickname) {
                 navigate("/chat", { state: { id: item.nickname } });
               }
             }}
