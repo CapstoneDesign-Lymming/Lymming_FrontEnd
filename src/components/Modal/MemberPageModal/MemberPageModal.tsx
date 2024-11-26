@@ -30,7 +30,7 @@ const MemberPageModal = () => {
               {item}
             </div>
             <div className={`state ${isEndArr[idx] === false ? "" : "end"}`}>
-              {isEndArr[idx] === false ? "모집완료" : "모집중"}
+              {isEndArr[idx] === false ? "모집중" : "모집완료"}
             </div>
           </div>
         ))}
