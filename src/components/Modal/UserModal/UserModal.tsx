@@ -49,10 +49,9 @@ const Usermodal: React.FC<UsermodalProps> = ({ close, userId, nickname }) => {
   // 유저 아이디로 유저 디테일 서버에서 불러오는 코드 추가하기
   const getUserData = async () => {
     const res = await axios.get(
-      `https://lymming-back.link/member/list/${userId}`
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/member/list/${userId}`
     );
     setUserData(res.data);
-    console.log(res.data);
   };
 
   return (

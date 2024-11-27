@@ -9,8 +9,7 @@ export const useOpenAiCassification = () => {
   const { data } = useInfoStore();
 
   const openai = new OpenAi({
-    apiKey:
-      "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",
+    apiKey: `${import.meta.env.VITE_AI_KEY}`,
     dangerouslyAllowBrowser: true,
   });
 

@@ -93,7 +93,7 @@ const ChatPage = () => {
       const roomId = await sortChatRoomId(currentUser, partner);
       try {
         const res = await axios.post(
-          "https://lymming-back.link/chat/existroom",
+          `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/existroom`,
           {
             roomId: roomId,
           }
@@ -120,13 +120,11 @@ const ChatPage = () => {
 
   const createChatRoom = async () => {
     if (partner) {
-      console.log("채팅방을 생성합니다");
-
       const roomId = await sortChatRoomId(currentUser, partner);
       // setRoomId(roomId);
-      console.log("createChatRoom에서 roomId", roomId);
+
       videoChatRoomId.current = roomId; //비디오채팅으로 넘겨주는 roomId TODO:처음 방이 생성될 경우에 videoChatRoomId를 설정
-      console.log("채팅방 아이디 생성 ", roomId);
+
       const payload = {
         roomId: roomId,
         userId1: currentUser,
@@ -134,13 +132,12 @@ const ChatPage = () => {
       };
       try {
         const res = await axios.post(
-          "https://lymming-back.link/chat/room/create",
+          `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/room/create`,
           payload
         );
 
         if (res.data) {
           setChatRoom(res.data);
-          console.log("생성된 채팅방의 roomid는", res.data);
         } else {
           console.log("채팅방이 존재하지 않습니다.");
         }
@@ -151,10 +148,11 @@ const ChatPage = () => {
   };
   const loadChatHistory = async () => {
     if (chatRoom?.roomId) {
-      console.log("채팅기록 불러오기");
       try {
         const res = await axios.get(
-          `https://lymming-back.link/chat/${chatRoom.roomId}/history`
+          `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/${
+            chatRoom.roomId
+          }/history`
         );
         setChatHistory(res.data);
 
@@ -174,15 +172,13 @@ const ChatPage = () => {
     if (!chatRoom?.roomId) return;
 
     client.current = Stomp.over(
-      () => new SockJS("https://lymming-back.link/chatting")
+      () => new SockJS(`${import.meta.env.VITE_BACKEND_ENDPOINT}/chatting`)
     );
 
     // STOMP 연결 설정
     client.current.connect(
       {},
       () => {
-        console.log("STOMP 연결 성공");
-        console.log(chatRoom.roomId);
         // 채팅방 구독
         client.current?.subscribe(
           `/sub/chat/room/${chatRoom.roomId}`,
@@ -191,7 +187,7 @@ const ChatPage = () => {
             setChatHistory((prev) => [...prev, msg]);
           }
         );
-        console.log("구독 성공");
+
         setIsSubscribed(true);
 
         if (invite === true) {
@@ -228,8 +224,6 @@ const ChatPage = () => {
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
-
-      console.log("시스템 메세지 전송");
     }
   };
 
@@ -247,8 +241,6 @@ const ChatPage = () => {
       };
 
       client.current.send("/pub/chatting/message", {}, JSON.stringify(msgData));
-
-      console.log("초대 메세지 전송");
 
       navigate(window.location.pathname, {
         state: { id: partner, invite: false },
@@ -287,11 +279,13 @@ const ChatPage = () => {
   // 채팅방 목록 불러오기
   const getChatRooms = async () => {
     try {
-      const res = await axios.get("https://lymming-back.link/chat/chatrooms", {
-        // 올바른 URL 경로 확인
-        params: { userId: currentUser }, // userId를 파라미터로 전달
-      });
-      console.log("채팅방 목록을 불러옵니다", res.data);
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/chat/chatrooms`,
+        {
+          // 올바른 URL 경로 확인
+          params: { userId: currentUser }, // userId를 파라미터로 전달
+        }
+      );
 
       setChatRooms(
         res.data.map((room: any) => {
@@ -330,7 +324,6 @@ const ChatPage = () => {
     //FIXME: shift키와 enter를 누르면 다음 줄로 이동하게 구현
     if (e.key === "Enter" && !e.shiftKey) {
       if (inputMessage !== "") {
-        console.log("enter perss!!");
         sendChatMessage();
       }
     }
@@ -340,7 +333,7 @@ const ChatPage = () => {
   const postInvite = async (id: number, nickname: string) => {
     try {
       const res = await axios.post(
-        "https://lymming-back.link/share/add/team/member",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/share/add/team/member`,
         {
           sharePageId: id,
           nickname: nickname,
@@ -372,8 +365,6 @@ const ChatPage = () => {
     loadChatHistory();
 
     if (chatRoom?.roomId) {
-      console.log("채팅방 연결 준비: ", chatRoom.roomId);
-
       const adjustedUser1Img =
         chatRoom.userId1 === currentUser
           ? chatRoom.user1Img
@@ -384,7 +375,6 @@ const ChatPage = () => {
           ? chatRoom.user2Img
           : chatRoom.user1Img;
 
-      console.log("사용자 이미지", adjustedUser1Img, adjustedUser2Img);
       setUserImg({
         user1Img: adjustedUser1Img,
         user2Img: adjustedUser2Img,

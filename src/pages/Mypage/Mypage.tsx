@@ -50,7 +50,7 @@ const Mypage = () => {
     setPutDat(localData);
   }, []);
   const stackArr = putData.stack?.split(",").map((item) => item.trim());
-  console.log(stackArr);
+
   const updateMyData = async () => {
     const s3url = await handleUpload();
     if (haveNickNameCheck) {
@@ -62,7 +62,7 @@ const Mypage = () => {
     try {
       //FIXME: axios put login
       const res = await axios.put(
-        `https://lymming-back.link/api/mypage/${data.userId}`,
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/mypage/${data.userId}`,
         {
           userId: data.userId,
           nickname: putData.nickname,
@@ -74,7 +74,7 @@ const Mypage = () => {
           teamperature: data.temperature,
         }
       );
-      console.log("수정하기 성공");
+
       //TODO: useInfo update
       setData({
         nickname: putData.nickname,
@@ -122,7 +122,6 @@ const Mypage = () => {
         ...prevData,
         stack: updatedStack,
       }));
-      console.log("stackArr222", stackArr);
     }
     setIsOpenStackBox(false); // 선택 박스 닫기
   };
@@ -130,7 +129,7 @@ const Mypage = () => {
   // const getUserName = async () => {
   //   try {
   //     const res = await axios.get(
-  //       "https://lymming-back.link/member/check-nickname",
+
   //       {
   //         params: { nickname: putData.nickname },
   //       }

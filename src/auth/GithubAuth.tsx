@@ -19,10 +19,9 @@ const GithubAuth = () => {
 
   // 서버로 인가코드 전송
   const postGithubCode = async (code: any) => {
-    console.log("로그인", code);
     try {
       const result = await axios.post(
-        "https://lymming-back.link/api/login/code/github",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/login/code/github`,
         {
           code,
         }
@@ -30,8 +29,6 @@ const GithubAuth = () => {
 
       //  사용자 정보를 로컬 스터리지에 저장
       localStorage.setItem("token", result.data.jwt);
-
-      console.log("로그인", result.data.jwt);
 
       // 있으면
       //홈으로 이동

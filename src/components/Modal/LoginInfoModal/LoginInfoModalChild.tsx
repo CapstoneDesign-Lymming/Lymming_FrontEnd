@@ -44,7 +44,7 @@ export const Child1 = () => {
   const getUserName = async () => {
     try {
       const res = await axios.get(
-        "https://lymming-back.link/member/check-nickname",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/member/check-nickname`,
         {
           params: { nickname: name },
         }

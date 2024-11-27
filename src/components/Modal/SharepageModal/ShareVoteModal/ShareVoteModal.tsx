@@ -20,16 +20,17 @@ const ShareVoteModal = () => {
   for (let i = 0; i < memberLength; i++) {
     memberCnt.push(i);
   }
-  console.log("candidates", candidates);
-  console.log("들어온 닉네임", nickname);
+
   const votePost = async (member: string) => {
-    const res = await axios.post("https://lymming-back.link/vote/best/member", {
-      nickname: nickname,
-      bestMember: member,
-      sharePageId: sharePageId,
-    });
+    const res = await axios.post(
+      `${import.meta.env.VITE_BACKEND_ENDPOINT}/vote/best/member`,
+      {
+        nickname: nickname,
+        bestMember: member,
+        sharePageId: sharePageId,
+      }
+    );
     if (res.status === 200) {
-      console.log("투표완료");
       closeModal();
     }
   };

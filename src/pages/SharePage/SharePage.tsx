@@ -24,9 +24,11 @@ interface ItemType {
 }
 
 const fetchShareData = async () => {
-  const response = await axios.get("https://lymming-back.link/share/list");
+  const response = await axios.get(
+    `${import.meta.env.VITE_BACKEND_ENDPOINT}/share/list`
+  );
   const reverseData = response.data.reverse();
-  console.log("sharepage 프로젝트 data", response.data);
+
   return reverseData;
 };
 

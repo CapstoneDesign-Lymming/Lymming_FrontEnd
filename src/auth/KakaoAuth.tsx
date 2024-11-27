@@ -19,10 +19,9 @@ const KakaoAuth = () => {
 
   // 서버로 인가코드 전
   const postKakaoCode = async (code: any) => {
-    console.log("로그인", code);
     try {
       const result = await axios.post(
-        "https://lymming-back.link/api/kakao/login",
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/api/kakao/login`,
         {
           code,
         }
@@ -30,7 +29,6 @@ const KakaoAuth = () => {
 
       // 리턴값으로 토큰 날라온다
       localStorage.setItem("token", result.data.refreshToken);
-      console.log("로그인", result.data);
 
       // 있으면
       //홈으로 이동
@@ -38,7 +36,7 @@ const KakaoAuth = () => {
       // 로그인 상태를 true로 만든다
       if (result.data.nickname) {
         setData(result.data);
-        console.log("로그인 이후 넘어오는 data", result.data);
+
         setLogin();
         navigate("/");
       }

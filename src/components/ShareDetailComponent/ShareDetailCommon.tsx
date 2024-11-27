@@ -77,7 +77,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const clickEndShareProject = async (projectId: number) => {
     try {
       const response = await axios.put(
-        `https://lymming-back.link/share/details/${projectId}/end`
+        `${
+          import.meta.env.VITE_BACKEND_ENDPOINT
+        }/share/details/${projectId}/end`
       );
       setToastName("successToast");
       setSuccessText("프로젝트가 종료되었습니다");
@@ -106,7 +108,9 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   const checkVote = async (): Promise<boolean> => {
     try {
       const res = await axios.get(
-        `https://lymming-back.link/vote/has/user?sharePageId=${propData.sharePageId}&nickname=${data.nickname}`
+        `${import.meta.env.VITE_BACKEND_ENDPOINT}/vote/has/user?sharePageId=${
+          propData.sharePageId
+        }&nickname=${data.nickname}`
       );
       if (res.data === "TRUE") {
         return true;
@@ -122,7 +126,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
   useEffect(() => {
     const fetchVoteStatus = async () => {
       const isVote = await checkVote(); // Promise를 처리
-      console.log(isVote);
+
       if (!isVote && propData.end === "TRUE") {
         //FIXME: end가 TRUE일 경우에만 투표모달 표시
         setCandidates(invoteMembers);
@@ -144,9 +148,7 @@ const ShareDetailCommon = ({ data: propData }: ShareDetailLeaderProps) => {
      */
   }, []);
   useEffect(() => {
-    console.log("페이지 접근");
     return () => {
-      console.log("페이지 종룐");
       resetInvoteState();
     };
   }, []);

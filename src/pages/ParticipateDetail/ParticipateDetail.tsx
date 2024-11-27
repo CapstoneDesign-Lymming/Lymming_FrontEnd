@@ -17,15 +17,15 @@ const ParticipateDetail = () => {
   const { projectId } = useParams<{ projectId: string }>();
   const navigate = useNavigate();
 
-  console.log(projectId);
-
   useEffect(() => {
     getData();
   }, []);
   const getData = async () => {
     try {
       const res = await axios.get(
-        `https://lymming-back.link/participate/detail/${projectId}`
+        `${
+          import.meta.env.VITE_BACKEND_ENDPOINT
+        }/participate/detail/${projectId}`
       );
       setItem(res.data);
     } catch (e) {
