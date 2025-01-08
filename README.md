@@ -13,29 +13,35 @@
 ---
 
 
-## Assignment Purpose 
+## 목적 
 
 프로젝트 팀원을 구하는 기존 방법은 크게 두 가지로 나뉩니다. 
 첫째, 인맥을 활용하는 방법, 둘째, 커뮤니티를 통해 모집하는 방식입니다. 하지만 인맥이 부족하면 팀원을 찾기 어렵고, 커뮤니티에서는 개발자의 정보나 기술 스택을 명확히 파악하기 어렵다는 한계가
 있습니다. 이러한 문제를 해결하고자, 사용자가 원하는 스펙의 팀원을 손쉽게 찾을 수 있는 웹 서비스 리밍을 기획하게 되었습니다.
 
-## Workflow
+## 워크플로우
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/3990f899-3007-4c21-b593-78fca17df136" alt="image" width="50%">
 </div>
 
-## ERD
+## 시스템 ERD
 <div align="center">
  <img src="https://github.com/user-attachments/assets/d82d60e3-3251-46dc-98d3-5b21bef05518" alt="image" width="70%">
 </div>
 
-## System Architecture
+## 시스템 아키텍쳐
 <div align="center">
   <img src="https://github.com/user-attachments/assets/e54a598f-43c7-49f3-9842-6c19046c1d82" alt="image" width="70%">
 </div>
 
-## FrontEnd Skill Stacks
+## 협업 툴
+
+| 피그마 | 노션|
+|----------|----------|
+| <img src="https://github.com/user-attachments/assets/43035c63-046d-4023-ac37-b3a8403e8629" width="300" height="300" /> | <img src="https://github.com/user-attachments/assets/e99a010d-c7d5-4704-8c5e-d2b6f0914e67" width="300" height="300" /> |
+
+## 프론트엔드 Skill Stacks
 - 코어: React, TypeScript
 - 상태 관리: Zustand, React-Qeury
 - 스타일링: Sass, Lottie-React
@@ -44,7 +50,7 @@
 - CI/CD: GitHub Actions
 ---
 
-## Core Functions
+## 기능 소개
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/9dd35567-1ee1-4c10-b51f-a2a8cc189485" alt="image" width="100%">
@@ -71,7 +77,7 @@
 
 ---
 
-## Demonstration video
+## 시연 영상
 
 
 
