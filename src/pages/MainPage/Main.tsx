@@ -12,6 +12,7 @@ import main_chat from "../../assets/lottie/main-chat.json";
 import main_videochat from "../../assets/lottie/main-videochat.json";
 import main_person from "../../assets/lottie/main-person.json";
 import main_exhibition from "../../assets/lottie/main-exhibition.json";
+import SeoMetaTag from "../../components/Helmet/SeoMetaTag";
 
 /**main page의 처음 올라오는 shpae요소의 framer motion */
 const shapeVariants = {
@@ -40,6 +41,11 @@ const Main = () => {
   return (
     <>
       <Header />
+      <SeoMetaTag
+        title={"lymming"}
+        description={"리밍 | 프로젝트를 시작하기 위한 첫 걸음!"}
+      />
+
       <div className="Main">
         <div className="Main-headerWrapper">
           <motion.div

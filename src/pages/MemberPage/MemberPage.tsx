@@ -15,6 +15,7 @@ import "./MemberPage.scss";
 import skills from "../../data/skills.json";
 import no_profile from "../../assets/img/no-profile.webp";
 import lymming from "../../assets/img/lymming_logo.png";
+import SeoMetaTag from "../../components/Helmet/SeoMetaTag";
 
 interface RecommendType {
   bio: string;
@@ -174,6 +175,7 @@ const MemberPage = () => {
   return (
     <>
       <Header />
+      <SeoMetaTag title={"lymming"} description={"리밍 | 멤버 페이지"} />
       <div className="MemberWrapper">
         <div className="Member">
           {

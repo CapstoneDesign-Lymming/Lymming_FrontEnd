@@ -16,10 +16,15 @@ import CollectPage from "./pages/CollectPage/CollectPage";
 import GithubAuth from "./auth/GithubAuth";
 import Mypage from "./pages/Mypage/Mypage";
 import Loading from "./components/Loading/Loading";
+import SeoMetaTag from "./components/Helmet/SeoMetaTag";
 
 function App() {
   return (
     <div className="App">
+      <SeoMetaTag
+        title="lymming"
+        description="리밍 | 프로젝트를 시작하기 위한 첫 걸음"
+      />
       <Routes>
         <Route path="/" element={<Main />}></Route>
         <Route path="/login" element={<LogIn />}></Route>

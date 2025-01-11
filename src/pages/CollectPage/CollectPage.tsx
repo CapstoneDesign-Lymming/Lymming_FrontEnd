@@ -6,6 +6,7 @@ import Usermodal from "../../components/Modal/UserModal/UserModal";
 import { ParticipateItem } from "../../interfaces/participate";
 import axios from "axios";
 import { useInfoStore } from "../../store/useLoginStore";
+import SeoMetaTag from "../../components/Helmet/SeoMetaTag";
 
 const CollectPage = () => {
   const [list, setList] = useState<ParticipateItem[]>([]);
@@ -58,7 +59,7 @@ const CollectPage = () => {
   return (
     <div className="CollectPage">
       <Header />
-
+      <SeoMetaTag title={"마이페이지"} description={"마이페이지"} />
       <div className="tab">
         <span
           className={selectTab === "내가쓴글" ? "active" : ""}
