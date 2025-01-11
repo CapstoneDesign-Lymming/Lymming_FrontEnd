@@ -8,6 +8,7 @@ import RootToast from "../../components/Toast/RootToast/RootToast";
 import no_profile from "../../assets/img/no-profile.webp";
 import infoData from "../../data/loginInfoData.json";
 import useImageUpload from "../../hooks/useImageUpload";
+import SeoMetaTag from "../../components/Helmet/SeoMetaTag";
 interface putDataTypes {
   temperature: number;
   nickname: string;
@@ -152,6 +153,10 @@ const Mypage = () => {
   return (
     <>
       <Header />
+      <SeoMetaTag
+        title={"리밍 | 마이페이지"}
+        description={"리밍 | 마이페이지에서 내 정보를 수정합니다."}
+      />
       <div className="MypageWrapper">
         <div className="Mypage">
           <div className="Mypage-head">마이페이지</div>

@@ -9,6 +9,7 @@ import skills from "../../data/skills.json";
 import noUserImg from "../../assets/img/no-profile.webp";
 
 import { useInfoStore } from "../../store/useLoginStore";
+import SeoMetaTag from "../../components/Helmet/SeoMetaTag";
 const ParticipateDetail = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [item, setItem] = useState<ParticipateItem>();
@@ -35,7 +36,7 @@ const ParticipateDetail = () => {
   return (
     <div className="ParticipateDetail">
       <Header />
-
+      <SeoMetaTag title={item!.projectName} description={item!.description} />
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />

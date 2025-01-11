@@ -7,10 +7,9 @@ import Usermodal from "../../components/Modal/UserModal/UserModal";
 import skill_data from "../../data/skills.json";
 import { ParticipateItem } from "../../interfaces/participate";
 import { useInfoStore, useLoginStore } from "../../store/useLoginStore";
+import SeoMetaTag from "../../components/Helmet/SeoMetaTag";
 
 const Participate = () => {
-  console.log(import.meta.env.VITE_BACKEND_ENDPOINT);
-
   const inside = useRef<HTMLDivElement>(null);
   const { login } = useLoginStore();
   const { data: userData } = useInfoStore();
@@ -135,7 +134,7 @@ const Participate = () => {
   return (
     <div className="Participate">
       <Header />
-
+      <SeoMetaTag title="리밍 | 참여하기" description="리밍 | 참여하기" />
       {userModalOpen && (
         <>
           <div className="backdrop" onClick={() => setUserModalOpen(false)} />
