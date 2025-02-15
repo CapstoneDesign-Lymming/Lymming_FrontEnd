@@ -1,291 +1,42 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { io, Socket } from "socket.io-client";
-import "./VideoChattingPage.scss";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useModalStore from "../../store/useModalState";
 import useConfirmVideoStore from "../../store/useComfirmVideoStore";
 import RootModal from "../../components/Modal/RootModal/RootModal";
-
-/**TODO:
- * 완료 1. 최초 렌더링 시 비디오 활성화 물어보는 방식으로 변경 (기존: 비디오 아이콘 선택)
- * 1. node.js 배포
- * 2. 마이크 비디오 on off
- * 3. 프로필 사진 video화면에 표시
- * 4. 참여자 목록
- * 5. 추후 채팅방->화상채팅방 이동시 url에 room id값 받아서 room name세팅
- *
- * FIXME:
- * 1. 화면공유 시작 클릭했지만 실패했을 경우에 대한 케이스 처리
- * 2. 비디오 off후 on시 상대에게 정상작동 x
- */
+import "./VideoChattingPage.scss";
+import useVideoChatting from "../../hooks/useVideoChatting";
 const VideoChattingPage = () => {
   const navigate = useNavigate();
-  const { roomId } = useParams();
-  console.log("para roomId", roomId);
-  const localVideoRef = useRef<HTMLVideoElement | null>(null);
-  const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  const [isVideoOn, setIsVideoOn] = useState<boolean>(false);
-  // const [isMicOn, setIsMicOn] = useState(true);
-
-  const roomName = useRef<string | undefined>("test_room");
-
-  const [socket, setSocket] = useState<Socket | null>(null);
-  const peerConnection = useRef<RTCPeerConnection | null>(null);
-  const [isLocalScreenSharing, setIsLocalScreenSharing] =
-    useState<boolean>(false);
-  const [isRemoteScreenSharing, setIsRemoteScreenSharing] =
-    useState<boolean>(false);
-
-  const [isReady, setIsReady] = useState<boolean>(false);
-  const [isCalling, setIsCalling] = useState<boolean>(false);
-
+  const {
+    isRemoteScreenSharing,
+    isLocalScreenSharing,
+    isVideoOn,
+    isReady,
+    peerConnection,
+    isCalling,
+    socket,
+    roomName,
+    localVideoRef,
+    remoteVideoRef,
+    setIsLocalScreenSharing,
+    setIsVideoOn,
+    setIsCalling,
+    setSocket,
+  } = useVideoChatting();
   const { isModalOpen, openModal } = useModalStore();
+
+  //전역 상태 관리
   const { isConfirmVideo } = useConfirmVideoStore();
 
   useEffect(() => {
-    //signaling server url 변경
-    const nextSocket = io(
-      // "http://localhost:8080",
-      import.meta.env.VITE_SIGNALING_SERVER_URL,
-      {
-        transports: ["websocket"], //websocket우선 사용
-      }
-    );
-    setSocket(nextSocket);
-    // setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
-    roomName.current = roomId;
-    console.log("화상채팅 roomId", roomId);
-
-    const pc = new RTCPeerConnection({
-      iceServers: [
-        { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun1.l.google.com:19302" },
-        { urls: "stun:stun2.l.google.com:19302" },
-        { urls: "stun:stun3.l.google.com:19302" },
-        {
-          urls: import.meta.env.VITE_COTURN_SERVER_IP,
-          username: import.meta.env.VITE_COTURN_ID,
-          credential: import.meta.env.VITE_COTURN_PW,
-        },
-      ],
-    });
-    pc.oniceconnectionstatechange = () => {
-      console.log("ICE connection state: ", pc.iceConnectionState);
-      if (pc.iceConnectionState === "connected") {
-        console.log("iceconnect 연결됨💧");
-      } else {
-        console.log("아직 iceconnect 연결 x❌❌");
-      }
-    };
-    pc.onicecandidate = (event) => {
-      if (!event.candidate) {
-        console.log("🥇🥇🥇"); //후보 연결을 완료하면 더 이상 새로운 후보가 생성되지 않거나 전달되지 않게 된다.
-        return;
-      }
-      console.log("ICE Candidate: ", event.candidate);
-      try {
-        nextSocket.emit("candidate", {
-          candidate: event.candidate,
-          room: roomName.current,
-        });
-        console.log("emit candidtate함 🚀");
-      } catch (error) {
-        console.log("emit candidate Error!", error);
-      }
-    };
-
-    pc.ontrack = (event) => {
-      console.log("remoteVideoRef 1: ", remoteVideoRef);
-      try {
-        if (!remoteVideoRef.current || !event.streams[0]) return;
-        console.log("# ontrack");
-
-        remoteVideoRef.current.srcObject = event.streams[0];
-        console.log("remoteVideoRef 2: ", remoteVideoRef);
-        console.log("event.streams[0]: ", event.streams[0]);
-      } catch (error) {
-        console.log("ontrack에서 발생한 ", error);
-      }
-    };
-
-    try {
-      // setPeerConnection(pc);
-      peerConnection.current = pc; //기존 useState값을 useRef로 변경하여 즉시 참조할 수 있게 변경
-      console.log("# PeerConnection");
-    } catch (error) {
-      console.log("setPeerConnection Error!", error);
-    }
-
-    nextSocket.on("offer", async (msg) => {
-      //1.상대가 call-> 방으로 offer감->offer받음
-      if (msg.sender === socket?.id) return;
-      console.log("🚀offer받음"); //ok offer은 받음
-      try {
-        //2. offer받고 sdp설정
-        await pc.setRemoteDescription(new RTCSessionDescription(msg.sdp));
-        console.log("🌳🌳"); //ok
-      } catch (error) {
-        console.log("setRemoteDescription", error);
-      }
-      try {
-        const answer = await pc.createAnswer();
-        await pc.setLocalDescription(answer);
-      } catch (error) {
-        console.log("answer", error);
-      }
-      try {
-        //3. answer 보냄
-        console.log("👍👍👍👍👍👍", roomName.current);
-
-        nextSocket.emit("answer", {
-          sdp: pc.localDescription,
-          room: roomName.current,
-        });
-        console.log("🌳answer🌳"); //ok offer받고 answer서버로 보냄
-      } catch (error) {
-        console.log("emit answer", error);
-      }
-    });
-
-    nextSocket.on("answer", (msg) => {
-      console.log("🎁answer", msg); //FIXME: 못받고 있음 (answer을)
-      /**
-       * 1.offer받음
-       * 2.answer보냄
-       * 3.서버가 answer받음
-       * 4.서버가 answer보냄 실패
-       * 5.클라가 answer받음 실패
-       */
-      if (msg.sender === socket?.id) {
-        return;
-      }
-      try {
-        const sdp = msg.sdp;
-        pc.setRemoteDescription(new RTCSessionDescription(sdp));
-        console.log("answer, setRemoteDescription");
-      } catch (error) {
-        console.log("answer에서 setRemoteDescription Error!", error);
-      }
-    });
-
-    nextSocket.on("candidate", (msg) => {
-      console.log("🚀candidate"); //FIXME: 못받음
-      if (msg.sender === socket?.id) return;
-      const candidate = msg.candidate;
-      if (
-        candidate &&
-        candidate.sdpMid !== null &&
-        candidate.sdpMLineIndex !== null
-      ) {
-        try {
-          const iceCandidate = new RTCIceCandidate(candidate);
-          if (peerConnection.current && iceCandidate) {
-            peerConnection.current
-              .addIceCandidate(iceCandidate)
-              .catch((error) => {
-                console.error("Error adding received ICE candidate", error);
-              });
-          }
-          setIsCalling(true);
-          console.log(isCalling);
-          console.log("🔥🔥");
-        } catch (error) {
-          console.error("Error constructing RTCIceCandidate", error);
-        }
-      } else {
-        console.log("Invalid ICE candidate: sdpMid or sdpMLineIndex is null");
-      }
-    });
-
-    nextSocket.on("screenSharing", async (msg) => {
-      console.log("상대방 화면 공유 상태", msg.isScreenSharing);
-      setIsRemoteScreenSharing(msg.isScreenSharing);
-      console.log(isLocalScreenSharing);
-
-      if (!msg.isScreenSharing) {
-        const webcamStream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-          audio: true,
-        });
-        if (remoteVideoRef.current) {
-          remoteVideoRef.current.srcObject = webcamStream;
-        }
-        if (peerConnection.current) {
-          const videoSender = peerConnection.current
-            .getSenders()
-            .find((sender) => sender.track?.kind === "video");
-          if (videoSender)
-            videoSender.replaceTrack(webcamStream.getVideoTracks()[0]);
-        }
-      }
-    });
-
-    nextSocket.on("allReady", async () => {
-      console.log("⭐모두 준비 완료");
-      console.log("allReady, call호출 전 peerConnectino 상태:", peerConnection);
-      setIsReady(true);
-      //TODO: 토스트를 통해 사용자에게 통하하기 버튼 안내
-    });
-
-    nextSocket.on("callEnded", () => {
-      console.log("callEnd");
-      endCall();
-    });
-
-    nextSocket.on("toggleMic", (data) => {
-      const { userId, isMicOn } = data;
-      const audioTracks = (
-        localVideoRef.current?.srcObject as MediaStream
-      )?.getAudioTracks();
-      audioTracks?.forEach((track) => {
-        track.enabled = isMicOn; // 상대방의 마이크 상태에 따라 오디오 트랙 활성화/비활성화
-        console.log(`User ${userId} mic status: ${isMicOn}`);
-      });
-    });
-
-    nextSocket.on("toggleVideo", (data) => {
-      if (data.userId !== socket?.id) {
-        // 자신의 토글 무시
-        if (data.isVideoOn && remoteVideoRef.current) {
-          // if(peerConnection.current){
-          //     peerConnection.current.ontrack=(event)=>{
-          //         const [remoteStream]=event.streams;
-          //         if(remoteVideoRef.current){
-          //             remoteVideoRef.current.srcObject = remoteStream;
-          //             console.log("상대 비디오 재설정",remoteStream);
-          //         }
-          //     }
-          // }
-        } else {
-          // 상대 비디오 끄기
-          // if(remoteVideoRef.current) remoteVideoRef.current.srcObject = null; // 비디오 끄기
-          if (remoteVideoRef.current?.srcObject) {
-            const mediaStream = remoteVideoRef.current.srcObject as MediaStream; // 타입 단언
-            const tracks = mediaStream.getVideoTracks();
-            tracks.forEach((track) => (track.enabled = false)); // 비디오 트랙 비활성화
-            console.log("상대 비디오 끄기");
-          }
-        }
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    console.log("isConfirmVideo", isConfirmVideo);
     if (!isConfirmVideo) {
       openModal();
     }
     if (isConfirmVideo) startVideoChatting();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConfirmVideo]);
-  //FIXME:추가됨
-  // useEffect(() => {
-  //   setRoom(roomId ?? "test_room"); //TODO: 추후 사용자 room id로 변경
-  //   console.log("roomId", roomId);
-  // }, [roomId]);
-  // /**비디오 버튼 클릭 시 비디오 연결, 룸 연결, 통화시작  */
+
   const startVideoChatting = () => {
     console.log("startVideoChatting");
     setVideo();
@@ -344,7 +95,6 @@ const VideoChattingPage = () => {
     setIsCalling(true);
   };
 
-  //FIXME: 화면공유 시작 클릭했지만 실패했을 경우에 대한 케이스 처리
   const screenSharing = async () => {
     if (!peerConnection) return;
     try {
@@ -512,43 +262,6 @@ const VideoChattingPage = () => {
     }
   };
 
-  // const toggleMic = async () => {
-  //   if (isMicOn) {
-  //     // 마이크 끄기
-  //     const tracks = (
-  //       localVideoRef.current?.srcObject as MediaStream
-  //     )?.getAudioTracks();
-  //     tracks?.forEach((track: MediaStreamTrack) => track.stop()); // 모든 오디오 트랙 중지
-  //     setIsMicOn(false);
-  //     socket?.emit("toggleMic", {
-  //       room: roomName,
-  //       userId: socket.id,
-  //       isMicOn: false,
-  //     });
-  //     console.log("🔨toggleMic off");
-  //   } else {
-  //     // 마이크 켜기
-  //     const stream = await navigator.mediaDevices.getUserMedia({
-  //       video: true,
-  //       audio: true,
-  //     });
-  //     if (localVideoRef.current) {
-  //       localVideoRef.current.srcObject = stream; // 오디오 재설정
-  //     }
-  //     stream.getTracks().forEach((track: MediaStreamTrack) => {
-  //       if (peerConnection.current) {
-  //         peerConnection.current.addTrack(track, stream);
-  //       }
-  //     });
-  //     setIsMicOn(true);
-  //     socket?.emit("toggleMic", {
-  //       room: roomName.current,
-  //       userId: socket.id,
-  //       isMicOn: true,
-  //     });
-  //     console.log("🔨toggleMic on");
-  //   }
-  // };
   return (
     <>
       <div className="VideoChattingWrapper">
@@ -585,30 +298,6 @@ const VideoChattingPage = () => {
           </video>
         </div>
         <div className="VideoChattingWrapper-Navigater">
-          {/* {isMicOn ? (
-            <div className="NavMenu" onClick={toggleMic}>
-              <svg
-                className="NavMenu-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 640 512"
-              >
-                <path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L472.1 344.7c15.2-26 23.9-56.3 23.9-88.7l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 21.2-5.1 41.1-14.2 58.7L416 300.8 416 96c0-53-43-96-96-96s-96 43-96 96l0 54.3L38.8 5.1zM344 430.4c20.4-2.8 39.7-9.1 57.3-18.2l-43.1-33.9C346.1 382 333.3 384 320 384c-70.7 0-128-57.3-128-128l0-8.7L144.7 210c-.5 1.9-.7 3.9-.7 6l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6z" />
-              </svg>
-              <div className="NavMenu-icon_text">음소거</div>
-            </div>
-          ) : (
-            <div className="NavMenu" onClick={toggleMic}>
-              <svg
-                className="NavMenu-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 384 512"
-              >
-                <path d="M192 0C139 0 96 43 96 96l0 160c0 53 43 96 96 96s96-43 96-96l0-160c0-53-43-96-96-96zM64 216c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 89.1 66.2 162.7 152 174.4l0 33.6-48 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l72 0 72 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0 0-33.6c85.8-11.7 152-85.3 152-174.4l0-40c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 40c0 70.7-57.3 128-128 128s-128-57.3-128-128l0-40z" />
-              </svg>
-              <div className="NavMenu-icon_text">마이크</div>
-            </div>
-          )} */}
-
           {isVideoOn ? (
             <div className="NavMenu" onClick={toggleVideo}>
               <svg
@@ -633,18 +322,6 @@ const VideoChattingPage = () => {
               <div>비디오 켜기</div>
             </div>
           )}
-
-          {/* <div className="NavMenu">
-            <svg
-              className="NavMenu-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-            >
-              <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
-            </svg>
-            <div>참여자</div>
-          </div> */}
-
           {isLocalScreenSharing ? (
             <div className="NavMenu" onClick={stopScreenSharing}>
               <svg
