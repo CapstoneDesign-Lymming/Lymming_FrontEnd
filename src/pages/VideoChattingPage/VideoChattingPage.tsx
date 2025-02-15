@@ -7,6 +7,16 @@ import "./VideoChattingPage.scss";
 import useVideoChatting from "../../hooks/useVideoChatting";
 const VideoChattingPage = () => {
   const navigate = useNavigate();
+  const { isModalOpen, openModal } = useModalStore();
+  const { isConfirmVideo } = useConfirmVideoStore();
+
+  useEffect(() => {
+    if (!isConfirmVideo) {
+      openModal();
+    }
+    if (isConfirmVideo) startVideoChatting();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConfirmVideo]);
 
   const {
     isRemoteScreenSharing,
@@ -24,18 +34,6 @@ const VideoChattingPage = () => {
     setIsCalling,
     setSocket,
   } = useVideoChatting();
-  const { isModalOpen, openModal } = useModalStore();
-
-  //전역 상태 관리
-  const { isConfirmVideo } = useConfirmVideoStore();
-
-  useEffect(() => {
-    if (!isConfirmVideo) {
-      openModal();
-    }
-    if (isConfirmVideo) startVideoChatting();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConfirmVideo]);
 
   const startVideoChatting = () => {
     console.log("startVideoChatting");
