@@ -1,22 +1,32 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Main from "./pages/MainPage/Main";
-import LogIn from "./pages/LogInPage/LogIn";
-import KakaoAuth from "./auth/KakaoAuth";
-import Participate from "./pages/ParticipatePage/Participate";
-import ParticipateDetail from "./pages/ParticipateDetail/ParticipateDetail";
-import TeamBuilding from "./pages/TeamBuilding/TeamBuilding";
-import VideoChattingPage from "./pages/VideoChattingPage/VideoChattingPage";
-import ChatPage from "./pages/ChatPage/ChatPage";
-import MemberPage from "./pages/MemberPage/MemberPage";
-import SharePage from "./pages/SharePage/SharePage";
-import ShareDetailPage from "./pages/ShareDetailPage/ShareDetailPage";
-import ShareDetailLeader from "./components/ShareDetailComponent/ShareDetailLeader";
-import CollectPage from "./pages/CollectPage/CollectPage";
-import GithubAuth from "./auth/GithubAuth";
-import Mypage from "./pages/Mypage/Mypage";
-import Loading from "./components/Loading/Loading";
-import SeoMetaTag from "./components/Helmet/SeoMetaTag";
+import { lazy } from "react";
+
+const Main = lazy(() => import("./pages/MainPage/Main"));
+const LogIn = lazy(() => import("./pages/LogInPage/LogIn"));
+const KakaoAuth = lazy(() => import("./auth/KakaoAuth"));
+const Participate = lazy(() => import("./pages/ParticipatePage/Participate"));
+const ParticipateDetail = lazy(
+  () => import("./pages/ParticipateDetail/ParticipateDetail")
+);
+const TeamBuilding = lazy(() => import("./pages/TeamBuilding/TeamBuilding"));
+const VideoChattingPage = lazy(
+  () => import("./pages/VideoChattingPage/VideoChattingPage")
+);
+const ChatPage = lazy(() => import("./pages/ChatPage/ChatPage"));
+const MemberPage = lazy(() => import("./pages/MemberPage/MemberPage"));
+const SharePage = lazy(() => import("./pages/SharePage/SharePage"));
+const ShareDetailPage = lazy(
+  () => import("./pages/ShareDetailPage/ShareDetailPage")
+);
+const ShareDetailLeader = lazy(
+  () => import("./components/ShareDetailComponent/ShareDetailLeader")
+);
+const CollectPage = lazy(() => import("./pages/CollectPage/CollectPage"));
+const GithubAuth = lazy(() => import("./auth/GithubAuth"));
+const Mypage = lazy(() => import("./pages/Mypage/Mypage"));
+const Loading = lazy(() => import("./components/Loading/Loading"));
+const SeoMetaTag = lazy(() => import("./components/Helmet/SeoMetaTag"));
 
 function App() {
   return (

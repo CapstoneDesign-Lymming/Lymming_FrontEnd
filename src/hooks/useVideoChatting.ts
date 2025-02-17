@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { io, Socket } from "socket.io-client";
 
+/**WebRTC와 관련된 요소들을 정의합니다 */
 const useVideoChatting = () => {
   const { roomId } = useParams();
+
   const roomName = useRef<string | undefined>("test_room");
   const remoteVideoRef = useRef<HTMLVideoElement | null>(null);
   const peerConnection = useRef<RTCPeerConnection | null>(null);
   const localVideoRef = useRef<HTMLVideoElement | null>(null);
+
   const [socket, setSocket] = useState<Socket | null>(null);
   const [isCalling, setIsCalling] = useState<boolean>(false);
   const [isRemoteScreenSharing, setIsRemoteScreenSharing] =
